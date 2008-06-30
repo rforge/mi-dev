@@ -1,0 +1,58 @@
+\name{mi.categorical}
+\docType{class}
+% Classes
+\alias{mi.categorical-class}
+% Function
+\alias{mi.categorical}
+\title{ 
+    Elementary function: multinomial log-linear models to impute a categorical variable.
+}
+\description{
+    Imputes missing data in a categorical variable using multinomial Log-linear Models. 
+}
+\usage{
+mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots )
+}
+\arguments{
+  \item{formula}{ a formula expression as for regression models, of the form
+          'response ~ predictors'. The response should be a factor or a
+          matrix with K columns, which will be interpreted as counts
+          for each of K classes. A log-linear model is fitted, with
+          coefficients zero for the first class. An offset can be
+          included: it should be a numeric matrix with K columns if the
+          response is either a matrix with K columns or a factor with K
+          > 2 classes, or a numeric vector for a response factor with 2
+          levels. See the documentation of 'formula()' for other
+          details.  }
+  \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
+  \item{n.iter}{ Maximum number of iteration. }
+  \item{MaxNWts}{ The maximum allowable number of weights. See nnet for detail. }
+  \item{\dots}{ Currently not used. }
+}
+\details{
+    'multinom' calls the library 'nnet'. See multinom for other details.   
+}
+\value{
+    \item{model   }{A summary of the multinomial fitted model.}
+    \item{expected}{The expected values estimated by the model.}
+    \item{random  }{Vector of length n.mis of random predicted values predicted by using the multinomial distribution.}
+}
+\references{
+    Andrew Gelman and Jennifer Hill, 
+    Data Analysis Using Regression and Multilevel/Hierarchical Models, 
+    Cambridge University Press, 2007.
+}
+\author{
+  Masanao Yajima \email{yajima@stat.columbia.edu},
+  M.Grazia Pittau \email{grazia@stat.columbia.edu},
+  Andrew Gelman \email{gelman@stat.columbia.edu}
+}
+\seealso{
+    \code{\link{mi.expected}},
+    \code{\link{mi.resid}},
+    \code{\link{mi.sigma}},
+    \code{\link{mi.coef}},
+    \code{\link{mi.info}}, 
+    \code{\link{mi}}
+}
+\keyword{ models }

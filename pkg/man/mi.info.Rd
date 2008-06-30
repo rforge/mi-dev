@@ -1,0 +1,65 @@
+\name{mi.info}
+\docType{class}
+\alias{mi.info-class}
+\alias{mi.info}
+
+\title{ Function to create information matrix for missing data imputation }
+\description{
+  Produces matrix of information needed to impute the missing data.  
+  After the information is extracted user has the option of changing the default.
+}
+\usage{
+mi.info(data, cor.threshhold = 0.99999)
+}
+\arguments{
+  \item{data}{ dataframe or matrix of dataset with missing data coded as NAs. }
+  \item{cor.threshold}{ Threshold value for correlation to be considered a problem.}
+}
+\details{
+  ~~ If necessary, more details than the description above ~~
+}
+\value{
+  \item{info}{information matrix
+   \tabular{llll}{
+     \tab \tab -name: \tab Name of variable\cr
+     \tab \tab -imp.order: \tab Imputation Order\cr
+     \tab \tab -nmis: \tab Number of missing\cr
+     \tab \tab -type: \tab Type of variable\cr
+     \tab \tab -var.class: \tab Class of input variable\cr
+     \tab \tab -level: \tab Levels in the input varialbe\cr
+     \tab \tab -include: \tab Include in the imputation process or not\cr
+     \tab \tab -is.ID: \tab Is ID variable or not\cr
+     \tab \tab -all.missing: \tab All observation missing or not\cr
+     \tab \tab -correlated: \tab Correlated variables\cr
+     \tab \tab -determ.pred: \tab Deterministic predictor\cr
+     \tab \tab -imp.formula: \tab Imputation formula\cr
+     \tab \tab -params: \tab Parameters for the imputation model\cr
+     \tab \tab -other: \tab Currently not used\cr
+   }
+  }
+}
+
+\references{
+    Andrew Gelman and M. Grazia Pittau,  
+    A flexible program for missing-data imputation and model checking, 
+    Technical report, Columbia University, New York; Andrew Gelman and Jennifer Hill, 
+    Data Analysis Using Regression and Multilevel/Hierarchical Models, 
+    Cambridge University Press, 2007.
+}
+
+\author{
+  Masanao Yajima \email{yajima@stat.columbia.edu},
+  M.Grazia Pittau \email{grazia@stat.columbia.edu},
+  Andrew Gelman \email{gelman@stat.columbia.edu}
+}
+
+\seealso{ 
+    \code{\link{mi.models}}, 
+    \code{\link{mi.matrix}} 
+}
+\examples{
+
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ models }
