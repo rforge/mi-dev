@@ -12,7 +12,7 @@
 }
 
 \usage{
-    mi.fixed( Y , ...)
+    mi.fixed( formula, data = NULL, ... )
 }
 
 \arguments{

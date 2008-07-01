@@ -19,14 +19,17 @@
 %\S4method{mi}{mi}(object, \dots)
 %}
 \usage{
-mi(object, info, type = NULL, m = 3, n.iter = 30, max.minutes = 20, seed = NA, rand.imp.method = "bootstrap", preprocess = FALSE, continue.on.convergence = FALSE)
+mi( object, info, type = NULL, n.imp = 3, n.iter = 30, 
+                  max.minutes = 20, rand.imp.method = "bootstrap", 
+                   preprocess = FALSE, continue.on.convergence = FALSE,
+                    seed = NA ) 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{A data frame containing the incomplete data. Missing data are coded as NA's or mi object.}
   \item{info}{ mi.info object. }
   \item{type}{Vector of types.  When you specify a type, types for all the columns must be specified.}
-  \item{m}{ Number of multiple imputations. The default is m = 3.}
+  \item{n.imp}{ Number of multiple imputations. The default is m = 3.}
   \item{n.iter}{ Number of iterations to get convergence. The default is 5. }
   \item{max.minutes}{ Maximum minutes to stop iterating.  The default is 20. }  
   \item{seed}{ Random seed.}

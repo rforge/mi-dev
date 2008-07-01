@@ -9,11 +9,11 @@
   After the information is extracted user has the option of changing the default.
 }
 \usage{
-mi.info(data, cor.threshhold = 0.99999)
+mi.info(data, threshold  = 0.99999)
 }
 \arguments{
   \item{data}{ dataframe or matrix of dataset with missing data coded as NAs. }
-  \item{cor.threshold}{ Threshold value for correlation to be considered a problem.}
+  \item{threshold}{ Threshold value for correlation to be considered a problem.}
 }
 \details{
   ~~ If necessary, more details than the description above ~~

@@ -5,7 +5,15 @@
   A function for plotting, for each variable its observed and imputed values. 
 }
 \usage{
-mi.scatterplot(Yobs, Yimp, X = NULL, xlab = NULL, ylab = NULL, display.zero = TRUE, main = "Imputed Variable Scatter Plot", gray.scale = FALSE, obs.col = "blue", imp.col = "red", obs.pch = 20, imp.pch = 20, obs.cex = 0.3, imp.cex = 0.3, obs.lty = 1, imp.lty = 1, obs.lwd = 2.5, imp.lwd = 2.5, ...)
+mi.scatterplot( Yobs, Yimp, X = NULL, xlab = NULL, ylab = NULL, 
+                            main = "Imputed Variable Scatter Plot", 
+                             display.zero = TRUE, gray.scale = FALSE, 
+                              obs.col = rgb( 0, 0, 1, alpha = 0.3 ), 
+                              imp.col = rgb( 1, 0, 0 ), 
+                              obs.pch = 20 , imp.pch = 20, 
+                              obs.cex = 0.3, imp.cex = 0.3, 
+                              obs.lty = 1  , imp.lty = 1, 
+                              obs.lwd = 2.5, imp.lwd = 2.5, ... )
 } 
 \arguments{ 
   \item{Yobs}{ observed values. }

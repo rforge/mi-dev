@@ -19,7 +19,7 @@ mi.models <- function ( data, filename = NULL, type.list = NULL, model.print = T
     model.text <- paste( "## List of the models for imputing missing data", "\nstructure ( list ( \n ", sep="" )
     for ( j in 1:ncol.mis ) {
       i <- mis.index[j]
-      type[j] <- ifelse ( is.null ( type.list ), datatype ( as.vector ( as.matrix ( data[,i] ) ) ), type.list[i] )
+      type[j] <- ifelse ( is.null ( type.list ), typecast ( as.vector ( as.matrix ( data[,i] ) ) ), type.list[i] )
       names.preds   <- col.names [-i]  # the names for the predictors     
       model.default <- ""
       model.temp    <- model.function ( type[j] )
@@ -49,10 +49,10 @@ mi.models <- function ( data, filename = NULL, type.list = NULL, model.print = T
 typelist<-function( data, len=3, text=FALSE ){
   return(
       if(!text){
-        substr(sapply(data,datatype),1,len)
+        substr(sapply(data,typecast),1,len)
       }
       else{
-        paste("c(", paste("'",substr(sapply(data,datatype),1,len),"'",collapse=", ",sep=""),")")
+        paste("c(", paste("'",substr(sapply(typecast),1,len),"'",collapse=", ",sep=""),")")
       }
   )
 }

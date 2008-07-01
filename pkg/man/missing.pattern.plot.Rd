@@ -7,15 +7,18 @@
   Plots the missing pattern.
 }
 \usage{
-missing.pattern.plot( data, y.order = FALSE, x.order = FALSE, main = NULL, xlab = "Index", ylab = "Variable", gray.scale = FALSE, obs.col = "blue", mis.col = "red", ... )
+missing.pattern.plot ( data, y.order = FALSE, x.order = FALSE, 
+                                    xlab = "Index", ylab = "Variable", 
+                                    main = NULL, gray.scale = FALSE,
+                                    obs.col = "blue", mis.col = "red", ... )
 }
 \arguments{
   \item{data}{ data.frame or matrix of data with missing data coded as "NA". }
   \item{y.order}{ if TRUE, orders the variable by number of missing value.  Default is FALSE.}
   \item{x.order}{ if TRUE, orders the data by number of missing value.  Default is FALSE. }
-  \item{main}{ an overall title for the plot: see 'title'. }
   \item{xlab}{ a title for the x axis: see 'title'. }
   \item{ylab}{ a title for the y axis: see 'title'. }
+  \item{main}{ an overall title for the plot: see 'title'. }
   \item{gray.scale}{ if TRUE, makes the plot into black and white.  This option overwrites the color specification. }
   \item{obs.col}{ color used for observed values.  Default is "blue". }
   \item{mis.col}{ color used for missing values.  Default is "red".  }
