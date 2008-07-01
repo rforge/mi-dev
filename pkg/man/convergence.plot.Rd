@@ -7,7 +7,7 @@
   Function to plot the convergence of mi iterations.
 }
 \usage{
-convergence.plot( mi.object, mfrow = c(1, 1))
+convergence.plot ( mi.object, ... )
 }
 \arguments{
   \item{mi.object}{ mi object generated from mi function }
