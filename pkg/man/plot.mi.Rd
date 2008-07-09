@@ -55,7 +55,7 @@ plot(imp.CHAIN)
 #==========================================
 #The selected variable vrb is the average of the continuous variables
 #imputed in the first imputation
-vv <- as.vector(apply(mi.matrix(imp.CHAIN), 2, datatype))=="squareroot-continuous"
+vv <- as.vector(apply(mi.matrix(imp.CHAIN), 2, typecast))=="squareroot-continuous"
 var <- apply(mi.matrix(imp.CHAIN)[,vv],1,mean)
 plot(imp.CHAIN, vrb=var,  vrb.name="Average of the continuous variables")
 }
