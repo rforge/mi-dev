@@ -411,8 +411,8 @@ print.variable.setting <- function(info.variable){
 # print function for mi.info object
 # ========================================================================
 
-print.mi.info <- function ( info ){
-  print( mi.info.table( info ) )
+print.mi.info <- function ( x ){
+  print( mi.info.table( x ) )
 }
 
 mi.info.table <- function ( info ) {

@@ -148,17 +148,17 @@ setMethod("mi.imputed", signature(object = "mi.mixed"),
   }
 )
 
-print.mi.mixed <- function ( object ) {
+print.mi.mixed <- function ( x ) {
   cat("model 1:\n ")
-  print(object$model$model.1$call)
+  print(x$model$model.1$call)
   cat("\ncoefficients 1:\n")
-  print(object$model$model.1$coefficient)
+  print(x$model$model.1$coefficient)
   cat("\nmodel 2:\n ")
-  print(object$model$model.2$call)
+  print(x$model$model.2$call)
   cat("\ncoefficients 2:\n")
-  print(object$model$model.2$coefficient)
+  print(x$model$model.2$coefficient)
   cat("\nimputed values:\n")
-  print(object$random)
+  print(x$random)
 }
 
 setMethod("mi.plot", signature(object = "mi.mixed"), 

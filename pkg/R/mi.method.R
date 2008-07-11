@@ -28,13 +28,13 @@ setMethod("mi.imputed", signature(object = "mi.method"),
     return(Y)
   }
 )
-print.mi.method <- function ( object ) {
+print.mi.method <- function ( x ) {
   cat("model:\n ")
-  print(object$model$call)
+  print(x$model$call)
   cat("\ncoefficients:\n")
-  print(object$model$coefficient)
+  print(x$model$coefficient)
   cat("\nimputed values:\n")
-  print(object$random)
+  print(x$random)
 }
 
 #setMethod("mi.start", signature(object = "mi.method"), 
