@@ -8,10 +8,12 @@
 }
 \usage{
 convergence.plot ( mi.object, ... )
+conv.plot ( mi.object, ... )
 }
 \arguments{
   \item{mi.object}{ mi object generated from mi function }
   \item{mfrow}{ vector of length 2 to specify number of row and column of the output }
+  \item{\dots}{ Other options for 'plot' function. }
 }
 \details{
   Convergence plot plots the convergence of the means and the standard deviation of each variable for the different imputation.

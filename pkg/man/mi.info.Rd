@@ -2,6 +2,10 @@
 \docType{class}
 \alias{mi.info-class}
 \alias{mi.info}
+\alias{mi.info.fix-method}
+\alias{is.mi.info-method}
+\alias{show,mi.info-method}
+
 
 \title{ Function to create information matrix for missing data imputation }
 \description{

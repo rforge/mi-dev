@@ -6,6 +6,8 @@
 % functions
 \alias{mi}
 \alias{mi,mi-method}
+\alias{is.mi-method}
+\alias{show,mi-method}
 
 \title{ Multiple Iterative Regression Imputation }
 \description{

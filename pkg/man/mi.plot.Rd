@@ -7,6 +7,7 @@
 \alias{mi.plot,mi.mixed-method}
 \alias{mi.plot,mi.polr-method}
 \alias{mi.plot,mi.sqrtcontinuous-method}
+\alias{mi.plot,mi.copy-method}
 
 \title{ Default plotting function for mi.method objects. }
 \description{
@@ -21,6 +22,7 @@ mi.plot(object, Yobs, \dots)
   \S4method{mi.plot}{mi.logcontinuous}( object, Yobs, \dots )
   \S4method{mi.plot}{mi.polr}( object, Yobs, \dots )
   \S4method{mi.plot}{mi.sqrtcontinuous}( object, Yobs, \dots )
+  \S4method{mi.plot}{mi.copy}( object, Yobs, \dots )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

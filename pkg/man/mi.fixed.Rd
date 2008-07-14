@@ -2,8 +2,10 @@
 \docType{class}
 % Classes
 \alias{mi.fixed-class}
+\alias{mi.copy-class}
 % Function
 \alias{mi.fixed}
+\alias{mi.copy}
 \title{
     Elementary function: imputation of constant variable.
 }
@@ -17,6 +19,7 @@
 
 \arguments{
     \item{Y}{ Incomplete data vector of length n. Missing values are coded as NA's. }
+    \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
     \item{\dots}{ Currently not used. }
 }
 

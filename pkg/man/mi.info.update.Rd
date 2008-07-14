@@ -13,7 +13,7 @@
 \alias{mi.info.update.other}
 \title{ function to update mi.info object to use for multiple imputation }
 \description{
-  
+  This function is internal function to update the mi.info object.
 }
 \usage{
 mi.info.update(info, target, list)

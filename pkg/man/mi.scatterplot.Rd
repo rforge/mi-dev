@@ -1,5 +1,6 @@
 \name{mi.scatterplot}
 \alias{mi.scatterplot}
+\alias{marginal.scatterplot}
 \title{ Multiple Imputation Scatterplot }
 \description{
   A function for plotting, for each variable its observed and imputed values. 

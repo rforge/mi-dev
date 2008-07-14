@@ -4,13 +4,15 @@
 \alias{typecast,ANY-method}
 \alias{typecast,matrix-method}
 \alias{typecast,data.frame-method}
+\alias{typecast,list-method}
 \title{ Variables type }
 \description{ Function for determinig the variable type. }
 \usage{
   typecast( object )
   \S4method{typecast}{ANY}( object )
   \S4method{typecast}{matrix}( object )
-  \S4method{typecast}{data.frame}( object )
+  \S4method{typecast}{data.frame}( object )  
+  \S4method{typecast}{list}( object )
 }
 \arguments{
   \item{ object }{Vector, matrix, or data frame of data to determin the type of.}
