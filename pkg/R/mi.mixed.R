@@ -148,7 +148,7 @@ setMethod("mi.imputed", signature(object = "mi.mixed"),
   }
 )
 
-print.mi.mixed <- function ( x ) {
+print.mi.mixed <- function ( x, ... ) {
   cat("model 1:\n ")
   print(x$model$model.1$call)
   cat("\ncoefficients 1:\n")

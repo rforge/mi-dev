@@ -28,7 +28,7 @@ setMethod("mi.imputed", signature(object = "mi.method"),
     return(Y)
   }
 )
-print.mi.method <- function ( x ) {
+print.mi.method <- function ( x, ... ) {
   cat("model:\n ")
   print(x$model$call)
   cat("\ncoefficients:\n")

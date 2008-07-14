@@ -411,7 +411,7 @@ print.variable.setting <- function(info.variable){
 # print function for mi.info object
 # ========================================================================
 
-print.mi.info <- function ( x ){
+print.mi.info <- function ( x, ... ){
   print( mi.info.table( x ) )
 }
 
@@ -535,7 +535,7 @@ mi.interactive <- function ( data ){
   cat("----------------------------------- \n\n")
   default<-mi.default.check()
   # run mi
-  data.mi <- mi( data, info, n.iter=default$n.iter, m=default$m, max.minutes=default$max.minutes, continue.on.convergence=default$continue.on.convergence )
+  data.mi <- mi( data, info, n.iter=default$n.iter, n.imp = default$m, max.minutes=default$max.minutes, continue.on.convergence=default$continue.on.convergence )
   if(!converged.mi(data.mi)){
     resp.rerun<-menu(c("yes","no"),title="mi did not converge, would you like to keep it running?")
     if(resp.rerun==1){
