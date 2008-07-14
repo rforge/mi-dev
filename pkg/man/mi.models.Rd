@@ -1,5 +1,6 @@
 \name{mi.models}
 \alias{mi.models}
+\alias{imputation.models}
 \title{Multiple imputation models}
 \description{A function that selects the imputation models according to the variables type 
  and produces a text file as an output.}
@@ -116,4 +117,3 @@ models <- mi.models(CHAIN.samp)
 #     haartadhere.W1 , subset= h39b.W2 >0)"
 }
 \keyword{ models }
-

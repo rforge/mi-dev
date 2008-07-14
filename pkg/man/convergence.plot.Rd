@@ -12,7 +12,7 @@ conv.plot ( mi.object, ... )
 }
 \arguments{
   \item{mi.object}{ mi object generated from mi function }
-  \item{mfrow}{ vector of length 2 to specify number of row and column of the output }
+  %\item{mfrow}{ vector of length 2 to specify number of row and column of the output }
   \item{\dots}{ Other options for 'plot' function. }
 }
 \details{
@@ -32,4 +32,3 @@ conv.plot ( mi.object, ... )
 }
 
 \keyword{ hplot }
-

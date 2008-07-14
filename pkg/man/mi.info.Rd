@@ -2,8 +2,9 @@
 \docType{class}
 \alias{mi.info-class}
 \alias{mi.info}
-\alias{mi.info.fix-method}
-\alias{is.mi.info-method}
+\alias{mi.info.fix}
+\alias{is.mi.info}
+% methods
 \alias{show,mi.info-method}
 
 
