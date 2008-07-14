@@ -18,7 +18,7 @@
 }
 
 \arguments{
-    \item{Y}{ Incomplete data vector of length n. Missing values are coded as NA's. }
+  \item{formula}{an object of class '"formula"' (or one that can be coerced to that class): a symbolic description of the model to be fitted.  See bayesglm 'formula' for details.}
     \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
     \item{\dots}{ Currently not used. }
 }
