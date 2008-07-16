@@ -351,9 +351,6 @@ data.mi <- function ( object ) {
 converged.mi <- function ( object ) { 
   return( object$converged ) 
 }
-type.mi <- function ( object ) { 
-  return( object$type ) 
-}
 m.mi <- function ( object ) {
   return( object$m ) 
 }

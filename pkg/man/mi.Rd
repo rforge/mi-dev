@@ -16,16 +16,15 @@
  to the variables with missingness in the data randomly imputing each variable
  and looping through until approximate convergence.
 }
-%\usage{
-%    mi( object, filename = NULL, type = NULL, m = 3, n.iter = 5, max.minutes = 20, seed = %NA )
 
-%\S4method{mi}{mi}(object, \dots)
-%}
 \usage{
 mi( object, info, type = NULL, n.imp = 3, n.iter = 30, 
                   max.minutes = 20, rand.imp.method = "bootstrap", 
                    preprocess = FALSE, continue.on.convergence = FALSE,
                     seed = NA ) 
+
+\S4method{mi}{mi}(object, \dots)
+
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -107,22 +106,21 @@ and looping through until approximate convergence.
 }
 \examples{
 data(CHAIN)
-imp.CHAIN <- mi(CHAIN,n.iter=5)
-mids <- imp.CHAIN$imp$Imputation1 ##The results of the first imputation
-##yields the same result as
-mids <- imp.CHAIN$imp[[1]] 
-#=================
-#Imputation 1
-#=================
-imputed.matrix <- mids$Imputed.matrix ## The imputed matrix
-models <- mids$Imp.Models   ##The models for the imputation procedure
+imp.CHAIN <- mi(CHAIN, n.imp =3, n.iter=5 )
 
-#=================
-#Imputation 2
-#=================
-imp.CHAIN$imp$"Imputation2"$Imp.Models
-imp.CHAIN$imp$"Imputation2"$Imputed.matrix
+is.mi( imp.CHAIN ) ## Is this a mi object?
+data.mi (imp.CHAIN) ## You can get the original data
+
+mi.mt <- mi.matrix( imp.CHAIN, m = 1 ) ## The imputed matrix for the first imputation
+mi.df <- mi.data.frame( imp.CHAIN, m = 1 ) ## The imputed data frame for the second imputation
+
+##############################
+# Convergence checking
+##############################
+converged.mi( imp.CHAIN )   ## You should get FALSE because its only 5 iterations
+bugs( imp.CHAIN ) ## BUGS object to look at the R hat statistics
+
+imp.CHAIN <- mi(imp.CHAIN, n.iter=5) ## You can pick up from where you left off
 
 }
-
 \keyword{ models }

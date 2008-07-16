@@ -46,11 +46,11 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
 
   # main program
   #if( !is.null( start ) ){ n.iter <- 1 } 
-#  bplr.imp    <- bayespolr2( formula = formula, data = data, start = start, 
-#                              method = c( "logistic" ), 
-#                              drop.unused.levels = FALSE,n.iter = n.iter );
-    bplr.imp    <- polr( formula = formula, data = data,  
-                              method = c( "logistic" ) );
+  bplr.imp    <- bayespolr( formula = formula, data = data, start = 0, 
+                              method = c( "logistic" ), 
+                              drop.unused.levels = FALSE, n.iter = n.iter );
+#    bplr.imp    <- polr( formula = formula, data = data,  
+#                              method = c( "logistic" ) );
 
 #  bplr.imp    <- bayespolr2( formula = formula, data = data, method = c( "logistic" ), 
 #                  drop.unused.levels = FALSE, n.iter = n.iter,start=0) #, start = start );
