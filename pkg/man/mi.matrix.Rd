@@ -1,5 +1,7 @@
 \name{mi.matrix}
 \alias{mi.matrix}
+\alias{mi.data.frame}
+
 \title{ 
     Multiply Imputed matrix
 }
@@ -8,6 +10,7 @@
 }
 \usage{
     mi.matrix( mi.object, m )
+    mi.data.frame( mi.object, m )
 }
 \arguments{
     \item{mi.object}{ mi object containing a multiply imputed data set. 

@@ -6,6 +6,14 @@
 % functions
 \alias{mi}
 \alias{is.mi}
+\alias{bugs.mi}
+\alias{call.mi}
+\alias{converged.mi}
+\alias{data.mi}
+\alias{imp.mi}
+\alias{info.mi}
+\alias{m.mi}
+  
 % methods
 \alias{mi,mi-method}
 \alias{show,mi-method}
@@ -23,7 +31,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
                    preprocess = FALSE, continue.on.convergence = FALSE,
                     seed = NA ) 
 
-\S4method{mi}{mi}(object, \dots)
+%\S4method{mi}{mi}(object, \dots)
 
 }
 %- maybe also 'usage' for other objects documented here.
