@@ -63,6 +63,14 @@ mi.info(data, threshold  = 0.99999)
     \code{\link{mi.matrix}} 
 }
 \examples{
+data(CHAIN)
+info.CHAIN<-mi.info(CHAIN)
+info.CHAIN
+
+info.CHAIN$imp.order # imputation order
+
+info.CHAIN$imp.formula # imputation formula
+info.CHAIN[["age.W1"]]$imp.formula  #imputation formula for specific variable
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

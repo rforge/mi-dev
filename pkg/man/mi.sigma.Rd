@@ -2,7 +2,7 @@
 \alias{mi.sigma}
 \alias{mi.sigma,mi.method-method}
 \alias{mi.sigma,mi.mixed-method}
-\title{ Expected value from mi.method objec class. }
+\title{ Estimated variance from mi.method objec class. }
 \description{
   Internal function to extract estimated variance from mi.method objects.
 }

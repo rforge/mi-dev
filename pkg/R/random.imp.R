@@ -21,8 +21,12 @@ random.imp <- function ( data , imp.method = c( "bootstrap", "pca" ) , ... ) {
     } else{
         stop ( message = "Unexpected data type: data must be vector, matrix, or data frame." );
     }
-  } else{
-      imputed <- pca( data, nPcs = 3, method = "bpca" )@completeObs;
+  } else if (imp.method=="pca"){
+     stop ( message = "pca imputation is not implemente in current version." );
   }
+  
+  #else{
+  #    imputed <- pca( data, nPcs = 3, method = "bpca" )@completeObs;
+  #}
   return( as.data.frame( imputed ) )
 }

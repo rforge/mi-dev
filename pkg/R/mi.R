@@ -369,21 +369,21 @@ imp.mi <-function(object,m=1){
 # ========================================================================
 # number of missing data per variable 
 # ========================================================================
-number.of.missing <- function( data ) {
-  if( inherits( data, "matrix" ) ) { 
-    resultVec <- !complete.cases( t( data ) ) 
-  } else if( inherits( data, "filehashDB1" ) ) {
-    nameDB   <- dbList( db )
-    resultVec<- vector( "integer", length( nameDB ) )
-    names( resultVec ) <- nameDB
-    for (i in 1:length( nameDB ) ) {
-      resultVec[i] <- sum( is.na( db[[nameDB[i]]] ) )
-    }
-  } else{
-    resultVec <-FALSE
-  }
-  return( resultVec )
-}
+#number.of.missing <- function( data ) {
+#  if( inherits( data, "matrix" ) ) { 
+#    resultVec <- !complete.cases( t( data ) ) 
+#  } else if( inherits( data, "filehashDB1" ) ) {
+#    nameDB   <- dbList( db )
+#    resultVec<- vector( "integer", length( nameDB ) )
+#    names( resultVec ) <- nameDB
+#    for (i in 1:length( nameDB ) ) {
+#      resultVec[i] <- sum( is.na( db[[nameDB[i]]] ) )
+#    }
+#  } else{
+#    resultVec <-FALSE
+#  }
+#  return( resultVec )
+#}
 
     
 fill.missing <- function ( data, mis.index, imputed ){

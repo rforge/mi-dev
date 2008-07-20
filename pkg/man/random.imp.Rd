@@ -11,7 +11,7 @@ random.imp( data , imp.method = c( "bootstrap", "pca" ) , ... )
 
 \arguments{
   \item{data}{ A vector, matrix, or data frame with missing data. }
-  \item{imp.method}{ Character to specify which method of random imputation to use. Default is "bootstrap".}
+  \item{imp.method}{ Character to specify which method of random imputation to use. Default is "bootstrap".  Note: pca is not implemented in the current version.}
   \item{\dots}{Unused}
 }
 \details{
@@ -29,6 +29,10 @@ random.imp( data , imp.method = c( "bootstrap", "pca" ) , ... )
   Masanao Yajima \email{yajima@stat.columbia.edu},
   M.Grazia Pittau \email{grazia@stat.columbia.edu},
   Andrew Gelman \email{gelman@stat.columbia.edu}
+}
+\examples{
+data(CHAIN)
+ran.CHAIN <- random.imp(CHAIN)
 }
 \seealso{ \code{\link{mi}} }
 \keyword{ models }
