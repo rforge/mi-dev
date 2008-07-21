@@ -2,6 +2,90 @@
 # method definition 
 # ==============================================================================
 
+##############
+# mi
+##############
+setMethod( "is.mi", signature( object = "mi" ),
+  function ( object ){ 
+    return(inherits ( object, "mi" )) 
+  }
+)
+
+setMethod("call.mi", signature( object = "mi" ),
+  function ( object ) { 
+    return( object@call ) 
+  }
+)
+
+setMethod("data.mi", signature( object = "mi" ),
+  function ( object ) { 
+    return( object@data ) 
+  }
+)
+
+setMethod("converged", signature( object = "mi" ),
+  function ( object ) { 
+    return( object@converged ) 
+  }
+)
+
+setMethod("m", signature( object = "mi" ),
+  function ( object ) {
+    return( object@m ) 
+  }
+)
+
+setMethod("bugs.mi", signature( object = "mi" ),
+  function ( object ){
+    return( object@bugs ) 
+  }
+)
+
+setMethod("info", signature( object = "mi" ),
+   function ( object ){
+    return( object@mi.info ) 
+  }
+)
+
+setMethod("imp", signature( object = "mi" ),
+  function(object,m=1){
+      return(object@imp[[m]])
+  }
+)
+
+setMethod( "mi.matrix", signature( object = "mi" ),
+  function ( object, m = 1 ) {
+    if( m(object) < m )  { stop( message = "Index of imputation is not within the range." ) }
+    info <- info(object)
+    mis.name <- names( nmis(info)[ nmis( info ) > 0 & !all.missing( info ) ] );
+    mimatrix <- data.mi(object);
+    for ( i in 1:length(mis.name) ){
+      nm <- mis.name[i]
+      mimatrix[ ,nm] <- mi.imputed( imp(object,m)[[nm]],mimatrix[ ,nm] );
+    }  
+    mimatrix<-mapply(factor2num,mimatrix);
+    return( as.matrix( mimatrix ) );
+  }
+)
+setMethod( "mi.data.frame", signature( object = "mi" ),
+  function ( object, m = 1 ) {
+  if( !inherits ( object, "mi" ) ) { stop( message = "Object must be 'mi' class." ) }
+  if( m(object)< m )  { stop( message = "Index of imputation is not within the range." ) }
+  info <- info(object)
+  mis.name <- names( nmis(info)[ nmis( info ) > 0 & !all.missing( info ) ] );  
+  mimatrix <- data.mi(object);
+  for ( i in 1:length(mis.name) ){
+      nm <- mis.name[i]
+      mimatrix[ ,nm] <- mi.imputed( imp(object,m)[[nm]],mimatrix[ ,nm] );
+  }  
+  return( data.frame( mimatrix ) )
+}
+)
+
+##############
+# mi.method
+##############
+
 setMethod( "mi.start", signature( object = "mi.method" ), 
   function( object ){     
     result <- mi.coef( object )
@@ -37,18 +121,14 @@ setMethod( "mi.imputed", signature( object = "mi.method" ),
     return( Y )
   }
 )
-
-setMethod( "show", signature( object = "mi" ),
-  function ( object ) {
-    print( object )
-  }
-) 
-
-setMethod("show", signature( object = "mi.info" ), 
-  function ( object ) {
-    print( object )
-  }
-)
+print.mi.method <- function ( x, ... ) {
+  cat("model:\n ")
+  print(x$model$call)
+  cat("\ncoefficients:\n")
+  print(x$model$coefficient)
+  cat("\nimputed values:\n")
+  print(x$random)
+}
 
 setMethod( "mi.hist", signature( object = "mi.method" ),     
   function (  Yobs, object,  b = NULL, binwidth = NULL, gray.scale = FALSE, 
@@ -91,18 +171,6 @@ setMethod( "mi.hist", signature( object = "mi.method" ),
 
 }
 )
-##The function for the histogram
-histlineplot <- function ( h, shift = 0, col = "black", zero = TRUE, 
-                            lty = 1, lwd = 1, ... ) {
-  n.bins <- length ( h$breaks ) - 1
-  x.pos  <- h$breaks[ rep( c( 1, 2:n.bins, n.bins+1 ), c( 1, rep( 2, n.bins-1 ), 1 ) ) ]
-  y.pos  <- rep ( h$counts, rep( 2, n.bins ) )
-  if ( zero ) {
-    x.pos <- c( x.pos[1], x.pos, x.pos[ length( x.pos ) ] )
-    y.pos <- c( 0, y.pos, 0 )
-  }
-  lines ( x.pos + shift, y.pos, col = col, lty = lty, lwd = lwd )
-}
 
 setMethod( "mi.plot", signature( object = "mi.method" ), 
   function( object, Yobs, main = deparse( substitute( Yobs ) ), gray.scale = FALSE ){      
@@ -120,6 +188,23 @@ setMethod( "mi.plot", signature( object = "mi.method" ),
     #plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
   }
 )
+
+##############
+# 
+##############
+
+##The function for the histogram
+histlineplot <- function ( h, shift = 0, col = "black", zero = TRUE, 
+                            lty = 1, lwd = 1, ... ) {
+  n.bins <- length ( h$breaks ) - 1
+  x.pos  <- h$breaks[ rep( c( 1, 2:n.bins, n.bins+1 ), c( 1, rep( 2, n.bins-1 ), 1 ) ) ]
+  y.pos  <- rep ( h$counts, rep( 2, n.bins ) )
+  if ( zero ) {
+    x.pos <- c( x.pos[1], x.pos, x.pos[ length( x.pos ) ] )
+    y.pos <- c( 0, y.pos, 0 )
+  }
+  lines ( x.pos + shift, y.pos, col = col, lty = lty, lwd = lwd )
+}
 
 factor2num <- function(a){
   if(is.factor(a)){

@@ -3,30 +3,24 @@
 # ==============================================================================
 setOldClass("lm")
 setOldClass("glm")
-
-
-setClass("mi",
-        representation(
-            call      = "character",
-            data      = "numeric",
-            m         = "numeric",
-            type      = "character",
-            nmis      = "numeric",
-            imp       = "list",
-            converged = "numeric",
-            bugs      = "list" ),
-            contains = "list"
-)
 setClass("mi.info",
-        representation(),
-            contains = "list"
+            representation(),
+              contains = "list"
 )
+setClass("mi",
+            representation(
+                call      = "call",
+                data      = "data.frame" ,
+                m         = "numeric",
+                mi.info   = "mi.info",
+                imp       = "list",
+                converged = "logical",
+                bugs      = "ANY"),
+            contains  = "list"
+)
+
 setClass("mi.method",
-        representation(
-            model = "list", 
-            expected = "numeric", 
-            random = "numeric"),
-            contains = "list"
+            representation ="VIRTUAL"
 )
 setClass("mi.dichotomous",
         representation(

@@ -200,193 +200,83 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
       }
     }
   }
-  ###############################
-  mi           <- list( call = NULL, data = NULL, n.imp = NULL, 
-                        type = NULL, nmis = NULL, imp = NULL, 
-                        converged = NULL, bugs = NULL);
-################################################################
-#  #Retro Grade residual codes
-#                        ,check = NULL, prd =NULL
-                        
-  mi$call      <- call;
-  mi$data      <- org.data;
-  mi$m         <- n.imp;
-  mi$mi.info   <- info;
-  mi$nmis      <- colSums( 1*is.na( data ) );
-  mi$imp       <- mi.object;
-  mi$converged <- converged.flg;
-  mi$bugs      <- con.check;
+
+  mi <- new("mi", 
+            call      = call,
+            data      = org.data,
+            m         = n.imp,
+            mi.info   = info,
+            imp       = mi.object,
+            converged = converged.flg,
+            bugs      = con.check)
 ################################################################
 #  #Retro Grade residual codes
 #  mi$check     <- exp.val;
-#  mi$prd       <- prd.val;
-  class ( mi ) <- c( "mi");
+#  mi$prd       <- prd.v al;
   return( mi );
 }
-
-#mi.filehash <- function ( data, filename = NULL, type = NULL, m = 3, n.iter = 30, max.minutes = 20, seed = NA, rand.imp.method = "bootstrap" ) {
-#    ProcStart <- proc.time()
-#    time.out  <- FALSE
-#    converged <- FALSE
-#    con.check <- NULL
-#    max.minutes<-max.minutes
-#    call <- match.call( )
-##    if( any( apply( data,2,"is.character" ) ) ) {
-##        stop( message = paste( "variable must be numeric: variable '", names( data )[apply( data, 2,"is.character" )], "' is character\n\t", sep=""))
-##    }
-#    if( !is.na ( seed ) ) { set.seed( seed ) }           
-#    col.mis    <- !complete.cases( t( data ) ) 
-#    #col.mis    <- number.of.missing(data)
-#    ncol.mis   <- sum( col.mis )
-#    VarModel   <- if( !is.null( filename ) ) { read.models( filename = filename ) } 
-#                    else { mi.models( data = data, model.print = FALSE, type.list = type ) }
-#    VarType    <- attr  ( VarModel, "type" )
-#    VarName    <- names ( VarModel )
-#    VarName    <- VarName
-#    length.list<- length( VarModel )
-#    AveVar <- array( NA, c( n.iter, m, dim( data )[2] * 2 ) )
-#    dimnames( AveVar ) <- list( NULL, NULL, c( paste( "mean(", colnames( data ),")",sep="" ), paste( "sd(", colnames( data ), ")", sep="" ) ) )
-#    mi.data   <- vector( "list", m )
-#    start.val <- vector( "list", m )
-#    mi.object <- vector( "list", m )
-#    for (j in 1:m){ 
-#        mi.data[[j]]  <- random.imp( data, method = rand.imp.method ) 
-#        start.val[[j]]<- vector( "list", length.list )
-#        mi.object[[j]]<- list( )
-#    }
-#    dbCreate("mi.object") 
-#    db1 <- dbInit("mi.object")
-#    dbInsert(db1, "mi.object", mi.object)
-#    #db1<-dumpObjects(mi.object,dbName="mi.object")
-#    cat( "Beginning Multiple Imputation (",date(),"):\n")  
-#    for ( s in 1:n.iter) {
-#        cat( "Iteration", s,"\n" )
-#        for ( i in 1:m ){
-#            cat( " Imputation", i,  ": " )
-#            for( jj in 1:ncol.mis ) {
-#                cat( VarName[jj], " " )
-#                dat <- data.frame( data[ ,names ( data ) == VarName[jj],FALSE ], mi.data[[i]][ ,names ( data ) != VarName[jj] ] )
-#                names( dat ) <- c( VarName[jj], names( data[,names(data) != VarName[jj],FALSE] ) )
-#                m.t <-  if ( !is.null( start.val[[i]][[jj]] ) ) { 
-#                            paste( substr( VarModel[[VarName[jj]]] , 1, nchar( VarModel[[VarName[jj]]] )-1)
-#                            , start.val[[i]][[jj]]
-#                            , ")") 
-#                        } 
-#                        else{ 
-#                            VarModel[[VarName[jj]]] 
-#                        }
-#                #m.t <- VarModel[[VarName[jj]]] 
-#                #write.csv(mi.data[[i]],file=paste("iterafter",s,"-",i,"-",VarName[jj],".csv",sep=""))
-#                #print(m.t)
-#
-#                  db1$mi.object[[i]][[jj]] <- eval( parse( text = paste( "with( dat, ",m.t, ")" ) ) )
-##                mi.object[[i]][[jj]] <- try(eval( parse( text = paste( "with( dat, ",m.t, ")" ) ) ),TRUE)
-##                if( inherits( mi.object[[i]][[jj]],"try-error" ) ){
-##                    stop(message=paste("\n error occured while executing:", m.t, "\n",mi.object[[i]][[jj]]))
-##                }
-#                #mi.object[[i]][[jj]] <- tryCatch(eval( parse( text = paste( "with( dat, ",m.t, ")" ) ) ),error=cat("error while processing",VarName[jj]),finally=cat("Exiting"))
-#                 mi.data[[i]][[VarName[jj]]][is.na(data[[VarName[jj]]])] <- db1$mi.object[[i]][[jj]]$random
-#                start.val[[i]][[jj]] <- mi.start(  db1$mi.object[[i]][[jj]] )
-#            } ## variable loop 
-#            cat("\n" )   
-#            AveVar[s,i,] <- c( mean( mi.data[[i]] ),sd( mi.data[[i]] ) )
-#        }
-#        dbReorganize(db1)
-#        db1<-dbInit("mi.object")
-#        if ( s > 5 || ( ( ( ( proc.time( ) - ProcStart ) / 60 )[3] > 0.5 ) && s > 2 ) ) {
-#            con.check <- as.bugs.array( AveVar[1:s,,] )
-#            if( max( con.check$summary[ ,8] ) < 1.1 )  { converged <- TRUE; break }
-#            if( ( ( proc.time( ) - ProcStart ) / 60 )[3] > max.minutes ) { time.out <- TRUE; break }
-#        }
-#                
-#    }
-#    names(db1$mi.object)<- paste( "Imputation", 1:m, sep="" )
-#    for( v in 1:m){
-#        names( db1$mi.object[[v]] ) <- VarName
-#    }
-#    cat( if( converged   ){"mi converged (" }
-#         else if( time.out  ){"Time out, mi did not converge (" }
-#         else if( s==n.iter ){"Reached the maximum iteration, mi did not converge ("}
-#         else{ "Unknown termination ("}
-#        ,date(), ")\n" ) 
-#    mi           <- list( call = NULL, data = NULL, m = NULL, type = NULL, nmis = NULL, imp = NULL, converged = NULL, bugs = NULL )
-#    mi$call      <- call
-#    mi$data      <- data
-#    mi$m         <- m
-#    mi$type      <- VarType
-#    mi$nmis      <- colSums( 1*is.na( data ) )
-#    #mi$imp       <- list.mi
-#    mi$imp       <- db1$mi.object
-#    mi$converged <- converged
-#    mi$bugs      <- con.check
-#    class ( mi ) <- c( "mi", "list" )
-#    return( mi )
-#}
-
-## ========================================================================
-## read model from text
-## ========================================================================
-#read.models <- function ( filename ) {
-#    if ( missing ( filename ) ) { stop ( message = "'filename' is unspecified." ) }
-#    else {
-#        model.list <- dget ( filename ) 
-#        cat( paste ( "Read file: ", getwd(), "/", filename, "\n", sep="" ) )
-#        return ( model.list )
-#    }
-#}
 
 ##The simple imputation function
 impute<- function ( a, a.impute ) { 
   return ( ifelse ( is.na ( a ), a.impute, a ) ) 
 }
-is.mi <- function ( object ){ 
-  return(inherits ( object, "mi" )) 
-}
-call.mi <- function ( object ) { 
-  return( object$call ) 
-}
-data.mi <- function ( object ) { 
-  return( object$data ) 
-}
-converged.mi <- function ( object ) { 
-  return( object$converged ) 
-}
-m.mi <- function ( object ) {
-  return( object$m ) 
-}
-bugs.mi <- function ( object ){
-  return( object$bugs ) 
-}
-info.mi <- function ( object ){
-  return( object$mi.info ) 
-}
-
-imp.mi <-function(object,m=1){
-    return(object$imp[[m]])
-}
 
 
-# ========================================================================
-# number of missing data per variable 
-# ========================================================================
-#number.of.missing <- function( data ) {
-#  if( inherits( data, "matrix" ) ) { 
-#    resultVec <- !complete.cases( t( data ) ) 
-#  } else if( inherits( data, "filehashDB1" ) ) {
-#    nameDB   <- dbList( db )
-#    resultVec<- vector( "integer", length( nameDB ) )
-#    names( resultVec ) <- nameDB
-#    for (i in 1:length( nameDB ) ) {
-#      resultVec[i] <- sum( is.na( db[[nameDB[i]]] ) )
-#    }
-#  } else{
-#    resultVec <-FALSE
-#  }
-#  return( resultVec )
+   
+#fill.missing <- function ( data, mis.index, imputed ){
+#  data[mis.index] <- imputed
+#  return(data)
 #}
 
-    
-fill.missing <- function ( data, mis.index, imputed ){
-  data[mis.index] <- imputed
-  return(data)
-}
+# ==============================================================================
+# S4 print function for mi object
+# ==============================================================================
+setMethod("print", signature(x = "mi"),function ( x, ... ) {
+  n <- nrow(x@data)
+  cat ( "\nMultiply imputed data set" );
+  cat ( "\n\nCall:\n " );
+  print( call.mi(x) );
+  cat ( "\nNumber of multiple imputations: ", m(x),"\n");
+  tab <- mi.info.table( info(x) )[,c("names","type","number.mis")]
+  tab <- data.frame(tab, proportion=tab[,"number.mis"]/n )
+  cat ( "\nNumber and proportion of missing data per column:\n" );
+  print ( tab );
+  cat ( "\nTotal Cases:", n );
+  r    <- 1 * is.na ( x@data );
+  cat ( "\nMissing at least one item:", sum ( colSums(r)!= 0 ) );
+  cat ( "\nComplete cases:", sum ( rowSums(r) == 0 ), "\n" );
+  invisible( tab );
+})
+
+# ==============================================================================
+# S4 show function for mi object
+# ==============================================================================
+setMethod( "show", signature( object = "mi" ),
+  function ( object ) {
+    print( object )
+  }
+) 
+
+# ==============================================================================
+# S4 plot function for mi object
+# ==============================================================================
+
+setMethod( "plot", signature( x = "mi", y="missing"),
+  function ( x, m=1, vrb = NULL, vrb.name = "Variable Score",
+                        gray.scale = FALSE, mfrow=c( 1, 4 ), ... ) {
+    if ( m(x) < m )  { 
+      stop( message = paste( "Index of imputation 'm' must be within the range of 1 to", m(x) ) ) 
+    } else{
+      mids <- imp(x,m);
+      Y    <- as.data.frame( x@data[ , names( mids ) ] );
+      names( Y ) <- names( mids );
+      par( mfrow = mfrow );
+      for( i in 1:dim( Y )[2] ) {
+        par( ask = TRUE );
+        if( !is.null( mids[[i]] ) ) {
+          mi.plot( mids[[i]], Y[ ,names( mids )[i]], main = names( Y )[ i ] );
+        }
+      }
+    }
+  }
+)

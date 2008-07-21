@@ -415,6 +415,11 @@ print.mi.info <- function ( x, ... ){
   print( mi.info.table( x ) )
 }
 
+setMethod("show", signature( object = "mi.info" ), 
+  function ( object ) {
+    print( object )
+  }
+)
 mi.info.table <- function ( info ) {
   result<-data.frame(matrix(NA,nrow=length(info),ncol=7))
   dimnames(result)<-list(c(1:length(info)),c("names","include","order","number.mis","all.mis","type","correlated"))
