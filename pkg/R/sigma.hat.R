@@ -5,7 +5,7 @@ setMethod( "sigma.hat", signature( object = "mi.method" ),
 )
 
 setMethod("sigma.hat", signature(object = "mi.mixed"),     
-  function ( object ) {
+  function ( object,... ) {
     return( object$model$model.2$sigma )
   }
 )
