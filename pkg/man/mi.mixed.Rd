@@ -4,6 +4,7 @@
 \alias{mi.mixed-class}
 % Function
 \alias{mi.mixed}
+\alias{coef,mi.mixed-method}
 \title{
     Two-stage elementary function: linear regression to impute a variable that can be positive or zero. }
 \description{
@@ -13,6 +14,11 @@
 }
 \usage{
 mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ...)
+
+\S4method{coef}{mi.mixed}(object)
+\S4method{sigma.hat}{mi.mixed}(object)
+\S4method{fitted}{mi.mixed}(object)
+\S4method{resid}{mi.mixed}(object)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -32,7 +38,7 @@ mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALS
     \item{model$model.1}{A summary of the fitted model for the all the data for which y is observed.}
     \item{model$model.2}{A summary of the fitted model for the all the data for which y is observed and positive.}
     \item{expected}{The expected values estimated by the model}
-    \item{random  }{Vector of length n.mis of random predicted values to impute the missing data. 
+    \item{random }{Vector of length n.mis of random predicted values to impute the missing data. 
                     Whether missing values are positive random is positive, otherwise is equal to zero.}
 }
 \references{
@@ -47,11 +53,7 @@ mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALS
 }
 \seealso{
     \code{\link{mi.expected}},
-    \code{\link{mi.resid}},
-    \code{\link{mi.sigma}},
-    \code{\link{mi.coef}},
     \code{\link{mi.info}},  
     \code{\link{mi}}
 }
 \keyword{ models }
-
