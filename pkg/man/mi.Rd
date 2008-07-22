@@ -12,6 +12,7 @@
 \alias{data.mi}
 \alias{imp.mi}
 \alias{info.mi}
+\alias{imp}
 \alias{m}
 \alias{is.mi,mi-method}
 \alias{bugs.mi,mi-method}
@@ -22,8 +23,13 @@
 \alias{info.mi,mi-method}
 \alias{m,mi-method}
 \alias{print,mi-method}
+\alias{imp,mi-method}
 \alias{print,mi.method-method}
-  
+\alias{fitted,mi.method-method}
+\alias{coef,mi.method-method}
+\alias{imputed,mi.method-method}
+\alias{resid,mi.method-method}
+\alias{sigma.hat,mi.method-method}
   
 % methods
 \alias{mi,mi-method}
