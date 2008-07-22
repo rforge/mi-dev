@@ -118,7 +118,8 @@ setMethod("mi.start", signature(object = "mi.mixed"),
 
 setMethod("mi.coef", signature(object = "mi.mixed"),     
   function ( object ) {
-    return( object$model$coefficient )
+   result <-  list(object$model$model.1$coefficient,object$model$model.2$coefficient)
+    return( result )
   }
 )
 

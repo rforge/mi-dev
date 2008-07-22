@@ -4,7 +4,7 @@
 glm.mi <- function ( formula, mi.object, family = gaussian, ... ) 
 {
     call   <- match.call( );
-    m      <- m.mi( mi.object ); 
+    m      <- m( mi.object ); 
     result <- vector( "list", m );
     names( result ) <- as.character(paste( "Imputation", seq( m ), sep = "" ));
     for ( i in 1:m ) {
@@ -49,4 +49,7 @@ print.mi.glm<-function( object ){
     display( object$glm.mi.fit[[i]] );
     cat( "----------------------------------------\n" );
   }
+}
+display.mi.glm<-function( object ){
+  print.mi.glm( object );
 }

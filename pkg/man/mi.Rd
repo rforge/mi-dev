@@ -125,7 +125,7 @@ mi.df <- mi.data.frame( imp.CHAIN, m = 1 ) ## The imputed data frame for the sec
 ##############################
 # Convergence checking
 ##############################
-converged.mi( imp.CHAIN )   ## You should get FALSE because its only 5 iterations
+converged( imp.CHAIN )   ## You should get FALSE because its only 5 iterations
 bugs.mi( imp.CHAIN ) ## BUGS object to look at the R hat statistics
 
 imp.CHAIN <- mi(imp.CHAIN, n.iter=5) ## You can pick up from where you left off

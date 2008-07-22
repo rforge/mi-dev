@@ -5,7 +5,7 @@
 mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30, 
                   max.minutes = 20, rand.imp.method = "bootstrap", 
                    preprocess = FALSE, continue.on.convergence = FALSE,
-                    seed = NA ) {
+                    seed = NA, check.coef.convergence = FALSE ) {
   call <- match.call( );                         # call
   if( !is.na ( seed ) ) { set.seed( seed ); }    # set random seed
   ProcStart     <- proc.time();                  # starting time
@@ -93,6 +93,11 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
 #    }
 #  }
 ################################################################
+  coef.val <- vector("list",ncol.mis)
+  names(coef.val) <- names( info )[ nmis( info )>0 ];
+  for (jjj in 1:ncol.mis){
+    coef.val[[jjj]]<- vector("list", n.imp)
+  }
   names(mi.object)<- paste( "Imputation", 1:n.imp, sep="" );
   cat( "Beginning Multiple Imputation (", date(), "):\n" );
   # iteration loop
@@ -130,7 +135,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
                                                 }
                                         ),
                                           info[[CurrentVar]]$params
-                              ) ) )
+                              ) ) );
         # Error Handling
         on.exit ();
         options( show.error.messages = TRUE );
@@ -139,8 +144,8 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
 #        #Retro Grade residual codes
 #        prd.val[[i]][[s]][[CurrentVar]]<- mi.data[[i]][[CurrentVar]]
 #        exp.val[[i]][[s]][[CurrentVar]]<- mi.object[[i]][[CurrentVar]]$expected
-
-        mi.data[[i]][[CurrentVar]][is.na( data[[CurrentVar]] )] <- mi.object[[i]][[CurrentVar]]$random
+        mi.data[[i]][[CurrentVar]][is.na( data[[CurrentVar]] )] <- mi.object[[i]][[CurrentVar]]$random;
+        coef.val[[CurrentVar]][[i]]<-rbind(coef.val[[CurrentVar]][[i]],unlist(mi.coef(mi.object[[i]][[CurrentVar]])));
         start.val[[i]][[jj]] <- mi.start( mi.object[[i]][[CurrentVar]] );
       } ## variable loop 
       cat("\n" );
@@ -200,7 +205,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
       }
     }
   }
-
+  
   mi <- new("mi", 
             call      = call,
             data      = org.data,
@@ -208,7 +213,8 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
             mi.info   = info,
             imp       = mi.object,
             converged = converged.flg,
-            bugs      = con.check)
+            coef.conv = as.bugs.array(strict.check(coef.val,n.iter,n.imp)),
+            bugs      = con.check);
 ################################################################
 #  #Retro Grade residual codes
 #  mi$check     <- exp.val;
@@ -221,8 +227,27 @@ impute<- function ( a, a.impute ) {
   return ( ifelse ( is.na ( a ), a.impute, a ) ) 
 }
 
+strict.check<-function(coefficient,n.iter,n.imp){
+  res<-array(NA,c(n.iter,n.imp,0))
+  for(i in 1:length(coefficient)){
+    for(j in 1:dim(coefficient[[i]][[1]])[2]){
+      res<-  array.append(res,matrix(unlist(lapply(coefficient[[i]], "[", , j)),,n.imp))
+    }
+  }
+  return(res)
+}
 
-   
+array.append<-function(a, b, d = 3){
+  if(any(dim(a)[-d]!= dim(b)[-d])){
+    stop(message="array dimention must be same for all the dimention except for the one that you are trying to append")
+  } else{
+    da <-  dim(a)
+    da[d]<- ifelse(is.na( dim(a)[d]),1,dim(a)[d])+ ifelse(is.na( dim(b)[d]),1,dim(b)[d])
+    ab <- c(a,b)
+    dim(ab) = da
+  }
+  return(ab)
+}
 #fill.missing <- function ( data, mis.index, imputed ){
 #  data[mis.index] <- imputed
 #  return(data)
@@ -253,7 +278,7 @@ setMethod("print", signature(x = "mi"),function ( x, ... ) {
 # ==============================================================================
 setMethod( "show", signature( object = "mi" ),
   function ( object ) {
-    print( object )
+    print( object );
   }
 ) 
 
@@ -262,7 +287,7 @@ setMethod( "show", signature( object = "mi" ),
 # ==============================================================================
 
 setMethod( "plot", signature( x = "mi", y="missing"),
-  function ( x, m=1, vrb = NULL, vrb.name = "Variable Score",
+  function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
                         gray.scale = FALSE, mfrow=c( 1, 4 ), ... ) {
     if ( m(x) < m )  { 
       stop( message = paste( "Index of imputation 'm' must be within the range of 1 to", m(x) ) ) 

@@ -15,6 +15,7 @@ setClass("mi",
                 mi.info   = "mi.info",
                 imp       = "list",
                 converged = "logical",
+                coef.conv = "ANY",
                 bugs      = "ANY"),
             contains  = "list"
 )

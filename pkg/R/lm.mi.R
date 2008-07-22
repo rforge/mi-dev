@@ -4,7 +4,7 @@
 lm.mi <- function ( formula,  mi.object, ... ) 
 {
     call   <- match.call( );
-    m      <- m.mi( mi.object );
+    m      <- m( mi.object );
     result <- vector( "list", m );
     names( result ) <- as.character( paste( "Imputation", seq( m ), sep = ""));
     for ( i in 1:m ) {
@@ -31,23 +31,26 @@ lm.mi <- function ( formula,  mi.object, ... )
 }
 
 print.mi.lm<-function( object ){
-  cat( "----------------------------------------\n" )
-  cat( "Pooled Estimate\n" )
-  cat( "----------------------------------------\n" )
-  print( object$call )
-  tab<-cbind( object$lm.mi.pooled[[1]], object$lm.mi.pooled[[2]] )
-  dimnames( tab )[[2]] <- c( "coef.est", "coef.se" )
-  print( tab )
-  cat( "---\n" )
-  cat( "----------------------------------------\n" )
-  cat( "Separate Estimate for each Imputation\n" )
-  cat( "----------------------------------------\n" )
+  cat( "----------------------------------------\n" );
+  cat( "Pooled Estimate\n" );
+  cat( "----------------------------------------\n" );
+  print( object$call );
+  tab<-cbind( object$lm.mi.pooled[[1]], object$lm.mi.pooled[[2]] );
+  dimnames( tab )[[2]] <- c( "coef.est", "coef.se" );
+  print( tab );
+  cat( "---\n" );
+  cat( "----------------------------------------\n" );
+  cat( "Separate Estimate for each Imputation\n" );
+  cat( "----------------------------------------\n" );
   for( i in 1:length( object$lm.mi.fit ) ) {
-    display( object$lm.mi.fit[[i]] )
-    cat( "----------------------------------------\n" )
+    display( object$lm.mi.fit[[i]] );
+    cat( "----------------------------------------\n" );
   }
 }
 
+display.mi.lm<-function( object ){
+  print.mi.lm( object );
+}
 #glm.mi.norm <- function (formula,mi.object,  family = gaussian, ...) 
 #{
 #    call <- match.call()
