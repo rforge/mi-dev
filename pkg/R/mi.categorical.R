@@ -1,7 +1,6 @@
 # ==============================================================================
 # imputation function for categorical variable
 # ==============================================================================
-
 mi.categorical <- function( formula, data = NULL, n.iter = 100, 
                               MaxNWts = 1500, ...  ) {
   call <- match.call();
