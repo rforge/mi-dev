@@ -35,29 +35,12 @@
 \examples{
 data(CHAIN)
 class(CHAIN)
-## [1] "data.frame"
 
-# for vector
-typecast(CHAIN[,1])
-## [1] "mixed"
+typecast(CHAIN[,1]) # for vector
 
-# for matrix
-typecast(as.matrix(CHAIN))
-##                h39b.W1                  age.W1                  c28.W1 
-##                "mixed" "squareroot-continuous" "squareroot-continuous" 
-##                 pcs.W1                mcs37.W1                  b05.W1 
-##"squareroot-continuous"           "dichotomous"   "ordered-categorical" 
-##         haartadhere.W1                 h39b.W2 
-##  "ordered-categorical"                 "mixed" 
+typecast(as.matrix(CHAIN))# for matrix
 
-# for data.frame
-typecast(CHAIN)
-##                h39b.W1                  age.W1                  c28.W1 
-##                "mixed" "squareroot-continuous" "squareroot-continuous" 
-##                 pcs.W1                mcs37.W1                  b05.W1 
-##"squareroot-continuous"           "dichotomous"   "ordered-categorical" 
-##         haartadhere.W1                 h39b.W2 
-##  "ordered-categorical"                 "mixed" 
+typecast(CHAIN) # for data.frame
 }
 
 \keyword{ models }

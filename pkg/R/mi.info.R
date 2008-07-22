@@ -529,7 +529,7 @@ mi.interactive <- function ( data ){
       loop <- FALSE
     }
     else if(resp1==3){
-     info <- mi.info.fix( info )
+      info <- mi.info.fix( info )
     }
     else{
       cat("invalid selection")

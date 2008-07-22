@@ -252,30 +252,29 @@ array.append<-function(a, b, d = 3){
   }
   return(ab)
 }
-#fill.missing <- function ( data, mis.index, imputed ){
-#  data[mis.index] <- imputed
-#  return(data)
-#}
+
 
 # ==============================================================================
 # S4 print function for mi object
 # ==============================================================================
-setMethod("print", signature(x = "mi"),function ( x, ... ) {
-  n <- nrow(x@data)
-  cat ( "\nMultiply imputed data set" );
-  cat ( "\n\nCall:\n " );
-  print( call.mi(x) );
-  cat ( "\nNumber of multiple imputations: ", m(x),"\n");
-  tab <- mi.info.table( info.mi(x) )[,c("names","type","number.mis")]
-  tab <- data.frame(tab, proportion=tab[,"number.mis"]/n )
-  cat ( "\nNumber and proportion of missing data per column:\n" );
-  print ( tab );
-  cat ( "\nTotal Cases:", n );
-  r    <- 1 * is.na ( x@data );
-  cat ( "\nMissing at least one item:", sum ( colSums(r)!= 0 ) );
-  cat ( "\nComplete cases:", sum ( rowSums(r) == 0 ), "\n" );
-  invisible( tab );
-})
+setMethod("print", signature( x = "mi" ),
+  function ( x, ... ) {
+    n <- nrow(x@data)
+    cat ( "\nMultiply imputed data set" );
+    cat ( "\n\nCall:\n " );
+    print( call.mi(x) );
+    cat ( "\nNumber of multiple imputations: ", m(x),"\n");
+    tab <- mi.info.table( info.mi(x) )[,c("names","type","number.mis")]
+    tab <- data.frame(tab, proportion=tab[,"number.mis"]/n )
+    cat ( "\nNumber and proportion of missing data per column:\n" );
+    print ( tab );
+    cat ( "\nTotal Cases:", n );
+    r    <- 1 * is.na ( x@data );
+    cat ( "\nMissing at least one item:", sum ( colSums(r)!= 0 ) );
+    cat ( "\nComplete cases:", sum ( rowSums(r) == 0 ), "\n" );
+    invisible( tab );
+  }
+)
 
 # ==============================================================================
 # S4 show function for mi object
@@ -290,7 +289,7 @@ setMethod( "show", signature( object = "mi" ),
 # S4 plot function for mi object
 # ==============================================================================
 
-setMethod( "plot", signature( x = "mi", y="missing"),
+setMethod( "plot", signature( x = "mi", y="missing" ),
   function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
                         gray.scale = FALSE, mfrow=c( 1, 4 ), ... ) {
     if ( m(x) < m )  { 

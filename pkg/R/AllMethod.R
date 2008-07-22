@@ -225,5 +225,3 @@ factor2num <- function(a){
 factor2char <- function(a){
   levels(a)[as.numeric(a)]
 }
-
-round=base:::round

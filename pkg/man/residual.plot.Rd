@@ -40,4 +40,26 @@ residual.plot(Expected, Residuals, sigma, main = deparse(substitute(Expected)), 
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
 
+\examples{
+
+  # In regression context
+  # data
+  x<-rnorm(100,0,1) # N(0,1)
+  y<-rnorm(100,(1+2*x),1.2) # y ~ 1 + 2*x + N(0,1.2)
+  lm.fit <- lm(y~x)
+  residual.plot (lm.fit$fitted.values, lm.fit$residuals, sigma.hat(lm.fit))
+
+  # In missing data imputation context ( residual of conditional model)
+  # true data
+  x<-rnorm(100,0,1) # N(0,1)
+  y<-rnorm(100,(1+2*x),1.2) # y ~ 1 + 2*x + N(0,1.2)
+  # create artificial missingness on y
+  y[seq(1,100,10)]<-NA
+  dat.xy <- data.frame(x,y)
+  # imputation
+  dat.cont.mi <- mi.continuous(y~x, data = dat.xy)
+  residual.plot(mi.expected(dat.cont.mi), mi.resid(dat.cont.mi,y), mi.sigma(dat.cont.mi))
+
+}
+
 \keyword{ hplot }

@@ -43,7 +43,7 @@ missing.pattern.plot ( data, y.order = FALSE, x.order = FALSE,
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
 \examples{
-data(CHAIN)
-missing.pattern.plot(CHAIN)
+  data(CHAIN)
+  missing.pattern.plot(CHAIN)
 }
 \keyword{ hplot }
