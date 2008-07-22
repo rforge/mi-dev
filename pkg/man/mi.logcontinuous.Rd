@@ -4,7 +4,7 @@
 \alias{mi.logcontinuous-class}
 % Function
 \alias{mi.logcontinuous}
-\alias{resid, mi.logcontinuous-method}
+\alias{resid,mi.logcontinuous-method}
 
 \title{
     Elementary function: linear regression to impute a continuous positive variable.
@@ -13,10 +13,9 @@
     Imputes univariate missing data using linear regression on the logarithm values.
 }
 \usage{
-mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter = 100, ...)
+mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter = 100, ... )
 
 \S4method{resid}{mi.logcontinuous}(object, Y)
-
 }
 
 \arguments{

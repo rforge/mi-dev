@@ -27,6 +27,8 @@ mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta 
   \item{n.iter}{ Maximum number of iteration for bayesglm. The default is 100.}
   \item{draw.from.beta}{ Draws from posterior distribution of the betas to add randomness. }
   \item{\dots}{ Currently not used. }
+  \item{object}{\code{mi} object.}
+  \item{Y}{observed values}
 }
 \details{
     In bayesglm default the prior distribution is Cauchy with center 0 and scale 2.5 

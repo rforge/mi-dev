@@ -13,9 +13,13 @@
     Function to return completed data set from result of mi program.
 }
 \usage{
-    mi.completed( object, m , outcome = c("data.frame", "matrix"))
-    mi.matrix( object, m )
-    mi.data.frame( object, m )
+mi.completed(object, \dots)
+mi.matrix(object, \dots)
+mi.data.frame(object, \dots)
+
+\S4method{mi.completed}{mi}( object, m , outcome = c("data.frame", "matrix"))
+\S4method{mi.matrix}{mi}( object, m )
+\S4method{mi.data.frame}{mi}( object, m )
 }
 \arguments{
     \item{object}{ mi object containing a multiply imputed data set. 

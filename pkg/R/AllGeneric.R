@@ -63,7 +63,7 @@ if ( !isGeneric( "imp" )) {
 
 if ( !isGeneric( "mi.completed" )) {
   setGeneric( "mi.completed",
-              function( object,... ){
+              function( object, ... ){
                 standardGeneric( "mi.completed" )
               } 
   )
