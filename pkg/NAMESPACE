@@ -19,8 +19,6 @@ exportMethods(
   fitted,
   imputed,
   mi.start,
-  mi.imputed,
-  mi.plot,
   mi.hist,
   plot,
   print,
