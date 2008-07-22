@@ -33,7 +33,7 @@ mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALS
   \item{draw.from.beta}{ Draws from posterior distribution of the betas to add randomness. }
   \item{\dots}{ Currently not used. }
   \item{object}{\code{mi} object.}
-  \item{Y}{\code{observed values}
+  \item{Y}{observed values}
 }
 \details{
     Imputation variable that can be positive or zero. 
