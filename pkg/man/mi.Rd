@@ -13,6 +13,15 @@
 \alias{imp.mi}
 \alias{info.mi}
 \alias{m.mi}
+\alias{is.mi,mi-method}
+\alias{bugs.mi,mi-method}
+\alias{call.mi,mi-method}
+\alias{converged.mi,mi-method}
+\alias{data.mi,mi-method}
+\alias{imp.mi,mi-method}
+\alias{info.mi,mi-method}
+\alias{m.mi,mi-method}
+  
   
 % methods
 \alias{mi,mi-method}

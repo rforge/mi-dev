@@ -16,6 +16,7 @@
 mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter = 100, ...)
 
 \S4method{resid}{mi.logcontinuous}(object, Y)
+
 }
 
 \arguments{
@@ -24,6 +25,8 @@ mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter =
   \item{start}{ Starting value for bayesglm. }
   \item{n.iter}{ Maximum number of iteration for bayesglm. The default is 100.}
   \item{\dots}{ Currently not used. }
+  \item{object}{\code{mi} object.}
+  \item{Y}{\code{observed values}
 }
 \details{
     see \code{\link[stats]{lm}}.

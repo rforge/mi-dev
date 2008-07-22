@@ -30,7 +30,6 @@
   Andrew Gelman   \email{gelman@stat.columbia.edu}
 }
 \seealso{
-  \code{\link{mi.models}} 
 }
 \examples{
 data(CHAIN)

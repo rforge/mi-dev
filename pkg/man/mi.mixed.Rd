@@ -8,6 +8,7 @@
 \alias{sigma.hat,mi.mixed-method}
 \alias{fitted,mi.mixed-method}
 \alias{resid,mi.mixed-method}
+\alias{plot,mi.mixed-method}
 \title{
     Two-stage elementary function: linear regression to impute a variable that can be positive or zero. }
 \description{
@@ -31,6 +32,8 @@ mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALS
   \item{n.iter}{ Maximum number of iteration for bayesglm. The default is 100.}
   \item{draw.from.beta}{ Draws from posterior distribution of the betas to add randomness. }
   \item{\dots}{ Currently not used. }
+  \item{object}{\code{mi} object.}
+  \item{Y}{\code{observed values}
 }
 \details{
     Imputation variable that can be positive or zero. 
