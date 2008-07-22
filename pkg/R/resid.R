@@ -19,7 +19,7 @@ setMethod( "resid", signature( object = "mi.dichotomous" ),
 # ==============================================================================
 setMethod( "resid", signature( object = "mi.logcontinuous" ),     
   function ( object, Y ) {
-    return( log( Y ) - log(fitted ( object ) ) )
+    return( log( Y ) - log( fitted ( object ) ) )
   }
 )
 # ==============================================================================
