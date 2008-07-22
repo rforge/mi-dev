@@ -4,8 +4,7 @@
 \alias{mi.sqrtcontinuous-class}
 % Function
 \alias{mi.sqrtcontinuous}
-\alias{resid, mi.sqrtcontinuous-method}
-
+\alias{resid,mi.sqrtcontinuous-method}
 \title{
     Elementary function: linear regression to impute a continuous positive variable.
 }
