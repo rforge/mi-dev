@@ -82,7 +82,7 @@ function ( x, y, main=deparse( substitute( Yobs ) ),gray.scale = FALSE ) {
 } 
 )
 setMethod("mi.hist", signature(object = "mi.categorical"),  
- function ( object, Yobs, b = NULL, binwidth = NULL, gray.scale = FALSE,
+ function (  Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE,
              main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
               xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
                obs.col = "blue", imp.col = "black", mis.col = "red",
