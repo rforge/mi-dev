@@ -5,7 +5,7 @@
 % Function
 \alias{mi.mixed}
 \alias{coef,mi.mixed-method}
-\alias{imputed,mixed-method}
+\alias{imputed,mi.mixed-method}
 \alias{sigma.hat,mi.mixed-method}
 \alias{fitted,mi.mixed-method}
 \alias{resid,mi.mixed-method}
