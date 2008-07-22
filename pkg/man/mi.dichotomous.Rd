@@ -4,6 +4,8 @@
 \alias{mi.dichotomous-class}
 % Function
 \alias{mi.dichotomous}
+% methods
+\alias{resid,mi.dichotomous-method}
 \title{
     Elementary function: Bayesian logistic regression to impute a dichotomous variable.
 }
@@ -14,8 +16,10 @@
 }
 \usage{
 mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ...)
+
+\S4method{resid}{mi.dichotomous}(object, Y)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{formula}{  an object of class '"formula"' (or one that can be coerced to that class): a symbolic description of the model to be fitted.  See bayesglm 'formula' for details. }
   \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
@@ -44,7 +48,9 @@ mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta 
   M.Grazia Pittau \email{grazia@stat.columbia.edu},
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
+
 \note{ see also http://www.stat.columbia.edu/~gelman/standardize/ }
+
 \examples{
   # true data
   x<-rnorm(100,0,1) # N(0,1)
@@ -56,10 +62,6 @@ mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta 
   mi.dichotomous(y~x, data = dat.xy)
 }
 \seealso{
-    \code{\link{mi.expected}},
-    \code{\link{mi.resid}},
-    \code{\link{mi.sigma}},
-    \code{\link{mi.coef}},
     \code{\link{mi.info}}, 
     \code{\link{mi}}
 }

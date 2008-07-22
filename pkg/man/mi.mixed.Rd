@@ -5,6 +5,9 @@
 % Function
 \alias{mi.mixed}
 \alias{coef,mi.mixed-method}
+\alias{sigma.hat,mi.mixed-method}
+\alias{fitted,mi.mixed-method}
+\alias{resid,mi.mixed-method}
 \title{
     Two-stage elementary function: linear regression to impute a variable that can be positive or zero. }
 \description{
@@ -18,7 +21,7 @@ mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALS
 \S4method{coef}{mi.mixed}(object)
 \S4method{sigma.hat}{mi.mixed}(object)
 \S4method{fitted}{mi.mixed}(object)
-\S4method{resid}{mi.mixed}(object)
+\S4method{resid}{mi.mixed}(object, Y)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -46,13 +49,13 @@ mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALS
     Data Analysis Using Regression and Multilevel/Hierarchical Models, 
     Cambridge University Press, 2007.
 }
+
 \author{
   Masanao Yajima \email{yajima@stat.columbia.edu},
   M.Grazia Pittau \email{grazia@stat.columbia.edu},
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
 \seealso{
-    \code{\link{mi.expected}},
     \code{\link{mi.info}},  
     \code{\link{mi}}
 }

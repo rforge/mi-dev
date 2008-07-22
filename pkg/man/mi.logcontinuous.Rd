@@ -4,6 +4,7 @@
 \alias{mi.logcontinuous-class}
 % Function
 \alias{mi.logcontinuous}
+\alias{resid, mi.logcontinuous-method}
 
 \title{
     Elementary function: linear regression to impute a continuous positive variable.
@@ -13,8 +14,10 @@
 }
 \usage{
 mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter = 100, ...)
+
+\S4method{resid}{mi.logcontinuous}(object, Y)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{formula}{an object of class '"formula"' (or one that can be coerced to that class): a symbolic description of the model to be fitted.  See bayesglm 'formula' for details.}
   \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
@@ -23,7 +26,7 @@ mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter =
   \item{\dots}{ Currently not used. }
 }
 \details{
-    see lm
+    see \code{\link[stats]{lm}}.
 }
 \value{
   
@@ -48,10 +51,6 @@ mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter =
     The incomplete data vector has to be positive.
 }
 \seealso{
-    \code{\link{mi.expected}},
-    \code{\link{mi.resid}},
-    \code{\link{mi.sigma}},
-    \code{\link{mi.coef}},
     \code{\link{mi.info}},  
     \code{\link{mi}}
 }

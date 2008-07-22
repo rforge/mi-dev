@@ -4,6 +4,7 @@
 \alias{mi.sqrtcontinuous-class}
 % Function
 \alias{mi.sqrtcontinuous}
+\alias{resid, mi.sqrtcontinuous-method}
 
 \title{
     Elementary function: linear regression to impute a continuous positive variable.
@@ -13,8 +14,10 @@
 }
 \usage{
 mi.sqrtcontinuous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ...)
+
+\S4method{resid}{mi.sqrtcontinuous}(object, Y)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{formula}{an object of class '"formula"' (or one that can be coerced to that class): a symbolic description of the model to be fitted.  See bayesglm 'formula' for details.}
   \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
@@ -49,10 +52,6 @@ mi.sqrtcontinuous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.be
     The incomplete data vector has to be positive.
 }
 \seealso{
-    \code{\link{mi.expected}},
-    \code{\link{mi.resid}},
-    \code{\link{mi.sigma}},
-    \code{\link{mi.coef}},
     \code{\link{mi.info}}, 
     \code{\link{mi}}
 }
