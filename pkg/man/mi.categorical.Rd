@@ -48,10 +48,6 @@ mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots )
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
 \seealso{
-    \code{\link{mi.expected}},
-    \code{\link{mi.resid}},
-    \code{\link{mi.sigma}},
-    \code{\link{mi.coef}},
     \code{\link{mi.info}}, 
     \code{\link{mi}}
 }

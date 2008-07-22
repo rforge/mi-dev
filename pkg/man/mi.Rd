@@ -27,9 +27,9 @@
 
 \usage{
 mi( object, info, type = NULL, n.imp = 3, n.iter = 30, 
-                  max.minutes = 20, rand.imp.method = "bootstrap", 
-                   preprocess = FALSE, continue.on.convergence = FALSE,
-                    seed = NA ) 
+    max.minutes = 20, rand.imp.method = "bootstrap", 
+    preprocess = FALSE, continue.on.convergence = FALSE,
+    seed = NA, check.coef.convergence = FALSE) 
 
 %\S4method{mi}{mi}(object, \dots)
 
@@ -46,6 +46,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   \item{rand.imp.method}{ Method for random imputation }
   \item{preprocess}{ Preprocess the data according to the info matrix. }
   \item{continue.on.convergence}{ If set to TRUE the mi will run until maximum iteration is reached or maximum minutes pass. }
+  \item{check.coef.convergence}{default = FALSE}
 }
 
 \value{ A list of object of class mi, which stands for multiple imputation.

@@ -54,10 +54,6 @@ mi.continuous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta =
 }
 
 \seealso{
-    \code{\link{mi.expected}},
-    \code{\link{mi.resid}},
-    \code{\link{mi.sigma}},
-    \code{\link{mi.coef}}, 
     \code{\link{mi.info}}, 
     \code{\link{mi}}
 }

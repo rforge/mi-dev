@@ -36,7 +36,7 @@ mi.pmm(formula, data = NULL, start = NULL, n.iter = 100, ...)
     Data Analysis Using Regression and Multilevel/Hierarchical Models, 
     Cambridge University Press, 2007.
 
-   Van Buuren, S. & Oudshoorn, C.G.M. (2000). Multivariate Imputation
+   Van Buuren, S. and Oudshoorn, C.G.M. (2000). Multivariate Imputation
      by Chained Equations:  MICE V1.0 User's manual. Report
      PG/VGZ/00.038, TNO Prevention and Health, Leiden.
 
@@ -51,10 +51,6 @@ mi.pmm(formula, data = NULL, start = NULL, n.iter = 100, ...)
 }
 \note{ see also http://www.stat.columbia.edu/~gelman/standardize/ }
 \seealso{
-    \code{ \link{mi.expected}},
-    \code{ \link{mi.resid}},
-    \code{ \link{mi.sigma}},
-    \code{ \link{mi.coef}},
     \code{ \link{mi.info}}, 
     \code{ \link{mi}}
 }
