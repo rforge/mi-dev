@@ -516,7 +516,7 @@ mi.interactive <- function ( data ){
   default<-mi.default.check()
   # run mi
   data.mi <- mi( data, info, n.iter=default$n.iter, n.imp = default$m, max.minutes=default$max.minutes, continue.on.convergence=default$continue.on.convergence )
-  if(!converged.mi(data.mi)){
+  if(!converged(data.mi)){
     resp.rerun<-menu(c("yes","no"),title="mi did not converge, would you like to keep it running?")
     if(resp.rerun==1){
       stop.mi <- FALSE

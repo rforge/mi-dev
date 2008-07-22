@@ -2,7 +2,7 @@
 # convergence plot
 # ==============================================================================
 convergence.plot <- function( mi.object, ... ) {
-  traceplot.bugs( mi.object@bugs, ... )
+  traceplot( mi.object@bugs, ... )
   invisible( mi.object@bugs )
 }
 
