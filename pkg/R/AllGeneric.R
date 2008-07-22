@@ -86,19 +86,26 @@ if ( !isGeneric( "mi.data.frame" )) {
 
 
 if ( !isGeneric( "mi.start" ) ) {
-    setGeneric( "mi.start", function( object ) 
-              standardGeneric( "mi.start" ) )
+    setGeneric( "mi.start", 
+              function( object ) {
+                standardGeneric( "mi.start" ) 
+              }
+  )
 }
 
 if ( !isGeneric( "imputed" ) ) {
     setGeneric( "imputed",
-               function( object, ... )
-               standardGeneric( "imputed" ) )
+               function( object, ... ){
+                  standardGeneric( "imputed" )
+               } 
+    )
 }
 if ( !isGeneric("mi.hist")) {
     setGeneric( "mi.hist",
-               function( Yobs, object, ... )
-               standardGeneric( "mi.hist" ) )
+               function( Yobs, object, ... ){
+               standardGeneric( "mi.hist" ) 
+               }
+    )
 }
 
 #if ( !isGeneric( "mi.scatterplot" ) ) {
@@ -109,6 +116,8 @@ if ( !isGeneric("mi.hist")) {
 
 if ( !isGeneric( "typecast" ) ) {
     setGeneric( "typecast",
-               function( object )
-               standardGeneric( "typecast" ) )
+               function( object ){
+               standardGeneric( "typecast" )
+               } 
+    )
 }
