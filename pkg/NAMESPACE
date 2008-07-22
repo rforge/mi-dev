@@ -16,8 +16,11 @@ exportClasses(
 
 exportMethods(
   coef,
+  converged,
   fitted,
   imputed,
+  imp,
+  m,
   mi.start,
   mi.hist,
   plot,
@@ -29,7 +32,6 @@ exportMethods(
 )
 
 export(
-  imputation.models,
   mi,
   mi.models,
   mi.fixed,
@@ -68,11 +70,8 @@ export(
   is.mi.info,
   call.mi,
   data.mi,
-  converged.mi,
-  m.mi,
   bugs.mi,
-  info.mi,
-  imp.mi 
+  info.mi
 )
 
 
