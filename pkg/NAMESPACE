@@ -15,18 +15,16 @@ exportClasses(
 )
 
 exportMethods(
-  coef,
-  fitted,
-  resid,
+  mi.coef,
   mi.start,
+  mi.sigma,
+  mi.expected,
+  mi.resid,
   mi.imputed,
   mi.plot,
   mi.hist,
-  plot,
-  print,
-  show,
-  sigma.hat,
-  typecast
+  typecast,
+  show
 )
 
 export(
@@ -77,11 +75,6 @@ export(
 )
 
 
-S3method(plot, mi)
-S3method(print, mi)
-S3method(print, mi.info)
-S3method(print, mi.method)
-S3method(print, mi.mixed)
 S3method(lm, mi)
 S3method(glm, mi)
 S3method("[<-", mi.info)
