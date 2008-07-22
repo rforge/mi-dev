@@ -162,21 +162,21 @@ print.mi.mixed <- function ( x, ... ) {
   print(x$random)
 }
 
-setMethod("mi.plot", signature(object = "mi.mixed"), 
- function ( object, Yobs, main=deparse( substitute( Yobs ) ), gray.scale = FALSE ) {
+setMethod("plot", signature(x = "mi.mixed",y="ANY"), 
+ function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
   #par(mfrow=c(1,4))
-  fit     <- mi.expected( object )
-  res     <- mi.resid( object, Yobs )
-  sigma   <- mi.sigma(object)
-  vrb.obs <- Yobs
-  vrb.imp <- mi.imputed( object, Yobs )
+  fit     <- mi.expected( x )
+  res     <- mi.resid( x, y )
+  sigma   <- mi.sigma( x )
+  vrb.obs <- y
+  vrb.imp <- mi.imputed( x, y )
   fit1 <- fit[[1]]
   fit2 <- fit[[2]]
   res1 <- res[[1]]
   res2 <- res[[2]]    
-  mi.hist ( vrb.obs, object, xlab = main, main = main, gray.scale = gray.scale )
-  binnedplot( fit1[ !is.na( Yobs ) ], res1[ !is.na( Yobs ) ], nclass=sqrt(length(fit1[ !is.na( Yobs ) ])), main = main)
-  residual.plot ( fit2[Yobs>0], res2[Yobs>0], sigma, main = main, gray.scale = gray.scale )
+  mi.hist ( vrb.obs, x, xlab = main, main = main, gray.scale = gray.scale )
+  binnedplot( fit1[ !is.na( y ) ], res1[ !is.na( y ) ], nclass=sqrt(length(fit1[ !is.na( y ) ])), main = main)
+  residual.plot ( fit2[y>0], res2[y>0], sigma, main = main, gray.scale = gray.scale )
   #mtext( "sqrt", 2, cex = 0.7, adj = 1 )
   mi.scatterplot ( vrb.obs, vrb.imp, fit1*fit2,xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale, display.zero=FALSE )
 }

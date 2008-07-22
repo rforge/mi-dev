@@ -85,17 +85,17 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   on.exit( rm( bplr.imp ) )
 }
 
-setMethod("mi.plot", signature(object = "mi.polr"), 
-function ( object, Yobs, main=deparse( substitute( Yobs ) ), gray.scale = FALSE ) {
+setMethod("plot", signature(x = "mi.polr",y="ANY"), 
+function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
   #par(mfrow=c(1,4))
-  Yobs    <- factor2num( Yobs )
-  fit     <- factor2num( mi.expected( object ))
-  res     <- factor2num( mi.resid( object, Yobs ))
-  sigma   <- factor2num( mi.sigma( object ) )
-  vrb.obs <- factor2num( Yobs )
-  vrb.imp <- factor2num( mi.imputed( object, Yobs ) )
-  mi.hist( vrb.obs, object, xlab = main, main = main, gray.scale = gray.scale ) 
-  binnedplot( fit[  !is.na( Yobs ) ], res[  !is.na( Yobs ) ], nclass = sqrt( length( fit[ !is.na( Yobs ) ] ) ), main = main)
+  y       <- factor2num( y )
+  fit     <- factor2num( mi.expected( x ))
+  res     <- factor2num( mi.resid( x, y ))
+  sigma   <- factor2num( mi.sigma( x ) )
+  vrb.obs <- factor2num( y )
+  vrb.imp <- factor2num( mi.imputed( x, y ) )
+  mi.hist( vrb.obs, x, xlab = main, main = main, gray.scale = gray.scale ) 
+  binnedplot( fit[  !is.na( y ) ], res[  !is.na( y ) ], nclass = sqrt( length( fit[ !is.na( y ) ] ) ), main = main )
   mtext( "Binned Residual", 3, cex = 0.7, adj = NA ) 
   mi.scatterplot( vrb.obs, vrb.imp, fit, xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale )
   plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
