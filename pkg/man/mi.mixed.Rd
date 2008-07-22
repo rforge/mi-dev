@@ -19,12 +19,13 @@
     and the second model is fit to all the data for which the variable is observed and positive.
 }
 \usage{
-mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ...)
+  mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ...)
 
-\S4method{coef}{mi.mixed}(object)
-\S4method{sigma.hat}{mi.mixed}(object)
-\S4method{fitted}{mi.mixed}(object)
-\S4method{resid}{mi.mixed}(object, Y)
+  \S4method{coef}{mi.mixed}(object)
+  \S4method{sigma.hat}{mi.mixed}(object)
+  \S4method{fitted}{mi.mixed}(object)
+  \S4method{resid}{mi.mixed}(object, Y)
+  \S4method{plot}{mi.mixed}( x, y, \dots )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

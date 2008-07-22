@@ -1,14 +1,5 @@
-\name{mi.plot}
-\alias{mi.plot}
-\alias{mi.plot,mi.method-method}
-\alias{mi.plot,mi.categorical-method}
-\alias{mi.plot,mi.dichotomous-method}
-\alias{mi.plot,mi.logcontinuous-method}
-\alias{mi.plot,mi.mixed-method}
-\alias{mi.plot,mi.polr-method}
-\alias{mi.plot,mi.sqrtcontinuous-method}
-\alias{mi.plot,mi.copy-method}
-\alias{plot,mi.method-method}
+\name{plot}
+\alias{plot}
 \alias{plot,mi.categorical-method}
 \alias{plot,mi.dichotomous-method}
 \alias{plot,mi.logcontinuous-method}
@@ -17,25 +8,25 @@
 \alias{plot,mi.copy-method}
 
 
-\title{ Default plotting function for mi.method objects. }
+\title{ Default plotting function for mi.method xs. }
 \description{
-  Plotting function for mi.method object class.
+  Plotting function for mi.method x class.
 }
 \usage{
-mi.plot(object, Yobs, \dots)
-  \S4method{mi.plot}{mi.method}( object, Yobs, \dots )
-  \S4method{mi.plot}{mi.mixed}( object, Yobs, \dots )
-  \S4method{mi.plot}{mi.dichotomous}( object, Yobs, \dots )
-  \S4method{mi.plot}{mi.categorical}( object, Yobs, \dots )
-  \S4method{mi.plot}{mi.logcontinuous}( object, Yobs, \dots )
-  \S4method{mi.plot}{mi.polr}( object, Yobs, \dots )
-  \S4method{mi.plot}{mi.sqrtcontinuous}( object, Yobs, \dots )
-  \S4method{mi.plot}{mi.copy}( object, Yobs, \dots )
+mi.plot(x, y, \dots)
+  \S4method{plot}{mi.method}( x, y, \dots )
+  \S4method{plot}{mi.mixed}( x, y, \dots )
+  \S4method{plot}{mi.dichotomous}( x, y, \dots )
+  \S4method{plot}{mi.categorical}( x, y, \dots )
+  \S4method{plot}{mi.logcontinuous}( x, y, \dots )
+  \S4method{plot}{mi.polr}( x, y, \dots )
+  \S4method{plot}{mi.sqrtcontinuous}( x, y, \dots )
+  \S4method{plot}{mi.copy}( x, y, \dots )
 }
-%- maybe also 'usage' for other objects documented here.
+%- maybe also 'usage' for other xs documented here.
 \arguments{
-  \item{object}{ mi.method object family }
-  \item{Yobs}{ Observed values. }
+  \item{x}{ mi.method x family }
+  \item{y}{ Observed values. }
   \item{\dots}{ Currently not used.}
 }
 \details{

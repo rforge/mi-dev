@@ -2,7 +2,6 @@
 \docType{class}
 % Classes
 \alias{mi-class}
-\alias{mi.method-class}
 % functions
 \alias{mi}
 \alias{is.mi}
@@ -24,12 +23,8 @@
 \alias{m,mi-method}
 \alias{print,mi-method}
 \alias{imp,mi-method}
-\alias{print,mi.method-method}
-\alias{fitted,mi.method-method}
-\alias{coef,mi.method-method}
-\alias{imputed,mi.method-method}
-\alias{resid,mi.method-method}
-\alias{sigma.hat,mi.method-method}
+\alias{plot,mi.method-method}
+
   
 % methods
 \alias{mi,mi-method}
