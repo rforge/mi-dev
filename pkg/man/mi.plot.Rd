@@ -12,7 +12,6 @@
 \alias{plot,mi.categorical-method}
 \alias{plot,mi.dichotomous-method}
 \alias{plot,mi.logcontinuous-method}
-\alias{plot,mi.mixed-method}
 \alias{plot,mi.polr-method}
 \alias{plot,mi.sqrtcontinuous-method}
 \alias{plot,mi.copy-method}
