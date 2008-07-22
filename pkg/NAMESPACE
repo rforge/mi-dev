@@ -27,7 +27,7 @@ exportMethods(
   resid,
   sigma.hat,
   show,
-  typecast,
+  typecast
 )
 
 export(
