@@ -75,17 +75,17 @@ setMethod("mi.resid", signature(object = "mi.sqrtcontinuous"),
   }
 )
 
-setMethod("mi.plot", signature(object = "mi.sqrtcontinuous"), 
-function ( object, Yobs, main=deparse( substitute( Yobs ) ), gray.scale = FALSE, ... ) {
+setMethod("plot", signature(x = "mi.sqrtcontinuous",y ="ANY"), 
+function ( x, y, main=deparse( substitute( Yobs ) ), gray.scale = FALSE, ... ) {
   #par(mfrow=c(1,4))
-  fit     <- mi.expected( object )
-  res     <- mi.resid( object, Yobs )
-  sigma   <- mi.sigma( object )
-  vrb.obs <- Yobs
-  vrb.imp <- mi.imputed( object, Yobs )
+  fit     <- mi.expected( x )
+  res     <- mi.resid( x, y )
+  sigma   <- mi.sigma( x )
+  vrb.obs <- y
+  vrb.imp <- mi.imputed( x, y )
   sqrta <- vrb.obs
   sqrta[!is.na(vrb.obs)] <-sqrt(vrb.obs[!is.na(vrb.obs)])
-  mi.hist( vrb.obs, object, main = main, xlab=main, gray.scale = gray.scale )
+  mi.hist( vrb.obs, x, main = main, xlab=main, gray.scale = gray.scale )
   #mtext( "sqrt", 1, cex = 0.7, adj = 1 )
   residual.plot( fit, res, sigma, main = main, xlab= "Predicted",  ylab = paste( "Residual" ), gray.scale = gray.scale )
   mtext( "sqrt", 2, cex = 0.7, adj = 1 )
