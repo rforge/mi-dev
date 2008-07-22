@@ -48,7 +48,6 @@ mi.polr(formula, data = NULL, drop.unused.levels = TRUE, start = NULL, n.iter = 
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
 \seealso{
-    \code{\link{mi.models}}, 
     \code{\link{mi}}
 }
 \keyword{ models }

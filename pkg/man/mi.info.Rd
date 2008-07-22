@@ -59,7 +59,6 @@ mi.info(data, threshold  = 0.99999)
 }
 
 \seealso{ 
-    \code{\link{mi.models}}, 
     \code{\link{mi.matrix}} 
 }
 \examples{

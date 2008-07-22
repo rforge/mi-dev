@@ -46,6 +46,5 @@ lm.mi(formula, mi.object, ...)
   lm.mi(y~x,dat.mi)
 }
 \seealso{
-  \code{\link{mi.models}} 
 }
 \keyword{ models }

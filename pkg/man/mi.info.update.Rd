@@ -55,7 +55,6 @@ mi.info.update.other(info, list)
 }
 
 \seealso{ 
-    \code{\link{mi.models}}, 
     \code{\link{mi.matrix}} 
 }
 \examples{

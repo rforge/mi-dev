@@ -110,7 +110,6 @@ and looping through until approximate convergence.
 }
 
 \seealso{ 
-    \code{\link{mi.models}}, 
     \code{\link{mi.matrix}} 
 }
 \examples{
