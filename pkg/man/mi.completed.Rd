@@ -2,13 +2,14 @@
 \alias{mi.completed}
 \alias{mi.matrix}
 \alias{mi.data.frame}
-\alias{mi.completed, mi-method}
-\alias{mi.matrix, mi-method}
-\alias{mi.data.frame, mi-method}
+\alias{mi.completed,mi-method}
+\alias{mi.matrix,mi-method}
+\alias{mi.data.frame,mi-method}
 
 \title{ 
     Multiply Imputed Dataframe or Matrix
 }
+
 \description{
     Function to return completed data set from result of mi program.
 }
