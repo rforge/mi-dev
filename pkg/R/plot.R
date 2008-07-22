@@ -133,7 +133,7 @@ function ( x, y, main=deparse( substitute( Yobs ) ),gray.scale = FALSE ) {
 
 # ==============================================================================
 # S4 plot function for mi.dichotomous object
-# =======================================================================
+# ==============================================================================
 setMethod("plot", signature(x = "mi.dichotomous",y="ANY"), 
 function ( x, y, main=deparse( substitute( Yobs ) ), gray.scale = FALSE ) {
           #par(mfrow=c(1,4))
@@ -153,7 +153,7 @@ function ( x, y, main=deparse( substitute( Yobs ) ), gray.scale = FALSE ) {
 
 # ==============================================================================
 # S4 plot function for mi.logcontinuous object
-# =======================================================================
+# ==============================================================================
 setMethod("plot", signature(x = "mi.logcontinuous",y="ANY"), 
   function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
     par(mfrow=c(1,4))
@@ -173,4 +173,26 @@ setMethod("plot", signature(x = "mi.logcontinuous",y="ANY"),
     mtext( "log", 2, cex = 0.7, adj = 1 )
     plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
   } 
+)
+# ==============================================================================
+# S4 plot function for mi.copy object
+# ==============================================================================
+setMethod("plot", signature(x = "mi.copy",y="ANY"), 
+ function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
+    #par(mfrow=c(1,4))
+  #  fit     <- mi.expected( object )
+  #  res     <- mi.resid( object, Yobs )
+  #  sigma   <- mi.sigma(object)
+  #  vrb.obs <- Yobs
+  #  vrb.imp <- mi.imputed( object, Yobs )
+  #  fit1 <- fit[[1]]
+  #  fit2 <- fit[[2]]
+  #  res1 <- res[[1]]
+  #  res2 <- res[[2]]    
+  #  mi.hist ( vrb.obs, object, xlab = main, main = main, gray.scale = gray.scale )
+  #  binnedplot( fit1[ !is.na( Yobs ) ], res1[ !is.na( Yobs ) ], nclass=sqrt(length(fit1[ !is.na( Yobs ) ])), main = main)
+  #  residual.plot ( fit2, res2, sigma, main = main, gray.scale = gray.scale )
+  #  #mtext( "sqrt", 2, cex = 0.7, adj = 1 )
+  #  mi.scatterplot ( vrb.obs, vrb.imp, xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale, display.zero=FALSE )
+  }
 )
