@@ -15,8 +15,6 @@ exportClasses(
 )
 
 exportMethods(
-  lm.mi,
-  glm.mi,
   call.mi,
   data.mi,
   bugs.mi,
@@ -48,11 +46,13 @@ export(
   converged,
   convergence.plot,
   data.mi,
+  glm.mi,
   imp,
   imputed,
   info.mi,
   is.mi,
   is.mi.info,
+  lm.mi,
   m,
   marginal.scatterplot,
   mi,
