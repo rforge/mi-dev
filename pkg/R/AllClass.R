@@ -22,7 +22,7 @@ setClass("mi",
 )
 
 setClass("mi.method",
-            representation ="VIRTUAL"
+            representation()
 )
 setClass("mi.dichotomous",
         representation(
