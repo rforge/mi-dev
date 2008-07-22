@@ -5,10 +5,12 @@
 % Function
 \alias{mi.mixed}
 \alias{coef,mi.mixed-method}
+\alias{imputed,mixed-method}
 \alias{sigma.hat,mi.mixed-method}
 \alias{fitted,mi.mixed-method}
 \alias{resid,mi.mixed-method}
 \alias{plot,mi.mixed-method}
+\alias{print,mi.mixed-method}
 \title{
     Two-stage elementary function: linear regression to impute a variable that can be positive or zero. }
 \description{
