@@ -202,7 +202,7 @@ setMethod( "mi.hist", signature( object = "mi.method" ),
               obs.lty = 1, imp.lty = 1, mis.lty = 1,
               obs.lwd = 1, imp.lwd = 1, mis.lwd = 1, mlt = 0.1, ... )
 {
-  Yimp <-mi.imputed( object, Yobs )
+  Yimp <-imputed( object, Yobs )
   mis  <- Yimp[ is.na( Yobs ) ] ##the vector of the imputed values
   if( !is.null( is.na( Yobs ) ) ) { obs.nomis <- Yobs[ !is.na( Yobs ) ] }
   if( is.null( binwidth ) ) { 
@@ -244,7 +244,7 @@ setMethod("mi.hist", signature( Yobs = "ANY", object = "mi.dichotomous"),
             obs.lty = 1, imp.lty = 1, mis.lty = 1,
             obs.lwd = 1, imp.lwd = 1, mis.lwd = 1, mlt = 0.1, ... )
  {
-  Yimp <-mi.imputed(object,Yobs)
+  Yimp <-imputed(object,Yobs)
   mis  <- Yimp[ is.na( Yobs ) ] ##the vector of the imputed values
   if( !is.null( is.na( Yobs ) ) ) { obs.nomis <- Yobs[ !is.na( Yobs ) ] }
   if( is.null( binwidth ) ) { binwidth = ( max( Yimp ) - min( Yimp ) ) / sqrt( length( Yimp ) )}
@@ -281,7 +281,7 @@ function ( Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE,
             obs.lty = 1, imp.lty = 1, mis.lty = 1,
             obs.lwd = 1, imp.lwd = 1, mis.lwd = 1, mlt = 0.1, ... )
 {
-  Yimp <-mi.imputed( object, Yobs )
+  Yimp <-imputed( object, Yobs )
   mis  <- Yimp[ is.na( Yobs ) ] ##the vector of the imputed values
   if( !is.null( is.na( Yobs ) ) ) { obs.nomis <- Yobs[ !is.na( Yobs ) ] }
   if( is.null( binwidth ) ) { binwidth = ( max( Yimp ) - min( Yimp ) ) / sqrt( length( Yimp ) )}
@@ -335,7 +335,7 @@ function ( Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE,
             obs.lty = 1, imp.lty = 1, mis.lty = 1,
             obs.lwd = 1, imp.lwd = 1, mis.lwd = 1, mlt = 0.1, ... )
 {
-  Yimp <-mi.imputed( object, Yobs )
+  Yimp <-imputed( object, Yobs )
   mis  <- Yimp[ is.na( Yobs ) ] ##the vector of the imputed values
   if( !is.null( is.na( Yobs ) ) ) { obs.nomis <- Yobs[ !is.na( Yobs ) ] }
   if( is.null( binwidth ) ) { binwidth = ( max( Yimp ) - min( Yimp ) ) / sqrt( length( Yimp ) ) }
@@ -371,7 +371,7 @@ setMethod("mi.hist", signature( Yobs = "ANY", object = "mi.polr"),
             obs.lwd = 1, imp.lwd = 1, mis.lwd = 1, mlt = 0.1, ... )
 {
   Yobs <-as.numeric(Yobs)
-  Yimp <-mi.imputed(object,Yobs)
+  Yimp <-imputed(object,Yobs)
   mis  <- Yimp[ is.na( Yobs ) ] ##the vector of the imputed values
   if( !is.null( is.na( Yobs ) ) ) { obs.nomis <- Yobs[ !is.na( Yobs ) ] }
   if(is.factor(Yobs)){
@@ -410,6 +410,74 @@ setMethod("mi.hist", signature( Yobs = "ANY", object = "mi.polr"),
 }
 )
 
+
+setMethod("mi.hist", signature(object = "mi.pmm"),  
+ function ( Yobs, object, main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
+             gray.scale = FALSE, xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
+             b = NULL, binwidth = NULL, col = c( "black", "blue", "red" ), 
+             lty = c( 1, 1, 1 ), lwd = c( 1, 1, 1 ), mlt = 0.1, ... )
+{
+  Yimp <-imputed(object,Yobs)
+  mis  <- Yimp[ is.na( Yobs ) ] ##the vector of the imputed values
+  if( !is.null( is.na( Yobs ) ) ) { obs.nomis <- Yobs[ !is.na( Yobs ) ] }
+  if( is.null( binwidth ) ) { binwidth = ( max( Yimp ) - min( Yimp ) ) / sqrt( length( Yimp ) )}
+  if( is.null( b )) { b <- seq( min( Yimp ), max( Yimp ), length.out = sqrt( length( Yimp ) ) )}
+  if( gray.scale == TRUE ) { 
+    col <- c( gray( 0.8 ), gray( 0.6 ), gray( 0 ) ) 
+    lty <- c( 3, 1, 1 )
+  }
+  #b <- seq( 0, ceiling( max( Yimp ) ), 0.2 )
+  h.obs <- hist( obs.nomis, plot = FALSE, breaks = b )
+  h.mis <- hist( mis, plot = FALSE, breaks = b )
+  h.imp <- hist( Yimp, plot = FALSE, breaks = b )
+  plot( range( h.imp$breaks ), c( 0, max( h.imp$counts ) *1.05 ), yaxs = "i", xlab = xlab,
+  xlim = range( Yimp ), ylab = ylab, xaxt = "n", tck = 0, type = "n", bty = "l", main = main )
+  lab <- as.double( names( table( obs.nomis ) ) )
+  if( max( c( h.obs$counts, h.mis$counts, h.imp$counts)) > 100) {mlt<-0.2}
+  histlineplot ( h.mis, shift=-mlt*binwidth, col=col[3], lty = lty[3], lwd = lwd[3] )
+  histlineplot ( h.obs, shift=mlt*binwidth, col=col[2], lty = lty[2], lwd = lwd[2] ) 
+  histlineplot ( h.imp, col=col[1] , lty = lty[1], lwd = lwd[1] )  
+  axis( 1, lab, tick = TRUE, col.axis = 'black' )
+}
+)
+
+setMethod("mi.hist", signature(object = "mi.categorical"),  
+ function (  Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE,
+             main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
+              xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
+               obs.col = "blue", imp.col = "black", mis.col = "red",
+              obs.lty = 1, imp.lty = 1, mis.lty = 1,
+              obs.lwd = 1, imp.lwd = 1, mis.lwd = 1, mlt = 0.1, ... )
+ {
+  Yimp <-imputed(object,Yobs)
+  mis  <- Yimp[ is.na( Yobs ) ] ##the vector of the imputed values
+  if( !is.null( is.na( Yobs ) ) ) { obs.nomis <- Yobs[ !is.na( Yobs ) ] }
+  if( is.null( binwidth ) ) { binwidth = ( max( Yimp ) - min( Yimp ) ) / sqrt( length( Yimp ) )}
+  if( is.null( b )) { b <- seq( min( Yimp ), max( Yimp ), length.out = sqrt( length( Yimp ) ) )}
+  if( gray.scale == TRUE ) { 
+    obs.col = gray( 0.6 ) 
+    imp.col = gray( 0.8 ) 
+    mis.col = gray( 0 )
+    obs.lty = 3
+    imp.lty = 1
+    mis.lty = 1
+  }
+  b <- seq( min(c(obs.nomis,mis,Yimp)), ceiling( max( Yimp ) ), 0.2 )
+  h.obs <- hist( obs.nomis, plot = FALSE, breaks = b )
+  h.mis <- hist( mis, plot = FALSE, breaks = b )
+  h.imp <- hist( Yimp, plot = FALSE, breaks = b )
+  plot( range( h.imp$breaks ), c( 0, max( h.imp$counts ) *1.05 ), yaxs = "i", xlab = xlab,
+  xlim = range( Yimp ), ylab = ylab, xaxt = "n", tck = 0, type = "n", bty = "l", main = main )
+  lab <- as.double( names( table( obs.nomis ) ) )
+  if( max( c( h.obs$counts, h.mis$counts, h.imp$counts)) > 100) {mlt<-0.2}
+  histlineplot ( h.mis, shift = -mlt*binwidth, 
+                  col = mis.col, lty = mis.lty, lwd = mis.lwd )
+  histlineplot ( h.obs, shift = mlt*binwidth, 
+                  col = obs.col, lty = obs.lty, lwd = obs.lwd ) 
+  histlineplot ( h.imp, col = imp.col , lty = imp.lty, lwd = imp.lwd )  
+  axis( 1, lab, tick = TRUE, col.axis = 'black' )
+}
+)
 
 ##The function for the histogram
 histlineplot <- function ( h, shift = 0, col = "black", zero = TRUE, 

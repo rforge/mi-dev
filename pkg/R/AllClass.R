@@ -3,6 +3,7 @@
 # ==============================================================================
 setOldClass("lm")
 setOldClass("glm")
+
 setClass("mi.info",
             representation(),
               contains = "list"

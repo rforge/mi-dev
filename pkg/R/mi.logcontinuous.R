@@ -59,32 +59,6 @@ mi.logcontinuous <- function( formula, data = data.frame ( cbind ( Y, X ) ),
   on.exit( rm( bglm.imp ) )
 }
 
-setMethod("mi.resid", signature(object = "mi.logcontinuous"),     
-  function ( object, Y ) {
-    return( log(Y) - log(mi.expected ( object )) )
-  }
-)
-
-setMethod("mi.plot", signature(object = "mi.logcontinuous"), 
-function ( object, Yobs, main=deparse( substitute( Yobs ) ), gray.scale = FALSE, ... ) {
-  par(mfrow=c(1,4))
-  fit     <- mi.expected( object )
-  res     <- mi.resid( object, Yobs )
-  sigma   <- mi.sigma( object )
-  vrb.obs <- Yobs
-  vrb.imp <- mi.imputed( object, Yobs ) 
-  loga  <- vrb.obs
-  loga[!is.na(vrb.obs)] <-log(vrb.obs[!is.na(vrb.obs)])
-  mi.hist( loga, object, type = vrb.typ, main = main, xlab=paste("log(",main,")"), gray.scale = gray.scale )
-  mtext( "log", 1, cex = 0.7, adj = 1 )
-  residual.plot( log(fit), res, sigma, main = main, xlab= "log(Predicted)",  ylab = paste( "log(Residual)" ), gray.scale = gray.scale )
-  mtext( "log", 1, cex = 0.7, adj = 1 )
-  mtext( "log", 2, cex = 0.7, adj = 1 )
-  mi.scatterplot( loga, log(vrb.imp), fit, xlab= "predicted",  ylab = paste( "log(", main, ")" ) , main = main, gray.scale = gray.scale )
-  mtext( "log", 2, cex = 0.7, adj = 1 )
-  plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-} 
-)
 
 is.positive <- function ( data ) {
     len<-ncol(data) 

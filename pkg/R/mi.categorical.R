@@ -64,59 +64,6 @@ Rmultnm <- function( n, prob.mat, category  ) {
   return( y.imp )
 }
 
-setMethod("plot", signature(x = "mi.categorical", y="ANY"), 
-function ( x, y, main=deparse( substitute( Yobs ) ),gray.scale = FALSE ) {
-  #par(mfrow=c(1,4))
-  fit     <- mi.expected( x )
-  res     <- mi.resid( x, y )
-  sigma   <- mi.sigma( x )
-  vrb.obs <- y
-  vrb.imp <- mi.imputed( x, y )
-  mi.hist( vrb.obs, x, type = vrb.typ, xlab = main, main = main, gray.scale = gray.scale )
-  binnedplot( fit[ !is.na(y) ], res[ !is.na(y) ], nclass = sqrt( length( fit[ !is.na(y)] ) ), main = main)
-  mtext( "Binned Residual", 3, cex = 0.7, adj = NA ) 
-  mi.scatterplot( vrb.obs, vrb.imp, fit, xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale )
-  plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-
-} 
-)
-setMethod("mi.hist", signature(object = "mi.categorical"),  
- function (  Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE,
-             main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
-              xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
-               obs.col = "blue", imp.col = "black", mis.col = "red",
-              obs.lty = 1, imp.lty = 1, mis.lty = 1,
-              obs.lwd = 1, imp.lwd = 1, mis.lwd = 1, mlt = 0.1, ... )
- {
-  Yimp <-mi.imputed(object,Yobs)
-  mis  <- Yimp[ is.na( Yobs ) ] ##the vector of the imputed values
-  if( !is.null( is.na( Yobs ) ) ) { obs.nomis <- Yobs[ !is.na( Yobs ) ] }
-  if( is.null( binwidth ) ) { binwidth = ( max( Yimp ) - min( Yimp ) ) / sqrt( length( Yimp ) )}
-  if( is.null( b )) { b <- seq( min( Yimp ), max( Yimp ), length.out = sqrt( length( Yimp ) ) )}
-  if( gray.scale == TRUE ) { 
-    obs.col = gray( 0.6 ) 
-    imp.col = gray( 0.8 ) 
-    mis.col = gray( 0 )
-    obs.lty = 3
-    imp.lty = 1
-    mis.lty = 1
-  }
-  b <- seq( min(c(obs.nomis,mis,Yimp)), ceiling( max( Yimp ) ), 0.2 )
-  h.obs <- hist( obs.nomis, plot = FALSE, breaks = b )
-  h.mis <- hist( mis, plot = FALSE, breaks = b )
-  h.imp <- hist( Yimp, plot = FALSE, breaks = b )
-  plot( range( h.imp$breaks ), c( 0, max( h.imp$counts ) *1.05 ), yaxs = "i", xlab = xlab,
-  xlim = range( Yimp ), ylab = ylab, xaxt = "n", tck = 0, type = "n", bty = "l", main = main )
-  lab <- as.double( names( table( obs.nomis ) ) )
-  if( max( c( h.obs$counts, h.mis$counts, h.imp$counts)) > 100) {mlt<-0.2}
-  histlineplot ( h.mis, shift = -mlt*binwidth, 
-                  col = mis.col, lty = mis.lty, lwd = mis.lwd )
-  histlineplot ( h.obs, shift = mlt*binwidth, 
-                  col = obs.col, lty = obs.lty, lwd = obs.lwd ) 
-  histlineplot ( h.imp, col = imp.col , lty = imp.lty, lwd = imp.lwd )  
-  axis( 1, lab, tick = TRUE, col.axis = 'black' )
-}
-)
 
 #
 #mi.categorical <- function( Y, X, data = NULL, type = NULL, n.iter = 100, check = TRUE, ...  ) {

@@ -84,20 +84,3 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   return( result )
   on.exit( rm( bplr.imp ) )
 }
-
-setMethod("plot", signature(x = "mi.polr",y="ANY"), 
-function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
-  #par(mfrow=c(1,4))
-  y       <- factor2num( y )
-  fit     <- factor2num( mi.expected( x ))
-  res     <- factor2num( mi.resid( x, y ))
-  sigma   <- factor2num( mi.sigma( x ) )
-  vrb.obs <- factor2num( y )
-  vrb.imp <- factor2num( mi.imputed( x, y ) )
-  mi.hist( vrb.obs, x, xlab = main, main = main, gray.scale = gray.scale ) 
-  binnedplot( fit[  !is.na( y ) ], res[  !is.na( y ) ], nclass = sqrt( length( fit[ !is.na( y ) ] ) ), main = main )
-  mtext( "Binned Residual", 3, cex = 0.7, adj = NA ) 
-  mi.scatterplot( vrb.obs, vrb.imp, fit, xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale )
-  plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-} 
-)

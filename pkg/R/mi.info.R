@@ -407,31 +407,6 @@ print.variable.setting <- function(info.variable){
       print(paste(names(info.variable$params),"=",info.variable$params,collapse=", "))
       cat("\n")
 }
-# ========================================================================
-# print function for mi.info object
-# ========================================================================
-
-print.mi.info <- function ( x, ... ){
-  print( mi.info.table( x ) )
-}
-
-setMethod("show", signature( object = "mi.info" ), 
-  function ( object ) {
-    print( object )
-  }
-)
-mi.info.table <- function ( info ) {
-  result<-data.frame(matrix(NA,nrow=length(info),ncol=7))
-  dimnames(result)<-list(c(1:length(info)),c("names","include","order","number.mis","all.mis","type","correlated"))
-  result[,1]<-sapply(info,function(inf){inf$name})
-  result[,2]<-sapply(info,function(inf){if(inf$include){"Yes"}else{"No"}}) 
-  result[,3]<-sapply(info,function(inf){inf$imp.order})
-  result[,4]<-sapply(info,function(inf){inf$nmis})
-  result[,5]<-sapply(info,function(inf){if(inf$all.missing){"Yes"}else{"No"}}) 
-  result[,6]<-sapply(info,function(inf){inf$type})
-  result[,7]<-sapply(info,function(inf){if(is.na(inf$correlated[1])){"No"}else{paste(inf$correlated,collapse=", ")}})  
-  invisible(result)
-}
 
 # ========================================================================
 # fix mi.info

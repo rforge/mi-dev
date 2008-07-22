@@ -80,26 +80,6 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
     return( result )
     on.exit( rm( bglm.imp ) )
 }
-setMethod("mi.resid", signature(object = "mi.dichotomous"),     
-  function ( object, Y ) {
-    return( dicot(Y) - mi.expected ( object ) )
-  }
-)
-setMethod("plot", signature(x = "mi.dichotomous",y="ANY"), 
-function ( x, y, main=deparse( substitute( Yobs ) ), gray.scale = FALSE ) {
-          #par(mfrow=c(1,4))
-          fit     <- mi.expected( x )
-          res     <- mi.resid( x, y )
-          sigma   <- mi.sigma( x )
-          vrb.obs <- y
-          vrb.imp <- mi.imputed( x, y )
-          mi.hist ( vrb.obs, x, xlab = main, main = main, gray.scale = gray.scale )
-          binnedplot ( fit[ !is.na( y )], res[ !is.na( y )], nclass = sqrt( length( fit[  !is.na( y )] ) ), main = main )
-          mtext( "Binned Residual", 3, cex = 0.7, adj = NA )
-          mi.scatterplot( vrb.obs, vrb.imp, fit, xlab = "Predicted", ylab = main, main = main, gray.scale = gray.scale )
-          plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-} 
-)
 
 dicot<-function(Y){
     y.levels <- if ( is.double( Y ) ) sort( unique ( Y ) ) else levels( factor( Y ) )

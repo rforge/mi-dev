@@ -67,34 +67,6 @@ mi.sqrtcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
   on.exit( rm( bglm.imp ) )
 }
 
-setMethod("mi.resid", signature(object = "mi.sqrtcontinuous"),     
-  function ( object, Y ) {
-    #return( sqrt(Y) - sqrt(mi.expected ( object )) )
-    return( Y - mi.expected ( object ) )
-
-  }
-)
-
-setMethod("plot", signature(x = "mi.sqrtcontinuous",y ="ANY"), 
-function ( x, y, main=deparse( substitute( Yobs ) ), gray.scale = FALSE, ... ) {
-  #par(mfrow=c(1,4))
-  fit     <- mi.expected( x )
-  res     <- mi.resid( x, y )
-  sigma   <- mi.sigma( x )
-  vrb.obs <- y
-  vrb.imp <- mi.imputed( x, y )
-  sqrta <- vrb.obs
-  sqrta[!is.na(vrb.obs)] <-sqrt(vrb.obs[!is.na(vrb.obs)])
-  mi.hist( vrb.obs, x, main = main, xlab=main, gray.scale = gray.scale )
-  #mtext( "sqrt", 1, cex = 0.7, adj = 1 )
-  residual.plot( fit, res, sigma, main = main, xlab= "Predicted",  ylab = paste( "Residual" ), gray.scale = gray.scale )
-  mtext( "sqrt", 2, cex = 0.7, adj = 1 )
-  mi.scatterplot( vrb.obs, vrb.imp, X=fit, xlab= "Predicted",  ylab =  main , main = main, gray.scale = gray.scale )
-  plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-} 
-)
-
-
 is.negative <- function ( data ) {
   len<-ncol(data) 
   result <- logical( len )

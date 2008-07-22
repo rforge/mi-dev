@@ -84,34 +84,16 @@ if ( !isGeneric( "mi.data.frame" )) {
   )
 }
 
-if ( !isGeneric( "mi.coef" )) {
-    setGeneric( "mi.coef",
-               function( object )
-               standardGeneric( "mi.coef" ) )
-}
+
 if ( !isGeneric( "mi.start" ) ) {
     setGeneric( "mi.start", function( object ) 
               standardGeneric( "mi.start" ) )
 }
-if ( !isGeneric( "mi.sigma" ) ) {
-    setGeneric( "mi.sigma",
-                function( object, ... )
-               standardGeneric( "mi.sigma" ) )
-}
-if ( !isGeneric( "mi.expected" ) ) {
-    setGeneric( "mi.expected",
+
+if ( !isGeneric( "imputed" ) ) {
+    setGeneric( "imputed",
                function( object, ... )
-               standardGeneric( "mi.expected" ) )
-}
-if ( !isGeneric( "mi.resid" ) ) {
-    setGeneric( "mi.resid",
-               function( object, ... )
-               standardGeneric( "mi.resid" ) )
-}
-if ( !isGeneric( "mi.imputed" ) ) {
-    setGeneric( "mi.imputed",
-               function( object, ... )
-               standardGeneric( "mi.imputed" ) )
+               standardGeneric( "imputed" ) )
 }
 if ( !isGeneric("mi.hist")) {
     setGeneric( "mi.hist",
@@ -125,11 +107,6 @@ if ( !isGeneric("mi.hist")) {
 #               standardGeneric( "mi.scatterplot" ) )
 #}
 
-if ( !isGeneric( "mi.plot" ) ) {
-    setGeneric( "mi.plot",
-               function( object, Yobs, ... )
-               standardGeneric( "mi.plot" ) )
-}
 if ( !isGeneric( "typecast" ) ) {
     setGeneric( "typecast",
                function( object )

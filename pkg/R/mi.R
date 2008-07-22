@@ -147,7 +147,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
 #        prd.val[[i]][[s]][[CurrentVar]]<- mi.data[[i]][[CurrentVar]]
 #        exp.val[[i]][[s]][[CurrentVar]]<- mi.object[[i]][[CurrentVar]]$expected
         mi.data[[i]][[CurrentVar]][is.na( data[[CurrentVar]] )] <- mi.object[[i]][[CurrentVar]]$random;
-        coef.val[[CurrentVar]][[i]]<-rbind(coef.val[[CurrentVar]][[i]],unlist(mi.coef(mi.object[[i]][[CurrentVar]])));
+        coef.val[[CurrentVar]][[i]]<-rbind(coef.val[[CurrentVar]][[i]],unlist(coef(mi.object[[i]][[CurrentVar]])));
         start.val[[i]][[jj]] <- mi.start( mi.object[[i]][[CurrentVar]] );
       } ## variable loop 
       cat("\n" );
@@ -254,61 +254,6 @@ array.append<-function(a, b, d = 3){
 }
 
 
-# ==============================================================================
-# S4 print function for mi object
-# ==============================================================================
-setMethod("print", signature( x = "mi" ),
-  function ( x, ... ) {
-    n <- nrow(x@data)
-    cat ( "\nMultiply imputed data set" );
-    cat ( "\n\nCall:\n " );
-    print( call.mi(x) );
-    cat ( "\nNumber of multiple imputations: ", m(x),"\n");
-    tab <- mi.info.table( info.mi(x) )[,c("names","type","number.mis")]
-    tab <- data.frame(tab, proportion=tab[,"number.mis"]/n )
-    cat ( "\nNumber and proportion of missing data per column:\n" );
-    print ( tab );
-    cat ( "\nTotal Cases:", n );
-    r    <- 1 * is.na ( x@data );
-    cat ( "\nMissing at least one item:", sum ( colSums(r)!= 0 ) );
-    cat ( "\nComplete cases:", sum ( rowSums(r) == 0 ), "\n" );
-    invisible( tab );
-  }
-)
-
-# ==============================================================================
-# S4 show function for mi object
-# ==============================================================================
-setMethod( "show", signature( object = "mi" ),
-  function ( object ) {
-    print( object );
-  }
-) 
-
-# ==============================================================================
-# S4 plot function for mi object
-# ==============================================================================
-
-setMethod( "plot", signature( x = "mi", y="missing" ),
-  function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
-                        gray.scale = FALSE, mfrow=c( 1, 4 ), ... ) {
-    if ( m(x) < m )  { 
-      stop( message = paste( "Index of imputation 'm' must be within the range of 1 to", m(x) ) ) 
-    } else{
-      mids <- imp(x,m);
-      Y    <- as.data.frame( x@data[ , names( mids ) ] );
-      names( Y ) <- names( mids );
-      par( mfrow = mfrow );
-      for( i in 1:dim( Y )[2] ) {
-        par( ask = TRUE );
-        if( !is.null( mids[[i]] ) ) {
-          plot( x = mids[[i]], y = Y[ ,names( mids )[i]], main = names( Y )[ i ] );
-        }
-      }
-    }
-  }
-)
-
 setMethod( "is.mi", signature( object = "mi" ),
   function ( object ){ 
     return(inherits ( object, "mi" )) 
@@ -354,43 +299,4 @@ setMethod("imp", signature( object = "mi" ),
   function(object,m=1){
       return(object@imp[[m]])
   }
-)
-
-setMethod( "mi.completed", signature( object = "mi" ),
-  function ( object, m = 1, outcome = c("data.frame","matrix") ) {
-    outcome<- match.arg(outcome);
-    if(outcome=="data.frame"){
-      return(mi.data.frame(object,m));
-    } else {
-      return(mi.matrix(object,m));
-    }
-  }
-)
-setMethod( "mi.matrix", signature( object = "mi" ),
-  function ( object, m = 1 ) {
-    if( m(object) < m )  { stop( message = "Index of imputation is not within the range." ) }
-    info <- info.mi(object)
-    mis.name <- names( nmis(info)[ nmis( info ) > 0 & !all.missing( info ) ] );
-    mimatrix <- data.mi(object);
-    for ( i in 1:length(mis.name) ){
-      nm <- mis.name[i]
-      mimatrix[ ,nm] <- mi.imputed( imp(object,m)[[nm]],mimatrix[ ,nm] );
-    }  
-    mimatrix<-mapply(factor2num,mimatrix);
-    return( as.matrix( mimatrix ) );
-  }
-)
-setMethod( "mi.data.frame", signature( object = "mi" ),
-  function ( object, m = 1 ) {
-  if( !inherits ( object, "mi" ) ) { stop( message = "Object must be 'mi' class." ) }
-  if( m(object)< m )  { stop( message = "Index of imputation is not within the range." ) }
-  info <- info.mi(object)
-  mis.name <- names( nmis(info)[ nmis( info ) > 0 & !all.missing( info ) ] );  
-  mimatrix <- data.mi(object);
-  for ( i in 1:length(mis.name) ){
-      nm <- mis.name[i]
-      mimatrix[ ,nm] <- mi.imputed( imp(object,m)[[nm]],mimatrix[ ,nm] );
-  }  
-  return( data.frame( mimatrix ) )
-}
 )
