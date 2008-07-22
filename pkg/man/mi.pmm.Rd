@@ -35,6 +35,14 @@ mi.pmm(formula, data = NULL, start = NULL, n.iter = 100, ...)
     Andrew Gelman and Jennifer Hill, 
     Data Analysis Using Regression and Multilevel/Hierarchical Models, 
     Cambridge University Press, 2007.
+
+   Van Buuren, S. & Oudshoorn, C.G.M. (2000). Multivariate Imputation
+     by Chained Equations:  MICE V1.0 User's manual. Report
+     PG/VGZ/00.038, TNO Prevention and Health, Leiden.
+
+     Rubin, D.B. (1987). Multiple imputation for nonresponse in
+     surveys. New York: Wiley.
+
 }
 \author{
   Masanao Yajima \email{yajima@stat.columbia.edu},
