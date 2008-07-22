@@ -15,11 +15,11 @@ exportClasses(
 )
 
 exportMethods(
-  mi.coef,
+  coef,
+  sigma.hat,
+  fitted,
+  resid,
   mi.start,
-  mi.sigma,
-  mi.expected,
-  mi.resid,
   mi.imputed,
   mi.plot,
   mi.hist,
