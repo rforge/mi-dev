@@ -1,5 +1,5 @@
 setMethod( "sigma.hat", signature( object = "mi.method" ),     
-  function ( object,... ) {
+  function ( object, ... ) {
     return( object$model$sigma )
   }
 )
