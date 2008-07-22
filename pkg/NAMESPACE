@@ -8,6 +8,7 @@ exportClasses(
   mi.polr,
   mi.categorical,
   mi.continuous,
+  mi.info,
   mi.logcontinuous,
   mi.sqrtcontinuous,
   mi.mixed,
