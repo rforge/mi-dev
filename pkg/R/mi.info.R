@@ -129,7 +129,7 @@ mi.info.formula.default <-function( data, info ){
     inc <- sapply(info, function(inf){inf$include} )
     inc[i]<-FALSE
     dimnames(data)[[2]][i]
-    info[[i]]$imp.formula <- type.default.formula(dimnames(data)[[2]][i],dimnames(data[,inc])[[2]],info[[i]]$type)
+    info[[i]]$imp.formula <- type.default.formula(dimnames(data)[[2]][i],dimnames(data[,inc,drop=FALSE])[[2]],info[[i]]$type)
   }
   return(info)
 }

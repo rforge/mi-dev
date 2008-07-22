@@ -45,6 +45,16 @@ mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta 
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
 \note{ see also http://www.stat.columbia.edu/~gelman/standardize/ }
+\examples{
+  # true data
+  x<-rnorm(100,0,1) # N(0,1)
+  y<-rbinom(100,1,invlogit(1+2*x)) # y ~ Bin(1,invlogit(1 + 2*x)
+  # create artificial missingness on y
+  y[seq(1,100,10)]<-NA
+  dat.xy <- data.frame(x,y)
+  # imputation
+  mi.dichotomous(y~x, data = dat.xy)
+}
 \seealso{
     \code{\link{mi.expected}},
     \code{\link{mi.resid}},

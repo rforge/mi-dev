@@ -36,15 +36,14 @@ mi.pmm<-function(formula, data = NULL, start = NULL, n.iter = 100, ... )
   result$model$sigma <- sigma.hat( bglm.imp )
   result$expected <- yhat
   result$random   <- apply( as.array( yhat[mis] ), 1, 
-                              .mi.pmm.match, yhat=yhat[!mis], Y=Y[!mis] ) 
+                              mi.pmm.match, yhat=yhat[!mis], Y=Y[!mis] ) 
   result$residual <- bglm.imp$residuals
   class ( result )<- c( "mi.pmm", "mi.method","list" )
   return( result )
 
 }
 
-#-------------------------.PMM.MATCH---------------------------------
-.mi.pmm.match<-function(z, yhat=yhat, Y=Y)
+mi.pmm.match<-function(z, yhat=yhat, Y=Y)
 {
     d <- abs( yhat - z )
     m <- Y[ d == min( d )]
@@ -54,8 +53,9 @@ mi.pmm<-function(formula, data = NULL, start = NULL, n.iter = 100, ... )
 
 setMethod("mi.hist", signature(object = "mi.pmm"),  
  function ( Yobs, object, main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
-                gray.scale = FALSE, xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
-                b = NULL, binwidth = NULL, col = c( "black", "blue", "red" ), lty = c( 1, 1, 1 ), lwd = c( 1, 1, 1 ), mlt = 0.1, ... )
+             gray.scale = FALSE, xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
+             b = NULL, binwidth = NULL, col = c( "black", "blue", "red" ), 
+             lty = c( 1, 1, 1 ), lwd = c( 1, 1, 1 ), mlt = 0.1, ... )
 {
   Yimp <-mi.imputed(object,Yobs)
   mis  <- Yimp[ is.na( Yobs ) ] ##the vector of the imputed values

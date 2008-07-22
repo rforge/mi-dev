@@ -45,10 +45,10 @@ if ( !isGeneric( "bugs.mi" )) {
               } 
   )
 }
-if ( !isGeneric( "info" )) {
-  setGeneric( "info",
+if ( !isGeneric( "info.mi" )) {
+  setGeneric( "info.mi",
               function( object ){
-                standardGeneric( "info" )
+                standardGeneric( "info.mi" )
               } 
   )
 }
@@ -61,6 +61,13 @@ if ( !isGeneric( "imp" )) {
   )
 }
 
+if ( !isGeneric( "mi.completed" )) {
+  setGeneric( "mi.completed",
+              function( object,... ){
+                standardGeneric( "mi.completed" )
+              } 
+  )
+}
 if ( !isGeneric( "mi.matrix" )) {
   setGeneric( "mi.matrix",
               function( object,... ){
@@ -76,7 +83,6 @@ if ( !isGeneric( "mi.data.frame" )) {
               } 
   )
 }
-
 
 if ( !isGeneric( "mi.coef" )) {
     setGeneric( "mi.coef",

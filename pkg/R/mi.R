@@ -33,17 +33,18 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
        
   } else if ( class( object ) == "mi" ) {
   # for mi object
-    org.data  <- object$data;
-    data      <- object$data;
+
+    org.data  <- data.mi(object);
+    data      <- data.mi(object);
     col.mis   <- !complete.cases( t( data ) );
     ncol.mis  <- sum( col.mis );
-    n.imp     <- object$m;
-    info      <- object$mi.info;
-    prev.iter <- dim(object$bugs$sims.array)[1]
+    n.imp     <- m(object);
+    info      <- info.mi(object);
+    prev.iter <- dim(bugs.mi(object)$sims.array)[1]
     AveVar    <- array( NA, c( prev.iter + n.iter,
                                  n.imp, 
-                                  sum( include( object$mi.info ) ) * 2 ) );
-    AveVar[ 1:prev.iter , , ]<- object$bugs$sims.array;
+                                  sum( include( info ) ) * 2 ) );
+    AveVar[ 1:prev.iter , , ]<- bugs.mi(object)$sims.array;
     s_start <- prev.iter + 1;
     s_end   <- prev.iter + n.iter;
   } else {
@@ -53,6 +54,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
   
   mis.index <-  apply(data, 2, is.na)
   # Automatic Preprocess
+
   if( preprocess ) {
     data <- mi.info.recode( data, info );
   }
@@ -213,7 +215,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
             mi.info   = info,
             imp       = mi.object,
             converged = converged.flg,
-            coef.conv = as.bugs.array(strict.check(coef.val,n.iter,n.imp)),
+            coef.conv = as.bugs.array(strict.check(coef.val,s,n.imp)),
             bugs      = con.check);
 ################################################################
 #  #Retro Grade residual codes
@@ -228,10 +230,10 @@ impute<- function ( a, a.impute ) {
 }
 
 strict.check<-function(coefficient,n.iter,n.imp){
-  res<-array(NA,c(n.iter,n.imp,0))
+  res <- array(NA,c(n.iter,n.imp,0))
   for(i in 1:length(coefficient)){
     for(j in 1:dim(coefficient[[i]][[1]])[2]){
-      res<-  array.append(res,matrix(unlist(lapply(coefficient[[i]], "[", , j)),,n.imp))
+      res <-  array.append(res,matrix(unlist(lapply(coefficient[[i]], "[", , j)),,n.imp))
     }
   }
   return(res)
@@ -239,6 +241,8 @@ strict.check<-function(coefficient,n.iter,n.imp){
 
 array.append<-function(a, b, d = 3){
   if(any(dim(a)[-d]!= dim(b)[-d])){
+    print(dim(a))
+    print(dim(b))
     stop(message="array dimention must be same for all the dimention except for the one that you are trying to append")
   } else{
     da <-  dim(a)
@@ -262,7 +266,7 @@ setMethod("print", signature(x = "mi"),function ( x, ... ) {
   cat ( "\n\nCall:\n " );
   print( call.mi(x) );
   cat ( "\nNumber of multiple imputations: ", m(x),"\n");
-  tab <- mi.info.table( info(x) )[,c("names","type","number.mis")]
+  tab <- mi.info.table( info.mi(x) )[,c("names","type","number.mis")]
   tab <- data.frame(tab, proportion=tab[,"number.mis"]/n )
   cat ( "\nNumber and proportion of missing data per column:\n" );
   print ( tab );

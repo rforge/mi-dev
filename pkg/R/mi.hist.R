@@ -13,12 +13,7 @@ setMethod( "mi.hist", signature( Yobs = "ANY", object= "ANY" ),
            obs.lwd = 1, imp.lwd = 1, mis.lwd = 1, mlt = 0.1, type, ... ){
     #print(cbind(Yobs,object))
   Yimp <-object              
-##obs is the vector with NA
-##imp is the completed vector of the same length of obs
   if( length( Yobs ) != length( Yimp ) ){stop ( message = "observed and imputed vectors must be of same length" ) }
-  
-  
-  
   if( !is.null( is.na( Yobs ) ) ) { obs.nomis <- Yobs[ !is.na( Yobs ) ] }
   if( missing(type)) type <- typecast( Yimp )
     #if( is.null( xlab ) ) { xlab <- deparse( substitute( Yobs ) ) }
