@@ -2,6 +2,9 @@
 \alias{mi.completed}
 \alias{mi.matrix}
 \alias{mi.data.frame}
+\alias{mi.completed, mi-method}
+\alias{mi.matrix, mi-method}
+\alias{mi.data.frame, mi-method}
 
 \title{ 
     Multiply Imputed Dataframe or Matrix
@@ -27,7 +30,7 @@
     Andrew Gelman and M. Grazia Pittau,  
     A flexible program for missing-data imputation and model checking, 
     Technical report, Columbia University, New York; 
-	Andrew Gelman and Jennifer Hill, 
+  Andrew Gelman and Jennifer Hill, 
     Data Analysis Using Regression and Multilevel/Hierarchical Models, 
     Cambridge University Press, 2007.
 }
