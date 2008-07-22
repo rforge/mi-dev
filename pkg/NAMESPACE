@@ -33,7 +33,6 @@ exportMethods(
 
 export(
   mi,
-  mi.models,
   mi.fixed,
   mi.dichotomous,
   mi.categorical,
