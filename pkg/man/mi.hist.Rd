@@ -49,7 +49,6 @@
     the histogram of the imputed values in red, 
     while the one of the observed values in blue.}
 \seealso{
-    \code{\link{plot.mi}}, 
     \code{\link{plot}},
     \code{\link{hist}}
 }

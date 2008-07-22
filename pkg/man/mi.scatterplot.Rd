@@ -55,5 +55,5 @@ mi.scatterplot( Yobs, Yimp, X = NULL, xlab = NULL, ylab = NULL,
 \note{ 
   By default imputed values are in red, while the observed values are in blue.
 }
-\seealso{\code{\link{plot.mi}}, \code{\link{plot}}}
+\seealso{\code{\link{plot}}}
 \keyword{ hplot }
