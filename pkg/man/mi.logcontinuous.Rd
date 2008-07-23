@@ -14,7 +14,7 @@
     Imputes univariate missing data using linear regression on the logarithm values.
 }
 \usage{
-  mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter = 100, ... )
+  mi.logcontinuous( formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ... )
   \S4method{resid}{mi.logcontinuous}(object, y)
   \S4method{plot}{mi.logcontinuous,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
 }
@@ -24,6 +24,7 @@
   \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
   \item{start}{ Starting value for bayesglm. }
   \item{n.iter}{ Maximum number of iteration for bayesglm. The default is 100.}
+  \item{draw.from.beta}{ Draws from posterior distribution of the betas to add randomness. }
   \item{\dots}{ Currently not used. }
   \item{object}{\code{mi.logcontinuous} object.}
   \item{x}{\code{mi.logcontinuous} object.}
