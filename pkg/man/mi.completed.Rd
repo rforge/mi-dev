@@ -51,7 +51,7 @@ mi.data.frame(object, \dots)
 }
 \examples{
     data(CHAIN)
-    imp <- mi (CHAIN)
+    imp <- mi (CHAIN, n.iter=6)
     imputed.matrix <- mi.completed (imp) #Imputed dataframe from the 1th Imputation (m=NULL, default=1)
     imputed.matrix <- mi.completed (imp, m=2)  #Imputed dataframe from the 2nd Imputation (m=2)
     imputed.matrix <- mi.completed (imp, m=3, outcome = "matrix")  #Imputed matrix from the 3nd Imputation (m=3)
