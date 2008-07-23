@@ -49,6 +49,7 @@ export(
   data.mi,
   glm.mi,
   imp,
+  imputed,
   info.mi,
   is.mi,
   is.mi.info,
