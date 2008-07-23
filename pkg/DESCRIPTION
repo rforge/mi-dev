@@ -9,7 +9,8 @@ Author:
   Yu-Sung Su <ys463@columbia.edu>,
   M.Grazia Pittau <grazia@stat.columbia.edu>
 Maintainer: M.Grazia Pittau <grazia@stat.columbia.edu>
-Depends: R(>= 2.6.0), MASS, nnet, arm, R2WinBUGS, stats
+Depends: R(>= 2.6.0), MASS, nnet, arm, R2WinBUGS
+Imports: stats
 Description: Missing-data imputation and model checking
 URL: http://www.stat.columbia.edu/~gelman/
 License: GPL (>=2)

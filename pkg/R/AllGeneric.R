@@ -9,6 +9,8 @@ if ( !isGeneric( "is.mi" )) {
               } 
   )
 }
+
+
 if ( !isGeneric( "call.mi" )) {
   setGeneric( "call.mi",
               function( object ){
