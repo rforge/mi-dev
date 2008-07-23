@@ -208,7 +208,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
       }
     }
   }
-  
+  mi.cof<<-coef.val
   mi <- new("mi", 
             call      = call,
             data      = org.data,
@@ -216,7 +216,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
             mi.info   = info,
             imp       = mi.object,
             converged = converged.flg,
-            coef.conv = as.bugs.array(strict.check(coef.val,s,n.imp)),
+            coef.conv = as.bugs.array(strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp)),
             bugs      = con.check);
 ################################################################
 #  #Retro Grade residual codes
@@ -242,8 +242,6 @@ strict.check<-function(coefficient,n.iter,n.imp){
 
 array.append<-function(a, b, d = 3){
   if(any(dim(a)[-d]!= dim(b)[-d])){
-    print(dim(a))
-    print(dim(b))
     stop(message="array dimention must be same for all the dimention except for the one that you are trying to append")
   } else{
     da <-  dim(a)

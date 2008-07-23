@@ -16,7 +16,7 @@
 \usage{
 mi.info(data, threshold  = 0.99999)
   \S4method{print}{mi.info}(x, \dots)
-    \S4method{show}{mi.method}(x, \dots)
+   \S4method{show}{mi.info}(x, \dots)
 }
 \arguments{
   \item{data}{ dataframe or matrix of dataset with missing data coded as NAs. }
