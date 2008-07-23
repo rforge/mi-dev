@@ -80,6 +80,6 @@
   y[seq(1,100,10)]<-NA
   dat.xy <- data.frame(x,y)
   # imputation
-  mi.mixed(list(1*(y>0)~x,y~x), data = dat.xy)
+  mi.mixed(list("1*(y>0)~x","y~x"), data = dat.xy)
 }
 \keyword{ models }
