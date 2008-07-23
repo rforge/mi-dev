@@ -1,4 +1,4 @@
-import(stats)
+#import(stats)
 
 exportClasses(
   mi,
@@ -21,7 +21,6 @@ exportMethods(
   bugs.mi,
   info.mi,
   is.mi,
-  mi.start,
   coef,
   converged,
   fitted,
@@ -32,6 +31,7 @@ exportMethods(
   mi.completed,
   mi.matrix,
   mi.data.frame,
+  mi.start,
   resid,
   sigma.hat,
   typecast,
