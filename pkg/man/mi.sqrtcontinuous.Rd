@@ -60,6 +60,7 @@ mi.sqrtcontinuous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.be
 }
 \seealso{
     \code{\link{mi.info}}, 
+    \code{\link{mi.method}},
     \code{\link{mi}}
 }
 \keyword{ models }

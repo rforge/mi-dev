@@ -27,8 +27,9 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   # main program
   lm.cat.imp  <- multinom( formula = formula, data = data, maxit = n.iter, 
                               trace = FALSE , MaxNWts = MaxNWts, ...);
-  deter.prob  <- predict( lm.cat.imp, newdata = data, type = "p", );
+  deter.prob  <- predict( lm.cat.imp, newdata = data, type = "p" );
   y.cat       <- as.double( levels ( factor ( Y ) ) );
+  if(length(y.cat)<=2){stop(message="number of category must be bigger than 2");}
   determ.pred <- as.vector( deter.prob %*% y.cat );
   names( determ.pred ) <- 1:length( determ.pred );
   random.pred <- Rmultnm( n.mis, deter.prob[mis,], y.cat );

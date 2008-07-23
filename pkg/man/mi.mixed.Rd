@@ -68,6 +68,7 @@
 }
 \seealso{
     \code{\link{mi.info}},  
+    \code{\link{mi.method}},
     \code{\link{mi}}
 }
 \keyword{ models }

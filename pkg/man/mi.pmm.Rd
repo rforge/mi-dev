@@ -52,6 +52,7 @@ mi.pmm(formula, data = NULL, start = NULL, n.iter = 100, ...)
 \note{ see also http://www.stat.columbia.edu/~gelman/standardize/ }
 \seealso{
     \code{ \link{mi.info}}, 
+    \code{\link{mi.method}},
     \code{ \link{mi}}
 }
 \keyword{ models }

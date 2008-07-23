@@ -38,7 +38,10 @@
 
 }
 \details{
-
+  mi.method is a virtual class for all the \code{mi.} classes.  
+  Basically all the necessary functions are defined under \code{mi.method} class, thus
+  most of the \code{mi.} classes that do not have specific method defined for them inherits their methods from this class.
+  For some special class as \code{mi.mixed} these methods are extended to tailor to the needs.
 }
 \value{
 %    \item{model   }{A summary of the fitted model.}
@@ -55,10 +58,6 @@
   Masanao Yajima \email{yajima@stat.columbia.edu},
   M.Grazia Pittau \email{grazia@stat.columbia.edu},
   Andrew Gelman \email{gelman@stat.columbia.edu}
-}
-
-\examples{
-
 }
 
 \seealso{

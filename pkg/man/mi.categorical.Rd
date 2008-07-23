@@ -56,6 +56,17 @@
 }
 \seealso{
     \code{\link{mi.info}}, 
+    \code{\link{mi.method}},
     \code{\link{mi}}
+}
+\examples{
+  x<-rnorm(100,0,1)
+  y<-x+4
+  y<-round(y)
+  y[y<0]<-0
+  # create artificial missingness on y
+  y[seq(1,100,10)]<-NA
+  dat.xy <- data.frame(x,y)
+  mi.categorical(formula =y~x,data=dat.xy)
 }
 \keyword{ models }

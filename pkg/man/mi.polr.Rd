@@ -55,6 +55,22 @@
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
 \seealso{
+    \code{\link{mi.info}},
+    \code{\link{mi.method}},
     \code{\link{mi}}
+    
 }
+\examples{
+  # true data
+  x<-rnorm(100,0,1) # N(0,1)
+  y<-(1+2*x)+rnorm(100,0,1)
+  y<-round(y)
+  y[y<0]<-0
+  # create artificial missingness on y
+  y[seq(1,100,10)]<-NA
+  dat.xy <- data.frame(x,y)
+  # imputation
+  polr.imp <- mi.polr(factor(y)~x, data = dat.xy)
+}
+
 \keyword{ models }
