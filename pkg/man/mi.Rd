@@ -129,7 +129,7 @@ and looping through until approximate convergence.
 }
 \examples{
 data(CHAIN)
-imp.CHAIN <- mi( CHAIN, n.imp = 3, n.iter = 10 )
+imp.CHAIN <- mi( CHAIN, n.imp = 3, n.iter = 5 )
 
 is.mi( imp.CHAIN )    ## Is this a mi object?
 data.mi ( imp.CHAIN ) ## You can get the original data
@@ -143,6 +143,7 @@ mi.df <- mi.data.frame( imp.CHAIN, m = 1 ) ## The imputed data frame for the sec
 converged( imp.CHAIN )   ## You should get FALSE because its only 5 iterations
 bugs.mi( imp.CHAIN )     ## BUGS object to look at the R hat statistics
 
-imp.CHAIN <- mi( imp.CHAIN, n.iter=6 ) ## You can pick up from where you left off
+# NOT RUN
+#imp.CHAIN <- mi( imp.CHAIN, n.iter=5 ) ## You can pick up from where you left off
 }
 \keyword{ models }

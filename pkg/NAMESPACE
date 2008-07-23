@@ -87,6 +87,7 @@ export(
   mi.start,
   missing.pattern.plot,
   mp.plot,
+  random.imp,
   typecast
 )
 
