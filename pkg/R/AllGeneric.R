@@ -81,10 +81,7 @@ if ( !isGeneric( "mi.start" ) ) {
     setGeneric( "mi.start", 
               function( object ) {
                 standardGeneric( "mi.start" ) 
-              },
-    useAsDefault= function(object){
-      mi.start.mi.method(object);
-    }
+              }
   )
 }
 if ( !isGeneric( "mi.data.frame" )) {
