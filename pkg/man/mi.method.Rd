@@ -14,7 +14,7 @@
 \alias{sigma.hat,mi.method-method}
 
 \title{
-    Virtual class for all \code{mi} classes.
+    Virtual class for all mi classes.
 }
 \description{
     Imputes univariate missing data using linear regression.
