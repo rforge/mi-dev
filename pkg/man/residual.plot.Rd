@@ -58,7 +58,7 @@ residual.plot(Expected, Residuals, sigma, main = deparse(substitute(Expected)), 
   dat.xy <- data.frame(x,y)
   # imputation
   dat.cont.mi <- mi.continuous(y~x, data = dat.xy)
-  residual.plot(mi.expected(dat.cont.mi), mi.resid(dat.cont.mi,y), mi.sigma(dat.cont.mi))
+  residual.plot(expected(dat.cont.mi), resid(dat.cont.mi,y), sigma.hat(dat.cont.mi))
 
 }
 

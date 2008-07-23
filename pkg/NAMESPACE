@@ -1,4 +1,4 @@
-#import(stats)
+import(stats)
 
 exportClasses(
   mi,
@@ -49,7 +49,6 @@ export(
   data.mi,
   glm.mi,
   imp,
-  imputed,
   info.mi,
   is.mi,
   is.mi.info,
@@ -86,7 +85,6 @@ export(
   mi.sqrtcontinuous,
   missing.pattern.plot,
   mp.plot,
-  random.imp,
   typecast
 )
 
