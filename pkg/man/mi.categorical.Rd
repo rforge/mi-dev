@@ -4,7 +4,9 @@
 \alias{mi.categorical-class}
 % Function
 \alias{mi.categorical}
+\alias{resid,mi.categorical-method}
 \alias{plot,mi.categorical,ANY-method}
+
 \title{ 
     Elementary function: multinomial log-linear models to impute a categorical variable.
 }
@@ -13,6 +15,7 @@
 }
 \usage{
   mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots )
+  \S4method{resid}{mi.categorical}(object, y)
   \S4method{plot}{mi.categorical,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
 }
 \arguments{
@@ -30,6 +33,7 @@
   \item{n.iter}{ Maximum number of iteration. }
   \item{MaxNWts}{ The maximum allowable number of weights. See nnet for detail. }
   \item{\dots}{ Currently not used. }
+  \item{object}{ \code{mi.categorical} object.}
   \item{x}{ \code{mi.categorical} object.}
   \item{y}{ Observed values.}
   \item{main}{ main title of the plot. }
