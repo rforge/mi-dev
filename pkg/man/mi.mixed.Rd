@@ -9,7 +9,7 @@
 \alias{sigma.hat,mi.mixed-method}
 \alias{fitted,mi.mixed-method}
 \alias{resid,mi.mixed-method}
-\alias{plot,mi.mixed-method}
+\alias{plot,mi.mixed,ANY-method}
 \alias{print,mi.mixed-method}
 \title{
     Two-stage elementary function: linear regression to impute a variable that can be positive or zero. }
@@ -25,7 +25,7 @@
   \S4method{sigma.hat}{mi.mixed}(object)
   \S4method{fitted}{mi.mixed}(object)
   \S4method{resid}{mi.mixed}(object, Y)
-  \S4method{plot}{mi.mixed}( x, y, \dots )
+  \S4method{plot}{mi.mixed,ANY}( x, y, \dots )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

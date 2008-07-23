@@ -31,7 +31,7 @@ mi.logcontinuous <- function( formula, data = data.frame ( cbind ( Y, X ) ),
   #bglm.imp        <- bayesglm( formula = log ( Y ) ~ X, data = data, family = gaussian, n.iter = n.iter, start = start, control=control )
   bglm.imp        <- bayesglm( formula = log ( Y ) ~ X, data = data, 
                                 family = gaussian, n.iter = n.iter, 
-                                  start = start )
+                                  start = start,Warning=FALSE )
   determ.pred     <- predict( bglm.imp, newdata = data.frame( Y, X ), 
                                 type = "response" )
   random.pred     <- rnorm( n.mis, determ.pred[mis], sigma.hat( bglm.imp ) )

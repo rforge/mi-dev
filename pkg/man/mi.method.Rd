@@ -5,7 +5,7 @@
 % Function
 \alias{mi.}
 \alias{print,mi.method-method}
-\alias{plot,mi.method-method}
+\alias{plot,mi.method,ANY-method}
 \alias{fitted,mi.method-method}
 \alias{coef,mi.method-method}
 \alias{imputed,mi.method-method}
@@ -25,7 +25,7 @@
   \S4method{fitted}{mi.method}(object)
   \S4method{resid}{mi.method}(object, Y)
   \S4method{print}{mi.method}(x, \dots)
-  \S4method{plot}{mi.method}( x, y, \dots )
+  \S4method{plot}{mi.method,ANY}( x, y, \dots )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

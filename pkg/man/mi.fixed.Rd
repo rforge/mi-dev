@@ -6,7 +6,7 @@
 % Function
 \alias{mi.fixed}
 \alias{mi.copy}
-\alias{plot,mi.copy-method}
+\alias{plot,mi.copy,ANY-method}
 \title{
     Elementary function: imputation of constant variable.
 }
@@ -16,7 +16,7 @@
 
 \usage{
     mi.fixed( formula, data = NULL, ... )
- \S4method{plot}{mi.copy}( x, y, \dots )
+ \S4method{plot}{mi.copy,ANY}( x, y, \dots )
 }
 
 \arguments{

@@ -34,7 +34,7 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
 #                           start=start);
   bglm.imp    <- bayesglm( formula = formula, data = data, family = gaussian, 
                             n.iter = n.iter, start = start, 
-                            drop.unused.levels = FALSE, ... );
+                            drop.unused.levels = FALSE, Warning=FALSE,... );
   determ.pred <- predict( bglm.imp, newdata = data, type = "response" );
   if(draw.from.beta){
     sim.bglm.imp    <- sim(bglm.imp,1);

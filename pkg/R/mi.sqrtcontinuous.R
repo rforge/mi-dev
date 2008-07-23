@@ -36,7 +36,7 @@ mi.sqrtcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
 #    start[is.na(start)]<-0
 #  } 
   #bglm.imp        <- bayesglm( formula = sqrt ( Y ) ~ X, data = data, family = gaussian, n.iter = n.iter, start = start,... )
-  bglm.imp        <- bayesglm( formula = formula, data = data, family = gaussian, n.iter = n.iter, start = start,... )
+  bglm.imp        <- bayesglm( formula = formula, data = data, family = gaussian, n.iter = n.iter, start = start,Warning=FALSE,... )
   if(any(is.na(coefficients(bglm.imp)))){ warning(message="there are coefficient estimated as NA in the model") }
   determ.pred     <- predict( bglm.imp, newdata = data, type = "response" )
   if(draw.from.beta){

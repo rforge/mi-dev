@@ -23,13 +23,12 @@
 \alias{m,mi-method}
 \alias{print,mi-method}
 \alias{imp,mi-method}
-\alias{plot,mi.method-method}
 
   
 % methods
 \alias{mi,mi-method}
 \alias{show,mi-method}
-
+\alias{plot,mi,missing-method}
 \title{ Multiple Iterative Regression Imputation }
 \description{
  Produce a multiply imputed matrix applying the elementary functions iteratively 
@@ -44,6 +43,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
     seed = NA, check.coef.convergence = FALSE) 
 
 %\S4method{mi}{mi}(object, \dots)
+\S4method{plot}{mi,missing}( x, \dots )
 
 }
 %- maybe also 'usage' for other objects documented here.
@@ -59,6 +59,8 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   \item{preprocess}{ Preprocess the data according to the info matrix. }
   \item{continue.on.convergence}{ If set to TRUE the mi will run until maximum iteration is reached or maximum minutes pass. }
   \item{check.coef.convergence}{default = FALSE}
+  \item{\dots}{options for plot.mi.}
+  
 }
 
 \value{ A list of object of class mi, which stands for multiple imputation.
@@ -140,6 +142,6 @@ mi.df <- mi.data.frame( imp.CHAIN, m = 1 ) ## The imputed data frame for the sec
 converged( imp.CHAIN )   ## You should get FALSE because its only 5 iterations
 bugs.mi( imp.CHAIN )     ## BUGS object to look at the R hat statistics
 
-imp.CHAIN <- mi( imp.CHAIN, n.iter=5 ) ## You can pick up from where you left off
+imp.CHAIN <- mi( imp.CHAIN, n.iter=6 ) ## You can pick up from where you left off
 }
 \keyword{ models }

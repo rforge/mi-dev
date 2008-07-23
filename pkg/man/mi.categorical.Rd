@@ -4,7 +4,7 @@
 \alias{mi.categorical-class}
 % Function
 \alias{mi.categorical}
-\alias{plot,mi.categorical-method}
+\alias{plot,mi.categorical,ANY-method}
 \title{ 
     Elementary function: multinomial log-linear models to impute a categorical variable.
 }
@@ -13,7 +13,7 @@
 }
 \usage{
 mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots )
- \S4method{plot}{mi.categorical}( x, y, \dots )
+ \S4method{plot}{mi.categorical,ANY}( x, y, \dots )
 }
 \arguments{
   \item{formula}{ a formula expression as for regression models, of the form

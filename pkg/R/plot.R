@@ -3,10 +3,8 @@
 # ==============================================================================
 
 setMethod( "plot", signature( x = "mi", y="missing" ),
-  function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
-                        gray.scale = FALSE, mfrow=c( 1, 4 ), ... ) {
-    plot.mi( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
-                          gray.scale = FALSE, mfrow=c( 1, 4 ), ... )
+  function ( x, ... ) {
+    plot.mi( x, ... )
   }
 )
 

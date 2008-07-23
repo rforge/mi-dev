@@ -40,7 +40,7 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
     bglm.imp    <- bayesglm( formula = formula, data = data, 
                               family = binomial ( link = "logit" ), 
                                n.iter = n.iter, start = start, 
-                                drop.unused.levels=FALSE, ... );
+                                drop.unused.levels=FALSE, Warning=FALSE, ... );
     #determ.pred <- predict ( bglm.imp, newdata = data, type = "response" )
     determ.pred <- predict ( bglm.imp, newdata = data, type = "response" );
     if( draw.from.beta ) {

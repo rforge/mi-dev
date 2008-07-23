@@ -6,7 +6,7 @@
 \alias{is.mi.info}
 % methods
 \alias{show,mi.info-method}
-
+\alias{print,mi.info-method}
 
 \title{ Function to create information matrix for missing data imputation }
 \description{
@@ -15,10 +15,14 @@
 }
 \usage{
 mi.info(data, threshold  = 0.99999)
+  \S4method{print}{mi.info}(x, \dots)
+    \S4method{show}{mi.method}(x, \dots)
 }
 \arguments{
   \item{data}{ dataframe or matrix of dataset with missing data coded as NAs. }
   \item{threshold}{ Threshold value for correlation to be considered a problem.}
+  \item{x}{ An object of a class '"mi.info"'.}
+    \item{\dots}{ Currently not used.}
 }
 \details{
   ~~ If necessary, more details than the description above ~~
