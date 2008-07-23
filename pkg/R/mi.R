@@ -208,7 +208,6 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
       }
     }
   }
-  mi.cof<<-coef.val
   mi <- new("mi", 
             call      = call,
             data      = org.data,
