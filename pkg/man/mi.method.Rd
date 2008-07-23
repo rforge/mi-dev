@@ -19,7 +19,7 @@
     Imputes univariate missing data using linear regression.
 }
 \usage{
-  \S4method{imputed}{mi.method}(object)
+  \S4method{imputed}{mi.method}(object,Y)
   \S4method{coef}{mi.method}(object)
   \S4method{sigma.hat}{mi.method}(object)
   \S4method{fitted}{mi.method}(object)

@@ -25,6 +25,7 @@
   \S4method{sigma.hat}{mi.mixed}(object)
   \S4method{fitted}{mi.mixed}(object)
   \S4method{resid}{mi.mixed}(object, Y)
+  \S4method{imputed}{mi.mixed}(object, Y)
   \S4method{plot}{mi.mixed,ANY}( x, y, \dots )
 }
 %- maybe also 'usage' for other objects documented here.
