@@ -4,6 +4,7 @@
 \alias{mi.categorical-class}
 % Function
 \alias{mi.categorical}
+\alias{plot,mi.categorical-method}
 \title{ 
     Elementary function: multinomial log-linear models to impute a categorical variable.
 }
@@ -12,6 +13,7 @@
 }
 \usage{
 mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots )
+ \S4method{plot}{mi.categorical}( x, y, \dots )
 }
 \arguments{
   \item{formula}{ a formula expression as for regression models, of the form
@@ -28,6 +30,8 @@ mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots )
   \item{n.iter}{ Maximum number of iteration. }
   \item{MaxNWts}{ The maximum allowable number of weights. See nnet for detail. }
   \item{\dots}{ Currently not used. }
+  \item{x}{ An object of class '"mi.categorical"'.}
+  \item{y}{ Observed values.}
 }
 \details{
     'multinom' calls the library 'nnet'. See multinom for other details.   

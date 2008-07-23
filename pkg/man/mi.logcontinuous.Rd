@@ -5,6 +5,7 @@
 % Function
 \alias{mi.logcontinuous}
 \alias{resid,mi.logcontinuous-method}
+\alias{plot,mi.logcontinuous-method}
 
 \title{
     Elementary function: linear regression to impute a continuous positive variable.
@@ -16,6 +17,7 @@
 mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter = 100, ... )
 
 \S4method{resid}{mi.logcontinuous}(object, Y)
+  \S4method{plot}{mi.logcontinuous}( x, y, \dots )
 }
 
 \arguments{
@@ -26,6 +28,8 @@ mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter =
   \item{\dots}{ Currently not used. }
   \item{object}{\code{mi} object.}
   \item{Y}{observed values}
+    \item{x}{ An object of class '"mi.logcontinuous"'.}
+  \item{y}{ Observed values.}
 }
 
 \details{

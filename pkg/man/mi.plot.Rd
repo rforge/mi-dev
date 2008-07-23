@@ -1,11 +1,10 @@
 \name{plot}
 \alias{plot}
-\alias{plot,mi.categorical-method}
-\alias{plot,mi.dichotomous-method}
-\alias{plot,mi.logcontinuous-method}
-\alias{plot,mi.polr-method}
-\alias{plot,mi.sqrtcontinuous-method}
-\alias{plot,mi.copy-method}
+
+
+
+
+
 
 
 \title{ Default plotting function for mi.method xs. }
@@ -16,12 +15,8 @@
 mi.plot(x, y, \dots)
   \S4method{plot}{mi.method}( x, y, \dots )
   \S4method{plot}{mi.mixed}( x, y, \dots )
-  \S4method{plot}{mi.dichotomous}( x, y, \dots )
-  \S4method{plot}{mi.categorical}( x, y, \dots )
-  \S4method{plot}{mi.logcontinuous}( x, y, \dots )
-  \S4method{plot}{mi.polr}( x, y, \dots )
-  \S4method{plot}{mi.sqrtcontinuous}( x, y, \dots )
-  \S4method{plot}{mi.copy}( x, y, \dots )
+
+
 }
 %- maybe also 'usage' for other xs documented here.
 \arguments{

@@ -37,6 +37,8 @@
   \item{\dots}{ Currently not used. }
   \item{object}{\code{mi} object.}
   \item{Y}{observed values}
+  \item{x}{ An object of class '"mi.mixed"'.}
+  \item{y}{ Observed values.}
 }
 \details{
     Imputation variable that can be positive or zero. 

@@ -4,6 +4,7 @@
 \alias{mi.dichotomous-class}
 % Function
 \alias{mi.dichotomous}
+\alias{plot,mi.dichotomous-method}
 % methods
 \alias{resid,mi.dichotomous-method}
 \title{
@@ -18,6 +19,7 @@
 mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ...)
 
 \S4method{resid}{mi.dichotomous}(object, Y)
+  \S4method{plot}{mi.dichotomous}( x, y, \dots )
 }
 
 \arguments{
@@ -29,6 +31,8 @@ mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta 
   \item{\dots}{ Currently not used. }
   \item{object}{\code{mi} object.}
   \item{Y}{observed values}
+    \item{x}{ An object of class '"mi.dichotomous"'.}
+  \item{y}{ Observed values.}
 }
 \details{
     In bayesglm default the prior distribution is Cauchy with center 0 and scale 2.5 

@@ -6,6 +6,7 @@
 % Function
 \alias{mi.fixed}
 \alias{mi.copy}
+\alias{plot,mi.copy-method}
 \title{
     Elementary function: imputation of constant variable.
 }
@@ -15,12 +16,15 @@
 
 \usage{
     mi.fixed( formula, data = NULL, ... )
+ \S4method{plot}{mi.copy}( x, y, \dots )
 }
 
 \arguments{
   \item{formula}{an object of class '"formula"' (or one that can be coerced to that class): a symbolic description of the model to be fitted.  See bayesglm 'formula' for details.}
     \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
     \item{\dots}{ Currently not used. }
+    \item{x}{ An object of class '"mi.copy"'.}
+  \item{y}{ Observed values.}
 }
 
 \value{
