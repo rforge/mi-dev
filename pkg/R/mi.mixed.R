@@ -3,7 +3,6 @@
 # ==============================================================================
 mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100, 
                          draw.from.beta = FALSE, ... ) {
-                         print(formula)
   call <- match.call();
   formula.dict <- if( is.list( formula ) ) { 
                     as.formula( formula[[1]] );
@@ -18,9 +17,7 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
   mf   <- match.call( expand.dots = FALSE );
   m    <- match( c( "formula", "data" ), names( mf ), 0 );
   mf   <- mf[ c( 1, m ) ];
-  print(mf[[2]])
-  #mf[2] <- mf[[2]][3]
-  #print(mf)
+  mf[2] <- formula[[2]]
   mf$drop.unused.levels <- TRUE;
   mf$na.action <- na.pass;
   mf[[1]] <- as.name( "model.frame" );
