@@ -126,7 +126,7 @@ and looping through until approximate convergence.
 }
 \examples{
 data(CHAIN)
-imp.CHAIN <- mi( CHAIN, n.imp = 3, n.iter = 5 )
+imp.CHAIN <- mi( CHAIN, n.imp = 3, n.iter = 10 )
 
 is.mi( imp.CHAIN )    ## Is this a mi object?
 data.mi ( imp.CHAIN ) ## You can get the original data

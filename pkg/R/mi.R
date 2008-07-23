@@ -8,6 +8,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
                     seed = NA, check.coef.convergence = FALSE ) {
   call <- match.call( );                         # call
   if( !is.na ( seed ) ) { set.seed( seed ); }    # set random seed
+  if( n.iter <=5 ){ stop(message="number of iteration must at least be more than 5")}
   ProcStart     <- proc.time();                  # starting time
   # variable initialization
   time.out.flg  <- FALSE;
