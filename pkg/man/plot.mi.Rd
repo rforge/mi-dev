@@ -1,4 +1,5 @@
 \name{ plot.mi }
+\alias{plot.mi}
 \alias{plot,mi-method}
 \title{ Diagnostic Plots for multiple imputation object}
 \description{

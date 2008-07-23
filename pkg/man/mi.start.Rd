@@ -12,10 +12,10 @@ mi.start(object)
   \S4method{mi.start}{mi.mixed}( object )
 }
 \arguments{
-  \item{object}{ mi.method object class. }
+  \item{object}{ \code{mi.method} object class. }
 }
 \details{
-  Extracs the starting values from mi.method object family.
+  Extracs the starting values from \code{mi.method} object family.
 }
 \value{
   \item{start}{starting value}

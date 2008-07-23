@@ -1,7 +1,7 @@
 \name{mi.hist}
 \docType{genericFunction}
 \alias{mi.hist}
-\alias{mi.hist,ANY,ANY-method}
+\alias{mi.hist,{ANY,ANY}-method}
 \alias{mi.hist,mi.method,ANY-method}
 \alias{mi.hist,mi.categorical,ANY-method}
 \alias{mi.hist,mi.dichotomous,ANY-method}
