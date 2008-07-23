@@ -75,21 +75,18 @@ if ( !isGeneric( "mi.matrix" )) {
               } 
   )
 }
-
-if ( !isGeneric( "mi.data.frame" )) {
-  setGeneric( "mi.data.frame",
-              function( object,... ){
-                standardGeneric( "mi.data.frame" )
-              } 
-  )
-}
-
-
 if ( !isGeneric( "mi.start" ) ) {
     setGeneric( "mi.start", 
               function( object ) {
                 standardGeneric( "mi.start" ) 
               }
+  )
+}
+if ( !isGeneric( "mi.data.frame" )) {
+  setGeneric( "mi.data.frame",
+              function( object,... ){
+                standardGeneric( "mi.data.frame" )
+              } 
   )
 }
 
