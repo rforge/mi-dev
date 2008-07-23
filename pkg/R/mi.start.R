@@ -3,17 +3,25 @@
 # ==============================================================================
 setMethod( "mi.start", signature( object = "mi.method" ), 
   function( object ) {     
-    result <- coef( object )
-    return ( result )
+    mi.start.mi.method(object);
   }
 ) 
+
+mi.start.mi.method <- function( object ) {     
+    result <- coef( object );
+    return ( result );
+}
 # ==============================================================================
 # extracting starting values for mi.mixed class object
 # ==============================================================================
 setMethod("mi.start", signature(object = "mi.mixed"),  
   function ( object ) {   
-    result <-  list(object$model$model.1$coefficient,
-                      object$model$model.2$coefficient)
-    return ( result )
+    mi.start.mi.mixed(object);
   }
-)
+) 
+
+mi.start.mi.mixed <- function( object ) {     
+    result <-  list(object$model$model.1$coefficient,
+                      object$model$model.2$coefficient);
+    return ( result );
+}
