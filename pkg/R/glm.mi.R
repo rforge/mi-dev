@@ -8,7 +8,7 @@ glm.mi <- function ( formula, mi.object, family = gaussian, ... )
     result <- vector( "list", m );
     names( result ) <- as.character(paste( "Imputation", seq( m ), sep = "" ));
     for ( i in 1:m ) {
-        mi.data     <- mi.matrix( mi.object, i );
+        mi.data     <- mi.completed( mi.object, i );
         result[[i]] <- glm( formula, family = family, 
                               data = data.frame( mi.data ), ... );
     }

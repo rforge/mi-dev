@@ -89,7 +89,11 @@ export(
   typecast
 )
 
-
+S3method(plot, mi)
+S3method(print, mi)
+S3method(print, mi.info)
+S3method(print, mi.method)
+S3method(print, mi.mixed)
 S3method("[<-", mi.info)
 S3method("$<-", mi.info)
 S3method("[", mi.info)

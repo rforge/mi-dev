@@ -3,6 +3,11 @@
 # ==============================================================================
 setMethod("print", signature( x = "mi" ),
   function ( x, ... ) {
+    print.mi( x, ...);
+  }
+)
+
+print.mi <- function ( x, ... ) {
     n <- nrow(x@data)
     cat ( "\nMultiply imputed data set" );
     cat ( "\n\nCall:\n " );
@@ -18,11 +23,14 @@ setMethod("print", signature( x = "mi" ),
     cat ( "\nComplete cases:", sum ( rowSums(r) == 0 ), "\n" );
     invisible( tab );
   }
-)
 # ========================================================================
 # S4 print function for mi.info object
 # ========================================================================
-
+setMethod("print", signature( x = "mi.info" ),
+  function ( x, ... ) {
+    print.mi.info( x, ...);
+  }
+)
 print.mi.info <- function ( x, ... ){
   print( mi.info.table( x ) )
 }
@@ -44,20 +52,29 @@ mi.info.table <- function ( info ) {
 # ==============================================================================
 setMethod("print", signature( x = "mi.method" ),
   function ( x, ... ) {
+    print.mi.method(x,...);
+  }
+)
+
+print.mi.method <- function ( x, ... ) {
     cat("model:\n ")
     print(x$model$call)
     cat("\ncoefficients:\n")
     print(x$model$coefficient)
     cat("\nimputed values:\n")
     print(x$random)
-  }
-)
+}
 
 # ==============================================================================
 # S4 print function for mi.mixed object
 # ==============================================================================
 setMethod("print", signature( x = "mi.mixed" ),
   function ( x, ... ) {
+    print.mi.mixed(x,...);
+  }
+)
+
+print.mi.mixed <- function ( x, ... ) {
     cat("model 1:\n ")
     print(x$model$model.1$call)
     cat("\ncoefficients 1:\n")
@@ -69,4 +86,3 @@ setMethod("print", signature( x = "mi.mixed" ),
     cat("\nimputed values:\n")
     print(x$random)
   }
-)

@@ -5,6 +5,13 @@
 setMethod( "plot", signature( x = "mi", y="missing" ),
   function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
                         gray.scale = FALSE, mfrow=c( 1, 4 ), ... ) {
+    plot.mi( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
+                          gray.scale = FALSE, mfrow=c( 1, 4 ), ... )
+  }
+)
+
+plot.mi <- function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
+                        gray.scale = FALSE, mfrow=c( 1, 4 ), ... ) {
     if ( m(x) < m )  { 
       stop( message = paste( "Index of imputation 'm' must be within the range of 1 to", m(x) ) ) 
     } else{
@@ -20,8 +27,6 @@ setMethod( "plot", signature( x = "mi", y="missing" ),
       }
     }
   }
-)
-
 # ==============================================================================
 # S4 plot function for mi.method object
 # ==============================================================================
