@@ -47,6 +47,17 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   result$random   <- random.pred;
   result$residual <- Y[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ] ;
   class ( result ) <- c( "mi.categorical", "mi.method","list" );
+  
+#  result <-new("mi.categorical",
+#            model    = list( call = lm.cat.imp$call,
+#                             call$formula = formula,
+#                             call$maxit   = n.iter,
+#                             call$MaxNWts =MaxNWts,
+#                             coefficient <- coefficients( lm.cat.imp ),
+#                             sigma       <- NULL),
+#            expected = determ.pred,
+#            random   = random.pred,
+#            residual = Y[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ]);
   return( result )
   on.exit( rm( lm.cat.imp ) )
 }

@@ -1,7 +1,6 @@
 # ==============================================================================
 # imputation function for continuous variable
 # ==============================================================================
-
 mi.continuous <- function ( formula, data = NULL, start = NULL, 
                               n.iter = 100, draw.from.beta = FALSE, ...  ) {
   call <- match.call();
@@ -63,6 +62,17 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
   result$expected <- determ.pred;
   result$random   <- random.pred;
   class ( result )<- c( "mi.continuous", "mi.method", "list" );
+#  result <-new("mi.continuous",
+#            model    = list( call = bglm.imp$call,
+#                             call$formula = as.formula( formula ),
+#                             call$start   = round(as.double( start ), 2 ),
+#                             call$n.iter  = n.iter,
+#                             coefficient  = coefficients( bglm.imp ),
+#                             sigma        =  sigma.hat( bglm.imp ),
+#                             dispersion   = bglm.imp$dispersion)
+#            expected = determ.pred,
+#            random   = random.pred);
+
   return( result )
   on.exit( rm( Y ) )
   on.exit( rm( X ) )

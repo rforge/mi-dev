@@ -27,8 +27,8 @@ setMethod( "resid", signature( object = "mi.logcontinuous" ),
 # ==============================================================================
 setMethod( "resid", signature( object = "mi.sqrtcontinuous" ),     
   function ( object, y ) {
-    #return( sqrt(y) - sqrt(fitted ( object )) )
-    return( y - fitted ( object ) )
+    return( sqrt(y) - sqrt(fitted ( object )) )
+    #return( y - fitted ( object ) )
   }
 )
 # ==============================================================================
@@ -38,5 +38,15 @@ setMethod( "resid", signature( object = "mi.mixed" ),
   function ( object, y ) {
    return( list(residual.values.1 = 1*( y > 0 ) - fitted( object )[[1]], 
                 residual.values.2 = y[as.double( names( fitted( object )[[2]]))]-fitted( object )[[2]]) )
+  }
+)
+
+# ==============================================================================
+# extract residual values for mi.sqrtcontinuous class object
+# ==============================================================================
+setMethod( "resid", signature( object = "mi.categorical" ),     
+  function ( object, y ) {
+    return( object$residual )
+    #return( y - fitted ( object ) )
   }
 )

@@ -16,6 +16,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
   max.iter.flg  <- FALSE;
   Time.Elapsed  <- 0;
   con.check     <- NULL;
+  coef.conv.check <- NULL;
 
   if( class( object ) %in% c( "matrix", "data.frame" ) ) { 
   # For data frame and matrix  
@@ -28,6 +29,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     if( missing( info ) ) {     
       info <- mi.info( data );    # create mi.info
     }      
+
     AveVar  <- array( NA, c( n.iter, n.imp, dim( data[,info$include] )[2] * 2 ) );
     s_start <- 1;
     s_end   <- n.iter;
@@ -45,6 +47,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     AveVar    <- array( NA, c( prev.iter + n.iter,
                                  n.imp, 
                                   sum( include( info ) ) * 2 ) );
+    coef.conv.check <- object@coef.conv$sims.array;
     AveVar[ 1:prev.iter , , ]<- bugs.mi(object)$sims.array;
     s_start <- prev.iter + 1;
     s_end   <- prev.iter + n.iter;
@@ -208,6 +211,14 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
       }
     }
   }
+  #mi.cof<<-coef.val
+  #n.imp<<-n.imp
+  if(is.null(coef.conv.check)){
+    coef.conv.check <- as.bugs.array(strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp))
+  }else{
+    tmp<-array.append3(coef.conv.check,strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp),1)
+    coef.conv.check <- as.bugs.array(tmp)
+  }
   mi <- new("mi", 
             call      = call,
             data      = org.data,
@@ -215,7 +226,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
             mi.info   = info,
             imp       = mi.object,
             converged = converged.flg,
-            coef.conv = as.bugs.array(strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp)),
+            coef.conv = coef.conv.check,
             bugs      = con.check);
 ################################################################
 #  #Retro Grade residual codes
@@ -233,22 +244,53 @@ strict.check<-function(coefficient,n.iter,n.imp){
   res <- array(NA,c(n.iter,n.imp,0))
   for(i in 1:length(coefficient)){
     for(j in 1:dim(coefficient[[i]][[1]])[2]){
-      res <-  array.append(res,matrix(unlist(lapply(coefficient[[i]], "[", , j)),,n.imp))
+      res <-  array.append(res,matrix(unlist(lapply(coefficient[[i]], "[", , j)),,n.imp),d=3)
     }
   }
   return(res)
 }
 
-array.append<-function(a, b, d = 3){
-  if(any(dim(a)[-d]!= dim(b)[-d])){
-    stop(message="array dimention must be same for all the dimention except for the one that you are trying to append")
-  } else{
-    da <-  dim(a)
-    da[d]<- ifelse(is.na( dim(a)[d]),1,dim(a)[d])+ ifelse(is.na( dim(b)[d]),1,dim(b)[d])
-    ab <- c(a,b)
-    dim(ab) = da
-  }
-  return(ab)
+array.append<-function (array1, array2, d = 3) 
+{
+    if (any(dim(array1)[-d] != dim(array2)[-d])) {
+        stop(message = "array dimention must be same for all the dimention except for the one that you are trying to append")
+    }
+    else {
+        newdim <- dim(array1)
+        newdim[d] <- ifelse(is.na(dim(array1)[d]), 1, dim(array1)[d]) + 
+            ifelse(is.na(dim(array2)[d]), 1, dim(array2)[d])
+        newarray <- c(array1, array2)
+        dim(newarray) = newdim
+    }
+    return(newarray)
+}
+
+array.append3<-function(a, b, d=3){
+    da<-dim(a)
+    db<-dim(b)
+    di<-dim(a)
+    di[d]<-da[d]+db[d]
+    ab <- array(NA,di)
+    if(d==1){
+      for(i in 1:di[3]){
+        ab[,,i]<-rbind(a[,,i],b[,,i])
+      }
+    }
+    else if(d==2){
+      for(i in 1:di[3]){
+        ab[,,i]<-cbind(a[,,i],b[,,i])
+      }
+    }
+    else if(d==3){
+      for(i in 1:da[3]){
+        ab[,,i]<-a[,,i]
+      }
+      for(i in 1:db[3]){
+        ab[,,da[3]+i]<-b[,,i]
+      } 
+      
+    }
+    return(ab)
 }
 
 

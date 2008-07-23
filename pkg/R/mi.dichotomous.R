@@ -77,6 +77,16 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
     result$random   <- random.pred;
     #result$residual <- residual.val
     class ( result ) <- c( "mi.dichotomous", "mi.method", "list" );
+#  result <-new("mi.dichotomous",
+#            model    = list( call = bglm.imp$call,
+#                             call$formula = as.formula( formula ),
+#                             call$start   = round(as.double( start ), 2 ),
+#                             call$n.iter  = n.iter,
+#                             coefficient  = coefficients( bglm.imp ),
+#                             sigma        =  sigma.hat( bglm.imp ),
+#                             dispersion   = bglm.imp$dispersion)
+#            expected = determ.pred,
+#            random   = random.pred);
     return( result );
     on.exit( rm( bglm.imp ) );
 }

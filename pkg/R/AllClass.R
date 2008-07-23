@@ -36,7 +36,8 @@ setClass("mi.categorical",
         representation(
             model    = "list", 
             expected = "numeric", 
-            random   = "numeric"),
+            random   = "numeric",
+            residual = "residual"),
             contains = "mi.method"
 )
 setClass("mi.polr",
@@ -86,7 +87,8 @@ setClass("mi.pmm",
         representation(
             model    = "list", 
             expected = "numeric", 
-            random   = "numeric"),
+            random   = "numeric",
+            residual = "numeric"),
             contains = "mi.method"
 )
 setClass("mi.copy",

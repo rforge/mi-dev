@@ -58,11 +58,22 @@ mi.sqrtcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
   result$model$coefficient <- coefficients( bglm.imp ); 
   result$model$sigma       <- sigma.hat( bglm.imp );
   result$model$dispersion  <- bglm.imp$dispersion;
-  #result$expected <- determ.pred^2
-  result$expected <- determ.pred;
-  #result$random   <- random.pred^2
-  result$random   <- abs(random.pred)
+  result$expected <- determ.pred^2
+  #result$expected <- determ.pred;
+  result$random   <- random.pred^2
+  #result$random   <- abs(random.pred)
   class ( result )<- c( "mi.sqrtcontinuous", "mi.method", "list" )
+#  S4 
+#  result <-new("mi.sqrtcontinuous",
+#            model    = list( call = bglm.imp$call,
+#                             call$formula = as.formula( formula ),
+#                             call$start   = round(as.double( start ), 2 ),
+#                             call$n.iter  = n.iter,
+#                             coefficient  = coefficients( bglm.imp ),
+#                             sigma        = sigma.hat( bglm.imp ),
+#                             dispersion   = bglm.imp$dispersion)
+#            expected = determ.pred^2,
+#            random   = random.pred^2)
   return( result )
   on.exit( rm( bglm.imp ) )
 }

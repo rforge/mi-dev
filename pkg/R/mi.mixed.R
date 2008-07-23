@@ -15,14 +15,15 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
                     formula;
                   }
   mf   <- match.call( expand.dots = FALSE );
-  m    <- match( c( "formula[[2]]", "data" ), names( mf ), 0 );
+  m    <- match( c( "formula", "data" ), names( mf ), 0 );
   mf   <- mf[ c( 1, m ) ];
+  mf[2] <- mf[[2]][3]
   mf$drop.unused.levels <- TRUE;
   mf$na.action <- na.pass;
   mf[[1]] <- as.name( "model.frame" );
   mf <- eval( mf, parent.frame( ) );
   mt <- attr( mf, "terms" );
-  Y  <- as.matrix( mf[ , 1, drop = FALSE] );
+  Y  <- model.response(mf, "any");
   if ( length( dim( Y ) ) == 1 ) {
     nm <- rownames( Y );
     dim( Y ) <- NULL;
@@ -41,6 +42,7 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
     n.iter <- 1; 
     start[[1]][ is.na( start[[1]] )] <- 0;
   } 
+
   glm.sign    <- bayesglm( formula = formula.dict, data= data, 
                             family = binomial( link = "logit" ), 
                              n.iter = n.iter, 
@@ -52,7 +54,7 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
     start[[2]][ is.na( start[[2]] ) ] <- 0;
   } 
   #control2    <- if( !is.null(start[[2]] ) ) { glm.control( maxit = 1 )} else { glm.control(...) }
-  lm.ifpos    <- bayesglm( formula =  formula.cont, data = data, subset = Y > 0, 
+  lm.ifpos    <- bayesglm( formula =  formula.cont, data = data, subset = substitute(Y) > 0, 
                             family = gaussian, n.iter = n.iter, 
                              start = start[[2]], drop.unused.levels=FALSE,Warning=FALSE, ...);
   pred.ifpos  <- predict( lm.ifpos, newdata = data, type = "response" );
@@ -105,6 +107,23 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
   result$random   <- random.pred;
   #result$residual <- list(residual.values.1=residual.dic, residual.values.2=residual.pos )
   class ( result )<- c( "mi.mixed", "mi.method","list" );
+  
+#  result <-new("mi.mixed,
+#            model    = list( model.1 = list( call         = glm.sign$call,
+#                                             call$formula = formula.dict,
+#                                             call$start   = round(as.double(start[[1]]),2),
+#                                             call$n.iter  = n.iter,
+#                                             coefficient  = glm.sign$coefficients,
+#                                             sigma        = sigma.hat(glm.sign) ),
+#                              model.2 = list( call         = lm.ifpos$call,
+#                                              call$formula = formula.cont,
+#                                              call$start   = round(as.double(start[[2]]),2),
+#                                              call$n.iter  = n.iter,
+#                                              coefficient  = lm.ifpos$coefficients,
+#                                              sigma        = sigma.hat( lm.ifpos ), 
+#                                              dispersion   = lm.ifpos$dispersion ))
+#            expected = list( expected.values.1 = pred.sign, expected.values.2 = pred.ifpos ),
+#            random   = random.pred);
   return( result );
   on.exit( rm( c( glm.sign, lm.ifpos ) ) );
 }

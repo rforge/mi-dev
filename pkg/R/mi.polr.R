@@ -81,6 +81,16 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   result$random            <- as.double(random.pred)
   names(result$random)     <- names( determ.pred[mis] )
   class( result )          <- c( "mi.polr", "mi.method", "list" )
+#  result <-new("mi.polr",
+#            model    = list( call = bplr.imp$call,
+#                             call$formula = as.formula( formula ),
+#                             call$start   = round(as.double( start ), 2 ),
+#                             call$n.iter  = n.iter,
+#                             coefficient  = bplr.imp$coefficient,
+#                             sigma        = NULL)
+#            expected = determ.pred,
+#            random   = random.pred);
+#  names(result@random)     <- names( determ.pred[mis] );
   return( result )
   on.exit( rm( bplr.imp ) )
 }

@@ -39,6 +39,20 @@ mi.pmm<-function(formula, data = NULL, start = NULL, n.iter = 100, ... )
                               mi.pmm.match, yhat=yhat[!mis], Y=Y[!mis] ) 
   result$residual <- bglm.imp$residuals
   class ( result )<- c( "mi.pmm", "mi.method","list" )
+  
+#  result <-new("mi.pmm",
+#            model    = list( call = bglm.imp$call,
+#                             call$formula = as.formula( formula ),
+#                             call$start   = round(as.double( start ), 2 ),
+#                             call$n.iter  = n.iter,
+#                             coefficient  = bglm.imp$coefficients,
+#                             sigma        = sigma.hat( bglm.imp ),
+#                             dispersion   = bglm.imp$dispersion)
+#            expected = yhat,
+#            random   = apply( as.array( yhat[mis] ), 1, 
+#                              mi.pmm.match, yhat=yhat[!mis], Y=Y[!mis] ),
+#            residual = bglm.imp$residuals );
+  
   return( result )
 
 }
