@@ -71,4 +71,15 @@
     \code{\link{mi.method}},
     \code{\link{mi}}
 }
+\examples{
+  # true data
+  x<-rnorm(100,0,1) # N(0,1)
+  y<-rnorm(100,(1+2*x),1.2) # y ~ 1 + 2*x + N(0,1.2)
+  y[y<0]<-0
+  # create artificial missingness on y
+  y[seq(1,100,10)]<-NA
+  dat.xy <- data.frame(x,y)
+  # imputation
+  mi.mixed(list(1*(y>0)~x,y~x), data = dat.xy)
+}
 \keyword{ models }

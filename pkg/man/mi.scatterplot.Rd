@@ -15,6 +15,7 @@ mi.scatterplot( Yobs, Yimp, X = NULL, xlab = NULL, ylab = NULL,
                               obs.cex = 0.3, imp.cex = 0.3, 
                               obs.lty = 1  , imp.lty = 1, 
                               obs.lwd = 2.5, imp.lwd = 2.5, ... )
+marginal.scatterplot ( data, object, use.imputed.X = FALSE, ...  )
 } 
 \arguments{ 
   \item{Yobs}{ observed values. }
@@ -36,6 +37,9 @@ mi.scatterplot( Yobs, Yimp, X = NULL, xlab = NULL, ylab = NULL,
   \item{obs.lwd}{ line width for observed variable. Default is 2.5. }
   \item{imp.lwd}{ line width for imputed variable. Default is 2.5. }
   \item{\dots}{ Other options for 'plot' function. }
+  \item{data}{ missing data. }
+  \item{object}{ \code{mi} object. }
+  \item{use.imputed.X}{ If you want to use the imputed X.  Default is FALSE. }
 }
 \details{
  Since several data points can have the same data values, we added a small random number to each so that they do not fall on top of each other. This is called jittering.  Fitted lowess lines are also added for both the imputed and observed data.
@@ -56,4 +60,15 @@ mi.scatterplot( Yobs, Yimp, X = NULL, xlab = NULL, ylab = NULL,
   By default imputed values are in red, while the observed values are in blue.
 }
 \seealso{\code{\link{plot}}}
+\examples{
+  # true data
+  x<-rnorm(100,0,1) # N(0,1)
+  y<-rnorm(100,(1+2*x),1.2) # y ~ 1 + 2*x + N(0,1.2)
+  # create artificial missingness on y
+  y[seq(1,100,10)]<-NA
+  dat.xy <- data.frame(x,y)
+  # imputation
+  imp.cont<-mi.continuous(y~x, data = dat.xy)
+  mi.scatterplot(y,imputed(imp.cont,y))
+}
 \keyword{ hplot }

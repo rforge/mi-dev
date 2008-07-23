@@ -63,4 +63,14 @@ mi.sqrtcontinuous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.be
     \code{\link{mi.method}},
     \code{\link{mi}}
 }
+\examples{
+  # true data
+  x<-rnorm(100,0,1) # N(0,1)
+  y<-rnorm(100,(4+2*x),1.2) # y ~ 1 + 2*x + N(0,1.2)
+  # create artificial missingness on y
+  y[seq(1,100,10)]<-NA
+  dat.xy <- data.frame(x,y)
+  # imputation
+  mi.sqrtcontinuous(y~x, data = dat.xy)
+}
 \keyword{ models }
