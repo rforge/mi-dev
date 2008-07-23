@@ -12,8 +12,8 @@
     Imputes missing data in a categorical variable using multinomial Log-linear Models. 
 }
 \usage{
-mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots )
- \S4method{plot}{mi.categorical,ANY}( x, y, \dots )
+  mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots )
+  \S4method{plot}{mi.categorical,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
 }
 \arguments{
   \item{formula}{ a formula expression as for regression models, of the form
@@ -30,8 +30,11 @@ mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots )
   \item{n.iter}{ Maximum number of iteration. }
   \item{MaxNWts}{ The maximum allowable number of weights. See nnet for detail. }
   \item{\dots}{ Currently not used. }
-  \item{x}{ An object of class '"mi.categorical"'.}
+  \item{x}{ \code{mi.categorical} object.}
   \item{y}{ Observed values.}
+  \item{main}{ main title of the plot. }
+  \item{gray.scale}{ When set to TRUE, makes the plot into gray scale with predefined color and line type. }
+
 }
 \details{
     'multinom' calls the library 'nnet'. See multinom for other details.   

@@ -14,15 +14,15 @@
   After the information is extracted user has the option of changing the default.
 }
 \usage{
-mi.info(data, threshold  = 0.99999)
+  mi.info(data, threshold  = 0.99999)
   \S4method{print}{mi.info}(x, \dots)
-   \S4method{show}{mi.info}(x, \dots)
+  \S4method{show}{mi.info}(x, \dots)
 }
 \arguments{
   \item{data}{ dataframe or matrix of dataset with missing data coded as NAs. }
   \item{threshold}{ Threshold value for correlation to be considered a problem.}
   \item{x}{ An object of a class '"mi.info"'.}
-    \item{\dots}{ Currently not used.}
+  \item{\dots}{ Currently not used.}
 }
 \details{
   ~~ If necessary, more details than the description above ~~
@@ -63,19 +63,16 @@ mi.info(data, threshold  = 0.99999)
 }
 
 \seealso{ 
-    \code{\link{mi.matrix}} 
+  \code{\link{mi}} 
 }
 \examples{
-data(CHAIN)
-info.CHAIN<-mi.info(CHAIN)
-info.CHAIN
-
-info.CHAIN$imp.order # imputation order
-
-info.CHAIN$imp.formula # imputation formula
-info.CHAIN[["age.W1"]]$imp.formula  #imputation formula for specific variable
-
+  data(CHAIN)
+  info.CHAIN<-mi.info(CHAIN)
+  info.CHAIN
+  
+  info.CHAIN$imp.order # imputation order
+  
+  info.CHAIN$imp.formula # imputation formula
+  info.CHAIN[["age.W1"]]$imp.formula  #imputation formula for specific variable
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ models }

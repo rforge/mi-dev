@@ -15,8 +15,8 @@
 \usage{
 mi.sqrtcontinuous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ...)
 
-\S4method{resid}{mi.sqrtcontinuous}(object, Y)
-  \S4method{plot}{mi.sqrtcontinuous,ANY}( x, y, \dots )
+\S4method{resid}{mi.sqrtcontinuous}(object, y)
+  \S4method{plot}{mi.sqrtcontinuous,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
 }
 
 \arguments{
@@ -26,10 +26,11 @@ mi.sqrtcontinuous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.be
   \item{n.iter}{ Maximum number of iteration for bayesglm. The default is 100.}
   \item{draw.from.beta}{ Draws from posterior distribution of the betas to add randomness. }
   \item{\dots}{ Currently not used. }
-  \item{object}{\code{mi} object.}
-  \item{Y}{observed values}
-    \item{x}{ An object of class '"mi.sqrtcontinuous"'.}
+  \item{object}{\code{mi.sqrtcontinuous} object.}
+  \item{x}{ \code{mi.sqrtcontinuous} object.}
   \item{y}{ Observed values.}
+  \item{main}{ main title of the plot. }
+  \item{gray.scale}{ When set to TRUE, makes the plot into gray scale with predefined color and line type. }
 
 }
 \details{

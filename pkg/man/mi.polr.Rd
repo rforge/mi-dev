@@ -12,8 +12,8 @@
     Imputes missing data in a categorical variable using multinomial Log-linear Models. 
 }
 \usage{
-mi.polr(formula, data = NULL, drop.unused.levels = TRUE, start = NULL, n.iter = 100, ...)
-  \S4method{plot}{mi.polr,ANY}( x, y, \dots )
+  mi.polr(formula, data = NULL, drop.unused.levels = TRUE, start = NULL, n.iter = 100, ...)
+  \S4method{plot}{mi.polr,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -29,8 +29,11 @@ mi.polr(formula, data = NULL, drop.unused.levels = TRUE, start = NULL, n.iter = 
   \item{start}{ Starting value for bayespolr. }
   \item{n.iter}{ Maximum number of iteration for bayespolr. The default is 100.}
   \item{\dots}{ Currently not used. }
-  \item{x}{ An object of class '"mi.dichotomous"'.}
+  \item{x}{\code{mi.polr} object.}
   \item{y}{ Observed values.}
+  \item{main}{ main title of the plot. }
+  \item{gray.scale}{ When set to TRUE, makes the plot into gray scale with predefined color and line type. }
+
 }
 \details{
     'multinom' calls the library 'nnet'. See multinom for other details.   
@@ -39,7 +42,7 @@ mi.polr(formula, data = NULL, drop.unused.levels = TRUE, start = NULL, n.iter = 
     \item{model    }{A summary of the multinomial fitted model}
     \item{expected }{The expected values estimated by the model}
     \item{random   }{Vector of length n.mis of random predicted values predicted by using the multinomial distribution}
-    \item{residual }{The residual vector of length same as Y}
+    \item{residual }{The residual vector of length same as y}
 }
 \references{
     Andrew Gelman and Jennifer Hill, 

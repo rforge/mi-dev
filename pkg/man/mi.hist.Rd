@@ -2,13 +2,13 @@
 \docType{genericFunction}
 \alias{mi.hist}
 \alias{mi.hist,ANY,ANY-method}
-\alias{mi.hist,ANY,mi.method-method}
-\alias{mi.hist,ANY,mi.categorical-method}
-\alias{mi.hist,ANY,mi.dichotomous-method}
-\alias{mi.hist,ANY,mi.mixed-method}
-\alias{mi.hist,ANY,mi.polr-method}
-\alias{mi.hist,ANY,mi.sqrtcontinuous-method}
-\alias{mi.hist,ANY,mi.pmm-method}
+\alias{mi.hist,mi.method,ANY-method}
+\alias{mi.hist,mi.categorical,ANY-method}
+\alias{mi.hist,mi.dichotomous,ANY-method}
+\alias{mi.hist,mi.mixed,ANY-method}
+\alias{mi.hist,mi.polr,ANY-method}
+\alias{mi.hist,mi.sqrtcontinuous,ANY-method}
+\alias{mi.hist,mi.pmm,ANY-method}
 \title{ 
     Multiple Imputation Histogram 
 }
@@ -16,14 +16,14 @@
     A function for plotting the histogram of each variable and of its observed and imputed values. 
 }
 \usage{
-  mi.hist( Yobs, object, \dots)
-\S4method{mi.hist}{ANY,mi.method}( Yobs, object, ...)
-\S4method{mi.hist}{ANY,mi.categorical}( Yobs, object, ...)
-\S4method{mi.hist}{ANY,mi.dichotomous}( Yobs, object, ...)
-\S4method{mi.hist}{ANY,mi.mixed}( Yobs, object, ...)
-\S4method{mi.hist}{ANY,mi.polr}( Yobs, object, ...)
-\S4method{mi.hist}{ANY,mi.sqrtcontinuous}( Yobs, object, ...)
-\S4method{mi.hist}{ANY,mi.pmm}( Yobs, object, ...)
+  mi.hist( object, Yobs, \dots)
+\S4method{mi.hist}{mi.method,ANY}( object, Yobs, ... )
+\S4method{mi.hist}{mi.categorical,ANY}( object, Yobs, ... )
+\S4method{mi.hist}{mi.dichotomous,ANY}( object, Yobs, ... )
+\S4method{mi.hist}{mi.mixed,ANY}( object, Yobs, ... )
+\S4method{mi.hist}{mi.polr,ANY}( object, Yobs, ... )
+\S4method{mi.hist}{mi.sqrtcontinuous,ANY}( object, Yobs, ... )
+\S4method{mi.hist}{mi.pmm,ANY}( object, Yobs, ... )
 }
 \arguments{
     \item{Yobs}{ observed values.}
@@ -49,7 +49,7 @@
     the histogram of the imputed values in red, 
     while the one of the observed values in blue.}
 \seealso{
-    \code{\link{plot}},
+    \code{\link{plot.mi}},
     \code{\link{hist}}
 }
 \examples{
@@ -61,10 +61,10 @@
   dat.xy <- data.frame(x,y)
   # imputation
   dat.cont.mi <- mi.continuous(y~x, data = dat.xy)
-  mi.hist( y, dat.cont.mi)
+  mi.hist( dat.cont.mi, y)
 
   # imputation
   dat.mi <- mi(dat.xy)
-  mi.hist( y, imp(dat.mi,1)[["y"]])
+  mi.hist( imp(dat.mi,1)[["y"]], y)
 }
 \keyword{ models }

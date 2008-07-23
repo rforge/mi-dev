@@ -36,7 +36,7 @@ setMethod( "plot", signature( x = "mi.method", y ="ANY"),
     sigma <- sigma.hat( x )
     vrb.obs <- y
     vrb.imp <- imputed( x, y )
-    mi.hist(  vrb.obs, object, xlab=main, main = main, gray.scale = gray.scale )
+    mi.hist(  object, vrb.obs, xlab=main, main = main, gray.scale = gray.scale )
     residual.plot( fit, res, sigma, main = main, gray.scale = gray.scale )
     binnedplot ( fit[ !is.na( y )], res[ !is.na( y )], 
               nclass = sqrt( length( fit[  !is.na( y )] ) ), main = main )
@@ -61,7 +61,7 @@ setMethod("plot", signature(x = "mi.mixed",y="ANY"),
   fit2 <- fit[[2]]
   res1 <- res[[1]]
   res2 <- res[[2]]    
-  mi.hist ( vrb.obs, x, xlab = main, main = main, gray.scale = gray.scale )
+  mi.hist ( x, vrb.obs, xlab = main, main = main, gray.scale = gray.scale )
   binnedplot( fit1[ !is.na( y ) ], res1[ !is.na( y ) ], nclass=sqrt(length(fit1[ !is.na( y ) ])), main = main)
   residual.plot ( fit2[y>0], res2[y>0], sigma, main = main, gray.scale = gray.scale )
   #mtext( "sqrt", 2, cex = 0.7, adj = 1 )
@@ -83,7 +83,7 @@ function ( x, y, main=deparse( substitute( Yobs ) ), gray.scale = FALSE, ... ) {
   vrb.imp <- imputed( x, y )
   sqrta <- vrb.obs
   sqrta[!is.na(vrb.obs)] <-sqrt(vrb.obs[!is.na(vrb.obs)])
-  mi.hist( vrb.obs, x, main = main, xlab=main, gray.scale = gray.scale )
+  mi.hist( x, vrb.obs,main = main, xlab=main, gray.scale = gray.scale )
   #mtext( "sqrt", 1, cex = 0.7, adj = 1 )
   residual.plot( fit, res, sigma, main = main, xlab= "Predicted",  ylab = paste( "Residual" ), gray.scale = gray.scale )
   mtext( "sqrt", 2, cex = 0.7, adj = 1 )
@@ -105,7 +105,7 @@ function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
   sigma   <- factor2num( sigma.hat( x ) )
   vrb.obs <- factor2num( y )
   vrb.imp <- factor2num( imputed( x, y ) )
-  mi.hist( vrb.obs, x, xlab = main, main = main, gray.scale = gray.scale ) 
+  mi.hist(  x, vrb.obs,xlab = main, main = main, gray.scale = gray.scale ) 
   binnedplot( fit[  !is.na( y ) ], res[  !is.na( y ) ], nclass = sqrt( length( fit[ !is.na( y ) ] ) ), main = main )
   mtext( "Binned Residual", 3, cex = 0.7, adj = NA ) 
   mi.scatterplot( vrb.obs, vrb.imp, fit, xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale )
@@ -125,7 +125,7 @@ function ( x, y, main=deparse( substitute( Yobs ) ),gray.scale = FALSE ) {
   sigma   <- sigma.hat( x )
   vrb.obs <- y
   vrb.imp <- imputed( x, y )
-  mi.hist( vrb.obs, x, type = vrb.typ, xlab = main, main = main, gray.scale = gray.scale )
+  mi.hist(  x, vrb.obs, type = vrb.typ, xlab = main, main = main, gray.scale = gray.scale )
   binnedplot( fit[ !is.na(y) ], res[ !is.na(y) ], nclass = sqrt( length( fit[ !is.na(y)] ) ), main = main)
   mtext( "Binned Residual", 3, cex = 0.7, adj = NA ) 
   mi.scatterplot( vrb.obs, vrb.imp, fit, xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale )
@@ -145,7 +145,7 @@ function ( x, y, main=deparse( substitute( Yobs ) ), gray.scale = FALSE ) {
           sigma   <- sigma.hat( x )
           vrb.obs <- y
           vrb.imp <- imputed( x, y )
-          mi.hist ( vrb.obs, x, xlab = main, main = main, gray.scale = gray.scale )
+          mi.hist ( x, vrb.obs, xlab = main, main = main, gray.scale = gray.scale )
           binnedplot ( fit[ !is.na( y )], res[ !is.na( y )], nclass = sqrt( length( fit[  !is.na( y )] ) ), main = main )
           mtext( "Binned Residual", 3, cex = 0.7, adj = NA )
           mi.scatterplot( vrb.obs, vrb.imp, fit, xlab = "Predicted", ylab = main, main = main, gray.scale = gray.scale )
@@ -167,7 +167,7 @@ setMethod("plot", signature(x = "mi.logcontinuous",y="ANY"),
     vrb.imp <- imputed( x, y ) 
     loga  <- vrb.obs
     loga[!is.na(vrb.obs)] <-log(vrb.obs[!is.na(vrb.obs)])
-    mi.hist( loga, x, type = vrb.typ, main = main, xlab=paste("log(",main,")"), gray.scale = gray.scale )
+    mi.hist(  x, loga, type = vrb.typ, main = main, xlab=paste("log(",main,")"), gray.scale = gray.scale )
     mtext( "log", 1, cex = 0.7, adj = 1 )
     residual.plot( log(fit), res, sigma, main = main, xlab= "log(Predicted)",  ylab = paste( "log(Residual)" ), gray.scale = gray.scale )
     mtext( "log", 1, cex = 0.7, adj = 1 )

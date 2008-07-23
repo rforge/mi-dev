@@ -16,15 +16,18 @@
 
 \usage{
     mi.fixed( formula, data = NULL, ... )
- \S4method{plot}{mi.copy,ANY}( x, y, \dots )
+ \S4method{plot}{mi.copy,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
 }
 
 \arguments{
   \item{formula}{an object of class '"formula"' (or one that can be coerced to that class): a symbolic description of the model to be fitted.  See bayesglm 'formula' for details.}
-    \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
-    \item{\dots}{ Currently not used. }
-    \item{x}{ An object of class '"mi.copy"'.}
+  \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
+  \item{\dots}{ Currently not used. }
+  \item{x}{ An object of class '"mi.copy"'.}
   \item{y}{ Observed values.}
+  \item{main}{ main title of the plot. }
+  \item{gray.scale}{ When set to TRUE, makes the plot into gray scale with predefined color and line type. }
+
 }
 
 \value{

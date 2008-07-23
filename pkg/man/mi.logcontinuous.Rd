@@ -14,10 +14,9 @@
     Imputes univariate missing data using linear regression on the logarithm values.
 }
 \usage{
-mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter = 100, ... )
-
-\S4method{resid}{mi.logcontinuous}(object, Y)
-  \S4method{plot}{mi.logcontinuous,ANY}( x, y, \dots )
+  mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter = 100, ... )
+  \S4method{resid}{mi.logcontinuous}(object, y)
+  \S4method{plot}{mi.logcontinuous,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
 }
 
 \arguments{
@@ -26,10 +25,11 @@ mi.logcontinuous(formula, data = data.frame(cbind(Y, X)), start = NULL, n.iter =
   \item{start}{ Starting value for bayesglm. }
   \item{n.iter}{ Maximum number of iteration for bayesglm. The default is 100.}
   \item{\dots}{ Currently not used. }
-  \item{object}{\code{mi} object.}
-  \item{Y}{observed values}
-    \item{x}{ An object of class '"mi.logcontinuous"'.}
+  \item{object}{\code{mi.logcontinuous} object.}
+  \item{x}{\code{mi.logcontinuous} object.}
   \item{y}{ Observed values.}
+  \item{main}{ main title of the plot. }
+  \item{gray.scale}{ When set to TRUE, makes the plot into gray scale with predefined color and line type. }
 }
 
 \details{

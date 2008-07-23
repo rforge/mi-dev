@@ -1,8 +1,8 @@
 # ==============================================================================
 # Histograms for the completed, observed and imputed values
 # ==============================================================================
-setMethod( "mi.hist", signature( Yobs = "ANY", object= "ANY" ),     
- function( Yobs, object, b = seq( min( c(Yobs,Yimp),na.rm=TRUE ), 
+setMethod( "mi.hist", signature( object= "ANY", Yobs = "ANY"  ),     
+ function( object, Yobs,  b = seq( min( c(Yobs,Yimp),na.rm=TRUE ), 
            max( c(Yobs,Yimp),na.rm=TRUE ), 
            length.out = sqrt( length( Yimp ) ) ), gray.scale = FALSE, 
            main = paste("Histogram of ", deparse( substitute( Yobs ) ) ),  
@@ -194,8 +194,8 @@ setMethod( "mi.hist", signature( Yobs = "ANY", object= "ANY" ),
 }
 )
 
-setMethod( "mi.hist", signature( object = "mi.method" ),     
-  function (  Yobs, object,  b = NULL, binwidth = NULL, gray.scale = FALSE, 
+setMethod( "mi.hist", signature( object = "mi.method", Yobs="ANY" ),     
+  function ( object,  Yobs, b = NULL, binwidth = NULL, gray.scale = FALSE, 
               main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
               xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
               obs.col = "blue", imp.col = "black", mis.col = "red",
@@ -236,8 +236,8 @@ setMethod( "mi.hist", signature( object = "mi.method" ),
 }
 )
 
-setMethod("mi.hist", signature( Yobs = "ANY", object = "mi.dichotomous"),  
- function ( Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE, 
+setMethod("mi.hist", signature( object = "mi.dichotomous",Yobs = "ANY"),  
+ function (  object, Yobs,b = NULL, binwidth = NULL, gray.scale = FALSE, 
             main = paste("Histogram of ", deparse( substitute( Yobs ) )),            
             xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
             obs.col = "blue", imp.col = "black", mis.col = "red",
@@ -273,8 +273,8 @@ setMethod("mi.hist", signature( Yobs = "ANY", object = "mi.dichotomous"),
   axis(1, lab, tick = TRUE, col.axis = 'black')
 }
 )
-setMethod("mi.hist", signature(Yobs = "ANY", object = "mi.mixed"),  
-function ( Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE,
+setMethod("mi.hist", signature(object = "mi.mixed",Yobs = "ANY"),  
+function ( object, Yobs, b = NULL, binwidth = NULL, gray.scale = FALSE,
             main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
             xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
             obs.col = "blue", imp.col = "black", mis.col = "red",
@@ -327,8 +327,8 @@ function ( Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE,
 }
 )
 
-setMethod("mi.hist", signature(Yobs = "ANY", object = "mi.sqrtcontinuous"),  
-function ( Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE,
+setMethod("mi.hist", signature(object = "mi.sqrtcontinuous",Yobs = "ANY"),  
+function ( object, Yobs, b = NULL, binwidth = NULL, gray.scale = FALSE,
             main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
             xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
             obs.col = "blue", imp.col = "black", mis.col = "red",
@@ -362,8 +362,8 @@ function ( Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE,
   axis( 1, tick = TRUE, col.axis = 'black' )
 }
 )
-setMethod("mi.hist", signature( Yobs = "ANY", object = "mi.polr"),  
- function ( Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE, 
+setMethod("mi.hist", signature( object = "mi.polr",Yobs = "ANY"),  
+ function ( object, Yobs,  b = NULL, binwidth = NULL, gray.scale = FALSE, 
             main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
             xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
             obs.col = "blue", imp.col = "black", mis.col = "red",
@@ -411,8 +411,8 @@ setMethod("mi.hist", signature( Yobs = "ANY", object = "mi.polr"),
 )
 
 
-setMethod("mi.hist", signature(object = "mi.pmm"),  
- function ( Yobs, object, main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
+setMethod("mi.hist", signature(object = "mi.pmm",Yobs="ANY"),  
+ function ( object, Yobs, main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
              gray.scale = FALSE, xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
              b = NULL, binwidth = NULL, col = c( "black", "blue", "red" ), 
              lty = c( 1, 1, 1 ), lwd = c( 1, 1, 1 ), mlt = 0.1, ... )
@@ -441,8 +441,8 @@ setMethod("mi.hist", signature(object = "mi.pmm"),
 }
 )
 
-setMethod("mi.hist", signature(object = "mi.categorical"),  
- function (  Yobs, object, b = NULL, binwidth = NULL, gray.scale = FALSE,
+setMethod("mi.hist", signature(object = "mi.categorical",Yobs="ANY"),  
+ function (  object, Yobs,b = NULL, binwidth = NULL, gray.scale = FALSE,
              main = paste("Histogram of ", deparse( substitute( Yobs ) )),  
               xlab = deparse( substitute( Yobs ) ), ylab = "Frequency", 
                obs.col = "blue", imp.col = "black", mis.col = "red",

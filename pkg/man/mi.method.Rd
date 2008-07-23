@@ -3,7 +3,6 @@
 % Classes
 \alias{mi.method-class}
 % Function
-\alias{mi.}
 \alias{imputed}
 \alias{print,mi.method-method}
 \alias{plot,mi.method,ANY-method}
@@ -20,21 +19,23 @@
     Imputes univariate missing data using linear regression.
 }
 \usage{
-  \S4method{imputed}{mi.method}(object,Y)
+  \S4method{imputed}{mi.method}(object,y)
   \S4method{coef}{mi.method}(object)
   \S4method{sigma.hat}{mi.method}(object)
   \S4method{fitted}{mi.method}(object)
-  \S4method{resid}{mi.method}(object, Y)
+  \S4method{resid}{mi.method}(object, y)
   \S4method{print}{mi.method}(x, \dots)
-  \S4method{plot}{mi.method,ANY}( x, y, \dots )
+  \S4method{plot}{mi.method,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{object}{An object of class '"mi.method"'.}
-  \item{Y }{ Observed data.}
-  \item{x}{ An object of class '"mi.method"'.}
-  \item{y}{ Observed values.}
+  \item{object}{\code{mi.method} object.}
   \item{\dots}{ Currently not used. }
+  \item{x}{ \code{mi.method} object.}
+  \item{y}{ Observed values.}
+  \item{main}{ main title of the plot. }
+  \item{gray.scale}{ When set to TRUE, makes the plot into gray scale with predefined color and line type. }
+
 }
 \details{
 

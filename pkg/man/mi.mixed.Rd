@@ -24,9 +24,9 @@
   \S4method{coef}{mi.mixed}(object)
   \S4method{sigma.hat}{mi.mixed}(object)
   \S4method{fitted}{mi.mixed}(object)
-  \S4method{resid}{mi.mixed}(object, Y)
-  \S4method{imputed}{mi.mixed}(object, Y)
-  \S4method{plot}{mi.mixed,ANY}( x, y, \dots )
+  \S4method{resid}{mi.mixed}(object, y)
+  \S4method{imputed}{mi.mixed}(object, y)
+  \S4method{plot}{mi.mixed,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -36,10 +36,12 @@
   \item{n.iter}{ Maximum number of iteration for bayesglm. The default is 100.}
   \item{draw.from.beta}{ Draws from posterior distribution of the betas to add randomness. }
   \item{\dots}{ Currently not used. }
-  \item{object}{\code{mi} object.}
-  \item{Y}{observed values}
-  \item{x}{ An object of class '"mi.mixed"'.}
+  \item{object}{\code{mi.mixed} object.}
+  \item{x}{\code{mi.mixed} object.}
   \item{y}{ Observed values.}
+  \item{main}{ main title of the plot. }
+  \item{gray.scale}{ When set to TRUE, makes the plot into gray scale with predefined color and line type. }
+
 }
 \details{
     Imputation variable that can be positive or zero. 

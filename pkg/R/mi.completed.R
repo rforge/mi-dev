@@ -18,11 +18,11 @@ setMethod( "mi.completed", signature( object = "mi" ),
 )
 setMethod( "mi.matrix", signature( object = "mi" ),
   function ( object, m = 1 ) {
-    mi.completed( object, m = 1, outcome = c("matrix") ) 
+    mi.completed( object, m = 1, outcome = "matrix" ) 
   }
 )
 setMethod( "mi.data.frame", signature( object = "mi" ),
   function ( object, m = 1 ) {
-    mi.completed( object, m = 1, outcome = c("data.frame") ) 
+    mi.completed( object, m = 1, outcome = "data.frame" ) 
   }
 )

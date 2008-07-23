@@ -101,7 +101,7 @@ if ( !isGeneric( "imputed" ) ) {
 }
 if ( !isGeneric("mi.hist")) {
     setGeneric( "mi.hist",
-               function( Yobs, object, ... ){
+               function( object, Yobs,... ){
                standardGeneric( "mi.hist" ) 
                }
     )

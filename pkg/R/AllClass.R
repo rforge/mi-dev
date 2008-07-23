@@ -6,7 +6,7 @@ setOldClass("glm")
 
 setClass("mi.info",
             representation(),
-              contains = "list"
+            contains = "list"
 )
 setClass("mi",
             representation(
@@ -22,7 +22,8 @@ setClass("mi",
 )
 
 setClass("mi.method",
-            representation ="VIRTUAL"
+            representation ="VIRTUAL",
+            contains = "list"
 )
 setClass("mi.dichotomous",
         representation(
