@@ -86,6 +86,7 @@ export(
   mi.sqrtcontinuous,
   missing.pattern.plot,
   mp.plot,
+  random.imp,
   typecast
 )
 
