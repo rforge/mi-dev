@@ -37,7 +37,7 @@ setClass("mi.categorical",
             model    = "list", 
             expected = "numeric", 
             random   = "numeric",
-            residual = "residual"),
+            residual = "numeric"),
             contains = "mi.method"
 )
 setClass("mi.polr",
