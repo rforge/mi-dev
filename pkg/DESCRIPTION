@@ -1,6 +1,6 @@
 Package: mi
-Version: 0.01-05.11
-Date: 2008-7-23
+Version: 0.01-05.12
+Date: 2008-7-25
 Title: mi Package
 Author: 
   Andrew Gelman <gelman@stat.columbia.edu>,
@@ -9,7 +9,7 @@ Author:
   Yu-Sung Su <ys463@columbia.edu>,
   M.Grazia Pittau <grazia@stat.columbia.edu>
 Maintainer: M.Grazia Pittau <grazia@stat.columbia.edu>
-Depends: methods, R(>= 2.6.0), MASS, nnet, arm, R2WinBUGS, stats
+Depends: methods, R(>= 2.6.0), MASS, nnet, armlite, R2WinBUGS, stats
 Description: Missing-data imputation and model checking
 URL: http://www.stat.columbia.edu/~gelman/
 License: GPL (>=2)
