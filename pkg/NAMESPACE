@@ -1,4 +1,18 @@
-#import(stats)
+importFrom("stats",
+      coef, 
+      fitted,
+      resid,
+      residuals,
+      coefficients
+)
+
+importFrom("graphics",  
+      plot
+)
+
+importFrom("armlite",
+      sigma.hat
+)
 
 exportClasses(
   mi,
