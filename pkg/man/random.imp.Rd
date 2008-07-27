@@ -1,9 +1,9 @@
 \name{random.imp}
 \alias{random.imp}
 
-\title{ Random imputation of missing data }
+\title{ Random Imputation of Missing Data }
 \description{
-  Simple random imputation of missing data.
+  Simple random imputation of missing values in given data set.
 }
 \usage{
 random.imp( data , imp.method = c( "bootstrap", "pca" ) , ... )
@@ -11,7 +11,8 @@ random.imp( data , imp.method = c( "bootstrap", "pca" ) , ... )
 
 \arguments{
   \item{data}{ A vector, matrix, or data frame with missing data. }
-  \item{imp.method}{ Character to specify which method of random imputation to use. Default is "bootstrap".  Note: pca is not implemented in the current version.}
+  \item{imp.method}{ Character to specify which method of random imputation to use. Default is "bootstrap".  
+                      Note: pca is not implemented in the current version.}
   \item{\dots}{Unused}
 }
 \details{
@@ -31,8 +32,10 @@ random.imp( data , imp.method = c( "bootstrap", "pca" ) , ... )
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
 \examples{
-data(CHAIN)
-ran.CHAIN <- random.imp(CHAIN)
+  data(CHAIN)
+  ran.CHAIN <- random.imp(CHAIN) 
 }
-\seealso{ \code{\link{mi}} }
+\seealso{ 
+  \code{\link{mi}} 
+}
 \keyword{ models }

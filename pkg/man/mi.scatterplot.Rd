@@ -3,7 +3,7 @@
 \alias{marginal.scatterplot}
 \title{ Multiple Imputation Scatterplot }
 \description{
-  A function for plotting, for each variable its observed and imputed values. 
+  A function for plotting observed and imputed values for a variable . 
 }
 \usage{
 mi.scatterplot( Yobs, Yimp, X = NULL, xlab = NULL, ylab = NULL, 
@@ -42,10 +42,13 @@ marginal.scatterplot ( data, object, use.imputed.X = FALSE, ...  )
   \item{use.imputed.X}{ If you want to use the imputed X.  Default is FALSE. }
 }
 \details{
- Since several data points can have the same data values, we added a small random number to each so that they do not fall on top of each other. This is called jittering.  Fitted lowess lines are also added for both the imputed and observed data.
+ Since several data points can have the same data values, especially in discrete variables,
+ small random number is added to each value so that points do not fall on top of each other. 
+ See help on \code{jitter} for more details.  
+ Lowess line is fitted to both imputed and observed data.
 }
 \value{
-  A scatterplot with the observed (in blues) and the imputed values (in red) plotted versus a chosen variable. 
+  A scatterplot with the observed and the imputed values plotted against a chosen variable. 
 }
 \references{ 
   Andrew Gelman and Jennifer Hill, 
@@ -58,9 +61,11 @@ marginal.scatterplot ( data, object, use.imputed.X = FALSE, ...  )
   Andrew Gelman \email{gelman@stat.columbia.edu}}
 \note{ 
   By default imputed values are in red, while the observed values are in blue.
-}
-\seealso{\code{\link{plot}}}
-\examples{
+} \seealso{ 
+  \code{\link{mi}},
+  \code{\link{plot}} 
+} 
+\examples{ 
   # true data
   x<-rnorm(100,0,1) # N(0,1)
   y<-rnorm(100,(1+2*x),1.2) # y ~ 1 + 2*x + N(0,1.2)

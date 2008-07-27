@@ -4,7 +4,7 @@
 
 \title{ Missing Pattern Plot }
 \description{
-  Plots the missing pattern.
+  Function to plot a missing pattern plot.
 }
 \usage{
 missing.pattern.plot ( data, y.order = FALSE, x.order = FALSE, 
@@ -19,16 +19,18 @@ missing.pattern.plot ( data, y.order = FALSE, x.order = FALSE,
   \item{xlab}{ a title for the x axis: see 'title'. }
   \item{ylab}{ a title for the y axis: see 'title'. }
   \item{main}{ an overall title for the plot: see 'title'. }
-  \item{gray.scale}{ if TRUE, makes the plot into black and white.  This option overwrites the color specification. }
+  \item{gray.scale}{ if TRUE, makes the plot into black and white.  
+                     This option overwrites the color specification. }
   \item{obs.col}{ color used for observed values.  Default is "blue". }
   \item{mis.col}{ color used for missing values.  Default is "red".  }
   \item{\dots}{ additional parameters passed to 'image' function. }
 }
 \details{
-  Color image with different color for missing and observed value in the dataset is plotted.  By default the observed is in "blue" and missing is in "red".
+  Color image with different color for missing and observed value in the dataset is plotted.  
+  By default the observed is in "blue" and missing is in "red".
 }
 \value{
-  Plot to visualize pattern of missingness in the data.
+  Plot to visualize pattern of missingness in the data.  
 }
 \references{
     Andrew Gelman and M. Grazia Pittau,  
@@ -36,6 +38,10 @@ missing.pattern.plot ( data, y.order = FALSE, x.order = FALSE,
     Technical report, Columbia University, New York; Andrew Gelman and Jennifer Hill, 
     Data Analysis Using Regression and Multilevel/Hierarchical Models, 
     Cambridge University Press, 2007.
+}
+\seealso{
+  \code{\link{mi}}, 
+  \code{\link{plot}}
 }
 \author{
   Masanao Yajima \email{yajima@stat.columbia.edu},

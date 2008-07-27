@@ -47,5 +47,7 @@ glm.mi(formula, mi.object, family = gaussian, ...)
   glm.mi(y~x,dat.mi,family = gaussian)
 }
 \seealso{
+  \code{\link{mi}}, 
+  \code{\link{lm.mi}}
 }
 \keyword{ models }

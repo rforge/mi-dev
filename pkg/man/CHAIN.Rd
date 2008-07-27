@@ -65,5 +65,7 @@
   Antiretroviral therapy and declining AIDS mortality in New York City.
   Medical Care 41:512-521.
 }
-
+\seealso{
+  \code{\link{mi}}
+}
 \keyword{datasets}

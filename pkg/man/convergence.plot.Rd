@@ -2,9 +2,9 @@
 \alias{convergence.plot}
 \alias{conv.plot}
 
-\title{ Convergence Plot of mi object }
+\title{ Convergence Plot of \code{mi} Object }
 \description{
-  Function to plot the convergence of mi iterations.
+  Function to plot trace of mi iterative samples.
 }
 \usage{
 convergence.plot ( mi.object, ... )
