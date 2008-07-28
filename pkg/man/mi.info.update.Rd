@@ -61,8 +61,5 @@ mi.info.update.other(info, list)
 data(CHAIN)
 CHAIN.info<-mi.info(CHAIN)
 CHAIN.info<-mi.info.update.type(CHAIN.info, list(age.W1="continuous", b05.W1="unordered-categorical"))
-
-
 }
-
 \keyword{ models }

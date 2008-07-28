@@ -61,7 +61,8 @@ marginal.scatterplot ( data, object, use.imputed.X = FALSE, ...  )
   Andrew Gelman \email{gelman@stat.columbia.edu}}
 \note{ 
   By default imputed values are in red, while the observed values are in blue.
-} \seealso{ 
+} 
+\seealso{ 
   \code{\link{mi}},
   \code{\link{plot}} 
 } 
