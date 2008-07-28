@@ -2,7 +2,7 @@
 \alias{convergence.plot}
 \alias{conv.plot}
 
-\title{ Convergence Plot of \code{mi} Object }
+\title{ Convergence Plot of mi Object }
 \description{
   Function to plot trace of mi iterative samples.
 }
