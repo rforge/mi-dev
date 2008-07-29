@@ -99,6 +99,7 @@ export(
   mi.scatterplot,
   mi.sqrtcontinuous,
   mi.start,
+  mi.types,
   missing.pattern.plot,
   mp.plot,
   random.imp,

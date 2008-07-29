@@ -334,13 +334,14 @@ mi.info.fix <- function( info ) {
             #change
               change.var.flg<-TRUE
               while( change.var.flg ) {
-                res.var3<-menu(c("type","formula","parameter","levels","view setting","different variable")
+                res.var3<-menu(c("type","formula (always update when you change type)","parameter","levels","view setting","different variable")
                                   ,title=.make.title("What would you like to change?" ))
                 if(res.var3 ==1){
                   #type
                   res.var3.type <- menu(mi.types(),title="choose a type to change to")
                   print(res.var3.type)
                   info[[Var.to.fix]]$type <- mi.types()[res.var3.type]
+                  #type.default.formula(,info[[Var.to.fix]]$type)
                 }
                 else if(res.var3 ==2){
                   #formula
@@ -404,7 +405,14 @@ print.variable.setting <- function(info.variable){
       cat("Levels: \n")
       print(info.variable$level)
       cat("\nFormula: \n")
-      print(as.formula(info.variable$imp.formula))
+      if(length(info.variable$imp.formula)==1){
+        print(as.formula(info.variable$imp.formula))
+      } else{
+        for(i in 1:length(info.variable$imp.formula)){
+          print(as.formula(info.variable$imp.formula[[i]]))
+          cat("\n")
+        }
+      }
       cat("\nParameters:\n")
       print(paste(names(info.variable$params),"=",info.variable$params,collapse=", "))
       cat("\n")
