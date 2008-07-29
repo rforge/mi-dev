@@ -105,6 +105,7 @@ export(
   mp.plot,
   random.imp,
   typecast
+  type.models
 )
 
 S3method(plot, mi)

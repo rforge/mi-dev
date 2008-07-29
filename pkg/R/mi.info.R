@@ -521,18 +521,41 @@ mi.interactive <- function ( data ){
     }
   }
   cat("\n----------------------------------- \n")
-  cat("starting mi: \n")
+  cat("parameter setting for mi: \n")
   cat("----------------------------------- \n\n")
   default<-mi.default.check()
+  cat("\n----------------------------------- \n")
+  cat("starting mi: \n")
+  cat("----------------------------------- \n\n")
   # run mi
   data.mi <- mi( data, info, n.iter=default$n.iter, n.imp = default$m, max.minutes=default$max.minutes, continue.on.convergence=default$continue.on.convergence )
+  stop.mi <- FALSE
   if(!converged(data.mi)){
     resp.rerun<-menu(c("yes","no"),title="mi did not converge, would you like to keep it running?")
+    if(resp.rerun==2){
+      stop.mi <-TRUE
+    }
+  } else {
+    resp.rerun <-menu(c("yes","no"),title="mi converged, would you like to stop?")
     if(resp.rerun==1){
-      stop.mi <- FALSE
-      while( !stop.mi ){
-        # run mi
-        data.mi <- mi( data.mi, info )
+      stop.mi <- TRUE
+    }
+  }
+  while( !stop.mi ){
+    deflt.chng<-menu(c("yes","no"),title="do you want to change the parameter setting?")
+    if(deflt.chng==1){
+      default<-mi.default.check()
+    }
+    data.mi <- mi( data.mi, info,n.iter=default$n.iter, max.minutes=default$max.minutes, continue.on.convergence=default$continue.on.convergence )
+    if(!converged(data.mi)){
+      resp.rerun<-menu(c("yes","no"),title="mi did not converge, would you like to keep it running?")
+      if(resp.rerun==2){
+        stop.mi <- TRUE
+      }
+    }else{
+      resp.rerun <-menu(c("yes","no"),title="mi converged, would you like to stop?")
+      if(resp.rerun==1){
+        stop.mi <- TRUE
       }
     }
   }
@@ -609,7 +632,7 @@ mi.default.check<- function( n.iter=30, m=3, max.minutes =20, continue.on.conver
     max.minutes<-scan(what=double(),nmax=1)
   }
   # convergence
-  cat( "mi will run until convergence but you can make it run longer" )
+  cat( "mi will run until convergence but you can make it run longer \n" )
   resp.conv <- menu( c( "yes", "no" ), title = "would you like it to run after convergence?" )
   if( resp.conv == 1 ){
     continue.on.convergence <- TRUE
