@@ -92,6 +92,7 @@ export(
   mi.info.update.params,
   mi.info.update.transform,
   mi.info.update.type,
+  mi.interactive,
   mi.logcontinuous, 
   mi.matrix,
   mi.mixed,
