@@ -45,10 +45,10 @@
         1=taking HAART nonadherent,
         2=taking HAART adheremt at round 6th.
     }
-    \item{\code{h39b.W2}}{
-      log of self reported viral load level at round 7th.
-      (0 represents undetectable level).
-    }
+    %\item{\code{h39b.W2}}{
+    %  log of self reported viral load level at round 7th.
+    %  (0 represents undetectable level).
+    %}
   }
 }
 \details{
