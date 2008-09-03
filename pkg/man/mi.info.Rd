@@ -4,6 +4,7 @@
 \alias{mi.info}
 \alias{mi.info.fix}
 \alias{is.mi.info}
+\alias{mi.interactive}
 % methods
 \alias{show,mi.info-method}
 \alias{print,mi.info-method}
