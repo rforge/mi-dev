@@ -2,15 +2,15 @@
 \alias{glm.mi}
 \title{ Generalized Linear Modeling Function for Multiply Imputed Dataset }
 \description{
-  Generalized Linear Modeling Function that pulls togather the estimates from multiply imputed dataset.
+  Generalized Linear Modeling Function that pulls togather the estimates from multiple imputed dataset.
 }
 \usage{
 glm.mi(formula, mi.object, family = gaussian, ...)
 }
 \arguments{
-  \item{formula}{ See glm for detail. }
+  \item{formula}{ See \code{glm} for detail. }
   \item{mi.object}{ mi object. }
-  \item{family}{See glm for detail.}
+  \item{family}{See \code{glm} for detail.}
   \item{\dots}{ Any option to pass on to glm function. }
 }
 \details{
@@ -18,8 +18,8 @@ glm.mi(formula, mi.object, family = gaussian, ...)
 }
 \value{
   \item{call}{the matched call.}
-  \item{glm.mi.pooled}{Pulled estimates from the multiple dataset.}
-  \item{glm.mi.fit}{Estimates from each dataset. See glm for details.}
+  \item{glm.mi.pooled}{pulled estimates from the multiple dataset.}
+  \item{glm.mi.fit}{estimates from each dataset. See \code{glm} for details.}
 
 }
 \references{

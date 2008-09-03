@@ -31,7 +31,7 @@
 \alias{plot,mi,missing-method}
 \title{ Multiple Iterative Regression Imputation }
 \description{
- Produce a multiply imputed matrix applying the elementary functions iteratively 
+ Produce a multiple imputed matrix applying the elementary functions iteratively 
  to the variables with missingness in the data randomly imputing each variable
  and looping through until approximate convergence.
 }
@@ -76,12 +76,12 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   \item{bugs}{BUGS array of the mean and sd of each iteration.}
   
   The \code{imp} method creates a list of length(m) of imputations, whose names are: 
-  "Imputation1","Imputation2","Imputation3".
+  \code{Imputation1}, \code{Imputation2}, \code{Imputation3}.
   Each \code{imp[[m]]} is itself a list containg:
   
-  -\code{imp[[m]]$Imp.Models}: the specified models used for imputing NA's in each columns of dat;
+  - \code{imp[[m]]$Imp.Models}: the specified models used for imputing NA's in each columns of dat;
   
-  -\code{imp[[m]]$Random.predicted}: a list of vectors of length n.mis (number of NA's), specifying the random predicted values for imputing
+  - \code{imp[[m]]$Random.predicted}: a list of vectors of length n.mis (number of NA's), specifying the random predicted values for imputing
   missing data. For the "mixed" variables the vectors of random values are three: the random values
   predicted by using the binomial distribution (corresponding to the the first step of the imputation procedure);
   the random values predicted by using the normal distribution (corresponding to the second step of the imputation procedure)
@@ -89,15 +89,16 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   whether missing values are positive, otherwise are equal to zero. For the categorical variables
   the random values are predicted by using the Multinomial ditribution;
   
-  -\code{imp[[m]]$Random.predicted}: a list of vectors of length n-n.mis (number of complete observed data), specifying the
+  - \code{imp[[m]]$Random.predicted}: a list of vectors of length n-n.mis (number of complete observed data), specifying the
   estimated values of the models. For the "mixed" variables the vectors of estimated values are two,
   according to the two steps imputation procedure;
   
-  -\code{imp[[m]]$Residual.values}: a list of vectors of residuals will be used for checking the models.
+  - \code{imp[[m]]$Residual.values}: a list of vectors of residuals will be used for checking the models.
   For the "mixed" variables the vectors of residuals are two,
   according to the two steps imputation procedure;
   
-  -\code{imp[[m]]$Imputed.matrix}: a data frame with the missing data imputed.
+  - \code{imp[[m]]$Imputed.matrix}: a data frame with the missing data imputed.
+  
   }
 \details{
 Generate multiple imputations for incomplete data using iterative regression imputation. 

@@ -8,17 +8,17 @@
 lm.mi(formula, mi.object, ...)
 }
 \arguments{
-  \item{formula}{ View lm for detail. }
-  \item{mi.object}{ mi object. }
-  \item{\dots}{ Any option to pass on to lm function. }
+  \item{formula}{ View \code{lm} for detail. }
+  \item{mi.object}{ \code{mi} object. }
+  \item{\dots}{ Any option to pass on to \code{lm} function. }
 }
 \details{
-  Extracs the starting values from mi.method object family.
+  Extracs the starting values from \code{mi.method} object family.
 }
 \value{
   \item{call}{the matched call.}
-  \item{lm.mi.pooled}{Pulled estimates from the multiple dataset.}
-  \item{lm.mi.fit}{Estimates from each dataset. See lm for details.}
+  \item{lm.mi.pooled}{pulled estimates from the multiple dataset.}
+  \item{lm.mi.fit}{estimates from each dataset. See \code{lm} for details.}
 
 }
 \references{

@@ -2,7 +2,7 @@
 \alias{type.models}
 \alias{mi.types}
 
-\title{Functions to identify types of the models of mi object}
+\title{Functions to identify types of the models of the mi object}
 \description{
 The function to select the model based on the variable type
 }
