@@ -3,8 +3,7 @@
 # ==============================================================================
 setMethod( "mi.start", signature( object = "mi.method" ), 
   function( object ) {     
-    result <- coef( object )
-    return ( result )
+    return( object$model$coefficient )
   }
 ) 
 
