@@ -10,7 +10,7 @@ importFrom("graphics",
       plot
 )
 
-importFrom("armlite",
+importFrom("arm",
       sigma.hat
 )
 
