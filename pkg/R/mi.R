@@ -151,7 +151,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
 #        prd.val[[i]][[s]][[CurrentVar]]<- mi.data[[i]][[CurrentVar]]
 #        exp.val[[i]][[s]][[CurrentVar]]<- mi.object[[i]][[CurrentVar]]$expected
         mi.data[[i]][[CurrentVar]][is.na( data[[CurrentVar]] )] <- mi.object[[i]][[CurrentVar]]$random;
-        coef.val[[CurrentVar]][[i]]<-rbind(coef.val[[CurrentVar]][[i]],unlist(coef(mi.object[[i]][[CurrentVar]])));
+        coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],unlist(coef(mi.object[[i]][[CurrentVar]])));
         start.val[[i]][[jj]] <- mi.start( mi.object[[i]][[CurrentVar]] );
       } ## variable loop 
       cat("\n" );

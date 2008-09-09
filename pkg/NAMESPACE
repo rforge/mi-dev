@@ -1,14 +1,14 @@
-importFrom("stats",
-      coef, 
-      fitted,
-      resid,
-      residuals,
-      coefficients
-)
+#importFrom("stats",
+#      coef, 
+#      fitted,
+#      resid,
+#      residuals,
+#      coefficients
+#)
 
-importFrom("graphics",  
-      plot
-)
+#importFrom("graphics",  
+#      plot
+#)
 
 importFrom("arm",
       sigma.hat

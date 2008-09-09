@@ -104,7 +104,7 @@ mi.info <- function( data, threshold  = 0.99999 ){
     info[[ord.index]]$imp.order <- ord.temp[ord.index];
   }
   # default formula
-  info<-mi.info.formula.default( data, info );
+  info <- mi.info.formula.default( data, info );
   if( length( mi.correlated.list( data ) ) > 0 ) {
     cat( "\afollowing variables are correlated\n" );
     print( data.correlated );
@@ -170,7 +170,7 @@ type.default.formula <- function( response.name, predictor.name, type ) {
 # Extracts the imputation order vector(integer)
 # ========================================================================
 
-imp.order<-function(info){
+imp.order <- function(info){
   return(sapply(info,function(inf){inf$imp.order}))
 }
 
