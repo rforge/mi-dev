@@ -1,3 +1,4 @@
+# These are imported by lme4 already
 #importFrom("stats",
 #      coef, 
 #      fitted,
