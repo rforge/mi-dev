@@ -74,7 +74,7 @@ setMethod("plot", signature(x = "mi.mixed",y="ANY"),
 # ==============================================================================
 
 setMethod("plot", signature(x = "mi.sqrtcontinuous",y ="ANY"), 
-function ( x, y, main=deparse( substitute( Yobs ) ), gray.scale = FALSE, ... ) {
+function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
   #par(mfrow=c(1,4))
   fit     <- fitted( x )
   res     <- resid( x, y )
@@ -118,7 +118,7 @@ function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
 # ==============================================================================
 
 setMethod("plot", signature(x = "mi.categorical", y="ANY"), 
-function ( x, y, main=deparse( substitute( Yobs ) ),gray.scale = FALSE ) {
+function ( x, y, main=deparse( substitute( y ) ),gray.scale = FALSE ) {
   #par(mfrow=c(1,4))
   fit     <- fitted( x )
   res     <- resid( x, y )
@@ -138,7 +138,7 @@ function ( x, y, main=deparse( substitute( Yobs ) ),gray.scale = FALSE ) {
 # S4 plot function for mi.dichotomous object
 # ==============================================================================
 setMethod("plot", signature(x = "mi.dichotomous",y="ANY"), 
-function ( x, y, main=deparse( substitute( Yobs ) ), gray.scale = FALSE ) {
+function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
           #par(mfrow=c(1,4))
           fit     <- fitted( x )
           res     <- resid( x, y )

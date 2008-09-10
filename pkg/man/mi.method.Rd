@@ -21,9 +21,9 @@
 }
 \usage{
   \S4method{imputed}{mi.method}(object,y)
-  \S4method{coef}{mi.method}(object)
-  \S4method{sigma.hat}{mi.method}(object)
-  \S4method{fitted}{mi.method}(object)
+  \S4method{coef}{mi.method}(object, \dots)
+  \S4method{sigma.hat}{mi.method}(object, \dots)
+  \S4method{fitted}{mi.method}(object, \dots)
   \S4method{resid}{mi.method}(object, y)
   \S4method{print}{mi.method}(x, \dots)
   \S4method{plot}{mi.method,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )

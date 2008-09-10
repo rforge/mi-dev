@@ -21,8 +21,8 @@
 \usage{
   mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ...)
 
-  \S4method{coef}{mi.mixed}(object)
-  \S4method{sigma.hat}{mi.mixed}(object)
+  \S4method{coef}{mi.mixed}(object, \dots)
+  \S4method{sigma.hat}{mi.mixed}(object, \dots)
   \S4method{fitted}{mi.mixed}(object)
   \S4method{resid}{mi.mixed}(object, y)
   \S4method{imputed}{mi.mixed}(object, y)

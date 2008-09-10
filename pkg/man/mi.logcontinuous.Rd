@@ -14,9 +14,9 @@
     Imputes univariate missing data using linear regression on the logarithm values.
 }
 \usage{
-  mi.logcontinuous( formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ... )
+  mi.logcontinuous( formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, \dots )
   \S4method{resid}{mi.logcontinuous}(object, y)
-  \S4method{plot}{mi.logcontinuous,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
+  \S4method{plot}{mi.logcontinuous,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 
 \arguments{

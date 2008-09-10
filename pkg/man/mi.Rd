@@ -43,7 +43,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
     seed = NA, check.coef.convergence = FALSE) 
 
 %\S4method{mi}{mi}(object, \dots)
-\S4method{plot}{mi,missing}( x, \dots )
+\S4method{plot}{mi,missing}( x, y, \dots )
 
 }
 %- maybe also 'usage' for other objects documented here.
@@ -60,6 +60,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   \item{continue.on.convergence}{ If set to TRUE the mi will run until maximum iteration is reached or maximum minutes pass. }
   \item{check.coef.convergence}{default = FALSE}
   \item{x}{An object of a class '"mi"'.}
+  \item{y}{currently not used.}
   \item{\dots}{options for plot.mi.}
   
 }

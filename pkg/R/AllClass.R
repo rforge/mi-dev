@@ -1,8 +1,8 @@
 # ==============================================================================
 # class definition 
 # ==============================================================================
-setOldClass("lm")
-setOldClass("glm")
+methods::setOldClass("lm")
+methods::setOldClass("glm")
 
 setClass("mi.info",
             representation(),
