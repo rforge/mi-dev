@@ -11,8 +11,6 @@
 #      plot
 #)
 
-import("lme4")
-
 importFrom("arm",
       sigma.hat
 )
