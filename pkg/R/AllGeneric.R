@@ -2,15 +2,6 @@
 # generic method definition 
 # ==============================================================================
 
-if ( !isGeneric( "is.mi" )) {
-  setGeneric( "is.mi",
-              function( object ){
-                standardGeneric( "is.mi" )
-              } 
-  )
-}
-
-
 if ( !isGeneric( "call.mi" )) {
   setGeneric( "call.mi",
               function( object ){
@@ -18,13 +9,9 @@ if ( !isGeneric( "call.mi" )) {
               } 
   )
 }
-if ( !isGeneric( "data.mi" )) {
-  setGeneric( "data.mi",
-              function( object ){
-                standardGeneric( "data.mi" )
-              } 
-  )
-}
+
+
+
 if ( !isGeneric( "converged" )) {
   setGeneric( "converged",
               function( object ){
@@ -32,6 +19,37 @@ if ( !isGeneric( "converged" )) {
               } 
   )
 }
+
+
+
+if ( !isGeneric( "coef" )) {
+  setGeneric( "coef",
+              function (object, ...) {
+                standardGeneric( "coef" )
+              } 
+  )
+}
+
+
+if ( !isGeneric( "data.mi" )) {
+  setGeneric( "data.mi",
+              function( object ){
+                standardGeneric( "data.mi" )
+              } 
+  )
+}
+
+
+
+if ( !isGeneric( "fitted" )) {
+  setGeneric( "fitted",
+              function (object, ...) {
+                standardGeneric( "fitted" )
+              } 
+  )
+}
+
+
 if ( !isGeneric( "m" )) {
   setGeneric( "m",
               function( object ){
@@ -40,6 +58,7 @@ if ( !isGeneric( "m" )) {
   )
 }
 
+
 if ( !isGeneric( "bugs.mi" )) {
   setGeneric( "bugs.mi",
               function( object ){
@@ -47,6 +66,8 @@ if ( !isGeneric( "bugs.mi" )) {
               } 
   )
 }
+
+
 if ( !isGeneric( "info.mi" )) {
   setGeneric( "info.mi",
               function( object ){
@@ -55,6 +76,7 @@ if ( !isGeneric( "info.mi" )) {
   )
 }
 
+
 if ( !isGeneric( "imp" )) {
   setGeneric( "imp",
               function( object,... ){
@@ -62,6 +84,15 @@ if ( !isGeneric( "imp" )) {
               } 
   )
 }
+
+if ( !isGeneric( "is.mi" )) {
+  setGeneric( "is.mi",
+              function( object ){
+                standardGeneric( "is.mi" )
+              } 
+  )
+}
+
 
 if ( !isGeneric( "mi.completed" )) {
   setGeneric( "mi.completed",
@@ -107,11 +138,17 @@ if ( !isGeneric("mi.hist")) {
     )
 }
 
-#if ( !isGeneric( "mi.scatterplot" ) ) {
-#    setGeneric( "mi.scatterplot",
-#               function( Yobs, Yimp, ... )
-#               standardGeneric( "mi.scatterplot" ) )
-#}
+
+
+if ( !isGeneric( "resid" )) {
+  setGeneric( "resid",
+              function (object, ...) {
+                standardGeneric( "resid" )
+              } 
+  )
+}
+
+
 
 if ( !isGeneric( "typecast" ) ) {
     setGeneric( "typecast",

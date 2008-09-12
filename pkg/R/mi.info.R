@@ -1,8 +1,11 @@
 # ==============================================================================
 # Creates information matrix
 # ==============================================================================
-mi.info <- function( data, threshold  = 0.99999 ){
-  if( is.matrix( data ) ) { data <- data.frame( data ) }
+mi.info <- function( data, threshold  = 0.99999 )
+{
+  if( is.matrix( data ) ) { 
+    data <- data.frame( data ) 
+  }
   info <- vector("list", dim( data )[2] )
   names( info ) <- dimnames( data )[[2]]
   data.original.name <- deparse( substitute( data ) )
