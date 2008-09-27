@@ -6,7 +6,7 @@
 #      residuals,
 #      coefficients
 #)
-
+#
 #importFrom("graphics",  
 #      plot
 #)
