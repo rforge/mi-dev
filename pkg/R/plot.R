@@ -32,7 +32,7 @@ plot.mi <- function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
 plot.mi.method <- function( x, y, 
   main = deparse( substitute( y ) ), gray.scale = FALSE, ... ){      
     fit   <- fitted( x )
-    res   <- resid( x, y )
+    res   <- residuals( x, y )
     sigma <- sigma.hat( x )
     vrb.obs <- y
     vrb.imp <- imputed( x, y )
@@ -71,7 +71,7 @@ plot.mi.mixed <-  function ( x, y,
   main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
   #par(mfrow=c(1,4))
   fit     <- fitted( x )
-  res     <- resid(x, y)
+  res     <- residuals(x, y)
   sigma   <- sigma.hat( x )
   vrb.obs <- y
   vrb.imp <- imputed( x, y )
@@ -117,7 +117,7 @@ plot.mi.sqrtcontinuous <- function ( x, y,
   main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
   #par(mfrow=c(1,4))
   fit     <- fitted( x )
-  res     <- resid( x, y )
+  res     <- residuals( x, y )
   sigma   <- sigma.hat( x )
   vrb.obs <- y
   vrb.imp <- imputed( x, y )
@@ -162,7 +162,7 @@ plot.mi.polr <- function ( x, y,
   #par(mfrow=c(1,4))
   y       <- factor2num( y )
   fit     <- factor2num( fitted( x ))
-  res     <- factor2num( resid( x, y ))
+  res     <- factor2num( residuals( x, y ))
   sigma   <- factor2num( sigma.hat( x ) )
   vrb.obs <- factor2num( y )
   vrb.imp <- factor2num( imputed( x, y ) )
@@ -199,7 +199,7 @@ plot.mi.categorical <- function ( x, y,
   main=deparse( substitute( y ) ),gray.scale = FALSE, ... ) {
   #par(mfrow=c(1,4))
   fit     <- fitted( x )
-  res     <- resid( x, y )
+  res     <- residuals( x, y )
   sigma   <- sigma.hat( x )
   vrb.obs <- y
   vrb.imp <- imputed( x, y )
@@ -235,7 +235,7 @@ plot.mi.dichotomous <- function ( x, y,
   main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
           #par(mfrow=c(1,4))
           fit     <- fitted( x )
-          res     <- resid( x, y )
+          res     <- residuals( x, y )
           sigma   <- sigma.hat( x )
           vrb.obs <- y
           vrb.imp <- imputed( x, y )
@@ -273,7 +273,7 @@ plot.mi.logcontinuous <- function ( x, y,
   main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
     par(mfrow=c(1,4))
     fit     <- fitted( x )
-    res     <- resid( x, y )
+    res     <- residuals( x, y )
     sigma   <- sigma.hat( x )
     vrb.obs <- y
     vrb.imp <- imputed( x, y ) 
