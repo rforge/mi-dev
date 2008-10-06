@@ -4,7 +4,7 @@
 \alias{mi.dichotomous-class}
 % Function
 \alias{mi.dichotomous}
-\alias{plot,mi.dichotomous,ANY-method}
+\alias{plot.mi.dichotomous}
 % methods
 \alias{resid,mi.dichotomous-method}
 \title{
@@ -19,7 +19,7 @@
 mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ...)
 
 \S4method{resid}{mi.dichotomous}(object, y)
-\S4method{plot}{mi.dichotomous,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
+\S3method{plot}{mi.dichotomous}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 
 \arguments{

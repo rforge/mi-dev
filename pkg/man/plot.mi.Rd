@@ -1,12 +1,12 @@
 \name{ plot.mi }
 \alias{plot.mi}
-\alias{plot,mi-method}
+%\alias{plot,mi-method}
 \title{ Diagnostic Plots for multiple imputation object}
 \description{
   Diagnostic plots for testing the fit of the imputation method to the observed data.
 }
 \usage{
-\S4method{plot}{mi}( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
+\S3method{plot}{mi}( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
                     gray.scale = FALSE, mfrow=c( 1, 4 ), \dots )
 }
 \arguments{

@@ -4,7 +4,7 @@
 \alias{mi.polr-class}
 % Function
 \alias{mi.polr}
-\alias{plot,mi.polr,ANY-method}
+\alias{plot.mi.polr}
 \title{
     Elementary function: multinomial log-linear models to impute a ordered categorical variable.
 }
@@ -13,7 +13,7 @@
 }
 \usage{
   mi.polr(formula, data = NULL, drop.unused.levels = TRUE, start = NULL, n.iter = 100, ...)
-  \S4method{plot}{mi.polr,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
+  \S3method{plot}{mi.polr}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

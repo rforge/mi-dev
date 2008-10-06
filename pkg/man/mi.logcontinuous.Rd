@@ -5,7 +5,7 @@
 % Function
 \alias{mi.logcontinuous}
 \alias{resid,mi.logcontinuous-method}
-\alias{plot,mi.logcontinuous,ANY-method}
+\alias{plot.mi.logcontinuous}
 
 \title{
     Elementary function: linear regression to impute a continuous positive variable.
@@ -16,7 +16,7 @@
 \usage{
   mi.logcontinuous( formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, \dots )
   \S4method{resid}{mi.logcontinuous}(object, y)
-  \S4method{plot}{mi.logcontinuous,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
+  \S3method{plot}{mi.logcontinuous}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 
 \arguments{

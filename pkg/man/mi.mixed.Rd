@@ -4,12 +4,12 @@
 \alias{mi.mixed-class}
 % Function
 \alias{mi.mixed}
-\alias{coef,mi.mixed-method}
+\alias{coef.mi.mixed}
 \alias{imputed,mi.mixed-method}
 \alias{sigma.hat,mi.mixed-method}
 \alias{fitted,mi.mixed-method}
 \alias{resid,mi.mixed-method}
-\alias{plot,mi.mixed,ANY-method}
+\alias{plot.mi.mixed}
 \alias{print,mi.mixed-method}
 \title{
     Two-stage elementary function: linear regression to impute a variable that can be positive or zero. }
@@ -19,14 +19,14 @@
     and the second model is fit to all the data for which the variable is observed and positive.
 }
 \usage{
-  mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ...)
+  mi.mixed(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, \dots)
 
-  \S4method{coef}{mi.mixed}(object, \dots)
+  \S3method{coef}{mi.mixed}(object, \dots)
   \S4method{sigma.hat}{mi.mixed}(object, \dots)
   \S4method{fitted}{mi.mixed}(object)
   \S4method{resid}{mi.mixed}(object, y)
   \S4method{imputed}{mi.mixed}(object, y)
-  \S4method{plot}{mi.mixed,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
+  \S3method{plot}{mi.mixed}(x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

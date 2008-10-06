@@ -6,9 +6,9 @@
 % Function
 \alias{imputed}
 \alias{print,mi.method-method}
-\alias{plot,mi.method,ANY-method}
+\alias{plot.mi.method}
 \alias{fitted,mi.method-method}
-\alias{coef,mi.method-method}
+\alias{coef.mi.method}
 \alias{imputed,mi.method-method}
 \alias{resid,mi.method-method}
 \alias{sigma.hat,mi.method-method}
@@ -21,12 +21,12 @@
 }
 \usage{
   \S4method{imputed}{mi.method}(object,y)
-  \S4method{coef}{mi.method}(object, \dots)
+  \S3method{coef}{mi.method}(object, \dots)
   \S4method{sigma.hat}{mi.method}(object, \dots)
   \S4method{fitted}{mi.method}(object, \dots)
   \S4method{resid}{mi.method}(object, y)
   \S4method{print}{mi.method}(x, \dots)
-  \S4method{plot}{mi.method,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
+  \S3method{plot}{mi.method}(x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -22,13 +22,13 @@ if ( !isGeneric( "converged" )) {
 
 
 
-if ( !isGeneric( "coef" )) {
-  setGeneric( "coef",
-              function (object, ...) {
-                standardGeneric( "coef" )
-              } 
-  )
-}
+#if ( !isGeneric( "coef" )) {
+#  setGeneric( "coef",
+#              function (object, ...) {
+#                standardGeneric( "coef" )
+#              } 
+#  )
+#}
 
 
 if ( !isGeneric( "data.mi" )) {

@@ -6,7 +6,7 @@
 % Function
 \alias{mi.fixed}
 \alias{mi.copy}
-\alias{plot,mi.copy,ANY-method}
+\alias{plot.mi.copy}
 \title{
     Elementary function: imputation of constant variable.
 }
@@ -15,8 +15,8 @@
 }
 
 \usage{
-    mi.fixed( formula, data = NULL, ... )
- \S4method{plot}{mi.copy,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
+ mi.fixed( formula, data = NULL, ... )
+ \S3method{plot}{mi.copy}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 
 \arguments{

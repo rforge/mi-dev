@@ -5,7 +5,7 @@
 % Function
 \alias{mi.categorical}
 \alias{resid,mi.categorical-method}
-\alias{plot,mi.categorical,ANY-method}
+\alias{plot.mi.categorical}
 
 \title{ 
     Elementary function: multinomial log-linear models to impute a categorical variable.
@@ -16,7 +16,7 @@
 \usage{
   mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots )
   \S4method{resid}{mi.categorical}(object, y)
-  \S4method{plot}{mi.categorical,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE )
+  \S3method{plot}{mi.categorical}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 \arguments{
   \item{formula}{ a formula expression as for regression models, of the form

@@ -1,15 +1,15 @@
 # These are imported by lme4 already
 importFrom("stats",
-      coef, 
+#      coef, 
       fitted,
       resid,
-      residuals,
-      coefficients
+      residuals
+#      coefficients
 )
 
-importFrom("graphics",  
-      plot
-)
+#importFrom("graphics",  
+#      plot
+#)
 
 importFrom("arm",
       sigma.hat
@@ -36,7 +36,7 @@ exportMethods(
   bugs.mi,
   info.mi,
   is.mi,
-  coef,
+#  coef,
   converged,
   fitted,
   imputed,
@@ -50,7 +50,7 @@ exportMethods(
   resid,
   sigma.hat,
   typecast,
-  plot,
+#  plot,
   print,
   show
 )
@@ -109,7 +109,17 @@ export(
   type.models
 )
 
+S3method(coef, mi.method)
+S3method(coef, mi.mixed)
 S3method(plot, mi)
+S3method(plot, mi.method)
+S3method(plot, mi.mixed)
+S3method(plot, mi.sqrtcontinuous)
+S3method(plot, mi.polr)
+S3method(plot, mi.categorical)
+S3method(plot, mi.copy)
+S3method(plot, mi.dichotomous)
+S3method(plot, mi.logcontinuous)
 S3method(print, mi)
 S3method(print, mi.info)
 S3method(print, mi.method)
