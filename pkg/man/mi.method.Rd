@@ -10,7 +10,7 @@
 \alias{fitted.mi.method}
 \alias{coef.mi.method}
 \alias{imputed,mi.method-method}
-\alias{resid,mi.method-method}
+\alias{residuals.mi.method}
 \alias{sigma.hat,mi.method-method}
 
 \title{
@@ -24,7 +24,7 @@
   \S3method{coef}{mi.method}(object, \dots)
   \S4method{sigma.hat}{mi.method}(object, \dots)
   \S3method{fitted}{mi.method}(object, \dots)
-  \S4method{resid}{mi.method}(object, y)
+  \S3method{residuals}{mi.method}(object, y, \dots)
   \S4method{print}{mi.method}(x, \dots)
   \S3method{plot}{mi.method}(x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }

@@ -4,7 +4,7 @@
 \alias{mi.logcontinuous-class}
 % Function
 \alias{mi.logcontinuous}
-\alias{resid,mi.logcontinuous-method}
+\alias{residuals.mi.logcontinuous}
 \alias{plot.mi.logcontinuous}
 
 \title{
@@ -15,7 +15,7 @@
 }
 \usage{
   mi.logcontinuous( formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, \dots )
-  \S4method{resid}{mi.logcontinuous}(object, y)
+  \S3method{residuals}{mi.logcontinuous}(object, y, \dots)
   \S3method{plot}{mi.logcontinuous}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 

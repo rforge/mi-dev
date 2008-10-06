@@ -4,7 +4,7 @@
 \alias{mi.sqrtcontinuous-class}
 % Function
 \alias{mi.sqrtcontinuous}
-\alias{resid,mi.sqrtcontinuous-method}
+\alias{residuals.mi.sqrtcontinuous}
 \alias{plot.mi.sqrtcontinuous}
 \title{
     Elementary function: linear regression to impute a continuous positive variable.
@@ -15,7 +15,7 @@
 \usage{
 mi.sqrtcontinuous(formula, data = NULL, start = NULL, n.iter = 100, draw.from.beta = FALSE, ...)
 
-\S4method{resid}{mi.sqrtcontinuous}(object, y)
+\S3method{residuals}{mi.sqrtcontinuous}(object, y, \dots)
 \S3method{plot}{mi.sqrtcontinuous}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 
