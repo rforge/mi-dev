@@ -47,7 +47,7 @@ strongly recommended to use a variable containing more information. Fitted lowes
 }
 \examples{
   data(CHAIN)
-  imp.CHAIN <- mi(CHAIN,n.iter=10)
+  imp.CHAIN <- mi(CHAIN,n.iter=6)
   plot(imp.CHAIN)
 
   #==========================================

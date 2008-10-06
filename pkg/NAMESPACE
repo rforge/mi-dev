@@ -1,11 +1,11 @@
 # These are imported by lme4 already
-importFrom("stats",
+#importFrom("stats",
 #      coef, 
-      fitted,
-      resid,
-      residuals
+#      fitted
+#      resid,
+#      residuals
 #      coefficients
-)
+#)
 
 #importFrom("graphics",  
 #      plot
@@ -38,7 +38,7 @@ exportMethods(
   is.mi,
 #  coef,
   converged,
-  fitted,
+#  fitted,
   imputed,
   imp,
   m,
@@ -47,7 +47,7 @@ exportMethods(
   mi.matrix,
   mi.data.frame,
   mi.start,
-  resid,
+#  resid,
   sigma.hat,
   typecast,
 #  plot,
@@ -111,6 +111,10 @@ export(
 
 S3method(coef, mi.method)
 S3method(coef, mi.mixed)
+S3method(fitted, mi.method)
+S3method(fitted, mi.mixed)
+#S3method(resid, mi.method)
+#S3method(resid, mi.mixed)
 S3method(plot, mi)
 S3method(plot, mi.method)
 S3method(plot, mi.mixed)

@@ -7,7 +7,7 @@
 \alias{coef.mi.mixed}
 \alias{imputed,mi.mixed-method}
 \alias{sigma.hat,mi.mixed-method}
-\alias{fitted,mi.mixed-method}
+\alias{fitted.mi.mixed}
 \alias{resid,mi.mixed-method}
 \alias{plot.mi.mixed}
 \alias{print,mi.mixed-method}
@@ -23,7 +23,7 @@
 
   \S3method{coef}{mi.mixed}(object, \dots)
   \S4method{sigma.hat}{mi.mixed}(object, \dots)
-  \S4method{fitted}{mi.mixed}(object)
+  \S3method{fitted}{mi.mixed}(object, \dots)
   \S4method{resid}{mi.mixed}(object, y)
   \S4method{imputed}{mi.mixed}(object, y)
   \S3method{plot}{mi.mixed}(x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)

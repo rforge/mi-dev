@@ -41,13 +41,13 @@ if ( !isGeneric( "data.mi" )) {
 
 
 
-if ( !isGeneric( "fitted" )) {
-  setGeneric( "fitted",
-              function (object, ...) {
-                standardGeneric( "fitted" )
-              } 
-  )
-}
+#if ( !isGeneric( "fitted" )) {
+#  setGeneric( "fitted",
+#              function (object, ...) {
+#                standardGeneric( "fitted" )
+#              } 
+#  )
+#}
 
 
 if ( !isGeneric( "m" )) {
@@ -140,13 +140,13 @@ if ( !isGeneric("mi.hist")) {
 
 
 
-if ( !isGeneric( "resid" )) {
-  setGeneric( "resid",
-              function (object, ...) {
-                standardGeneric( "resid" )
-              } 
-  )
-}
+#if ( !isGeneric( "resid" )) {
+#  setGeneric( "resid",
+#              function (object, ...) {
+#                standardGeneric( "resid" )
+#              } 
+#  )
+#}
 
 
 
