@@ -1,15 +1,23 @@
 \name{lm.mi}
+\docType{class}
+% Classes
+\alias{mi.lm-class}
 \alias{lm.mi}
+\alias{display,mi.lm-method}
+
 \title{ Linear Regression Function for Multiply Imputed Dataset }
 \description{
   Linear Regression Function that pulls togather the estimates from multiply imputed dataset.
 }
 \usage{
 lm.mi(formula, mi.object, ...)
+\S4method{display}{mi.lm}(object, digits=2)
 }
 \arguments{
   \item{formula}{ View \code{lm} for detail. }
   \item{mi.object}{ \code{mi} object. }
+  \item{object}{\code{mi.lm} object.}
+  \item{digits}{number of significant digits to display, default=2.}
   \item{\dots}{ Any option to pass on to \code{lm} function. }
 }
 \details{

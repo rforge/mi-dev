@@ -1,16 +1,25 @@
 \name{glm.mi}
+\docType{class}
+% Classes
+\alias{mi.glm}
 \alias{glm.mi}
+\alias{display,mi.glm-method}
+
+
 \title{ Generalized Linear Modeling Function for Multiply Imputed Dataset }
 \description{
   Generalized Linear Modeling Function that pulls togather the estimates from multiple imputed dataset.
 }
 \usage{
 glm.mi(formula, mi.object, family = gaussian, ...)
+\S4method{display}{mi.glm}(object, digits=2)
 }
 \arguments{
   \item{formula}{ See \code{glm} for detail. }
   \item{mi.object}{ mi object. }
   \item{family}{See \code{glm} for detail.}
+  \item{object}{\code{mi.glm} object.}
+  \item{digits}{number of significant digits to display, default=2.}
   \item{\dots}{ Any option to pass on to glm function. }
 }
 \details{

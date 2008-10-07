@@ -5,6 +5,8 @@ factor2num <- function( a ) {
     a
   }
 }
+
+
 factor2char <- function( a ) {
   levels( a )[ as.numeric( a ) ]
 }

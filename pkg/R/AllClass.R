@@ -21,6 +21,11 @@ setClass("mi",
             #contains  = "list"
 )
 
+setClass("mi.glm")
+
+setClass("mi.lm")
+
+
 setClass("mi.method",
             representation ="VIRTUAL",
             contains = "list"
