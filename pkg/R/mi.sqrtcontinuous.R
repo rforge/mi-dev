@@ -44,22 +44,22 @@ mi.sqrtcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
     random.pred     <- rnorm(n.mis, tcrossprod(cbind(X[mis,1,drop=FALSE]*0+1,X[mis,,drop=FALSE]),sim.bglm.imp$beta), sim.bglm.imp$sigma )
   }
   else{
-    random.pred     <- rnorm( n.mis, determ.pred[mis], sigma.hat( bglm.imp ) );
+    random.pred     <- rnorm( n.mis, determ.pred[mis], sigma.hat( bglm.imp ) )
   }
-  names( random.pred ) <- names( determ.pred[mis] );
+  names( random.pred ) <- names( determ.pred[mis] )
   # calculate residual
   #residual.val    <- bglm.imp$residuals #Y - determ.pred^2
   # return the result
   result <- list( model = list( call = NULL, coefficient = NULL, sigma = NULL ), expected = NULL, random = NULL )
-  result$model$call        <- bglm.imp$call;
-  result$model$call$formula<- as.formula( formula );
-  result$model$call$start  <- round( as.double( start ),2 );
-  result$model$call$n.iter <- n.iter;
-  result$model$coefficient <- coefficients( bglm.imp ); 
-  result$model$sigma       <- sigma.hat( bglm.imp );
-  result$model$dispersion  <- bglm.imp$dispersion;
+  result$model$call        <- bglm.imp$call
+  result$model$call$formula<- as.formula( formula )
+  result$model$call$start  <- round( as.double( start ),2 )
+  result$model$call$n.iter <- n.iter
+  result$model$coefficient <- coefficients( bglm.imp ) 
+  result$model$sigma       <- sigma.hat( bglm.imp )
+  result$model$dispersion  <- bglm.imp$dispersion
   result$expected <- determ.pred^2
-  #result$expected <- determ.pred;
+  #result$expected <- determ.pred
   result$random   <- random.pred^2
   #result$random   <- abs(random.pred)
   class ( result )<- c( "mi.sqrtcontinuous", "mi.method", "list" )

@@ -3,36 +3,36 @@
 # ==============================================================================
 mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE, 
                        start = NULL, n.iter = 100, ... ) {
-  call <- match.call();
-  mf   <- match.call(expand.dots = FALSE);
-  m    <- match(c("formula", "data"), names(mf), 0);
-  mf   <- mf[c(1, m)];
-  mf$drop.unused.levels <- TRUE;
-  mf$na.action <- na.pass;
-  mf[[1]] <- as.name( "model.frame" );
-  mf <- eval( mf, parent.frame( ) );
-  mt <- attr( mf, "terms" );
-  Y  <- model.response( mf, "any" );
+  call <- match.call()
+  mf   <- match.call(expand.dots = FALSE)
+  m    <- match(c("formula", "data"), names(mf), 0)
+  mf   <- mf[c(1, m)]
+  mf$drop.unused.levels <- TRUE
+  mf$na.action <- na.pass
+  mf[[1]] <- as.name( "model.frame" )
+  mf <- eval( mf, parent.frame( ) )
+  mt <- attr( mf, "terms" )
+  Y  <- model.response( mf, "any" )
   if ( length( dim( Y ) ) == 1 ) {
-    nm <- rownames( Y );
-    dim( Y ) <- NULL;
+    nm <- rownames( Y )
+    dim( Y ) <- NULL
     if ( !is.null( nm ) ) 
-      names ( Y ) <- nm;
+      names ( Y ) <- nm
   }
-  X <- as.matrix( mf[ , -1, drop = FALSE ] );
+  X <- as.matrix( mf[ , -1, drop = FALSE ] )
   namesD <- if( is.null( data ) ) { 
-              NULL;
+              NULL
             } else { 
-              deparse( substitute( data ) );
+              deparse( substitute( data ) )
             }
-  mis    <- is.na( Y );
-  n.mis  <- sum( mis );
+  mis    <- is.na( Y )
+  n.mis  <- sum( mis )
   if(is.null(data)){
-    data<- mf;
+    data<- mf
   }
   # convert the levels
-  Y.levels <- levels( factor( Y ) );
-  Y.nlevel <- nlevels( factor( Y ) );
+  Y.levels <- levels( factor( Y ) )
+  Y.nlevel <- nlevels( factor( Y ) )
   if( is.numeric( Y ) ) { Y.levels <- as.double( Y.levels ) }
   Y.org <- Y
 #    for ( i in 1:Y.nlevel ) {
@@ -48,12 +48,12 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   #if( !is.null( start ) ){ n.iter <- 1 } 
   bplr.imp    <- bayespolr( formula = formula, data = data, start = 0, 
                               method = c( "logistic" ), 
-                              drop.unused.levels = FALSE, n.iter = n.iter );
+                              drop.unused.levels = FALSE, n.iter = n.iter )
 #    bplr.imp    <- polr( formula = formula, data = data,  
-#                              method = c( "logistic" ) );
+#                              method = c( "logistic" ) )
 
 #  bplr.imp    <- bayespolr2( formula = formula, data = data, method = c( "logistic" ), 
-#                  drop.unused.levels = FALSE, n.iter = n.iter,start=0) #, start = start );
+#                  drop.unused.levels = FALSE, n.iter = n.iter,start=0) #, start = start )
 #  #bplr.imp    <- bayespolr( formula = formula, data = data, method = c( "logistic" ), drop.unused.levels = FALSE, n.iter = n.iter )
   expect.prob <- predict( bplr.imp, newdata = data, type = "probs" )
   determ.pred <- as.vector( expect.prob %*% as.double( Y.levels ) )
@@ -63,7 +63,7 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   # reconvert the levels
   #imputed.vctr <- imputed.tmp
 
-    random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse=";") )        
+    random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse="") )        
     #imputed.vctr <- replace( imputed.vctr, imputed.tmp == i, Y.levels[i] )
   # return the result
   result <- list( model = list( call = NULL, 
@@ -89,8 +89,8 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
 #                             coefficient  = bplr.imp$coefficient,
 #                             sigma        = NULL)
 #            expected = determ.pred,
-#            random   = random.pred);
-#  names(result@random)     <- names( determ.pred[mis] );
+#            random   = random.pred)
+#  names(result@random)     <- names( determ.pred[mis] )
   return( result )
   on.exit( rm( bplr.imp ) )
 }

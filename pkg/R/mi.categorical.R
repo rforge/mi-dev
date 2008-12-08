@@ -3,50 +3,50 @@
 # ==============================================================================
 mi.categorical <- function( formula, data = NULL, n.iter = 100, 
                               MaxNWts = 1500, ...  ) {
-  call <- match.call();
-  mf   <- match.call(expand.dots = FALSE);
-  m    <- match(c("formula", "data"), names(mf), 0);
-  mf   <- mf[c(1, m)];
-  mf$drop.unused.levels <- TRUE;
-  mf$na.action <- na.pass;
-  mf[[1]] <- as.name("model.frame");
-  mf <- eval(mf, parent.frame());
-  mt <- attr(mf, "terms");
-  Y  <- model.response(mf, "any");
+  call <- match.call()
+  mf   <- match.call(expand.dots = FALSE)
+  m    <- match(c("formula", "data"), names(mf), 0)
+  mf   <- mf[c(1, m)]
+  mf$drop.unused.levels <- TRUE
+  mf$na.action <- na.pass
+  mf[[1]] <- as.name("model.frame")
+  mf <- eval(mf, parent.frame())
+  mt <- attr(mf, "terms")
+  Y  <- model.response(mf, "any")
   if (length(dim(Y)) == 1) {
-    nm <- rownames(Y);
-    dim(Y) <- NULL;
+    nm <- rownames(Y)
+    dim(Y) <- NULL
     if (!is.null(nm)) 
-      names(Y) <- nm;
+      names(Y) <- nm
   }
   X <- mf[,-1,drop=FALSE]
   namesD <- if( is.null( data ) ) { NULL } else { deparse( substitute( data ) ) }
-  mis    <- is.na( Y );
-  n.mis  <- sum( mis );
+  mis    <- is.na( Y )
+  n.mis  <- sum( mis )
   if(is.null(data)){ data<- mf }
   # main program
   lm.cat.imp  <- multinom( formula = formula, data = data, maxit = n.iter, 
-                              trace = FALSE , MaxNWts = MaxNWts, ...);
-  deter.prob  <- predict( lm.cat.imp, newdata = data, type = "p" );
-  y.cat       <- as.double( levels ( factor ( Y ) ) );
-  if(length(y.cat)<=2){stop(message="number of category must be bigger than 2");}
-  determ.pred <- as.vector( deter.prob %*% y.cat );
-  names( determ.pred ) <- 1:length( determ.pred );
-  random.pred <- Rmultnm( n.mis, deter.prob[mis,], y.cat );
-  names( random.pred ) <- names( determ.pred[mis] );
+                              trace = FALSE , MaxNWts = MaxNWts, ...)
+  deter.prob  <- predict( lm.cat.imp, newdata = data, type = "p" )
+  y.cat       <- as.double( levels ( factor ( Y ) ) )
+  if(length(y.cat)<=2){stop(message="number of category must be bigger than 2")}
+  determ.pred <- as.vector( deter.prob %*% y.cat )
+  names( determ.pred ) <- 1:length( determ.pred )
+  random.pred <- Rmultnm( n.mis, deter.prob[mis,], y.cat )
+  names( random.pred ) <- names( determ.pred[mis] )
   # return the result
   result <- list( model = list( call = NULL, coefficient = NULL, sigma = NULL ), 
                     expected = NULL, random = NULL )         
-  result$model$call        <- lm.cat.imp$call;
-  result$model$call$formula<- formula;
-  result$model$call$maxit  <- n.iter;
-  result$model$call$MaxNWts<- MaxNWts;
-  result$model$coefficient <- coefficients( lm.cat.imp );
-  result$model$sigma       <- NULL; 
-  result$expected <- determ.pred;
-  result$random   <- random.pred;
-  result$residual <- Y[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ] ;
-  class ( result ) <- c( "mi.categorical", "mi.method","list" );
+  result$model$call        <- lm.cat.imp$call
+  result$model$call$formula<- formula
+  result$model$call$maxit  <- n.iter
+  result$model$call$MaxNWts<- MaxNWts
+  result$model$coefficient <- coefficients( lm.cat.imp )
+  result$model$sigma       <- NULL 
+  result$expected <- determ.pred
+  result$random   <- random.pred
+  result$residual <- Y[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ] 
+  class ( result ) <- c( "mi.categorical", "mi.method","list" )
   
 #  result <-new("mi.categorical",
 #            model    = list( call = lm.cat.imp$call,
@@ -57,7 +57,7 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
 #                             sigma       <- NULL),
 #            expected = determ.pred,
 #            random   = random.pred,
-#            residual = Y[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ]);
+#            residual = Y[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ])
   return( result )
   on.exit( rm( lm.cat.imp ) )
 }
