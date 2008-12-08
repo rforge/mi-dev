@@ -22,23 +22,26 @@ factor2char <- function( a ) {
 # ========================================================================
 
 imp.order <- function(info){
-  return(sapply(info,function(inf){inf$imp.order}))
+  foo <- function(x) x$imp.order
+  return(sapply(info, FUN=foo))
 }
 
 # ========================================================================
 # Extracts the include or not vector (logical)
 # ========================================================================
 
-include<-function(info){
-  return(sapply(info,function(inf){inf$include}))
+include <- function(info){
+  foo <- function(x) x$include
+  return(sapply(info, FUN=foo))
 }
 
 # ========================================================================
 # Extracts the number of missing vector(integer)
 # ========================================================================
 
-nmis<-function(info){
-  return(sapply(info,function(inf){inf$nmis}))
+nmis <- function(info){
+  foo <- function(x) x$nmis
+  return(sapply(info, FUN=foo))
 }
 
 # ========================================================================
@@ -46,5 +49,6 @@ nmis<-function(info){
 # ========================================================================
 
 all.missing <-function(info){
-  return(sapply(info,function(inf){inf$all.missing}))
+  foo <- function(x) x$all.missing
+  return(sapply(info, FUN=foo))
 }
