@@ -1,5 +1,6 @@
 mi.logcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100, 
-                                draw.from.beta = FALSE, ... ) {
+                                draw.from.beta = FALSE, data.augment = FALSE,...  ) 
+{
   call <- match.call()
   mf   <- match.call(expand.dots = FALSE)
   m    <- match(c("formula", "data"), names(mf), 0)
@@ -26,7 +27,20 @@ mi.logcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
      n.iter <- 1 
      start[is.na(start)]<-0
   } 
-  bglm.imp        <- bayesglm( formula = formula, data = data, family = gaussian, n.iter = n.iter, start = start,Warning=FALSE,... )
+  
+  if(data.augment){
+    bglm.imp <- bayesglm( formula = formula, 
+                          data = .data.aug(data, n=trunc(dim(data)[1]*0.1)),
+                          family = gaussian, n.iter = n.iter, 
+                          start = start, Warning=FALSE,... )
+  }
+  else{
+    bglm.imp <- bayesglm( formula = formula, 
+                          data = data, 
+                          family = gaussian, n.iter = n.iter, 
+                          start = start, Warning=FALSE,... )
+  }
+
   if(any(is.na(coefficients(bglm.imp)))){ warning(message="there are coefficient estimated as NA in the model") }
   determ.pred     <- predict( bglm.imp, newdata = data, type = "response" )
   if(draw.from.beta){

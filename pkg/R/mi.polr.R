@@ -2,7 +2,7 @@
 # imputation function for ordered categorical variable
 # ==============================================================================
 mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE, 
-                       start = NULL, n.iter = 100, ... ) {
+                      start = NULL, n.iter = 100, data.augment = FALSE, ... ) {
   call <- match.call()
   mf   <- match.call(expand.dots = FALSE)
   m    <- match(c("formula", "data"), names(mf), 0)
@@ -45,26 +45,28 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   if( is.null( data ) ){ data <- data.frame( mf )}
 
   # main program
-  #if( !is.null( start ) ){ n.iter <- 1 } 
-  bplr.imp    <- bayespolr( formula = formula, data = data, start = 0, 
-                              method = c( "logistic" ), 
-                              drop.unused.levels = FALSE, n.iter = n.iter )
-#    bplr.imp    <- polr( formula = formula, data = data,  
-#                              method = c( "logistic" ) )
-
-#  bplr.imp    <- bayespolr2( formula = formula, data = data, method = c( "logistic" ), 
-#                  drop.unused.levels = FALSE, n.iter = n.iter,start=0) #, start = start )
-#  #bplr.imp    <- bayespolr( formula = formula, data = data, method = c( "logistic" ), drop.unused.levels = FALSE, n.iter = n.iter )
+  
+  if(data.augment){
+    bplr.imp <- bayespolr( formula = formula, 
+                           data =   .data.aug(data, n=trunc(dim(data)[1]*0.1)),
+                           start = 0, 
+                           method = c("logistic"), 
+                           drop.unused.levels = FALSE, n.iter = n.iter )
+  }
+  else{
+    bplr.imp <- bayespolr( formula = formula, 
+                           data =   .data.aug(data, n=trunc(dim(data)[1]*0.1)),
+                           start = 0, 
+                           method = c("logistic"), 
+                           drop.unused.levels = FALSE, n.iter = n.iter )
+  }
+  
   expect.prob <- predict( bplr.imp, newdata = data, type = "probs" )
   determ.pred <- as.vector( expect.prob %*% as.double( Y.levels ) )
   names( determ.pred ) <- 1:length( determ.pred )
   random.pred <- Rmultnm( n.mis, expect.prob[mis,],  c( 1:Y.nlevel ) )    
-  #names( determ.pred ) <- NULL
-  # reconvert the levels
-  #imputed.vctr <- imputed.tmp
+  random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse="") )        
 
-    random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse="") )        
-    #imputed.vctr <- replace( imputed.vctr, imputed.tmp == i, Y.levels[i] )
   # return the result
   result <- list( model = list( call = NULL, 
                                 coefficient = NULL, 

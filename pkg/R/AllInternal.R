@@ -9,7 +9,7 @@ vrb.typ <- NULL # to pass R CMD check
 
 .randdraw <- function(data, n = 1){
   foo <- function(x) sample(na.exclude(x), size = n, replace = FALSE)
-  added.rows <- apply(datam 2, FUN = foo)
+  added.rows <- apply(data, 2, FUN = foo)
   return(added.rows)
 }
 
@@ -18,7 +18,7 @@ vrb.typ <- NULL # to pass R CMD check
 # ========================================================================
 
 .data.aug <- function(data, n = 1){
-  add.data <- .randdraw(data =data, n = n)
+  add.data <- .randdraw(data = data, n = n)
   newdata <- rbind.data.frame(data, add.data)
   return(newdata)
 }

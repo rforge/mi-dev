@@ -97,8 +97,10 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
 
   for ( s in s_start:s_end ) {# iteration loop
     cat( "Iteration", s,"\n" )
+    
     for ( i in 1:n.imp ){# imputation loop
       cat( " Imputation", i,  ": " )
+    
       for( jj in 1:length(VarName) ) {# variable loop
         CurrentVar <- VarName[jj]
         cat( CurrentVar, " " )
@@ -125,9 +127,8 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
                            }
                            else{
                             NULL
-                           }
-                           ),
-                   data.augment = data.augment, 
+                           },
+                   data.augment = data.augment),
                    info[[CurrentVar]]$params
                    ) ) )
 

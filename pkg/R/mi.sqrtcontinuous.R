@@ -2,7 +2,8 @@
 # imputation function for positive continuous variable
 # ==============================================================================
 mi.sqrtcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100, 
-                                draw.from.beta = FALSE, ... ) {
+                                draw.from.beta = FALSE, data.augment = FALSE,...) 
+{
   call <- match.call()
   mf   <- match.call(expand.dots = FALSE)
   m    <- match(c("formula", "data"), names(mf), 0)
@@ -27,16 +28,19 @@ mi.sqrtcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
   if(is.null(data)){ data<- mf }
 
   # main program
-#  if (sum(1*!is.negative(X)) > 0) {
-#    namesX[!is.negative(X)]<-paste("sqrt(",namesX[!is.negative(X)],")")
-#    X[,!is.negative(X)]<-sqrt( X[,!is.negative(X)] )
-#  }
-#  if( !is.null( start ) ){ 
-#    n.iter <- 1 
-#    start[is.na(start)]<-0
-#  } 
-  #bglm.imp        <- bayesglm( formula = sqrt ( Y ) ~ X, data = data, family = gaussian, n.iter = n.iter, start = start,... )
-  bglm.imp        <- bayesglm( formula = formula, data = data, family = gaussian, n.iter = n.iter, start = start,Warning=FALSE,... )
+
+  if(data.augment){
+    bglm.imp <- bayesglm( formula = formula, 
+                          data = .data.aug(data, n=trunc(dim(data)[1]*0.1)), 
+                          family = gaussian, n.iter = n.iter, 
+                          start = start, Warning=FALSE,... )
+  }
+  else{
+    bglm.imp <- bayesglm( formula = formula, 
+                          data = data, 
+                          family = gaussian, n.iter = n.iter, 
+                          start = start, Warning=FALSE,... )
+  }
   if(any(is.na(coefficients(bglm.imp)))){ warning(message="there are coefficient estimated as NA in the model") }
   determ.pred     <- predict( bglm.imp, newdata = data, type = "response" )
   if(draw.from.beta){

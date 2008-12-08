@@ -12,7 +12,8 @@
     Imputes missing data in a categorical variable using multinomial Log-linear Models. 
 }
 \usage{
-  mi.polr(formula, data = NULL, drop.unused.levels = TRUE, start = NULL, n.iter = 100, ...)
+  mi.polr(formula, data = NULL, drop.unused.levels = TRUE, start = NULL, 
+    n.iter = 100, data.augment = FALSE, \dots)
   \S3method{plot}{mi.polr}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots )
 }
 %- maybe also 'usage' for other objects documented here.
@@ -28,6 +29,8 @@
   \item{drop.unused.levels}{ Drops unused levels. }
   \item{start}{ Starting value for bayespolr. }
   \item{n.iter}{ Maximum number of iteration for bayespolr. The default is 100.}
+  \item{data.augment}{Augment the data with 10\% of the random draws from the observed data, 
+                default= FALSE.}
   \item{\dots}{ Currently not used. }
   \item{x}{\code{mi.polr} object.}
   \item{y}{ Observed values.}
@@ -36,7 +39,7 @@
 
 }
 \details{
-    'multinom' calls the library 'nnet'. See multinom for other details.   
+    \code{multinom} calls the library \pkg{nnet}. See multinom for other details.   
 }
 \value{
     \item{model    }{A summary of the multinomial fitted model}

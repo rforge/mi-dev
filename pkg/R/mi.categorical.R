@@ -2,7 +2,8 @@
 # imputation function for categorical variable
 # ==============================================================================
 mi.categorical <- function( formula, data = NULL, n.iter = 100, 
-                              MaxNWts = 1500, ...  ) {
+                              MaxNWts = 1500, data.augment = FALSE,...  ) 
+{
   call <- match.call()
   mf   <- match.call(expand.dots = FALSE)
   m    <- match(c("formula", "data"), names(mf), 0)
@@ -25,8 +26,19 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   n.mis  <- sum( mis )
   if(is.null(data)){ data<- mf }
   # main program
-  lm.cat.imp  <- multinom( formula = formula, data = data, maxit = n.iter, 
-                              trace = FALSE , MaxNWts = MaxNWts, ...)
+
+  
+  if(data.augment){
+   lm.cat.imp <- multinom( formula = formula, 
+                           data = .data.aug(data, n=trunc(dim(data)[1]*0.1)),
+                           maxit = n.iter, 
+                           trace = FALSE , MaxNWts = MaxNWts, ...)
+  }
+  else{
+      lm.cat.imp  <- multinom( formula = formula, data = data, maxit = n.iter, 
+                            trace = FALSE , MaxNWts = MaxNWts, ...)
+  }      
+  
   deter.prob  <- predict( lm.cat.imp, newdata = data, type = "p" )
   y.cat       <- as.double( levels ( factor ( Y ) ) )
   if(length(y.cat)<=2){stop(message="number of category must be bigger than 2")}

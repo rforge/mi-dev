@@ -40,7 +40,8 @@
 mi( object, info, type = NULL, n.imp = 3, n.iter = 30, 
     max.minutes = 20, rand.imp.method = "bootstrap", 
     preprocess = FALSE, continue.on.convergence = FALSE,
-    seed = NA, check.coef.convergence = FALSE) 
+    seed = NA, check.coef.convergence = FALSE, 
+    data.augment = FALSE) 
 
 %\S4method{mi}{mi}(object, \dots)
 %\S3method{plot}{mi}(x, \dots )
@@ -59,8 +60,8 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   \item{preprocess}{ Preprocess the data according to the info matrix. }
   \item{continue.on.convergence}{ If set to TRUE the mi will run until maximum iteration is reached or maximum minutes pass. }
   \item{check.coef.convergence}{default = FALSE}
-%  \item{x}{An object of a class '"mi"'.}
-%  \item{y}{currently not used.}
+  \item{data.augment}{Augment the data with 10\% of the random draws from the observed data, 
+                default= FALSE.}
   \item{\dots}{options for plot.mi.}
   
 }
@@ -121,7 +122,8 @@ and looping through until approximate convergence.
 }
 
 \author{
-  Masanao Yajima \email{yajima@stat.columbia.edu},
+ Masanao Yajima \email{yajima@stat.columbia.edu},
+  Yu-Sung Su \email{yajima@stat.columbia.edu},
   M.Grazia Pittau \email{grazia@stat.columbia.edu},
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
