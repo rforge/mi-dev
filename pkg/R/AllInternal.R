@@ -7,9 +7,9 @@ vrb.typ <- NULL # to pass R CMD check
 # Random draw from the obs. data
 # ========================================================================
 
-.randdraw <- function(data, n=1){
-  foo <- function(x) sample(na.exclude(x), size=n, replace=FALSE)
-  added.rows <- apply(datam 2, FUN=foo)
+.randdraw <- function(data, n = 1){
+  foo <- function(x) sample(na.exclude(x), size = n, replace = FALSE)
+  added.rows <- apply(datam 2, FUN = foo)
   return(added.rows)
 }
 
@@ -17,8 +17,8 @@ vrb.typ <- NULL # to pass R CMD check
 # Augment data with randdraws
 # ========================================================================
 
-data.aug <- function(data, n=1){
-  add.data <- .randdraw(data=data, n=n)
+.data.aug <- function(data, n = 1){
+  add.data <- .randdraw(data =data, n = n)
   newdata <- rbind.data.frame(data, add.data)
   return(newdata)
 }
