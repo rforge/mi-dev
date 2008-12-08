@@ -49,54 +49,43 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     AveVar[ 1:prev.iter , , ]<- bugs.mi(object)$sims.array
     s_start <- prev.iter + 1
     s_end   <- prev.iter + n.iter
-  } else {
-  # unexpected object
-    stop( gettextf( "object class '%s' is not acceptable", class( object ) ) )
+  } 
+  else { # unexpected object
+    stop(gettextf("object class '%s' is not acceptable", class(object)))
   }
   
   mis.index <-  apply(data, 2, is.na)
+  
   # Automatic Preprocess
-
   if( preprocess ) {
-    data <- mi.info.recode( data, info )
+    data <- mi.info.recode(data, info)
   }
  
-  data<-data[,include( info ) ]
+  data <- data[,include( info ) ]
   dimnames( AveVar ) <- list( NULL, NULL, 
                               c( paste( "mean(", colnames( data ),")",sep="" ), 
                                  paste( "sd(", colnames( data ), ")", sep="" ) ) )
   VarName.tm <- names( info )[include( info ) & nmis( info )>0 ]
   VarName    <- VarName.tm[order(imp.order( info )[include( info ) & nmis( info )>0 ])]
   length.list<- sum( include( info ) & nmis( info ) >0 )
+  
   # list initialization
   mi.data       <- vector( "list", n.imp )
   start.val     <- vector( "list", n.imp )
   mi.object     <- vector( "list", n.imp )
+  
   for (j in 1:n.imp){ 
     mi.data[[j]]  <-  if( class( object ) %in% "mi" ){ 
                         data.frame( mi.matrix( object, m=j )[,include( info )] ) 
-                      } else{ 
+                      } 
+                      else{ 
                         random.imp( data, method = rand.imp.method )
                       }
     start.val[[j]]<- vector( "list", length.list )
     mi.object[[j]]<- vector( "list", ncol.mis )
     names(mi.object[[j]]) <- names( info )[ nmis( info )>0 ]
   }
-################################################################
-#  #Retro Grade residual codes
-#  exp.val <- vector("list",n.imp)
-#  prd.val <- vector("list",n.imp)
-#  for (jjj in 1:n.imp){
-#  exp.val[[jjj]]<- vector("list", n.iter)
-#  prd.val[[jjj]]<- vector("list", n.iter)
-#    for(kkk in 1:n.iter){
-#      exp.val[[jjj]][[kkk]] <- vector("list",length(VarName))
-#      names(exp.val[[jjj]][[kkk]])<-VarName.tm 
-#      prd.val[[jjj]][[kkk]] <- vector("list",length(VarName))
-#      names(prd.val[[jjj]][[kkk]])<-VarName.tm 
-#    }
-#  }
-################################################################
+  
   coef.val <- vector("list",ncol.mis)
   names(coef.val) <- names( info )[ nmis( info )>0 ]
   for (jjj in 1:ncol.mis){
@@ -104,14 +93,13 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
   }
   names(mi.object)<- paste( "Imputation", 1:n.imp, sep="" )
   cat( "Beginning Multiple Imputation (", date(), "):\n" )
-  # iteration loop
-  for ( s in s_start:s_end ) {
+
+
+  for ( s in s_start:s_end ) {# iteration loop
     cat( "Iteration", s,"\n" )
-    # imputation loop
-    for ( i in 1:n.imp ){
+    for ( i in 1:n.imp ){# imputation loop
       cat( " Imputation", i,  ": " )
-      # variable loop
-      for( jj in 1:length(VarName) ) {
+      for( jj in 1:length(VarName) ) {# variable loop
         CurrentVar <- VarName[jj]
         cat( CurrentVar, " " )
         CurVarFlg <- ( names ( data ) == CurrentVar )
@@ -127,50 +115,53 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         on.exit ( options( show.error.messages = TRUE ),add = TRUE)
         options( show.error.messages = FALSE )
         # Error Handling
-        mi.object[[i]][[CurrentVar]] <- with( dat, 
-                                          do.call( model.type,
-                                                    args = c( list( formula = info[[CurrentVar]]$imp.formula, 
-                                                    data = dat,
-                                          start=if(!is.null( start.val[[i]][[jj]] ) ){
-                                                  start.val[[i]][[jj]]
-                                                }
-                                                else{
-                                                  NULL
-                                                }
-                                        ),
-                                          info[[CurrentVar]]$params
-                              ) ) )
+        
+        mi.object[[i]][[CurrentVar]] <- with(dat, 
+          do.call( model.type,
+                   args = c(list(formula = info[[CurrentVar]]$imp.formula, 
+                   data = dat,
+                   start = if(!is.null( start.val[[i]][[jj]])){
+                            start.val[[i]][[jj]]
+                           }
+                           else{
+                            NULL
+                           }
+                           ),
+                   data.augment = data.augment, 
+                   info[[CurrentVar]]$params
+                   ) ) )
+
         # Error Handling
         on.exit ()
         options( show.error.messages = TRUE )
         # Error Handling
-################################################################
-#        #Retro Grade residual codes
-#        prd.val[[i]][[s]][[CurrentVar]]<- mi.data[[i]][[CurrentVar]]
-#        exp.val[[i]][[s]][[CurrentVar]]<- mi.object[[i]][[CurrentVar]]$expected
+
         mi.data[[i]][[CurrentVar]][is.na( data[[CurrentVar]] )] <- mi.object[[i]][[CurrentVar]]$random
         coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],unlist(coef(mi.object[[i]][[CurrentVar]])))
         start.val[[i]][[jj]] <- mi.start( mi.object[[i]][[CurrentVar]] )
       } ## variable loop 
       cat("\n" )
-      #AveVar[s,i,] <- c( mean( mi.data[[i]] ),sd( mi.data[[i]] ) )
-      AveVar[s,i,] <-c(sapply(mi.data[[i]],function(v){mean(unclass(v),na.rm=T)}),
-                        sapply(mi.data[[i]],function(v){sd(unclass(v),na.rm=T)}))
+      
+      mean.foo <- function(x) mean(unclass(x), na.rm=T)
+      sd.foo <- function(x) sd(unclass(x), na.rm=T)
+      AveVar[s,i,] <-c( sapply(mi.data[[i]], FUN=mean.foo),
+                        sapply(mi.data[[i]], FUN=sd.foo))
                         
-      #fill.missing( data, mis.index, imputed )
+ 
     
     } # imputation loop
+    
     # Check for convvergence
     Time.Elapsed <- proc.time( ) - ProcStart
-    if ( s > 5 || ( ( ( ( Time.Elapsed ) / 60 )[3] > 0.5 ) && s > 2 ) ) {
-      con.check <- as.bugs.array( AveVar[ 1:s, , ] )
-      if( max( con.check$summary[ ,8] ) < 1.1 )  { 
+    if ( s > 5 || ((((Time.Elapsed)/60)[3] > 0.5 ) && s > 2)) {
+      con.check <- as.bugs.array(AveVar[ 1:s, , ])
+      if(max(con.check$summary[ ,8]) < 1.1) { 
         converged.flg <- TRUE
-        if( !continue.on.convergence ) { 
+        if(!continue.on.convergence) { 
           break
         }
       }
-      if( ( ( Time.Elapsed ) / 60 )[3] > max.minutes ) { 
+      if(((Time.Elapsed)/60)[3] > max.minutes){ 
         time.out.flg <- TRUE 
         break
       }
@@ -193,9 +184,10 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
       ,date(), ")\n" ) 
       
   # Automatic Preprocess
-  if( preprocess ) {
-    data <- mi.info.uncode( data, info )
+  if(preprocess) {
+    data <- mi.info.uncode(data, info)
   }
+  
   # impute correlated variables
   for( cor.idx in 1:length( info ) ) {
     if( length( info[[cor.idx]]$correlated ) > 0 
@@ -209,11 +201,11 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
       }
     }
   }
-  #mi.cof<<-coef.val
-  #n.imp<<-n.imp
+
   if(is.null(coef.conv.check)){
     coef.conv.check <- as.bugs.array(strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp))
-  }else{
+  }
+  else{
     tmp<-array.append3(coef.conv.check,strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp),1)
     coef.conv.check <- as.bugs.array(tmp)
   }
@@ -226,15 +218,12 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
             converged = converged.flg,
             coef.conv = coef.conv.check,
             bugs      = con.check)
-################################################################
-#  #Retro Grade residual codes
-#  mi$check     <- exp.val
-#  mi$prd       <- prd.v al
   return( mi )
 }
 
+
 ##The simple imputation function
-impute<- function ( a, a.impute ) { 
+impute <- function ( a, a.impute ) { 
   return ( ifelse ( is.na ( a ), a.impute, a ) ) 
 }
 
@@ -248,7 +237,7 @@ strict.check<-function(coefficient,n.iter,n.imp){
   return(res)
 }
 
-array.append<-function (array1, array2, d = 3) 
+array.append <- function (array1, array2, d = 3) 
 {
     if (any(dim(array1)[-d] != dim(array2)[-d])) {
         stop(message = "array dimention must be same for all the dimention except for the one that you are trying to append")
@@ -263,7 +252,7 @@ array.append<-function (array1, array2, d = 3)
     return(newarray)
 }
 
-array.append3<-function(a, b, d=3){
+array.append3 <- function(a, b, d=3){
     da<-dim(a)
     db<-dim(b)
     di<-dim(a)
