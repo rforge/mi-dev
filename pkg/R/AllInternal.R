@@ -1,4 +1,6 @@
 
+vrb.typ <- NULL # to pass R CMD check
+
 
 
 # ========================================================================
@@ -21,10 +23,12 @@ data.aug <- function(data, n=1){
   return(newdata)
 }
 
-vrb.typ <- NULL
+# ========================================================================
+# Convert factor to numeric value
+# ========================================================================
 
 
-factor2num <- function( a ) {
+.factor2num <- function( a ) {
   if(is.factor( a ) ) {
     as.double( levels( a ) )[ as.double( a ) ]
   } else {
@@ -32,8 +36,11 @@ factor2num <- function( a ) {
   }
 }
 
+# ========================================================================
+# Convert character value
+# ========================================================================
 
-factor2char <- function( a ) {
+.factor2char <- function( a ) {
   levels( a )[ as.numeric( a ) ]
 }
 
