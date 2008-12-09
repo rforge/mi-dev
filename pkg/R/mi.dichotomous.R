@@ -40,7 +40,7 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
   if(augment.data){
     data2 <- rbind.data.frame(data, .randdraw(data, n=trunc(dim(data)[1])*0.1))
     bglm.imp <- bayesglm( formula = formula, 
-                          data = .data.aug(data, n=trunc(dim(data)[1]*0.1)), 
+                          data = data2, 
                           family = binomial ( link = "logit" ), 
                           n.iter = n.iter, start = start, 
                           drop.unused.levels=FALSE, Warning=FALSE, ... )
