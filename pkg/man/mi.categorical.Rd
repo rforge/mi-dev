@@ -15,7 +15,7 @@
 }
 \usage{
   mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, 
-    data.augment = FALSE, \dots)
+    augment.data = FALSE, \dots)
   \S3method{residuals}{mi.categorical}(object, y, \dots)
   \S3method{plot}{mi.categorical}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
@@ -33,7 +33,7 @@
   \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
   \item{n.iter}{ Maximum number of iteration. }
   \item{MaxNWts}{ The maximum allowable number of weights. See nnet for detail. }
-  \item{data.augment}{Augment the data with 10\% of the random draws from the observed data, 
+  \item{augment.data}{Augment the data with 10\% of the random draws from the observed data, 
                 default= FALSE.}
   \item{\dots}{ Currently not used. }
   \item{object}{ \code{mi.categorical} object.}

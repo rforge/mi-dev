@@ -3,7 +3,7 @@
 # ==============================================================================
 mi.continuous <- function ( formula, data = NULL, start = NULL, 
                             n.iter = 100, draw.from.beta = FALSE, 
-                            data.augment = FALSE,...  ) 
+                            augment.data = FALSE,...  ) 
 {
   call <- match.call()
   mf   <- match.call(expand.dots = FALSE)
@@ -32,7 +32,7 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
     start[is.na(start)]<-0
   }
   
-  if(data.augment){
+  if(augment.data){
     bglm.imp <- bayesglm( formula = formula, 
                           data = .data.aug(data, n=trunc(dim(data)[1]*0.1)), 
                           family = gaussian, n.iter = n.iter, start = start, 

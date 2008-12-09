@@ -12,7 +12,7 @@
 }
 \usage{
 mi.continuous(formula, data = NULL, start = NULL, n.iter = 100, 
-    draw.from.beta = FALSE, data.augment = FALSE, \dots)
+    draw.from.beta = FALSE, augment.data = FALSE, \dots)
 }
 
 \arguments{
@@ -21,7 +21,7 @@ mi.continuous(formula, data = NULL, start = NULL, n.iter = 100,
   \item{start}{ Starting value for bayesglm. }
   \item{n.iter}{ Maximum number of iteration for bayesglm. The default is 100.}
   \item{draw.from.beta}{ Draws from posterior distribution of the betas to add randomness. }
-  \item{data.augment}{Augment the data with 10\% of the random draws from the observed data, 
+  \item{augment.data}{Augment the data with 10\% of the random draws from the observed data, 
                 default= FALSE.}
   \item{\dots}{ Currently not used. }
 }

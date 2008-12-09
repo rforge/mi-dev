@@ -2,7 +2,7 @@
 # imputation function for positive continuous variable
 # ==============================================================================
 mi.sqrtcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100, 
-                                draw.from.beta = FALSE, data.augment = FALSE,...) 
+                                draw.from.beta = FALSE, augment.data = FALSE,...) 
 {
   call <- match.call()
   mf   <- match.call(expand.dots = FALSE)
@@ -29,7 +29,7 @@ mi.sqrtcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
 
   # main program
 
-  if(data.augment){
+  if(augment.data){
     bglm.imp <- bayesglm( formula = formula, 
                           data = .data.aug(data, n=trunc(dim(data)[1]*0.1)), 
                           family = gaussian, n.iter = n.iter, 

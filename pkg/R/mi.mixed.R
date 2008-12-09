@@ -2,7 +2,7 @@
 # imputation function for zero and positive variable
 # ==============================================================================
 mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100, 
-                         draw.from.beta = FALSE, data.augment = FALSE,...  ) 
+                         draw.from.beta = FALSE, augment.data = FALSE,...  ) 
 {
   call <- match.call()
   formula.dict <- if( is.list( formula ) ) { 
@@ -44,19 +44,19 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
     start[[1]][ is.na( start[[1]] )] <- 0
   } 
 
-  if(data.augment){
+  if(augment.data){
     glm.sign <- bayesglm( formula = formula.dict, 
                           data = .data.aug(data, n=trunc(dim(data)[1]*0.1)),
                           family = binomial( link = "logit" ), 
                           n.iter = n.iter, start = start[[1]],
-                          drop.unused.levels = FALSE, Warning=FALSE)
+                          drop.unused.levels = FALSE, Warning=FALSE, ...)
   }
   else{
     glm.sign <- bayesglm( formula = formula.dict, 
                           data = data,
                           family = binomial( link = "logit" ), 
                           n.iter = n.iter, start = start[[1]],
-                          drop.unused.levels = FALSE, Warning=FALSE)
+                          drop.unused.levels = FALSE, Warning=FALSE, ...)
   }
   pred.sign   <- predict( glm.sign, newdata = data, type = "response" )
   ## fitting the model only for the positive values of y
@@ -65,15 +65,15 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
     start[[2]][ is.na( start[[2]] ) ] <- 0
   } 
   
-  if(data.augment){
+  if(augment.data){
     lm.ifpos  <- bayesglm( formula =  formula.cont, data = data, subset = substitute(Y) > 0, 
                             family = gaussian, n.iter = n.iter, 
-                             start = start[[2]], drop.unused.levels=FALSE,Warning=FALSE)
+                             start = start[[2]], drop.unused.levels=FALSE,Warning=FALSE, ...)
   }
   else{
     lm.ifpos <- bayesglm( formula =  formula.cont, data = data, subset = substitute(Y) > 0, 
                             family = gaussian, n.iter = n.iter, 
-                             start = start[[2]], drop.unused.levels=FALSE,Warning=FALSE)  
+                             start = start[[2]], drop.unused.levels=FALSE,Warning=FALSE, ...)  
   }
   pred.ifpos  <- predict( lm.ifpos, newdata = data, type = "response" )
   determ.pred <- abs(pred.sign * pred.ifpos)
@@ -92,7 +92,7 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
   names( random.pred ) <- names( determ.pred[mis] )
   result <- list( model = list(model.1=list(call=NULL,coefficient=NULL,
                                             sigma=NULL),
-                               model.2=list(call=NULL,coefficient=NULL,
+                               model.2=lismit(call=NULL,coefficient=NULL,
                                             sigma=NULL,dispersion=NULL)), 
                   expected = NULL, random = NULL )
 

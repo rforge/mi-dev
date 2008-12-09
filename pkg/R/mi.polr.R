@@ -2,7 +2,7 @@
 # imputation function for ordered categorical variable
 # ==============================================================================
 mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE, 
-                      start = NULL, n.iter = 100, data.augment = FALSE, ... ) {
+                      start = NULL, n.iter = 100, augment.data = FALSE, ... ) {
   call <- match.call()
   mf   <- match.call(expand.dots = FALSE)
   m    <- match(c("formula", "data"), names(mf), 0)
@@ -46,7 +46,7 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
 
   # main program
   
-  if(data.augment){
+  if(augment.data){
     bplr.imp <- bayespolr( formula = formula, 
                            data =   .data.aug(data, n=trunc(dim(data)[1]*0.1)),
                            start = 0, 
@@ -55,7 +55,7 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   }
   else{
     bplr.imp <- bayespolr( formula = formula, 
-                           data =   .data.aug(data, n=trunc(dim(data)[1]*0.1)),
+                           data =  data,
                            start = 0, 
                            method = c("logistic"), 
                            drop.unused.levels = FALSE, n.iter = n.iter )
