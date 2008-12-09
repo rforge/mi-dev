@@ -44,7 +44,7 @@
 
 }
 \details{
-    'multinom' calls the library 'nnet'. See multinom for other details.   
+    \code{multinom} calls the library \pkg{nnet}. See \code{multinom} for other details.   
 }
 \value{
     \item{model   }{A summary of the multinomial fitted model.}
