@@ -42,7 +42,7 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   Y  <- factor( as.double( Y ) )
   #if( is.null( data ) ) { data <- data.frame( cbind( factor( Y ), X ) ) }
   #if(is.null(data)){ data<- data.frame(factor(mf[,1]),mf[,-1]) }
-  if( is.null( data ) ){ data <- data.frame( mf )}
+  #if( is.null( data ) ){ data <- data.frame(mf)}
 
   # main program
   
@@ -65,8 +65,8 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   expect.prob <- predict( bplr.imp, newdata = data, type = "probs" )
   determ.pred <- as.vector( expect.prob %*% as.double( Y.levels ) )
   names( determ.pred ) <- 1:length( determ.pred )
-  random.pred <- Rmultnm( n.mis, expect.prob[mis,],  c( 1:Y.nlevel ) )    
-  random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse="") )        
+  random.pred <- Rmultnm( n.mis, expect.prob[mis,],  c( 1:Y.nlevel ) ) 
+  random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse=";") )        
 
   # return the result
   result <- list( model = list( call = NULL, 

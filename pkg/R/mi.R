@@ -113,6 +113,9 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         on.exit ( options( show.error.messages = TRUE ),add = TRUE)
         options( show.error.messages = FALSE )
         # Error Handling
+        if(augment.data){
+          info[[CurrentVar]]$params$augment.data <- TRUE
+        }
         mi.object[[i]][[CurrentVar]] <- with( dat, 
                                           do.call( model.type,
                                                     args = c( list( formula = info[[CurrentVar]]$imp.formula, 
@@ -122,8 +125,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
                                                 }
                                                 else{
                                                   NULL
-                                                },
-                                          augment.data=augment.data),
+                                                }),
                                           info[[CurrentVar]]$params
                               )))
         # Error Handling
