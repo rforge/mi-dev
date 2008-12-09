@@ -49,16 +49,15 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
                           data = .data.aug(data, n=trunc(dim(data)[1]*0.1)),
                           family = binomial( link = "logit" ), 
                           n.iter = n.iter, start = start[[1]],
-                          drop.unused.levels = FALSE, Warning=FALSE,... )
+                          drop.unused.levels = FALSE, Warning=FALSE)
   }
   else{
     glm.sign <- bayesglm( formula = formula.dict, 
                           data = data,
                           family = binomial( link = "logit" ), 
                           n.iter = n.iter, start = start[[1]],
-                          drop.unused.levels = FALSE, Warning=FALSE,... )
+                          drop.unused.levels = FALSE, Warning=FALSE)
   }
-    
   pred.sign   <- predict( glm.sign, newdata = data, type = "response" )
   ## fitting the model only for the positive values of y
   if( !is.null( start[[2]] ) ){ 
@@ -66,9 +65,16 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
     start[[2]][ is.na( start[[2]] ) ] <- 0
   } 
   
-  lm.ifpos    <- bayesglm( formula =  formula.cont, data = data, subset = substitute(Y) > 0, 
+  if(data.augment){
+    lm.ifpos  <- bayesglm( formula =  formula.cont, data = data, subset = substitute(Y) > 0, 
                             family = gaussian, n.iter = n.iter, 
-                             start = start[[2]], drop.unused.levels=FALSE,Warning=FALSE, ...)
+                             start = start[[2]], drop.unused.levels=FALSE,Warning=FALSE)
+  }
+  else{
+    lm.ifpos <- bayesglm( formula =  formula.cont, data = data, subset = substitute(Y) > 0, 
+                            family = gaussian, n.iter = n.iter, 
+                             start = start[[2]], drop.unused.levels=FALSE,Warning=FALSE)  
+  }
   pred.ifpos  <- predict( lm.ifpos, newdata = data, type = "response" )
   determ.pred <- abs(pred.sign * pred.ifpos)
   if(draw.from.beta){
