@@ -16,10 +16,10 @@
     n.iter = 100, augment.data = FALSE, \dots)
   \S3method{plot}{mi.polr}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots )
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{formula}{ a formula expression as for regression models, of the form
-          'response ~ predictors'. The response should be a factor
+          \code{response ~ predictors}. The response should be a factor
           (preferably an ordered factor), which will be interpreted as
           an ordinal response, with levels ordered as in the factor.  
           The model must have an intercept: attempts to remove one will
@@ -54,6 +54,7 @@
 }
 \author{
   Masanao Yajima \email{yajima@stat.columbia.edu},
+  Yu-Sung Su \email{ys463@stat.columbia.edu},
   M.Grazia Pittau \email{grazia@stat.columbia.edu},
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
