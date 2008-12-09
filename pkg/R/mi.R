@@ -123,7 +123,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
                                                 else{
                                                   NULL
                                                 }),
-                                          augment.data=augment.data,
+                                          augment.data,
                                           info[[CurrentVar]]$params
                               )))
         # Error Handling
