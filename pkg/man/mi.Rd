@@ -41,7 +41,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
     max.minutes = 20, rand.imp.method = "bootstrap", 
     preprocess = FALSE, continue.on.convergence = FALSE,
     seed = NA, check.coef.convergence = FALSE, 
-    data.augment = FALSE) 
+    augment.data = FALSE) 
 
 %\S4method{mi}{mi}(object, \dots)
 %\S3method{plot}{mi}(x, \dots )
@@ -60,7 +60,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   \item{preprocess}{ Preprocess the data according to the info matrix. }
   \item{continue.on.convergence}{ If set to TRUE the mi will run until maximum iteration is reached or maximum minutes pass. }
   \item{check.coef.convergence}{default = FALSE}
-  \item{data.augment}{Augment the data with 10\% of the random draws from the observed data, 
+  \item{augment.data}{Augment the data with 10\% of the random draws from the observed data, 
                 default= FALSE.}
   \item{\dots}{options for plot.mi.}
   
