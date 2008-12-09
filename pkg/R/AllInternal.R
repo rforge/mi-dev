@@ -17,7 +17,7 @@ vrb.typ <- NULL # to pass R CMD check
 # augment.datament data with randdraws
 # ========================================================================
 
-.dat.aug <- function(data, n = 1){
+.data.aug <- function(data, n = 1){
   add.data <- .randdraw(data = data, n = n)
   newdata <- rbind.data.frame(data, add.data)
   return(newdata)
