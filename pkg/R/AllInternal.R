@@ -13,15 +13,6 @@ vrb.typ <- NULL # to pass R CMD check
   return(added.rows)
 }
 
-# ========================================================================
-# augment.datament data with randdraws
-# ========================================================================
-
-.data.aug <- function(data, n = 1){
-  add.data <- .randdraw(data = data, n = n)
-  newdata <- rbind.data.frame(data, add.data)
-  return(newdata)
-}
 
 # ========================================================================
 # Convert factor to numeric value

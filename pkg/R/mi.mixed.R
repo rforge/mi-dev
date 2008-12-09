@@ -2,8 +2,7 @@
 # imputation function for zero and positive variable
 # ==============================================================================
 mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100, 
-                         draw.from.beta = FALSE, augment.data = FALSE,...  ) 
-{
+                         draw.from.beta = FALSE, augment.data=FALSE,... ) {
   call <- match.call()
   formula.dict <- if( is.list( formula ) ) { 
                     as.formula( formula[[1]] )
@@ -43,20 +42,20 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
     n.iter <- 1 
     start[[1]][ is.na( start[[1]] )] <- 0
   } 
-
+  
+  
   if(augment.data){
-    glm.sign <- bayesglm( formula = formula.dict, 
-                          data = .data.aug(data, n=trunc(dim(data)[1]*0.1)),
-                          family = binomial( link = "logit" ), 
-                          n.iter = n.iter, start = start[[1]],
-                          drop.unused.levels = FALSE, Warning=FALSE, ...)
+    data2 <- rbind.data.frame(data, .randdraw(data, n=trunc(dim(data)[1])*0.1))
+    glm.sign <- bayesglm( formula = formula.dict, data= data2, 
+                            family = binomial( link = "logit" ), 
+                             n.iter = n.iter, 
+                              start = start[[1]],drop.unused.levels=FALSE,Warning=FALSE,... )  
   }
   else{
-    glm.sign <- bayesglm( formula = formula.dict, 
-                          data = data,
-                          family = binomial( link = "logit" ), 
-                          n.iter = n.iter, start = start[[1]],
-                          drop.unused.levels = FALSE, Warning=FALSE, ...)
+    glm.sign <- bayesglm( formula = formula.dict, data= data, 
+                            family = binomial( link = "logit" ), 
+                             n.iter = n.iter, 
+                              start = start[[1]],drop.unused.levels=FALSE,Warning=FALSE,... )
   }
   pred.sign   <- predict( glm.sign, newdata = data, type = "response" )
   ## fitting the model only for the positive values of y
@@ -64,16 +63,17 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
     n.iter <- 1
     start[[2]][ is.na( start[[2]] ) ] <- 0
   } 
+  #control2    <- if( !is.null(start[[2]] ) ) { glm.control( maxit = 1 )} else { glm.control(...) }
   
   if(augment.data){
-    lm.ifpos  <- bayesglm( formula =  formula.cont, data = data, subset = substitute(Y) > 0, 
-                            family = gaussian, n.iter = n.iter, 
-                             start = start[[2]], drop.unused.levels=FALSE,Warning=FALSE, ...)
-  }
-  else{
-    lm.ifpos <- bayesglm( formula =  formula.cont, data = data, subset = substitute(Y) > 0, 
+    lm.ifpos    <- bayesglm( formula =  formula.cont, data = data2, subset = data2[substitute(Y) > 0,], 
                             family = gaussian, n.iter = n.iter, 
                              start = start[[2]], drop.unused.levels=FALSE,Warning=FALSE, ...)  
+  }
+  else{
+    lm.ifpos    <- bayesglm( formula =  formula.cont, data = data, subset = substitute(Y) > 0, 
+                            family = gaussian, n.iter = n.iter, 
+                             start = start[[2]], drop.unused.levels=FALSE,Warning=FALSE, ...)
   }
   pred.ifpos  <- predict( lm.ifpos, newdata = data, type = "response" )
   determ.pred <- abs(pred.sign * pred.ifpos)
@@ -92,16 +92,27 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
   names( random.pred ) <- names( determ.pred[mis] )
   result <- list( model = list(model.1=list(call=NULL,coefficient=NULL,
                                             sigma=NULL),
-                               model.2=lismit(call=NULL,coefficient=NULL,
+                               model.2=list(call=NULL,coefficient=NULL,
                                             sigma=NULL,dispersion=NULL)), 
                   expected = NULL, random = NULL )
-
+#  result$model$model.1$call <- paste( "bayesglm(formula = 1*( ",  namesY, "!= 0 ) ~ ",
+#                                                              paste( namesX, collapse = " + " ),
+#                                                              ", family = binomial ( link = 'logit' ), ",
+#                                                              if( !is.null( namesD ) ){ paste( "data = ", namesD, ", ", sep="" ) }, 
+#                                                               if( !is.null( start[[1]] ) ) { paste( "start = ", paste( start[[1]] , collapse = "," ), ", ") },
+#                                                              "n.iter = ", n.iter, ")", sep="" )
   result$model$model.1$call         <- glm.sign$call
   result$model$model.1$call$formula <- formula.dict
   result$model$model.1$call$start   <- round(as.double(start[[1]]),2)
   result$model$model.1$call$n.iter  <- n.iter
   result$model$model.1$coefficient  <- glm.sign$coefficients
   result$model$model.1$sigma        <- sigma.hat(glm.sign)
+#  result$model$model.2$call <- paste( "bayesglm(formula = ", namesY, " ~ ",
+#                                                              paste( namesX, collapse = " + " ),
+#                                                              ", family = gaussian, ",
+#                                                              if( !is.null( namesD ) ){ paste( "data = ", namesD, ", ", sep="" ) }, 
+#                                                               if( !is.null( start[[2]] ) ) { paste( "start = ", paste( start[[2]] , collapse = "," ), ", ") },
+#                                                              "n.iter = ", n.iter, ")", sep="" )
   result$model$model.2$call         <- lm.ifpos$call
   result$model$model.2$call$formula <- formula.cont
   result$model$model.2$call$start   <- round(as.double(start[[2]]),2)
@@ -115,6 +126,22 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
   #result$residual <- list(residual.values.1=residual.dic, residual.values.2=residual.pos )
   class ( result )<- c( "mi.mixed", "mi.method","list" )
   
+#  result <-new("mi.mixed,
+#            model    = list( model.1 = list( call         = glm.sign$call,
+#                                             call$formula = formula.dict,
+#                                             call$start   = round(as.double(start[[1]]),2),
+#                                             call$n.iter  = n.iter,
+#                                             coefficient  = glm.sign$coefficients,
+#                                             sigma        = sigma.hat(glm.sign) ),
+#                              model.2 = list( call         = lm.ifpos$call,
+#                                              call$formula = formula.cont,
+#                                              call$start   = round(as.double(start[[2]]),2),
+#                                              call$n.iter  = n.iter,
+#                                              coefficient  = lm.ifpos$coefficients,
+#                                              sigma        = sigma.hat( lm.ifpos ), 
+#                                              dispersion   = lm.ifpos$dispersion ))
+#            expected = list( expected.values.1 = pred.sign, expected.values.2 = pred.ifpos ),
+#            random   = random.pred)
   return( result )
   on.exit( rm( c( glm.sign, lm.ifpos ) ) )
 }

@@ -29,8 +29,9 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
 
   
   if(augment.data){
-   lm.cat.imp <- multinom( formula = formula, 
-                           data = .data.aug(data, n=trunc(dim(data)[1]*0.1)),
+    data2 <- rbind.data.frame(data, .randdraw(data, n=trunc(dim(data)[1])*0.1))
+    lm.cat.imp <- multinom( formula = formula, 
+                           data = data2,
                            maxit = n.iter, 
                            trace = FALSE , MaxNWts = MaxNWts, ...)
   }

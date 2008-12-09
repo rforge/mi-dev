@@ -47,8 +47,9 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   # main program
   
   if(augment.data){
+    data2 <- rbind.data.frame(data, .randdraw(data, n=trunc(dim(data)[1])*0.1))
     bplr.imp <- bayespolr( formula = formula, 
-                           data =   .data.aug(data, n=trunc(dim(data)[1]*0.1)),
+                           data = data2,
                            start = 0, 
                            method = c("logistic"), 
                            drop.unused.levels = FALSE, n.iter = n.iter )
