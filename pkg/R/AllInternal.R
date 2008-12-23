@@ -1,6 +1,6 @@
 
 vrb.typ <- NULL # to pass R CMD check
-
+data.tmp <<- NULL # to pass R CMD check
 
 
 # ========================================================================

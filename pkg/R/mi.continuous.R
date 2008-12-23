@@ -33,7 +33,12 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
   }
   
   if(augment.data){
-    data2 <- rbind.data.frame(data, .randdraw(data, n=trunc(dim(data)[1])*0.1))
+    n.aug <- trunc(dim(data)[1])*0.1
+    n.complete <- dim(na.exclude(data))[1]
+    if(n.aug > n.complete){
+      n.aug <- n.complete
+    }
+    data2 <- rbind.data.frame(data, .randdraw(data, n=n.aug))
     bglm.imp <- bayesglm( formula = formula, 
                           data = data2, 
                           family = gaussian, n.iter = n.iter, start = start, 

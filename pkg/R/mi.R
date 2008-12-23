@@ -134,7 +134,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         # Error Handling
 
         mi.data[[i]][[CurrentVar]][is.na( data[[CurrentVar]] )] <- mi.object[[i]][[CurrentVar]]$random
-        data.tmp <- NULL
+        data.tmp <<- mi.data
         coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],unlist(coef(mi.object[[i]][[CurrentVar]])))
         start.val[[i]][[jj]] <- mi.start( mi.object[[i]][[CurrentVar]] )
       } ## variable loop 
@@ -212,6 +212,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
             converged = converged.flg,
             coef.conv = coef.conv.check,
             bugs      = con.check)
+  with(globalenv(), rm(data.tmp))
   return( mi )
 }
 

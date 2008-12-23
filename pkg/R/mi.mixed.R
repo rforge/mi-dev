@@ -45,7 +45,12 @@ mi.mixed <- function ( formula, data = NULL, start = NULL, n.iter = 100,
   
   
   if(augment.data){
-    data2 <- rbind.data.frame(data, .randdraw(data, n=trunc(dim(data)[1])*0.1))
+    n.aug <- trunc(dim(data)[1])*0.1
+    n.complete <- dim(na.exclude(data))[1]
+    if(n.aug > n.complete){
+      n.aug <- n.complete
+    }
+    data2 <- rbind.data.frame(data, .randdraw(data, n=n.aug))
     glm.sign <- bayesglm( formula = formula.dict, data= data2, 
                             family = binomial( link = "logit" ), 
                              n.iter = n.iter, 
