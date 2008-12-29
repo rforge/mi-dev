@@ -1,6 +1,5 @@
 mi.logcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100, 
-                                draw.from.beta = FALSE, augment.data = FALSE,...  ) 
-{
+                                draw.from.beta = FALSE, ... ) {
   call <- match.call()
   mf   <- match.call(expand.dots = FALSE)
   m    <- match(c("formula", "data"), names(mf), 0)
@@ -27,12 +26,7 @@ mi.logcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
      n.iter <- 1 
      start[is.na(start)]<-0
   } 
-  
-  bglm.imp <- bayesglm( formula = formula, 
-                          data = data, 
-                          family = gaussian, n.iter = n.iter, 
-                          start = start, Warning=FALSE,... )
-
+  bglm.imp        <- bayesglm( formula = formula, data = data, family = gaussian, n.iter = n.iter, start = start,Warning=FALSE,... )
   if(any(is.na(coefficients(bglm.imp)))){ warning(message="there are coefficient estimated as NA in the model") }
   determ.pred     <- predict( bglm.imp, newdata = data, type = "response" )
   if(draw.from.beta){
@@ -40,9 +34,9 @@ mi.logcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
     random.pred     <- rnorm(n.mis, tcrossprod(cbind(X[mis,1,drop=FALSE]*0+1,X[mis,,drop=FALSE]),sim.bglm.imp$beta), sim.bglm.imp$sigma )
   }
   else{
-    random.pred     <- rnorm( n.mis, determ.pred[mis], sigma.hat( bglm.imp ) )
+    random.pred     <- rnorm( n.mis, determ.pred[mis], sigma.hat( bglm.imp ) );
   }
-  names( random.pred ) <- names( determ.pred[mis] )
+  names( random.pred ) <- names( determ.pred[mis] );
   
   # calculate residual
   # return the result
@@ -54,9 +48,9 @@ mi.logcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
 #                                          if( !is.null( start ) ) { paste( "start = ", paste( start, collapse = "," ), ", ") },
 #                                          "n.iter = ", n.iter, ")", sep="" )
   result$model$call        <- bglm.imp$call
-  result$model$call$formula<- as.formula( formula )
-  result$model$call$start  <- round(as.double( start ), 2 )
-  result$model$call$n.iter <- n.iter
+  result$model$call$formula<- as.formula( formula );
+  result$model$call$start  <- round(as.double( start ), 2 );
+  result$model$call$n.iter <- n.iter;
   result$model$coefficient <- bglm.imp$coefficients
   result$model$sigma       <- sigma.hat( bglm.imp )
   result$model$dispersion  <- bglm.imp$dispersion
