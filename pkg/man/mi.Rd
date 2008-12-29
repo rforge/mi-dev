@@ -71,6 +71,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   \item{imp}{A list of length(m) of imputations.}
   \item{converged}{Binary variable to indicate if mi has converged.}
   \item{bugs}{BUGS array of the mean and sd of each iteration.}
+  \item{data.tmp}{If mi quits with errors, \code{data.tmp} return to the global environment}
   
   The \code{imp} method creates a list of length(m) of imputations, whose names are: 
   \code{Imputation1}, \code{Imputation2}, \code{Imputation3}.
