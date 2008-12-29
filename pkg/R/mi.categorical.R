@@ -27,23 +27,8 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   if(is.null(data)){ data<- mf }
   # main program
 
-  
-  if(augment.data){
-    n.aug <- trunc(dim(data)[1])*0.1
-    n.complete <- dim(na.exclude(data))[1]
-    if(n.aug > n.complete){
-      n.aug <- n.complete
-    }
-    data2 <- rbind.data.frame(data, .randdraw(data, n=n.aug))
-    lm.cat.imp <- multinom( formula = formula, 
-                           data = data2,
-                           maxit = n.iter, 
-                           trace = FALSE , MaxNWts = MaxNWts, ...)
-  }
-  else{
-      lm.cat.imp  <- multinom( formula = formula, data = data, maxit = n.iter, 
+  lm.cat.imp  <- multinom( formula = formula, data = data, maxit = n.iter, 
                             trace = FALSE , MaxNWts = MaxNWts, ...)
-  }      
   
   deter.prob  <- predict( lm.cat.imp, newdata = data, type = "p" )
   y.cat       <- as.double( levels ( factor ( Y ) ) )
@@ -66,19 +51,11 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   result$residual <- Y[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ] 
   class ( result ) <- c( "mi.categorical", "mi.method","list" )
   
-#  result <-new("mi.categorical",
-#            model    = list( call = lm.cat.imp$call,
-#                             call$formula = formula,
-#                             call$maxit   = n.iter,
-#                             call$MaxNWts =MaxNWts,
-#                             coefficient <- coefficients( lm.cat.imp ),
-#                             sigma       <- NULL),
-#            expected = determ.pred,
-#            random   = random.pred,
-#            residual = Y[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ])
   return( result )
   on.exit( rm( lm.cat.imp ) )
 }
+
+
 ## The random Multinomial function (for the categorical variable)
 Rmultnm <- function( n, prob.mat, category  ) {
   y.imp <- NULL

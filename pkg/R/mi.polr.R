@@ -46,26 +46,11 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
 
   # main program
   
-  if(augment.data){
-    n.aug <- trunc(dim(data)[1])*0.1
-    n.complete <- dim(na.exclude(data))[1]
-    if(n.aug > n.complete){
-      n.aug <- n.complete
-    }
-    data2 <- rbind.data.frame(data, .randdraw(data, n=n.aug))
-    bplr.imp <- bayespolr( formula = formula, 
-                           data = data2,
-                           start = 0, 
-                           method = c("logistic"), 
-                           drop.unused.levels = FALSE, n.iter = n.iter )
-  }
-  else{
-    bplr.imp <- bayespolr( formula = formula, 
+  bplr.imp <- bayespolr( formula = formula, 
                            data =  data,
                            start = 0, 
                            method = c("logistic"), 
                            drop.unused.levels = FALSE, n.iter = n.iter )
-  }
   
   expect.prob <- predict( bplr.imp, newdata = data, type = "probs" )
   determ.pred <- as.vector( expect.prob %*% as.double( Y.levels ) )

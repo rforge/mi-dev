@@ -2,8 +2,7 @@
 # imputation function for continuous variable
 # ==============================================================================
 mi.continuous <- function ( formula, data = NULL, start = NULL, 
-                            n.iter = 100, draw.from.beta = FALSE, 
-                            augment.data = FALSE,...  ) 
+                            n.iter = 100, draw.from.beta = FALSE,...  ) 
 {
   call <- match.call()
   mf   <- match.call(expand.dots = FALSE)
@@ -32,23 +31,10 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
     start[is.na(start)]<-0
   }
   
-  if(augment.data){
-    n.aug <- trunc(dim(data)[1])*0.1
-    n.complete <- dim(na.exclude(data))[1]
-    if(n.aug > n.complete){
-      n.aug <- n.complete
-    }
-    data2 <- rbind.data.frame(data, .randdraw(data, n=n.aug))
-    bglm.imp <- bayesglm( formula = formula, 
-                          data = data2, 
-                          family = gaussian, n.iter = n.iter, start = start, 
-                          drop.unused.levels = FALSE, Warning=FALSE, ... )
-  }
-  else{
-    bglm.imp <- bayesglm( formula = formula, data = data, family = gaussian, 
+  bglm.imp <- bayesglm( formula = formula, data = data, family = gaussian, 
                           n.iter = n.iter, start = start, 
                           drop.unused.levels = FALSE, Warning=FALSE,... )
-  }
+  
   determ.pred <- predict( bglm.imp, newdata = data, type = "response" )
   if(draw.from.beta){
     sim.bglm.imp    <- sim(bglm.imp,1)

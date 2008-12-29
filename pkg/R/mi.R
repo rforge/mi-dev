@@ -35,7 +35,8 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     s_start <- 1
     s_end   <- n.iter
        
-  } else if ( class( object ) == "mi" ) {
+  } 
+  else if ( class( object ) == "mi" ) {
   # for mi object
 
     org.data  <- data.mi(object)
@@ -114,12 +115,14 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         options( show.error.messages = FALSE )
         # Error Handling
         if(augment.data){
-          info[[CurrentVar]]$params$augment.data <- TRUE
+          n.aug <- trunc((dim(data)[1]*0.1))
+          aug.dat <- rbind.data.frame(dat, .randdraw(org.data, n=n.aug))
         }
+          
         mi.object[[i]][[CurrentVar]] <- with( dat, 
                                           do.call( model.type,
                                                     args = c( list( formula = info[[CurrentVar]]$imp.formula, 
-                                                    data = dat,
+                                                    data = ifelse(augment.data, aug.dat, dat),
                                           start=if(!is.null(start.val[[i]][[jj]])){
                                                   start.val[[i]][[jj]]
                                                 }

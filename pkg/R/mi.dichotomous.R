@@ -2,7 +2,7 @@
 # imputation function for dichotomous variable
 # ==============================================================================
 mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
-                             draw.from.beta=FALSE, augment.data=FALSE,... ) {
+                             draw.from.beta=FALSE,... ) {
   call <- match.call( );
   mf   <- match.call( expand.dots = FALSE );
   m    <- match( c( "formula", "data" ), names( mf ), 0 );
@@ -37,25 +37,11 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
     start[is.na(start)]<-0;
     } 
     
-  if(augment.data){
-    n.aug <- trunc(dim(data)[1])*0.1
-    n.complete <- dim(na.exclude(data))[1]
-    if(n.aug > n.complete){
-      n.aug <- n.complete
-    }
-    data2 <- rbind.data.frame(data, .randdraw(data, n=n.aug))
-    bglm.imp <- bayesglm( formula = formula, 
-                          data = data2, 
-                          family = binomial ( link = "logit" ), 
-                          n.iter = n.iter, start = start, 
-                          drop.unused.levels=FALSE, Warning=FALSE, ... )
-  }
-  else{
-    bglm.imp    <- bayesglm( formula = formula, data = data, 
+   bglm.imp    <- bayesglm( formula = formula, data = data, 
                               family = binomial ( link = "logit" ), 
                               n.iter = n.iter, start = start, 
                                drop.unused.levels=FALSE, Warning=FALSE, ... )
-  }
+
     #determ.pred <- predict ( bglm.imp, newdata = data, type = "response" )
     determ.pred <- predict ( bglm.imp, newdata = data, type = "response" );
     if( draw.from.beta ) {
@@ -66,11 +52,6 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
       random.temp <- rbinom  ( n.mis, 1, determ.pred[mis] ); 
     }
     
-#    sim.bglm.imp<- sim( bglm.imp,1 )
-#    prob.pred   <- invlogit( tcrossprod(cbind( (X[mis,1,drop=FALSE]*0 + 1), X[mis,,drop=FALSE]), sim.bglm.imp$beta ) )
-#    random.temp <- rbinom  ( n.mis, 1, prob.pred ) 
-#    determ.pred <- predict ( bglm.imp, newdata = data, type = "response" )
-    #random.temp <- rbinom  ( n.mis, 1, determ.pred[mis] ) 
     # reverse 0/1 conversion
     random.pred <- random.temp;
     random.pred <- replace ( random.pred, random.temp == 0, y.levels[1] );
@@ -93,16 +74,6 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
     result$random   <- random.pred;
     #result$residual <- residual.val
     class ( result ) <- c( "mi.dichotomous", "mi.method", "list" );
-#  result <-new("mi.dichotomous",
-#            model    = list( call = bglm.imp$call,
-#                             call$formula = as.formula( formula ),
-#                             call$start   = round(as.double( start ), 2 ),
-#                             call$n.iter  = n.iter,
-#                             coefficient  = coefficients( bglm.imp ),
-#                             sigma        =  sigma.hat( bglm.imp ),
-#                             dispersion   = bglm.imp$dispersion)
-#            expected = determ.pred,
-#            random   = random.pred);
     return( result );
     on.exit( rm( bglm.imp ) );
 }

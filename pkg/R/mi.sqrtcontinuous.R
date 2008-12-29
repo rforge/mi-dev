@@ -2,7 +2,7 @@
 # imputation function for positive continuous variable
 # ==============================================================================
 mi.sqrtcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100, 
-                                draw.from.beta = FALSE, augment.data = FALSE,... ) {
+                                draw.from.beta = FALSE, ... ) {
   call <- match.call()
   mf   <- match.call(expand.dots = FALSE)
   m    <- match(c("formula", "data"), names(mf), 0)
@@ -27,18 +27,8 @@ mi.sqrtcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
     data <- mf 
   }
   
-  if(augment.data){
-    n.aug <- trunc(dim(data)[1])*0.1
-    n.complete <- dim(na.exclude(data))[1]
-    if(n.aug > n.complete){
-      n.aug <- n.complete
-    }
-    data2 <- rbind.data.frame(data, .randdraw(data, n=n.aug))
-    bglm.imp <- bayesglm( formula = formula, data = data2, family = gaussian, n.iter = n.iter, start = start, Warning=FALSE,... )
-  }
-  else{
-    bglm.imp <- bayesglm( formula = formula, data = data, family = gaussian, n.iter = n.iter, start = start,Warning=FALSE,... )
-  }
+  bglm.imp <- bayesglm( formula = formula, data = data, family = gaussian, n.iter = n.iter, start = start,Warning=FALSE,... )
+
   
   if(any(is.na(coefficients(bglm.imp)))){ warning(message="there are coefficient estimated as NA in the model") }
   
@@ -52,11 +42,7 @@ mi.sqrtcontinuous <- function( formula, data = NULL, start = NULL, n.iter = 100,
     random.pred     <- rnorm( n.mis, determ.pred[mis], sigma.hat( bglm.imp ) );
   }
   names(random.pred) <- names(determ.pred[mis]);
-#  display(bglm.imp)
-  print(coefficients(bglm.imp))
-  print(sigma.hat(bglm.imp))
-  #print(max(determ.pred))
-#  print(determ.pred)
+
   # calculate residual
   #residual.val    <- bglm.imp$residuals #Y - determ.pred^2
   # return the result
