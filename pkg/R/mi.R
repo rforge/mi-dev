@@ -104,7 +104,11 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         CurVarFlg <- ( names ( data ) == CurrentVar )
         dat <- data.frame( data[ ,CurVarFlg, drop=FALSE ], 
                             mi.data[[i]][ ,!CurVarFlg ] )
-        names( dat ) <- c( CurrentVar, names( data[,!CurVarFlg, drop=FALSE] ) )
+        if(augment.data){
+          n.aug <- trunc((dim(data)[1]*0.1))
+          dat <- rbind.data.frame(dat, .randdraw(org.data, n=n.aug))
+        }
+        names(dat) <- c( CurrentVar, names( data[,!CurVarFlg, drop=FALSE] ) )
         model.type   <- as.character( type.models( info[[CurrentVar]]$type ) )
         
         # Error Handling
@@ -114,15 +118,11 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         on.exit ( options( show.error.messages = TRUE ),add = TRUE)
         options( show.error.messages = FALSE )
         # Error Handling
-        if(augment.data){
-          n.aug <- trunc((dim(data)[1]*0.1))
-          aug.dat <- rbind.data.frame(dat, .randdraw(org.data, n=n.aug))
-        }
           
-        mi.object[[i]][[CurrentVar]] <- with( dat, 
+        mi.object[[i]][[CurrentVar]] <- with(data=dat, 
                                           do.call( model.type,
                                                     args = c( list( formula = info[[CurrentVar]]$imp.formula, 
-                                                    data = ifelse(augment.data, aug.dat, dat),
+                                                    data = dat,
                                           start=if(!is.null(start.val[[i]][[jj]])){
                                                   start.val[[i]][[jj]]
                                                 }
