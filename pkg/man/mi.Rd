@@ -42,12 +42,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
     preprocess = FALSE, continue.on.convergence = FALSE,
     seed = NA, check.coef.convergence = FALSE, 
     augment.data = FALSE) 
-
-%\S4method{mi}{mi}(object, \dots)
-%\S3method{plot}{mi}(x, \dots )
-
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{A data frame containing the incomplete data. Missing data are coded as NA's or mi object.}
   \item{info}{ mi.info object. }

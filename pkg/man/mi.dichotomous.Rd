@@ -17,7 +17,7 @@
 }
 \usage{
 mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100, 
-  draw.from.beta = FALSE, augment.data = FALSE, \dots)
+  draw.from.beta = FALSE, \dots)
 
 \S3method{residuals}{mi.dichotomous}(object, y, \dots)
 \S3method{plot}{mi.dichotomous}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
@@ -29,8 +29,6 @@ mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100,
   \item{start}{ Starting value for bayesglm. }
   \item{n.iter}{ Maximum number of iteration for bayesglm. The default is 100.}
   \item{draw.from.beta}{ Draws from posterior distribution of the betas to add randomness. }
-  \item{augment.data}{Augment the data with 10\% of the random draws from the observed data, 
-                default= FALSE.}
   \item{\dots}{ Currently not used. }
   \item{object}{\code{mi.dichotomous} object.}
   \item{x}{ \code{mi.dichotomous} object.}

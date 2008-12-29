@@ -13,7 +13,7 @@
 }
 \usage{
   mi.polr(formula, data = NULL, drop.unused.levels = TRUE, start = NULL, 
-    n.iter = 100, augment.data = FALSE, \dots)
+    n.iter = 100, \dots)
   \S3method{plot}{mi.polr}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots )
 }
 
@@ -29,8 +29,6 @@
   \item{drop.unused.levels}{ Drops unused levels. }
   \item{start}{ Starting value for bayespolr. }
   \item{n.iter}{ Maximum number of iteration for bayespolr. The default is 100.}
-  \item{augment.data}{Augment the data with 10\% of the random draws from the observed data, 
-                default= FALSE.}
   \item{\dots}{ Currently not used. }
   \item{x}{\code{mi.polr} object.}
   \item{y}{ Observed values.}
