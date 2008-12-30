@@ -7,7 +7,7 @@ random.imp <- function ( data , imp.method = c( "bootstrap", "pca" ) , ... ) {
     if( is.vector( data ) ) {
       mis       <- is.na ( data )
       imputed   <- data
-      #imputed[ mis ] <- sample( data[ !mis ], sum( mis ), replace = TRUE )
+      imputed[ mis ] <- sample( data[ !mis ], sum( mis ), replace = TRUE )
     } else if( is.matrix( data ) || is.data.frame( data )  ){
       imputed <- data
       for( j in 1:ncol ( data ) ) {

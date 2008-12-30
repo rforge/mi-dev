@@ -41,7 +41,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
     max.minutes = 20, rand.imp.method = "bootstrap", 
     preprocess = FALSE, continue.on.convergence = FALSE,
     seed = NA, check.coef.convergence = FALSE, 
-    augment.data = FALSE) 
+    augment.data = FALSE, cooling = FALSE, K = 0) 
 }
 \arguments{
   \item{object}{A data frame containing the incomplete data. Missing data are coded as NA's or mi object.}
@@ -57,6 +57,10 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   \item{check.coef.convergence}{default = FALSE}
   \item{augment.data}{Augment the data with 10\% of the random draws from the observed data, 
                 default= FALSE.}
+  \item{K}{The cooling parameter, default is 0. If K > 0, the imputation will randomly switch between
+        randomly drawing from the observation or drawing from the modeled based values.  And 
+        with each iteration, the probability of cooling (q) decreases by number of iterations, such that
+        q = K/S.}
   \item{\dots}{options for plot.mi.}
   
 }

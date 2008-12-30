@@ -4,9 +4,9 @@
 
 mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30, 
                   max.minutes = 20, rand.imp.method = "bootstrap", 
-                   preprocess = FALSE, continue.on.convergence = FALSE,
-                    seed = NA, check.coef.convergence = FALSE, 
-                    augment.data=FALSE) {
+                  preprocess = FALSE, continue.on.convergence = FALSE,
+                  seed = NA, check.coef.convergence = FALSE, 
+                  augment.data = FALSE, K = 0) {
   call <- match.call( )                         # call
   if( !is.na ( seed ) ) { set.seed( seed ) }    # set random seed
   if( n.iter <=5 ){ stop(message="number of iteration must be more than 5")}
@@ -51,7 +51,9 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     AveVar[ 1:prev.iter , , ]<- bugs.mi(object)$sims.array
     s_start <- prev.iter + 1
     s_end   <- prev.iter + n.iter
-  } else {
+    K <- 0
+  } 
+  else {
   # unexpected object
     stop( gettextf( "object class '%s' is not acceptable", class( object ) ) )
   }
@@ -63,7 +65,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     data <- mi.info.recode( data, info )
   }
  
-  data<-data[,include( info ) ]
+  data <- data[,include( info ) ]
   dimnames( AveVar ) <- list( NULL, NULL, 
                               c( paste( "mean(", colnames( data ),")",sep="" ), 
                                  paste( "sd(", colnames( data ), ")", sep="" ) ) )
@@ -77,7 +79,8 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
   for (j in 1:n.imp){ 
     mi.data[[j]]  <-  if( class( object ) %in% "mi" ){ 
                         data.frame( mi.matrix( object, m=j )[,include( info )] ) 
-                      } else{ 
+                      } 
+                      else{ 
                         random.imp( data, method = rand.imp.method )
                       }
     start.val[[j]]<- vector( "list", length.list )
@@ -100,7 +103,19 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
       # variable loop
       for( jj in 1:length(VarName) ) {
         CurrentVar <- VarName[jj]
-        cat( CurrentVar, " " )
+        
+        # probability of cooling 
+        q <- K/s
+        q <- ifelse(q > 1, 1, q)
+        q <- rbinom(1, 1, prob=q) 
+          
+        if(q){
+          cat(paste(CurrentVar, "*", sep=""), " ")
+        }
+        else{
+          cat( CurrentVar, "  " )
+        }
+        
         CurVarFlg <- ( names ( data ) == CurrentVar )
         dat <- data.frame( data[ ,CurVarFlg, drop=FALSE ], 
                             mi.data[[i]][ ,!CurVarFlg ] )
@@ -118,7 +133,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         on.exit ( options( show.error.messages = TRUE ),add = TRUE)
         options( show.error.messages = FALSE )
         # Error Handling
-          
+        
         mi.object[[i]][[CurrentVar]] <- with(data=dat, 
                                           do.call( model.type,
                                                     args = c( list( formula = info[[CurrentVar]]$imp.formula, 
@@ -135,6 +150,12 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         on.exit ()
         options( show.error.messages = TRUE )
         # Error Handling
+
+        if(q){
+          n.mis <- sum(is.na(dat[[CurrentVar]]))
+          mi.object[[i]][[CurrentVar]]$random <- sample(na.exclude(dat[[CurrentVar]]), n.mis, replace=FALSE)
+        }
+
 
         mi.data[[i]][[CurrentVar]][is.na( data[[CurrentVar]] )] <- mi.object[[i]][[CurrentVar]]$random
         data.tmp <<- mi.data
