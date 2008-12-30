@@ -41,7 +41,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
     max.minutes = 20, rand.imp.method = "bootstrap", 
     preprocess = FALSE, continue.on.convergence = FALSE,
     seed = NA, check.coef.convergence = FALSE, 
-    augment.data = FALSE, cooling = FALSE, K = 0) 
+    augment.data = FALSE, K = 0) 
 }
 \arguments{
   \item{object}{A data frame containing the incomplete data. Missing data are coded as NA's or mi object.}
