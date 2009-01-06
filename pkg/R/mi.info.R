@@ -154,15 +154,21 @@ type.default.formula <- function( response.name, predictor.name, type ) {
   if (type=="mixed"){
     form <- list(paste( paste( "1*(", response.name, "!=0) ~",sep=""),paste(predictor.name,collapse=" + ")),
                  paste( response.name,"~",paste(predictor.name,collapse=" + ")))
-  } else if (type=="squareroot-continuous"){
+  } 
+  else if (type=="squareroot-continuous"){
     form <- paste( paste( "sqrt(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
-  } else if (type=="logscale-continuous"){
-    form <- paste( paste( "log(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
-  } else if (type=="ordered-categorical"){
+  } 
+  else if (type == "logscale-continuous") {
+    form <- paste(paste("log(", response.name, ") ~", sep = ""), 
+            paste(predictor.name, collapse = " + "))
+    }
+  else if (type=="ordered-categorical"){
     form <- paste( paste( "factor(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
-  } else if (type=="fixed"){
+  } 
+  else if (type=="fixed"){
     form <- paste( response.name, " ~",response.name)
-  } else{
+  } 
+  else{
     form <- paste( response.name,"~",paste(predictor.name,collapse=" + "))
   }
   return(form) 

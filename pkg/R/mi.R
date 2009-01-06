@@ -153,7 +153,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
 
         if(q){
           n.mis <- sum(is.na(dat[[CurrentVar]]))
-          mi.object[[i]][[CurrentVar]]$random <- sample(na.exclude(dat[[CurrentVar]]), n.mis, replace=FALSE)
+          mi.object[[i]][[CurrentVar]]$random <- sample(na.exclude(dat[[CurrentVar]]), n.mis, replace=TRUE)
         }
 
 

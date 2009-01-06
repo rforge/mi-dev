@@ -3,7 +3,6 @@
     that q = K/iteration.  This will create noise to the mi process by drawing
     from marginals.
 
-
 2008-12-28 Yu-Sung Su     <ys463@columbia.edu>  
    * add augment.data option to mi procedures.  If TRUE, will augment the data 
     with 10% of the observaed data.  
