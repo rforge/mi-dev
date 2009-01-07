@@ -1,3 +1,10 @@
+2008-1-6 Yu-Sung Su     <ys463@columbia.edu>  
+   * DESCRIPTION (Version, Date): depend abind package
+   * array.append and array.append3 are obsolete.  Use abind instead.
+
+2008-1-5 Yu-Sung Su     <ys463@columbia.edu>  
+   * DESCRIPTION (Version, Date): 0.02-03
+
 2008-12-30 Yu-Sung Su     <ys463@columbia.edu>  
    * add K parameter to mi procedures.  If K>0, will cool the mi with probabilty q such
     that q = K/iteration.  This will create noise to the mi process by drawing
