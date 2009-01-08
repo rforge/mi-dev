@@ -622,57 +622,68 @@ center <- function( x ) {
 }
 
 
-mi.info.update <-function( info, target, list ) {
-  if( !is.mi.info( info ) ) {
-    stop ( message = "this function is available only for mi.info objects" )
-  } else {
-    nam <- names( list )
-    if ( is.null( nam ) ) {
-      if ( length( list ) != length ( info ) ){
-        stop ( message = "type for all the variable must be specified " )
-      } else {
-        nam <- 1:length( list )
-      }
+update.mi.info <- function(object, target, list, ...){
+  nam <- names(list)
+  if (is.null(nam)) {
+    if (length(list) != length(object)){
+      stop ( message = "type for all the variable must be specified " )
     } 
-    for ( i in 1:length( list ) ) {
-      info[[nam[i]]][[target]] <- list[[nam[i]]]
+    else {
+      nam <- 1:length(list)
     }
+  } 
+  for ( i in 1:length( list ) ) {
+    object[[nam[i]]][[target]] <- list[[nam[i]]]
   }
-  return( info )
+  return(info=object)
 }
+
                             
-mi.info.update.type <- function ( info, list ) {
-  return( mi.info.update ( info, "type", list ) )
+mi.info.update.type <- function (object, list ) {
+  class(object) <- "mi.info"
+  info <- update(object, target="type", list )
+  return(info)
 }
-mi.info.update.level <- function ( info, list ) {
-  return( mi.info.update ( info, "level", list ) )
+mi.info.update.level <- function (object, list ) {
+  info <- update(object, target="level", list )
+  return(info)
 }
-mi.info.update.include <- function ( info, list ) {
-  return( mi.info.update ( info, "include", list ) )
+mi.info.update.include <- function (object, list ) {
+  info <- update(object, target="include", list )
+  return(info)
 }
-mi.info.update.is.ID <- function ( info, list ) {
-  return( mi.info.update ( info, "is.ID", list ) )
+mi.info.update.is.ID <- function (object, list ) {
+  info <- update(object, target="is.ID", list ) 
+  return(info)
+  
 }
-mi.info.update.correlated <- function ( info, list ) {
-  return( mi.info.update ( info, "correlated", list ) )
+mi.info.update.correlated <- function (object, list ) {
+  info <- update(object, target="correlated", list ) 
+  return(info)
 }
-mi.info.update.transform <- function ( info, list ) {
-  return( mi.info.update ( info, "transform", list ) )
+mi.info.update.transform <- function (object, list ) {
+  info <- update (object, target="transform", list )
+  return(info)
 }
-mi.info.update.imp.order <- function ( info, list ) {
-  return( mi.info.update ( info, "imp.order", list ) )
+mi.info.update.imp.order <- function ( object, list ) {
+  info <- update (object, target="imp.order", list )
+  return(info)
 }
-mi.info.update.determ.pred <- function ( info, list ) {
-  return( mi.info.update ( info, "determ.pred", list ) )
+mi.info.update.determ.pred <- function ( object, list ) {
+  info <- update (object, target="determ.pred", list ) 
+  return(info)
 }
-mi.info.update.params <- function ( info, list ) {
-  return( mi.info.update ( info, "params", list ) )
+mi.info.update.params <- function ( object, list ) {
+  info <- update (object, target="params", list ) 
+  return(info)
 }
-mi.info.update.imp.formula <- function ( info, list ) {
-  return( mi.info.update ( info, "imp.formula", list ) )
+mi.info.update.imp.formula <- function ( object, list ) {
+  info <- update (object, target="imp.formula", list )
+  return(info)
 }
-mi.info.update.other <- function ( info, list ) {
-  return( mi.info.update ( info, "other", list ) )
+mi.info.update.other <- function ( object, list ) {
+  info <- update (object, target="other", list )
+  return(info)
 }
 
 is.mi.info <- function( object ) {

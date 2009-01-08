@@ -105,8 +105,8 @@ if ( !isGeneric( "mi.data.frame" )) {
   )
 }
 
-if ( !isGeneric( "imputed" ) ) {
-    setGeneric( "imputed",
+if ( !isGeneric("imputed")) {
+    setGeneric("imputed",
                function( object, ... ){
                   standardGeneric( "imputed" )
                } 

@@ -58,6 +58,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     stop( gettextf( "object class '%s' is not acceptable", class( object ) ) )
   }
   
+  
   mis.index <-  apply(data, 2, is.na)
   # Automatic Preprocess
 

@@ -11,6 +11,8 @@
 #      plot
 #)
 
+importFrom(stats, "update")
+
 importFrom("arm",
       display,
       sigma.hat
@@ -83,7 +85,7 @@ export(
   mi.hist,
   mi.info,
   mi.info.fix,
-  mi.info.update,
+#  mi.info.update,
   mi.info.update.correlated,
   mi.info.update.determ.pred,
   mi.info.update.imp.formula,
@@ -122,6 +124,7 @@ S3method(residuals, mi.sqrtcontinuous)
 S3method(residuals, mi.dichotomous)
 S3method(residuals, mi.logcontinuous)
 S3method(residuals, mi.categorical)
+S3method(update, mi.info)
 S3method(plot, mi)
 S3method(plot, mi.method)
 S3method(plot, mi.mixed)

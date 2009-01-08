@@ -16,7 +16,7 @@ setMethod("typecast", signature( object = "ANY" ),
       "dichotomous"
     } 
     else {
-      if (is.numeric(object)){       # if the variable is numeric
+      if (is.numeric(object)){     # if the variable is numeric
         if (len > 2 & len <= 5){   # 3~5 category variable
           "ordered-categorical"
         } 

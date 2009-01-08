@@ -5,6 +5,7 @@ methods::setOldClass("lm")
 methods::setOldClass("glm")
 
 setClass("mi.info")
+        
 
 
 setClass("mi",
