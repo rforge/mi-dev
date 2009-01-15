@@ -1,15 +1,27 @@
+#.check.log.var <- function(x){
+#  check1 <- min(x, na.rm=TRUE) < 0
+#  if(check1) stop("log cannot take on negative values")
+#  check2 <- min(x, na.rm=TRUE) == 0 
+#  if(check2){
+#    k <- round((min(x[x>0], na.rm=TRUE) + 0)/2,2)
+#  }
+#  return(k)
+#}
+
+
+
 # ========================================================================
 # preprocessing the data
 # ========================================================================
 
-preprocess.data <- function(data){
+.preprocess.data <- function(data){
   n.col <- ncol(data)
   n.row <- nrow(data)
   var.name <- names(data)
   type <- apply(data, 2, typecast)
   idx1 <- match(type, "mixed", nomatch=0)
   n.new.var <- sum(idx1)
-  idx2 <- seq(1, n.new.var)
+  idx2 <- grep("mixed", type)
   TMP.lab <- NULL
   TMP <- NULL
   for(i in 1:n.col){
@@ -31,26 +43,24 @@ preprocess.data <- function(data){
 }
 
 
-postprocess.data <- function(trans.data, org.data){
+.postprocess.data <- function(trans.data, org.data){
   var.name <- names(org.data)
+  idx1 <- pmatch(names(trans.data), names(org.data), nomatch=NA)
+  idx1 <- na.exclude(idx1)
+  TMP.lab <- var.name[-idx1]
   idx1 <- pmatch(names(trans.data), names(org.data), nomatch=0)
-  idx1 <- ifelse(idx1==0, 1, 0)
-  idx1 <- seq(1, sum(idx1), 1)
+  idx1 <- grep(0, idx1)
+  n.col <- max(idx1)
   data <- trans.data[,idx1]
-  idx2 <- pmatch(names(org.data), names(trans.data), nomatch=0)
-  idx2 <- pmatch(0, idx2)
-  TMP.lab <- var.name[idx2]
-  n.col <- ncol(data)
+  trans.data <- trans.data[,-idx1]
   TMP <- NULL
   for(i in seq(1,(n.col-1),2)){
     tmp <- data[,i]*exp(data[,(i+1)])
     TMP <- cbind(TMP, tmp)
   }
-  names(TMP) <- TMP.lab
-  trans.data <- trans.data[,-idx1]
+  colnames(TMP) <- TMP.lab
   trans.data <- cbind.data.frame(TMP, trans.data)
   return(trans.data)
-  on.exit(rm(data))
   on.exit(rm(TMP))
 }
 

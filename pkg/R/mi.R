@@ -6,7 +6,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
                   max.minutes = 20, rand.imp.method = "bootstrap", 
                   preprocess = FALSE, continue.on.convergence = FALSE,
                   seed = NA, check.coef.convergence = FALSE, 
-                  augment.data = FALSE, K = 0) {
+                  augment.data = FALSE, K = 0, trans = FALSE) {
   call <- match.call( )                         # call
   if( !is.na ( seed ) ) { set.seed( seed ) }    # set random seed
   if( n.iter <=5 ){ stop(message="number of iteration must be more than 5")}
@@ -25,6 +25,9 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     nameD      <- deparse( substitute( object ) )
     org.data   <- object
     data       <- object
+    if(trans){
+      data <- .preprocess.data(data)
+    }
     col.mis    <- !complete.cases( t( data ) ) 
     ncol.mis   <- sum( col.mis )
     if( missing( info ) ) {     
@@ -38,9 +41,12 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
   } 
   else if ( class( object ) == "mi" ) {
   # for mi object
-
+    trans <- object@trans
     org.data  <- data.mi(object)
     data      <- data.mi(object)
+    if(trans){
+      data <- .preprocess.data(data)
+    }
     col.mis   <- !complete.cases( t( data ) )
     ncol.mis  <- sum( col.mis )
     n.imp     <- m(object)
@@ -79,7 +85,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
   mi.object     <- vector( "list", n.imp )
   for (j in 1:n.imp){ 
     mi.data[[j]]  <-  if( class( object ) %in% "mi" ){ 
-                        data.frame( mi.matrix( object, m=j )[,include( info )] ) 
+                        data.frame( mi.matrix(object, m=j, trans=FALSE)[,include( info )] ) 
                       } 
                       else{ 
                         random.imp( data, method = rand.imp.method )
@@ -122,7 +128,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
                             mi.data[[i]][ ,!CurVarFlg ] )
         if(augment.data){
           n.aug <- trunc((dim(data)[1]*0.1))
-          dat <- rbind.data.frame(dat, .randdraw(org.data, n=n.aug))
+          dat <- rbind.data.frame(dat, .randdraw(data, n=n.aug))
         }
         names(dat) <- c( CurrentVar, names( data[,!CurVarFlg, drop=FALSE] ) )
         model.type   <- as.character( type.models( info[[CurrentVar]]$type ) )
@@ -227,6 +233,9 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     tmp <- abind(coef.conv.check,strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp),along=1)
     coef.conv.check <- as.bugs.array(tmp)
   }
+  
+  
+  
   mi <- new("mi", 
             call      = call,
             data      = org.data,
@@ -235,7 +244,8 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
             imp       = mi.object,
             converged = converged.flg,
             coef.conv = coef.conv.check,
-            bugs      = con.check)
+            bugs      = con.check,
+            trans     = trans)
   with(globalenv(), rm(data.tmp))
   return( mi )
 }

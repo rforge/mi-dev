@@ -22,7 +22,7 @@ setMethod("typecast", signature( object = "ANY" ),
         } 
         else if (len > 5 & all(values > 0)){ # more than 5 category and positive 
           "squareroot-continuous" 
-            #"logscale-continuous" 
+          #"logscale-continuous" 
         } 
         else if (len > 5 & "0" %in% values & all(values >= 0)){# more than 5 category with 0 and all positive numbers
           "mixed" 

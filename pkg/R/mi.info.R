@@ -132,7 +132,10 @@ mi.info.formula.default <-function( data, info ){
     inc <- sapply(info, function(inf){inf$include} )
     inc[i]<-FALSE
     dimnames(data)[[2]][i]
-    info[[i]]$imp.formula <- type.default.formula(dimnames(data)[[2]][i],dimnames(data[,inc,drop=FALSE])[[2]],info[[i]]$type)
+    info[[i]]$imp.formula <- type.default.formula(
+                                dimnames(data)[[2]][i],
+                                dimnames(data[,inc,drop=FALSE])[[2]],
+                                info[[i]]$type)
   }
   return(info)
 }
@@ -159,9 +162,9 @@ type.default.formula <- function( response.name, predictor.name, type ) {
     form <- paste( paste( "sqrt(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
   } 
   else if (type == "logscale-continuous") {
-    form <- paste(paste("log(", response.name, ") ~", sep = ""), 
+      form <- paste(paste("log(", response.name, ") ~", sep = ""), 
             paste(predictor.name, collapse = " + "))
-    }
+  }
   else if (type=="ordered-categorical"){
     form <- paste( paste( "factor(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
   } 
@@ -173,6 +176,13 @@ type.default.formula <- function( response.name, predictor.name, type ) {
   }
   return(form) 
 }
+
+#    k <- .check.log.var(response.name)
+#    if(k > 0){
+#      form <- paste(paste("log(", response.name, "+", k, ") ~", sep = ""), 
+#            paste(predictor.name, collapse = " + "))    
+#    }
+#    else{
 
 
 # ========================================================================
@@ -634,6 +644,17 @@ update.mi.info <- function(object, target, list, ...){
   } 
   for ( i in 1:length( list ) ) {
     object[[nam[i]]][[target]] <- list[[nam[i]]]
+    if(target=="type"){
+      varnames <- names(object)
+      object$include[nam[i]] <- FALSE
+      inc <- object$include
+      varnames <- varnames[inc,drop=TRUE]
+      object[[nam[i]]]["imp.formula"] <- type.default.formula(
+                                          nam[i], 
+                                          varnames, 
+                                          object$type[nam[i]])
+      object$include[nam[i]] <- TRUE
+    }
   }
   return(info=object)
 }
