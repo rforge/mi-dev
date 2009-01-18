@@ -8,9 +8,9 @@ lm.mi <- function (formula, mi.object, data.list = NULL, ... )
       m      <- m( mi.object )
       result <- vector( "list", m )
       names( result ) <- as.character( paste( "Imputation", seq( m ), sep = ""))
+      mi.data <- mi.data.list(mi.object)
       for ( i in 1:m ) {
-        mi.data <- mi.matrix( mi.object, i )
-        result[[i]] <- lm( formula, data = data.frame( mi.data ), ... )
+        result[[i]] <- lm( formula, data = data.frame( mi.data[[i]] ), ... )
       }
     }
     else{
@@ -18,7 +18,7 @@ lm.mi <- function (formula, mi.object, data.list = NULL, ... )
       result <- vector( "list", m )
       names( result ) <- as.character( paste( "Imputation", seq( m ), sep = ""))
       for ( i in 1:m ) {
-        mi.data <- mi.data.list(mi.object)
+        mi.data <- data.list
         result[[i]] <- lm( formula, data = data.frame(mi.data[[i]]), ... )
       }
     }

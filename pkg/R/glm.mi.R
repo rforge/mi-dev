@@ -8,10 +8,10 @@ glm.mi <- function ( formula, mi.object = NULL, data.list = NULL, family = gauss
       m      <- m( mi.object ) 
       result <- vector( "list", m )
       names( result ) <- as.character(paste( "Imputation", seq( m ), sep = "" ))
+      mi.data     <- mi.data.list(mi.object)
       for ( i in 1:m ) {
-          mi.data     <- mi.completed( mi.object, i )
           result[[i]] <- glm( formula, family = family, 
-                                data = data.frame( mi.data ), ... )
+                                data = data.frame( mi.data[[i]] ), ... )
       }
     }
     else{
@@ -19,7 +19,7 @@ glm.mi <- function ( formula, mi.object = NULL, data.list = NULL, family = gauss
       result <- vector( "list", m )
       names( result ) <- as.character(paste( "Imputation", seq( m ), sep = "" ))
       for ( i in 1:m ) {
-          mi.data     <- mi.data.list(mi.object)
+          mi.data     <- data.list
           result[[i]] <- glm( formula, family = family, 
                                 data = data.frame( mi.data[[i]] ), ... )    
       }
