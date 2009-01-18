@@ -71,23 +71,44 @@
 }
 
 
-.postprocess.data <- function(trans.data, org.data){
-  var.name <- names(org.data)
-  idx1 <- pmatch(names(trans.data), names(org.data), nomatch=NA)
-  idx1 <- na.exclude(idx1)
-  TMP.lab <- var.name[-idx1]
-  idx1 <- pmatch(names(trans.data), names(org.data), nomatch=0)
-  idx1 <- grep(0, idx1)
-  n.col <- max(idx1)
-  data <- trans.data[,idx1]
-  trans.data <- trans.data[,-idx1]
-  TMP <- NULL
-  for(i in seq(1,(n.col-1),2)){
-    tmp <- data[,i]*exp(data[,(i+1)])
-    TMP <- cbind(TMP, tmp)
-  }
-  colnames(TMP) <- TMP.lab
-  trans.data <- cbind.data.frame(TMP, trans.data)
+.postprocess.data <- function(trans.data){
+  n.chains <- length(trans.data)
+ # if(!is.null(org.data)){
+#    var.name <- names(org.data)
+#    idx1 <- pmatch(names(trans.data[[1]]), names(org.data), nomatch=NA)
+#    idx1 <- na.exclude(idx1)
+#    TMP.lab <- var.name[-idx1]
+#    idx1 <- pmatch(names(trans.data[[1]]), names(org.data), nomatch=0)
+#    idx1 <- grep(0, idx1)
+#    n.col <- max(idx1)
+#    for (s in 1:n.chains){
+#      data <- trans.data[[s]][,idx1]
+#      trans.data[[s]] <- trans.data[[s]][,-idx1]
+#      TMP <- NULL
+#      for(i in seq(1,(n.col-1),2)){
+#        tmp <- data[,i]*exp(data[,(i+1)])
+#        TMP <- cbind(TMP, tmp)
+#      }
+#    colnames(TMP) <- TMP.lab
+#    trans.data[[s]] <- cbind.data.frame(TMP, trans.data[[s]])
+#    }
+#  }
+#  else{
+#    org.data <- data.mi(mi.object)
+    var.name <- names(trans.data[[1]])
+    idx1 <- grep("ind", names(trans.data[[1]]))
+    idx2 <- grep("log", names(trans.data[[1]]))
+    idx3 <- c(idx1, idx2)
+    var.name1 <- var.name[idx1]
+    var.name1 <- gsub(".ind", "", var.name1)
+    var.name <- c(var.name1, var.name[-idx3])
+    for (s in 1:n.chains){
+      data <- trans.data[[s]][,idx1]*exp(trans.data[[s]][,idx2])
+      trans.data[[s]] <- trans.data[[s]][,-idx3]
+      trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
+      names(trans.data[[s]]) <- var.name
+    }  
+#  }
   return(trans.data)
   on.exit(rm(TMP))
 }
