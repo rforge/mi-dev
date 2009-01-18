@@ -1,3 +1,31 @@
+# ========================================================================
+# create missingness
+# ========================================================================
+
+.create.missing <- function(data, pct.mis=10){
+  n <- nrow(data)
+  J <- ncol(data)
+  if(length(pct.mis)==1){
+    n.mis <- rep((n*(pct.mis/100)), J)
+  }
+  else{
+    if(length(pct.mis) < J) stop("The length of missing does not equal to the column of the data")
+    n.mis <- n*(pct.mis/100)
+  }
+  for(i in 1:ncol(data)){
+    if(n.mis[i]==0){
+      data[,i] <- data[,i]
+    }
+    else{
+      data[sample(1:n, n.mis[i], replace=FALSE),i] <- NA
+    }
+  }
+  return(data)
+}
+  
+
+
+
 #.check.log.var <- function(x){
 #  check1 <- min(x, na.rm=TRUE) < 0
 #  if(check1) stop("log cannot take on negative values")

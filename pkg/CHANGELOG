@@ -1,3 +1,9 @@
+2008-1-17 Yu-Sung Su     <ys463@columbia.edu>  
+   * man/mi.compeleted: add an example of mi.data.list
+   * R/AllInternal: add .preprocess.data, .postprocess.data, .create.missing
+   * R/AllGeneric: add mi.data.list
+   * R/mi.completed: add mi.data.list.mi
+
 2008-1-8 Yu-Sung Su     <ys463@columbia.edu>  
    * R/mi.info.update: make mi.info.update into S3 method.
 

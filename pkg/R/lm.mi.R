@@ -1,15 +1,26 @@
 #==============================================================================
 # Linear Regression for multiply imputed dataset
 #==============================================================================
-lm.mi <- function ( formula,  mi.object, ... ) 
+lm.mi <- function (formula, mi.object, data.list = NULL, ... ) 
 {
     call   <- match.call( )
-    m      <- m( mi.object )
-    result <- vector( "list", m )
-    names( result ) <- as.character( paste( "Imputation", seq( m ), sep = ""))
-    for ( i in 1:m ) {
+    if(is.null(data.list)){
+      m      <- m( mi.object )
+      result <- vector( "list", m )
+      names( result ) <- as.character( paste( "Imputation", seq( m ), sep = ""))
+      for ( i in 1:m ) {
         mi.data <- mi.matrix( mi.object, i )
         result[[i]] <- lm( formula, data = data.frame( mi.data ), ... )
+      }
+    }
+    else{
+      m <- length(data.list)
+      result <- vector( "list", m )
+      names( result ) <- as.character( paste( "Imputation", seq( m ), sep = ""))
+      for ( i in 1:m ) {
+        mi.data <- mi.data.list(mi.object)
+        result[[i]] <- lm( formula, data = data.frame(mi.data[[i]]), ... )
+      }
     }
     coef   <- vector( "list", m )
     se     <- vector( "list", m )

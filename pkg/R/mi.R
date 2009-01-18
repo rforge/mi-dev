@@ -6,7 +6,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
                   max.minutes = 20, rand.imp.method = "bootstrap", 
                   preprocess = FALSE, continue.on.convergence = FALSE,
                   seed = NA, check.coef.convergence = FALSE, 
-                  augment.data = FALSE, K = 0, trans = FALSE) {
+                  augment.data = FALSE, K = 0) {
   call <- match.call( )                         # call
   if( !is.na ( seed ) ) { set.seed( seed ) }    # set random seed
   if( n.iter <=5 ){ stop(message="number of iteration must be more than 5")}
@@ -25,9 +25,6 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     nameD      <- deparse( substitute( object ) )
     org.data   <- object
     data       <- object
-    if(trans){
-      data <- .preprocess.data(data)
-    }
     col.mis    <- !complete.cases( t( data ) ) 
     ncol.mis   <- sum( col.mis )
     if( missing( info ) ) {     
@@ -41,12 +38,8 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
   } 
   else if ( class( object ) == "mi" ) {
   # for mi object
-    trans <- object@trans
     org.data  <- data.mi(object)
     data      <- data.mi(object)
-    if(trans){
-      data <- .preprocess.data(data)
-    }
     col.mis   <- !complete.cases( t( data ) )
     ncol.mis  <- sum( col.mis )
     n.imp     <- m(object)
@@ -85,7 +78,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
   mi.object     <- vector( "list", n.imp )
   for (j in 1:n.imp){ 
     mi.data[[j]]  <-  if( class( object ) %in% "mi" ){ 
-                        data.frame( mi.matrix(object, m=j, trans=FALSE)[,include( info )] ) 
+                        data.frame( mi.matrix(object, m=j)[,include( info )] ) 
                       } 
                       else{ 
                         random.imp( data, method = rand.imp.method )
@@ -244,8 +237,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
             imp       = mi.object,
             converged = converged.flg,
             coef.conv = coef.conv.check,
-            bugs      = con.check,
-            trans     = trans)
+            bugs      = con.check)
   with(globalenv(), rm(data.tmp))
   return( mi )
 }

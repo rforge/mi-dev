@@ -14,13 +14,14 @@
   Generalized Linear Modeling Function that pulls togather the estimates from multiple imputed dataset.
 }
 \usage{
-glm.mi(formula, mi.object, family = gaussian, ...)
+glm.mi(formula, mi.object, data.list = NULL, family = gaussian, ...)
 \S3method{print}{mi.glm}(x, \dots)
 \S4method{display}{mi.glm}(object, digits=2)
 }
 \arguments{
   \item{formula}{ See \code{glm} for detail. }
   \item{mi.object}{ mi object. }
+  \item{data.list}{A list of data with same dimentions and variables; default is NULL.}
   \item{family}{See \code{glm} for detail.}
   \item{x}{\code{mi.glm} object.}
   \item{object}{\code{mi.glm} object.}

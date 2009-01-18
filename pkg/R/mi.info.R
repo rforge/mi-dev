@@ -22,7 +22,12 @@ mi.info <- function( data, threshold  = 0.99999 )
     # nmis
     info[[i]]$nmis <- sum( is.na( data[ ,i] ) )
     # type
-    info[[i]]$type <- typecast( data[,i] )
+    if(regexpr(".log", info[[i]]$name)>0){
+      info[[i]]$type <- "continuous"
+    }
+    else{
+      info[[i]]$type <- typecast( data[,i] )
+    }
     info[[i]]$var.class <- class( data[,i] )
     # level
     if( info[[i]]$var.class == "character" ) {

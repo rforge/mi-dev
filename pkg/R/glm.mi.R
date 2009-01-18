@@ -1,16 +1,28 @@
 #==============================================================================
 # Generalized Linear Modeling for multiply imputed dataset
 #==============================================================================
-glm.mi <- function ( formula, mi.object, family = gaussian, ... ) 
+glm.mi <- function ( formula, mi.object = NULL, data.list = NULL, family = gaussian, ... ) 
 {
     call   <- match.call( )
-    m      <- m( mi.object ) 
-    result <- vector( "list", m )
-    names( result ) <- as.character(paste( "Imputation", seq( m ), sep = "" ))
-    for ( i in 1:m ) {
-        mi.data     <- mi.completed( mi.object, i )
-        result[[i]] <- glm( formula, family = family, 
-                              data = data.frame( mi.data ), ... )
+    if(is.null(data.list)){
+      m      <- m( mi.object ) 
+      result <- vector( "list", m )
+      names( result ) <- as.character(paste( "Imputation", seq( m ), sep = "" ))
+      for ( i in 1:m ) {
+          mi.data     <- mi.completed( mi.object, i )
+          result[[i]] <- glm( formula, family = family, 
+                                data = data.frame( mi.data ), ... )
+      }
+    }
+    else{
+      m <- length(data.list)
+      result <- vector( "list", m )
+      names( result ) <- as.character(paste( "Imputation", seq( m ), sep = "" ))
+      for ( i in 1:m ) {
+          mi.data     <- mi.data.list(mi.object)
+          result[[i]] <- glm( formula, family = family, 
+                                data = data.frame( mi.data[[i]] ), ... )    
+      }
     }
     coef   <- vector( "list", m )
     se     <- vector( "list", m )

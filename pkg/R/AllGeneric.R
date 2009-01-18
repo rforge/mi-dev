@@ -105,6 +105,15 @@ if ( !isGeneric( "mi.data.frame" )) {
   )
 }
 
+if ( !isGeneric( "mi.data.list" )) {
+  setGeneric( "mi.data.list",
+              function( object,... ){
+                standardGeneric( "mi.data.list" )
+              } 
+  )
+}
+
+
 if ( !isGeneric("imputed")) {
     setGeneric("imputed",
                function( object, ... ){
