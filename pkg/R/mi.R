@@ -6,7 +6,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
                   max.minutes = 20, rand.imp.method = "bootstrap", 
                   preprocess = FALSE, continue.on.convergence = FALSE,
                   seed = NA, check.coef.convergence = FALSE, 
-                  augment.data = FALSE, K = 0) {
+                  add.priors = list(augment.data = FALSE, pct.aug=10, K = 0)) {
   call <- match.call( )                         # call
   if( !is.na ( seed ) ) { set.seed( seed ) }    # set random seed
   if( n.iter <=5 ){ stop(message="number of iteration must be more than 5")}
@@ -50,7 +50,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     AveVar[ 1:prev.iter , , ]<- bugs.mi(object)$sims.array
     s_start <- prev.iter + 1
     s_end   <- prev.iter + n.iter
-    K <- 0
+    add.priors$K <- 0
   } 
   else {
   # unexpected object
@@ -105,7 +105,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         CurrentVar <- VarName[jj]
         
         # probability of cooling 
-        q <- K/s
+        q <- add.priors$K/s
         q <- ifelse(q > 1, 1, q)
         q <- rbinom(1, 1, prob=q) 
           
@@ -119,8 +119,9 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         CurVarFlg <- ( names ( data ) == CurrentVar )
         dat <- data.frame( data[ ,CurVarFlg, drop=FALSE ], 
                             mi.data[[i]][ ,!CurVarFlg ] )
-        if(augment.data){
-          n.aug <- trunc((dim(data)[1]*0.1))
+        if(add.priors$augment.data){
+          pct.aug <- add.priors$pct.aug
+          n.aug <- trunc((dim(data)[1]*pct.aug))
           dat <- rbind.data.frame(dat, .randdraw(data, n=n.aug))
         }
         names(dat) <- c( CurrentVar, names( data[,!CurVarFlg, drop=FALSE] ) )

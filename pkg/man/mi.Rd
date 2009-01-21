@@ -41,7 +41,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
     max.minutes = 20, rand.imp.method = "bootstrap", 
     preprocess = FALSE, continue.on.convergence = FALSE,
     seed = NA, check.coef.convergence = FALSE, 
-    augment.data = FALSE, K = 0) 
+    add.priors = list(augment.data = FALSE, pct.aug = 10, K = 0) )
 }
 \arguments{
   \item{object}{A data frame containing the incomplete data. Missing data are coded as NA's or mi object.}
@@ -55,12 +55,14 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   \item{preprocess}{ Preprocess the data according to the info matrix. }
   \item{continue.on.convergence}{ If set to TRUE the mi will run until maximum iteration is reached or maximum minutes pass. }
   \item{check.coef.convergence}{default = FALSE}
-  \item{augment.data}{Augment the data with 10\% of the random draws from the observed data, 
-                default= FALSE.}
-  \item{K}{The cooling parameter, default is 0. If K > 0, the imputation will randomly switch between
-        randomly drawing from the observation or drawing from the modeled based values.  And 
-        with each iteration, the probability of cooling (q) decreases by number of iterations, such that
-        q = K/S.}
+  \item{add.priors}{a list of parameters for controlling the adding priors process. This will
+      add additional data from the observed data as priors. \code{augment.data}: augment the data with \code{pct.aug} 
+      of the random draws from the observed data, default= FALSE; \code{pct.aug}: when \code{augment.data}=TRUE,
+      \code{pct.aug} \% of data will add into the exisitng data; \code{K}: the cooling parameter, default is 0. 
+        If K > 0, the imputation will randomly switch between randomly add one data point drawing 
+        from the observation or drawing from the modeled based values.  And 
+        with each iteration (s), the probability of cooling (q) decreases by number of iterations, such that
+        q = K/s.}
 %  \item{trans}{transform a \code{mixed} variable into an indicator variable (0 for the 0, 1 for all the positive values, NA for NA)
 %    and an log-scaled variable (log on all positive values, and NA for 0's and missing values).}
   \item{\dots}{options for plot.mi.}

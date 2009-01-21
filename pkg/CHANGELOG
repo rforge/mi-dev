@@ -1,3 +1,7 @@
+2008-1-21 Yu-Sung Su     <ys463@columbia.edu>  
+   * man/mi: description about add.priors.
+   * R/mi: merge augment.data and K into add.priors.
+
 2008-1-17 Yu-Sung Su     <ys463@columbia.edu>  
    * man/mi.compeleted: add an example of mi.data.list
    * R/AllInternal: add .preprocess.data, .postprocess.data, .create.missing
