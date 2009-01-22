@@ -74,13 +74,6 @@ setClass("mi.mixed",
             contains = "mi.method"
 )
 
-#setClass("mi.sqrtcontinuous",
-#        representation(
-#            model    = "list", 
-#            expected = "numeric", 
-#            random   = "numeric"),
-#            contains = "mi.method"
-#)
 setClass("mi.logcontinuous",
         representation(
             model    = "list", 
