@@ -7,7 +7,7 @@
 \alias{mi.hist,mi.dichotomous,ANY-method}
 \alias{mi.hist,mi.mixed,ANY-method}
 \alias{mi.hist,mi.polr,ANY-method}
-\alias{mi.hist,mi.sqrtcontinuous,ANY-method}
+%\alias{mi.hist,mi.sqrtcontinuous,ANY-method}
 \alias{mi.hist,mi.pmm,ANY-method}
 \alias{mi.hist,ANY-method}
 \alias{mi.hist,mi.method-method}
@@ -15,7 +15,7 @@
 \alias{mi.hist,mi.dichotomous-method}
 \alias{mi.hist,mi.mixed-method}
 \alias{mi.hist,mi.polr-method}
-\alias{mi.hist,mi.sqrtcontinuous-method}
+%\alias{mi.hist,mi.sqrtcontinuous-method}
 \alias{mi.hist,mi.pmm-method}
 
 
@@ -34,7 +34,7 @@
 \S4method{mi.hist}{mi.dichotomous,ANY}( object, Yobs, ... )
 \S4method{mi.hist}{mi.mixed,ANY}( object, Yobs, ... )
 \S4method{mi.hist}{mi.polr,ANY}( object, Yobs, ... )
-\S4method{mi.hist}{mi.sqrtcontinuous,ANY}( object, Yobs, ... )
+%\S4method{mi.hist}{mi.sqrtcontinuous,ANY}( object, Yobs, ... )
 \S4method{mi.hist}{mi.pmm,ANY}( object, Yobs, ... )
 }
 \arguments{

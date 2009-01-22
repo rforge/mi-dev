@@ -108,30 +108,30 @@ plot.mi.mixed <-  function ( x, y,
 #}
 #)
 
-# ==============================================================================
-# S4 plot function for mi.sqrtcontinuous object
-# ==============================================================================
-
-
-plot.mi.sqrtcontinuous <- function ( x, y, 
-  main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
-  #par(mfrow=c(1,4))
-  fit     <- fitted( x )
-  res     <- residuals( x, y )
-  sigma   <- sigma.hat( x )
-  vrb.obs <- y
-  vrb.imp <- imputed( x, y )
-  sqrta <- vrb.obs
-  sqrta[!is.na(vrb.obs)] <- sqrt(vrb.obs[!is.na(vrb.obs)])
-  mi.hist(x, vrb.obs, main = main, xlab=main, gray.scale = gray.scale )
-  #mtext( "sqrt", 1, cex = 0.7, adj = 1 )
-  residual.plot( fit, res, sigma, main = main, xlab= "Predicted",  ylab = paste( "Residual" ), gray.scale = gray.scale )
-  mtext( "sqrt", 2, cex = 0.7, adj = 1 )
-  mi.scatterplot( vrb.obs, vrb.imp, X=fit, xlab= "Predicted",  ylab =  main , main = main, gray.scale = gray.scale )
-  plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-} 
-
-
+## ==============================================================================
+## S4 plot function for mi.sqrtcontinuous object
+## ==============================================================================
+#
+#
+#plot.mi.sqrtcontinuous <- function ( x, y, 
+#  main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
+#  #par(mfrow=c(1,4))
+#  fit     <- fitted( x )
+#  res     <- residuals( x, y )
+#  sigma   <- sigma.hat( x )
+#  vrb.obs <- y
+#  vrb.imp <- imputed( x, y )
+#  sqrta <- vrb.obs
+#  sqrta[!is.na(vrb.obs)] <- sqrt(vrb.obs[!is.na(vrb.obs)])
+#  mi.hist(x, vrb.obs, main = main, xlab=main, gray.scale = gray.scale )
+#  #mtext( "sqrt", 1, cex = 0.7, adj = 1 )
+#  residual.plot( fit, res, sigma, main = main, xlab= "Predicted",  ylab = paste( "Residual" ), gray.scale = gray.scale )
+#  mtext( "sqrt", 2, cex = 0.7, adj = 1 )
+#  mi.scatterplot( vrb.obs, vrb.imp, X=fit, xlab= "Predicted",  ylab =  main , main = main, gray.scale = gray.scale )
+#  plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
+#} 
+#
+#
 
 #setMethod("plot", signature(x = "mi.sqrtcontinuous",y ="ANY"), 
 #function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {

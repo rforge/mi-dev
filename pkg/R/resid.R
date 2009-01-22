@@ -35,17 +35,17 @@ residuals.mi.logcontinuous <- function ( object, y, ...) {
     return( log( y ) - log( fitted ( object ) ) )
   }
 
-# ==============================================================================
-# extract residual values for mi.sqrtcontinuous class object
-# ==============================================================================
-
-residuals.mi.sqrtcontinuous <-   function (object, y, ...) {
-    return( sqrt(y) - sqrt(fitted ( object )) )
-    #return( y - fitted ( object ) )
-  }
-
-
-#setMethod( "resid", signature( object = "mi.sqrtcontinuous" ),     
+## ==============================================================================
+## extract residual values for mi.sqrtcontinuous class object
+## ==============================================================================
+#
+#residuals.mi.sqrtcontinuous <-   function (object, y, ...) {
+#    return( sqrt(y) - sqrt(fitted ( object )) )
+#    #return( y - fitted ( object ) )
+#  }
+#
+#
+##setMethod( "resid", signature( object = "mi.sqrtcontinuous" ),     
 #  function ( object, y ) {
 #    return( sqrt(y) - sqrt(fitted ( object )) )
 #    #return( y - fitted ( object ) )
@@ -68,14 +68,14 @@ residuals.mi.mixed <-   function (object, y, ...) {
 #  }
 #)
 
-# ==============================================================================
-# extract residual values for mi.sqrtcontinuous class object
-# ==============================================================================
-
-residuals.mi.categorical <-   function (object, y, ...) {
-    return( object$residual )
-    #return( y - fitted ( object ) )
-}
+## ==============================================================================
+## extract residual values for mi.sqrtcontinuous class object
+## ==============================================================================
+#
+#residuals.mi.categorical <-   function (object, y, ...) {
+#    return( object$residual )
+#    #return( y - fitted ( object ) )
+#}
 
 
 #setMethod( "resid", signature( object = "mi.categorical" ),     
