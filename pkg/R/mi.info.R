@@ -188,7 +188,7 @@ type.default.formula <- function( response.name, predictor.name, type ) {
 #            paste(predictor.name, collapse = " + "))    
 #    }
 #    else{
-
+#
 
 # ========================================================================
 # Extracts the type (character) as vector

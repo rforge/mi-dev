@@ -6,7 +6,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
                   max.minutes = 20, rand.imp.method = "bootstrap", 
                   preprocess = FALSE, continue.on.convergence = FALSE,
                   seed = NA, check.coef.convergence = FALSE, 
-                  add.priors = list(augment.data = FALSE, pct.aug=10, K = 0)) {
+                  add.priors = prior.control()) {
   call <- match.call( )                         # call
   if( !is.na ( seed ) ) { set.seed( seed ) }    # set random seed
   if( n.iter <=5 ){ stop(message="number of iteration must be more than 5")}

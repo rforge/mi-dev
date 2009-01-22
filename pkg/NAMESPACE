@@ -110,6 +110,7 @@ export(
   mi.types,
   missing.pattern.plot,
   mp.plot,
+  prior.control,
   random.imp,
   typecast,
   type.models

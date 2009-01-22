@@ -13,6 +13,7 @@
 \alias{info.mi}
 \alias{imp}
 \alias{m}
+\alias{prior.control}
 \alias{is.mi,mi-method}
 \alias{bugs.mi,mi-method}
 \alias{call.mi,mi-method}
@@ -41,7 +42,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
     max.minutes = 20, rand.imp.method = "bootstrap", 
     preprocess = FALSE, continue.on.convergence = FALSE,
     seed = NA, check.coef.convergence = FALSE, 
-    add.priors = list(augment.data = FALSE, pct.aug = 10, K = 0) )
+    add.priors = prior.control() )
 }
 \arguments{
   \item{object}{A data frame containing the incomplete data. Missing data are coded as NA's or mi object.}

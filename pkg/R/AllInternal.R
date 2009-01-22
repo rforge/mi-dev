@@ -1,3 +1,9 @@
+
+prior.control <- function(augment.data = FALSE, pct.aug=10, K = 0){
+  return(list(augment.data = augment.data, pct.aug=pct.aug, K = K))
+}
+
+
 # ========================================================================
 # create missingness
 # ========================================================================
@@ -26,15 +32,16 @@
 
 
 
-#.check.log.var <- function(x){
-#  check1 <- min(x, na.rm=TRUE) < 0
-#  if(check1) stop("log cannot take on negative values")
-#  check2 <- min(x, na.rm=TRUE) == 0 
-#  if(check2){
-#    k <- round((min(x[x>0], na.rm=TRUE) + 0)/2,2)
-#  }
-#  return(k)
-#}
+.check.log.var <- function(x){
+  check1 <- min(x, na.rm=TRUE) < 0
+  if(check1) stop("log cannot take on negative values")
+  check2 <- min(x, na.rm=TRUE) == 0 
+  if(check2){
+    k <- round((min(x[x>0], na.rm=TRUE) + 0)/2,2)
+    return(k)
+  }
+  else return(0)
+}
 
 
 
@@ -125,7 +132,7 @@ data.tmp <<- NULL # to pass R CMD check
 # ========================================================================
 
 .randdraw <- function(data, n = 1){
-  foo <- function(x) sample(na.exclude(x), size = n, replace = FALSE)
+  foo <- function(x) sample(na.exclude(x), size = n, replace = TRUE)
   added.rows <- apply(data, 2, FUN = foo)
   return(added.rows)
 }
