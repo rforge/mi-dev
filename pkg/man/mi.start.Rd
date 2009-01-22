@@ -2,7 +2,7 @@
 \alias{mi.start}
 \alias{mi.start,mi.method-method}
 \alias{mi.start,mi.mixed-method}
-\title{ Starting value from mi.method objec class. }
+\title{Starting value from mi.method objec class. }
 \description{
   Internal function to extract starting values from mi.method objects.
 }

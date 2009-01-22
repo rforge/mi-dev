@@ -1,7 +1,7 @@
 \name{ plot.mi }
 \alias{plot.mi}
 %\alias{plot,mi-method}
-\title{ Diagnostic Plots for multiple imputation object}
+\title{Diagnostic Plots for multiple imputation object}
 \description{
   Diagnostic plots for testing the fit of the imputation method to the observed data.
 }
@@ -55,7 +55,7 @@ strongly recommended to use a variable containing more information. Fitted lowes
   #==========================================
   #The selected variable vrb is the average of the continuous variables
   #imputed in the first imputation
-  vv <- as.vector(apply(mi.matrix(imp.CHAIN), 2, typecast))=="squareroot-continuous"
+  vv <- as.vector(apply(mi.matrix(imp.CHAIN), 2, typecast))=="continuous"
   var <- apply(mi.matrix(imp.CHAIN)[,vv],1,mean)
   plot(imp.CHAIN, vrb=var,  vrb.name="Average of the continuous variables")
 }

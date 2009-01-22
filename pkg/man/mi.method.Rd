@@ -49,6 +49,7 @@
 %    \item{expected}{The expected values estimated by the model.}
 %    \item{random  }{Vector of length n.mis of random predicted values predicted by using the normal distribution.} 
 %}
+
 \references{
     Andrew Gelman and Jennifer Hill, 
     Data Analysis Using Regression and Multilevel/Hierarchical Models, 

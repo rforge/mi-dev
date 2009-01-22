@@ -112,6 +112,9 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         if(q){
           cat(paste(CurrentVar, "*", sep=""), " ")
         }
+        if(add.priors$augment.data){
+          cat(paste(CurrentVar, "*", sep=""), " ")
+        }
         else{
           cat( CurrentVar, "  " )
         }

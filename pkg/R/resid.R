@@ -72,10 +72,10 @@ residuals.mi.mixed <-   function (object, y, ...) {
 ## extract residual values for mi.sqrtcontinuous class object
 ## ==============================================================================
 #
-#residuals.mi.categorical <-   function (object, y, ...) {
-#    return( object$residual )
-#    #return( y - fitted ( object ) )
-#}
+residuals.mi.categorical <-   function (object, y, ...) {
+    return( object$residual )
+    #return( y - fitted ( object ) )
+}
 
 
 #setMethod( "resid", signature( object = "mi.categorical" ),     

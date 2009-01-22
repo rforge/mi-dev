@@ -80,22 +80,6 @@ setMethod( "mi.hist", signature( object= "ANY", Yobs = "ANY"  ),
         axis( 1, tick = TRUE, col.axis = 'black' )
         
     }
-    else if( type == "squareroot-continuous" ) {
-        #obs.nomis <- log( obs.nomis )
-        h.obs <- hist( obs.nomis, plot = FALSE, breaks = b )
-        h.mis <- hist( mis,  plot = FALSE, breaks = b )
-        h.imp <- hist( Yimp, plot = FALSE, breaks = b )
-        plot( range( h.imp$breaks ), c( 0, max( h.imp$counts ) * 1.05 ), yaxs = "i", xlab = xlab,
-             xlim = range( Yimp ),ylab = ylab, type = "n", bty = "l", main = main )
-        if( max( c( h.obs$counts, h.mis$counts, h.imp$counts)) > 100) {mlt<-0.2}
-        histlineplot ( h.mis, shift = -mlt*binwidth, 
-                  col = mis.col, lty = mis.lty, lwd = mis.lwd )
-        histlineplot ( h.obs, shift = mlt*binwidth, 
-                  col = obs.col, lty = obs.lty, lwd = obs.lwd ) 
-        histlineplot ( h.imp, col = imp.col , lty = imp.lty, lwd = imp.lwd ) 
-        axis( 1, tick = TRUE, col.axis = 'black' )
-        
-    }
     else if( type == "continuous" ) {
         h.obs <- hist( obs.nomis, plot = FALSE, breaks = b )
         h.mis <- hist( mis,  plot = FALSE, breaks = b )

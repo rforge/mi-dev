@@ -8,7 +8,6 @@
 mi.types <- function ( ) {
   type = c( "fixed"
             ,"continuous"
-            ,"squareroot-continuous"
             ,"logscale-continuous"
             ,"ordered-categorical"
             ,"unordered-categorical"
@@ -29,8 +28,6 @@ type.models <- function ( type ) {
     imputation.method <- list (
         "continuous"            = "mi.continuous"
         ,"logscale-continuous"  = "mi.logcontinuous"
-        #,"squareroot-continuous"= "mi.sqrtcontinuous"
-        #,"squareroot-continuous"="mi.continuous( imp.formula options)
         ,"ordered-categorical"  = "mi.polr"
         ,"unordered-categorical"= "mi.categorical"
         ,"dichotomous"          = "mi.dichotomous"
