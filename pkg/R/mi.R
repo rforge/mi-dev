@@ -89,8 +89,9 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
   }
   coef.val <- vector("list",ncol.mis)
   names(coef.val) <- names( info )[ nmis( info )>0 ]
+  print(ncol.mis)
   for (jjj in 1:ncol.mis){
-    coef.val[[jjj]]<- vector("list", n.imp)
+    coef.val[[jjj]] <- vector("list", n.imp)
   }
   names(mi.object)<- paste( "Imputation", 1:n.imp, sep="" )
   cat( "Beginning Multiple Imputation (", date(), "):\n" )

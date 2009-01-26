@@ -190,29 +190,6 @@ type.default.formula <- function( response.name, predictor.name, type ) {
 #    else{
 #
 
-# ========================================================================
-# Extracts the type (character) as vector
-# ========================================================================
-
-type <-function(info){
-  return(sapply(info,function(inf){inf$type}))
-}
-
-# ========================================================================
-# Extracts the level (vector) as list
-# ========================================================================
-
-level <-function(info){
-  return(sapply(info,function(inf){inf$level}))
-}
-
-# ========================================================================
-# Extract imputation formula (character) as list
-# ========================================================================
-
-imp.formula <-function(info){
-  return(sapply(info,function(inf){inf$level}))
-}
 
 # ========================================================================
 # Fix information matrix
@@ -270,7 +247,7 @@ mi.info.fix <- function( info ) {
     #--------------------
     # imputation order
     #--------------------
-    ord.flg<-TRUE
+    ord.flg <- TRUE
     while(ord.flg){
       res.ord<-menu(c("Yes","No","look at current setting")
                     , title=.make.title("change imputation order?" ))
@@ -289,10 +266,12 @@ mi.info.fix <- function( info ) {
         for(ord.index in 1:length(ord.change.temp[,1])){
           info[[ord.index]]$imp.order <- ord.change.temp[ord.index,]
         }
-      } else if(res.ord == 2){
+      } 
+      else if(res.ord == 2){
         #no change
-        ord.flg<-FALSE
-      } else if(res.ord == 3){
+        ord.flg <- FALSE
+      } 
+      else if(res.ord == 3){
         #view setting
         print(info)
       }
@@ -637,6 +616,10 @@ center <- function( x ) {
 }
 
 
+#=================================================================
+#     update mi.info functions
+#=================================================================
+
 update.mi.info <- function(object, target, list, ...){
   nam <- names(list)
   if (is.null(nam)) {
@@ -670,51 +653,67 @@ mi.info.update.type <- function (object, list ) {
   info <- update(object, target="type", list )
   return(info)
 }
+
 mi.info.update.level <- function (object, list ) {
   info <- update(object, target="level", list )
   return(info)
 }
+
 mi.info.update.include <- function (object, list ) {
   info <- update(object, target="include", list )
   return(info)
 }
+
 mi.info.update.is.ID <- function (object, list ) {
   info <- update(object, target="is.ID", list ) 
-  return(info)
-  
+  return(info)  
 }
+
 mi.info.update.correlated <- function (object, list ) {
   info <- update(object, target="correlated", list ) 
   return(info)
 }
+
 mi.info.update.transform <- function (object, list ) {
   info <- update (object, target="transform", list )
   return(info)
 }
+
 mi.info.update.imp.order <- function ( object, list ) {
   info <- update (object, target="imp.order", list )
   return(info)
 }
+
 mi.info.update.determ.pred <- function ( object, list ) {
   info <- update (object, target="determ.pred", list ) 
   return(info)
 }
+
 mi.info.update.params <- function ( object, list ) {
   info <- update (object, target="params", list ) 
   return(info)
 }
+
 mi.info.update.imp.formula <- function ( object, list ) {
   info <- update (object, target="imp.formula", list )
   return(info)
 }
+
 mi.info.update.other <- function ( object, list ) {
   info <- update (object, target="other", list )
   return(info)
 }
 
+
+
+#=============================================================
+# mi.info.utils
+#=============================================================
+
 is.mi.info <- function( object ) {
-  return( inherits( object, "mi.info" ) ) 
+  return(inherits(object, "mi.info")) 
 }
+
 
 
 "$.mi.info" <- function (x, ..., drop = TRUE) {
@@ -722,66 +721,104 @@ is.mi.info <- function( object ) {
       if (drop) 
           return(drop(x))
       else return(x)
-  }else{
-    result <- NULL
-    result<-sapply(x,function(xs){xs[[...]]})
-    return(result)
   }
-}
-"[.mi.info" <- function (x, ..., drop = TRUE) {
-  if (missing(x)) {
-      if (drop) 
-          return(drop(x))
-      else return(x)
-  }else{
-    result <- NULL
-    result<-sapply(x,function(xs){xs[[...]]})
+  else{
+    foo <- function(x){
+      x[[...]]
+    }
+    result <- sapply(x, FUN = foo)
     return(result)
   }
 }
 
+"[.mi.info" <- function (x, ..., drop = TRUE) {
+  if (missing(x)) {
+    if (drop){
+      return(drop(x))
+    }
+    else{
+      return(x)
+    }
+  }
+  else{
+    foo <- function(x){
+      x[[...]]
+    }    
+    result <- sapply(x, FUN = foo)
+    return(result)
+  }
+}
+
+
 "[<-.mi.info" <- function (x, ..., value = NULL) {
   if (missing(x)) {
-      if (drop) 
-          return(drop(x))
-      else return(x)
-  }else{
-    result <- NULL
+    if (drop){ 
+      return(drop(x))
+    }
+    else{
+      return(x)
+    }
+  }
+  else{
     for(i in 1:length(x)){
-      x[[i]][[...]]<-value[[i]]
+      x[[i]][[...]] <- value[[i]]
     }
     return(x)
   }
 }
+
+
 "$<-.mi.info" <- function (x, ..., value = NULL) {
   if (missing(x)) {
       if (drop) 
           return(drop(x))
       else return(x)
-  }else{
-    result <- NULL
+  }
+  else{
     for(i in 1:length(x)){
-      x[[i]][[...]]<-value[[i]]
+      x[[i]][[...]] <- value[[i]]
     }
     return(x)
   }
 }
 
-rankMat <- function(A, tol = NULL, singValA = svd(A, 0,0)$d)
-{
-    ## Purpose: rank of a matrix ``as Matlab''
-    ## ----------------------------------------------------------------------
-    ## Arguments: A: a numerical matrix, maybe non-square
-    ##          tol: numerical tolerance (compared to singular values)
-    ##     singValA: vector of non-increasing singular values of A
-    ##               (pass as argument if already known)
-    ## ----------------------------------------------------------------------
-    ## Author: Martin Maechler, Date:  7 Apr 2007, 16:16
-    d <- dim(A)
-    stopifnot(length(d) == 2, length(singValA) == min(d),
-              diff(singValA) < 0)       # must be sorted decreasingly
-    if(is.null(tol))
-        tol <- max(d) * .Machine$double.eps * abs(singValA[1])
-    else stopifnot(is.numeric(tol), tol >= 0)
-    return( sum(singValA >= tol) )
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#rankMat <- function(A, tol = NULL, singValA = svd(A, 0,0)$d)
+#{
+#    ## Purpose: rank of a matrix ``as Matlab''
+#    ## ----------------------------------------------------------------------
+#    ## Arguments: A: a numerical matrix, maybe non-square
+#    ##          tol: numerical tolerance (compared to singular values)
+#    ##     singValA: vector of non-increasing singular values of A
+#    ##               (pass as argument if already known)
+#    ## ----------------------------------------------------------------------
+#    ## Author: Martin Maechler, Date:  7 Apr 2007, 16:16
+#    d <- dim(A)
+#    stopifnot(length(d) == 2, length(singValA) == min(d),
+#              diff(singValA) < 0)       # must be sorted decreasingly
+#    if(is.null(tol))
+#        tol <- max(d) * .Machine$double.eps * abs(singValA[1])
+#    else stopifnot(is.numeric(tol), tol >= 0)
+#    return( sum(singValA >= tol) )
+#}

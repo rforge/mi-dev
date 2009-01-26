@@ -1,6 +1,6 @@
 
 prior.control <- function(augment.data = FALSE, pct.aug=10, K = 0){
-  return(list(augment.data = augment.data, pct.aug=pct.aug, K = K))
+  return(list(augment.data = augment.data, pct.aug = pct.aug, K = K))
 }
 
 
@@ -48,7 +48,6 @@ prior.control <- function(augment.data = FALSE, pct.aug=10, K = 0){
 # ========================================================================
 # preprocessing the data
 # ========================================================================
-
 .preprocess.data <- function(data){
   n.col <- ncol(data)
   n.row <- nrow(data)
@@ -102,22 +101,21 @@ prior.control <- function(augment.data = FALSE, pct.aug=10, K = 0){
 #  }
 #  else{
 #    org.data <- data.mi(mi.object)
-    var.name <- names(trans.data[[1]])
-    idx1 <- grep("ind", names(trans.data[[1]]))
-    idx2 <- grep("log", names(trans.data[[1]]))
-    idx3 <- c(idx1, idx2)
-    var.name1 <- var.name[idx1]
-    var.name1 <- gsub(".ind", "", var.name1)
-    var.name <- c(var.name1, var.name[-idx3])
-    for (s in 1:n.chains){
-      data <- trans.data[[s]][,idx1]*exp(trans.data[[s]][,idx2])
-      trans.data[[s]] <- trans.data[[s]][,-idx3]
-      trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
-      names(trans.data[[s]]) <- var.name
-    }  
+  var.name <- names(trans.data[[1]])
+  idx1 <- grep("ind", names(trans.data[[1]]))
+  idx2 <- grep("log", names(trans.data[[1]]))
+  idx3 <- c(idx1, idx2)
+  var.name1 <- var.name[idx1]
+  var.name1 <- gsub(".ind", "", var.name1)
+  var.name <- c(var.name1, var.name[-idx3])
+  for (s in 1:n.chains){
+    data <- trans.data[[s]][,idx1]*exp(trans.data[[s]][,idx2])
+    trans.data[[s]] <- trans.data[[s]][,-idx3]
+    trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
+    names(trans.data[[s]]) <- var.name
+  }  
 #  }
   return(trans.data)
-  on.exit(rm(TMP))
 }
 
 
@@ -160,14 +158,52 @@ data.tmp <<- NULL # to pass R CMD check
 }
 
 
+# ========================================================================
+# Extracts the type (character) as vector
+# ========================================================================
+
+type <-function(info){
+  foo <- function(x){
+    x$type
+  }
+  type <- sapply(info, FUN = foo)
+  return(type)
+}
+
+# ========================================================================
+# Extracts the level (vector) as list
+# ========================================================================
+
+level <- function(info){
+  foo <- function(x){
+    x$level
+  }
+  level <- sapply(info, FUN = foo)
+  return(level)
+}
+
+# ========================================================================
+# Extract imputation formula (character) as list
+# ========================================================================
+
+imp.formula <-function(info){
+  foo <- function(x){
+    x$imp.formula
+  }
+  form <- sapply(info, FUN = foo)
+  return(form)
+}
 
 # ========================================================================
 # Extracts the imputation order vector(integer)
 # ========================================================================
 
 imp.order <- function(info){
-  foo <- function(x) x$imp.order
-  return(sapply(info, FUN=foo))
+  foo <- function(x){
+    x$imp.order
+  }
+  imp.order <- sapply(info, FUN = foo)
+  return(imp.order)
 }
 
 # ========================================================================
@@ -175,8 +211,11 @@ imp.order <- function(info){
 # ========================================================================
 
 include <- function(info){
-  foo <- function(x) x$include
-  return(sapply(info, FUN=foo))
+  foo <- function(x){
+    x$include
+  }
+  include <- sapply(info, FUN = foo)
+  return(include)
 }
 
 # ========================================================================
@@ -184,8 +223,11 @@ include <- function(info){
 # ========================================================================
 
 nmis <- function(info){
-  foo <- function(x) x$nmis
-  return(sapply(info, FUN=foo))
+  foo <- function(x){
+    x$nmis
+  }
+  nmis <- sapply(info, FUN=foo)
+  return(nmis)
 }
 
 # ========================================================================
@@ -193,6 +235,9 @@ nmis <- function(info){
 # ========================================================================
 
 all.missing <-function(info){
-  foo <- function(x) x$all.missing
-  return(sapply(info, FUN=foo))
+  foo <- function(x){
+    x$all.missing
+  }
+  all.missing <- sapply(info, FUN=foo)
+  return(all.missing)
 }

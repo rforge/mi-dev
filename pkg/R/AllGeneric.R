@@ -2,9 +2,9 @@
 # generic method definition 
 # ==============================================================================
 
-if ( !isGeneric( "call.mi" )) {
+if ( !isGeneric("call.mi")) {
   setGeneric( "call.mi",
-              function( object ){
+              function(object ){
                 standardGeneric( "call.mi" )
               } 
   )
@@ -12,7 +12,7 @@ if ( !isGeneric( "call.mi" )) {
 
 
 
-if ( !isGeneric( "converged" )) {
+if ( !isGeneric("converged")) {
   setGeneric( "converged",
               function( object ){
                 standardGeneric( "converged" )
@@ -128,6 +128,7 @@ if ( !isGeneric("mi.hist")) {
                }
     )
 }
+
 
 
 
