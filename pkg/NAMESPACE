@@ -27,9 +27,6 @@ exportClasses(
   mi.categorical,
   mi.continuous,
   mi.info,
-  mi.logcontinuous,
-#  mi.sqrtcontinuous,
-  mi.mixed,
   mi.pmm
 )
 
@@ -39,10 +36,8 @@ exportMethods(
   bugs.mi,
   info.mi,
   is.mi,
-#  coef,
   converged,
   display,
-#  fitted,
   imputed,
   imp,
   m,
@@ -51,11 +46,8 @@ exportMethods(
   mi.matrix,
   mi.data.frame,
   mi.data.list,
-  mi.start,
-#  resid,
   sigma.hat,
   typecast,
-#  plot,
   print,
   show
 )
@@ -100,13 +92,9 @@ export(
   mi.info.update.transform,
   mi.info.update.type,
   mi.interactive,
-  mi.logcontinuous, 
   mi.matrix,
-  mi.mixed,
   mi.polr,
   mi.scatterplot,
-#  mi.sqrtcontinuous,
-  mi.start,
   mi.types,
   missing.pattern.plot,
   mp.plot,
@@ -117,32 +105,22 @@ export(
 )
 
 S3method(coef, mi.method)
-#S3method(coef, mi.logcontinuous)
-S3method(coef, mi.mixed)
 S3method(fitted, mi.method)
-S3method(fitted, mi.mixed)
 S3method(residuals, mi.method)
-S3method(residuals, mi.mixed)
-#S3method(residuals, mi.sqrtcontinuous)
 S3method(residuals, mi.dichotomous)
-S3method(residuals, mi.logcontinuous)
 S3method(residuals, mi.categorical)
 S3method(update, mi.info)
 S3method(plot, mi)
 S3method(plot, mi.method)
-S3method(plot, mi.mixed)
-#S3method(plot, mi.sqrtcontinuous)
 S3method(plot, mi.polr)
 S3method(plot, mi.categorical)
 S3method(plot, mi.copy)
 S3method(plot, mi.dichotomous)
-S3method(plot, mi.logcontinuous)
 S3method(print, mi)
 S3method(print, mi.glm)
 S3method(print, mi.lm)
 S3method(print, mi.info)
 S3method(print, mi.method)
-S3method(print, mi.mixed)
 S3method("[<-", mi.info)
 S3method("$<-", mi.info)
 S3method("[", mi.info)

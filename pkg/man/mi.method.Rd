@@ -44,11 +44,7 @@
   most of the \code{mi} classes that do not have specific method defined for them inherits their methods from this class.
   For some special class as \code{mi.mixed} these methods are extended to tailor to the needs.
 }
-%\value{
-%    \item{model   }{A summary of the fitted model.}
-%    \item{expected}{The expected values estimated by the model.}
-%    \item{random  }{Vector of length n.mis of random predicted values predicted by using the normal distribution.} 
-%}
+
 
 \references{
     Andrew Gelman and Jennifer Hill, 

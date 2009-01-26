@@ -90,13 +90,7 @@ if ( !isGeneric( "mi.matrix" )) {
               } 
   )
 }
-if ( !isGeneric( "mi.start" ) ) {
-    setGeneric( "mi.start", 
-              function( object ) {
-                standardGeneric( "mi.start" ) 
-              }
-  )
-}
+
 if ( !isGeneric( "mi.data.frame" )) {
   setGeneric( "mi.data.frame",
               function( object,... ){

@@ -26,10 +26,6 @@ setClass("mi.glm")
 setClass("mi.lm")
 
 
-setClass("mi.method",
-            representation ="VIRTUAL",
-            contains = "list"
-)
 setClass("mi.dichotomous",
         representation(
             model    = "list", 
