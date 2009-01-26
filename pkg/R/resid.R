@@ -51,25 +51,8 @@ residuals.mi.logcontinuous <- function ( object, y, ...) {
 #    #return( y - fitted ( object ) )
 #  }
 #)
-# ==============================================================================
-# extract residual values for mi.mixed class object
-# ==============================================================================
-
-residuals.mi.mixed <-   function (object, y, ...) {
-   return( list(residual.values.1 = 1*( y > 0 ) - fitted( object )[[1]], 
-                residual.values.2 = y[as.double( names( fitted( object )[[2]]))]-fitted( object )[[2]]) )
-}
-
-
-#setMethod( "resid", signature( object = "mi.mixed" ),     
-#  function ( object, y ) {
-#   return( list(residual.values.1 = 1*( y > 0 ) - fitted( object )[[1]], 
-#                residual.values.2 = y[as.double( names( fitted( object )[[2]]))]-fitted( object )[[2]]) )
-#  }
-#)
-
 ## ==============================================================================
-## extract residual values for mi.sqrtcontinuous class object
+## extract residual values for mi.categorical class object
 ## ==============================================================================
 #
 residuals.mi.categorical <-   function (object, y, ...) {

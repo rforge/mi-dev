@@ -165,7 +165,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         mi.data[[i]][[CurrentVar]][is.na( data[[CurrentVar]] )] <- mi.object[[i]][[CurrentVar]]$random
         data.tmp <<- mi.data
         coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],unlist(coef(mi.object[[i]][[CurrentVar]])))
-        start.val[[i]][[jj]] <- mi.start( mi.object[[i]][[CurrentVar]] )
+        start.val[[i]][[jj]] <- coef( mi.object[[i]][[CurrentVar]] )
       } ## variable loop 
       cat("\n" )
       #AveVar[s,i,] <- c( mean( mi.data[[i]] ),sd( mi.data[[i]] ) )

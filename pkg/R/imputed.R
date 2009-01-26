@@ -7,12 +7,3 @@ setMethod( "imputed", signature( object = "mi.method" ),
     return( y )
   }
 )
-# ==============================================================================
-# extract imputed values for mi.mixed class object
-# ==============================================================================
-setMethod("imputed", signature(object = "mi.mixed"),     
-  function ( object, y ) {
-    y[ is.na( y ) ] <- object$random
-    return( y )
-  }
-)

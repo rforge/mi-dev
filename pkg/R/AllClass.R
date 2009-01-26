@@ -66,21 +66,7 @@ setClass("mi.fixed",
             random   = "numeric"),
             contains = "mi.method"
 )
-setClass("mi.mixed",
-        representation(
-            model    = "list", 
-            expected = "numeric", 
-            random   = "numeric"),
-            contains = "mi.method"
-)
 
-setClass("mi.logcontinuous",
-        representation(
-            model    = "list", 
-            expected = "numeric", 
-            random   = "numeric"),
-            contains = "mi.method"
-)
 setClass("mi.pmm",
         representation(
             model    = "list", 

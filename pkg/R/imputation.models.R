@@ -8,7 +8,6 @@
 mi.types <- function ( ) {
   type = c( "fixed"
             ,"continuous"
-            ,"logscale-continuous"
             ,"ordered-categorical"
             ,"unordered-categorical"
             ,"dichotomous"
@@ -27,12 +26,10 @@ type.models <- function ( type ) {
     type <- match.arg ( type, mi.types( ) )
     imputation.method <- list (
         "continuous"            = "mi.continuous"
-        ,"logscale-continuous"  = "mi.logcontinuous"
         ,"ordered-categorical"  = "mi.polr"
         ,"unordered-categorical"= "mi.categorical"
         ,"dichotomous"          = "mi.dichotomous"
-        #,"mixed"                ="mi.continuous"
-        ,"mixed"                = "mi.mixed"
+        ,"mixed"                = "mi.continuous"
         ,"predictive-mean-match"= "mi.pmm"
         ,"fixed"                = "mi.fixed" 
     )
