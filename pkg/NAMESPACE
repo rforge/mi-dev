@@ -79,7 +79,6 @@ export(
   mi.hist,
   mi.info,
   mi.info.fix,
-#  mi.info.update,
   mi.info.update.correlated,
   mi.info.update.determ.pred,
   mi.info.update.imp.formula,
