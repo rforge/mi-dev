@@ -232,9 +232,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     coef.conv.check <- as.bugs.array(tmp)
   }
   
-  
-  
-  mi <- new("mi", 
+   mi <- new("mi", 
             call      = call,
             data      = org.data,
             m         = n.imp,
@@ -262,49 +260,6 @@ strict.check<-function(coefficient,n.iter,n.imp){
   return(res)
 }
 
-#array.append<-function (array1, array2, d = 3) 
-#{
-#    if (any(dim(array1)[-d] != dim(array2)[-d])) {
-#        stop(message = "array dimention must be same for all the dimention except for the one that you are trying to append")
-#    }
-#    else {
-#        newdim <- dim(array1)
-#        newdim[d] <- ifelse(is.na(dim(array1)[d]), 1, dim(array1)[d]) + 
-#            ifelse(is.na(dim(array2)[d]), 1, dim(array2)[d])
-#        newarray <- c(array1, array2)
-#        dim(newarray) = newdim
-#    }
-#    return(newarray)
-#}
-#
-#array.append3 <-function(a, b, d=3){
-#    da<-dim(a)
-#    db<-dim(b)
-#    di<-dim(a)
-#    di[d]<-da[d]+db[d]
-#    ab <- array(NA,di)
-#    if(d==1){
-#      for(i in 1:di[3]){
-#        ab[,,i]<-rbind(a[,,i],b[,,i])
-#      }
-#    }
-#    else if(d==2){
-#      for(i in 1:di[3]){
-#        ab[,,i]<-cbind(a[,,i],b[,,i])
-#      }
-#    }
-#    else if(d==3){
-#      for(i in 1:da[3]){
-#        ab[,,i]<-a[,,i]
-#      }
-#      for(i in 1:db[3]){
-#        ab[,,da[3]+i]<-b[,,i]
-#      } 
-#      
-#    }
-#    return(ab)
-#}
-#
 
 setMethod( "is.mi", signature( object = "mi" ),
   function ( object ){ 

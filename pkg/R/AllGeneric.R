@@ -12,6 +12,9 @@ if ( !isGeneric("call.mi")) {
 
 
 
+
+
+
 if ( !isGeneric("converged")) {
   setGeneric( "converged",
               function( object ){
@@ -122,8 +125,6 @@ if ( !isGeneric("mi.hist")) {
                }
     )
 }
-
-
 
 
 if ( !isGeneric( "typecast" ) ) {
