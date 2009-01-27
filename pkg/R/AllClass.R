@@ -26,28 +26,15 @@ setClass("mi.glm")
 setClass("mi.lm")
 
 
-setClass("mi.dichotomous",
+setClass("mi.method",
         representation(
-            model    = "list", 
-            expected = "numeric", 
-            random   = "numeric"),
-            contains = "mi.method"
+          model = "list",
+          expected = "numeric",
+          random = "numeric"),
+          contains = "list"
 )
-setClass("mi.categorical",
-        representation(
-            model    = "list", 
-            expected = "numeric", 
-            random   = "numeric",
-            residual = "numeric"),
-            contains = "mi.method"
-)
-setClass("mi.polr",
-        representation(
-            model = "list", 
-            expected = "numeric", 
-            random = "numeric"),
-            contains = "mi.method"
-)
+
+
 setClass("mi.continuous",
         representation(
             model    = "list", 
@@ -55,6 +42,42 @@ setClass("mi.continuous",
             random   = "numeric"),
             contains = "mi.method"
 )
+
+
+
+setClass("mi.dichotomous",
+        representation(
+            model    = "list", 
+            expected = "numeric", 
+            random   = "numeric"),
+            contains = "mi.method"
+)
+
+setClass("mi.categorical",
+        representation(
+            model    = "list", 
+            expected = "numeric", 
+            random   = "numeric",
+            residuals = "numeric"),
+            contains = "mi.method"
+)
+
+setClass("mi.polr",
+        representation(
+            model = "list", 
+            expected = "numeric", 
+            random = "numeric"),
+            contains = "mi.method"
+)
+
+setClass("mi.continuous",
+        representation(
+            model    = "list", 
+            expected = "numeric", 
+            random   = "numeric"),
+            contains = "mi.method"
+)
+
 setClass("mi.fixed",
         representation(
             model    = "list", 
@@ -63,14 +86,16 @@ setClass("mi.fixed",
             contains = "mi.method"
 )
 
+
 setClass("mi.pmm",
         representation(
             model    = "list", 
             expected = "numeric", 
             random   = "numeric",
-            residual = "numeric"),
+            residuals = "numeric"),
             contains = "mi.method"
 )
+
 setClass("mi.copy",
         representation(
             model    = "list", 

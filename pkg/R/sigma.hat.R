@@ -1,8 +1,9 @@
 # ==============================================================================
-# extract sigma.hat values for mi.method class object
+# extract sigma.hat values 
 # ==============================================================================
-setMethod( "sigma.hat", signature( object = "mi.method" ),     
-  function ( object, ... ) {
-    return( object$model$sigma )
+
+setMethod("sigma.hat", signature( object = "mi.method"),     
+  function (object) {
+    object@model$sigma
   }
 )

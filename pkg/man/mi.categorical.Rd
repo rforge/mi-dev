@@ -4,7 +4,8 @@
 \alias{mi.categorical-class}
 % Function
 \alias{mi.categorical}
-\alias{residuals.mi.categorical}
+\alias{resid,mi.categorical-method}
+\alias{residuals,mi.categorical-method}
 \alias{plot.mi.categorical}
 
 \title{ 
@@ -15,7 +16,7 @@
 }
 \usage{
   mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots)
-  \S3method{residuals}{mi.categorical}(object, y, \dots)
+  \S4method{residuals}{mi.categorical}(object, y)
   \S3method{plot}{mi.categorical}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 \arguments{

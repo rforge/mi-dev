@@ -1,6 +1,6 @@
 2008-1-26 Yu-Sung Su     <ys463@columbia.edu>  
    * clean up redundant code
-   * no more squareroot-continuous
+   * no more squareroot-continuous, logscale-continuous, mi.mixed, mi.start
    * R/AllInternal: add internal function from mi.info
    * R/mi.info: 
       1. remove some internal functions to AllInternal

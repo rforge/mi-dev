@@ -159,7 +159,7 @@ mi.info.params.default <-function( info ){
 # Default formula for the type
 # ========================================================================
 type.default.formula <- function( response.name, predictor.name, type ) {
-  else if (type=="ordered-categorical"){
+  if (type=="ordered-categorical"){
     form <- paste( paste( "factor(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
   } 
   else if (type=="fixed"){

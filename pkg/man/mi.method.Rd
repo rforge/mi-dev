@@ -7,10 +7,12 @@
 \alias{imputed}
 \alias{print,mi.method-method}
 \alias{plot.mi.method}
-\alias{fitted.mi.method}
-\alias{coef.mi.method}
+\alias{fitted,mi.method-method}
+\alias{coef,mi.method-method}
+\alias{coefficients,mi.method-method}
 \alias{imputed,mi.method-method}
-\alias{residuals.mi.method}
+\alias{residuals,mi.method-method}
+\alias{resid,mi.method-method}
 \alias{sigma.hat,mi.method-method}
 
 \title{
@@ -21,10 +23,12 @@
 }
 \usage{
   \S4method{imputed}{mi.method}(object,y)
-  \S3method{coef}{mi.method}(object, \dots)
-  \S4method{sigma.hat}{mi.method}(object, \dots)
-  \S3method{fitted}{mi.method}(object, \dots)
-  \S3method{residuals}{mi.method}(object, y, \dots)
+  \S4method{coef}{mi.method}(object)
+  \S4method{coefficients}{mi.method}(object)
+  \S4method{sigma.hat}{mi.method}(object)
+  \S4method{fitted}{mi.method}(object)
+  \S4method{resid}{mi.method}(object, y)
+  \S4method{residuals}{mi.method}(object, y)
   \S4method{print}{mi.method}(x, \dots)
   \S3method{plot}{mi.method}(x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }

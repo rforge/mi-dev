@@ -241,3 +241,20 @@ all.missing <-function(info){
   all.missing <- sapply(info, FUN=foo)
   return(all.missing)
 }
+
+# ========================================================================
+# dichotomize a variable
+# ========================================================================
+
+
+.dichot <- function(Y){
+    y.levels <- if (is.double(Y)){
+                  sort(unique(Y)) 
+                }
+                else{
+                  levels(factor(Y))
+                }
+    Y <- replace(Y, Y==y.levels[1], 0)
+    Y <- replace(Y, Y==y.levels[2], 1)
+    return(Y)
+}

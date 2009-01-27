@@ -6,7 +6,8 @@
 \alias{mi.dichotomous}
 \alias{plot.mi.dichotomous}
 % methods
-\alias{residuals.mi.dichotomous}
+\alias{resid,mi.dichotomous-method}
+\alias{residuals,mi.dichotomous-method}
 \title{
     Elementary function: Bayesian logistic regression to impute a dichotomous variable.
 }
@@ -18,8 +19,8 @@
 \usage{
 mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100, 
   draw.from.beta = FALSE, \dots)
-
-\S3method{residuals}{mi.dichotomous}(object, y, \dots)
+\S4method{resid}{mi.dichotomous}(object, y)
+\S4method{residuals}{mi.dichotomous}(object, y)
 \S3method{plot}{mi.dichotomous}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 

@@ -1,6 +1,8 @@
 # ==============================================================================
-# extract fitted values for mi.method class object
+# extract fitted values 
 # ==============================================================================
-fitted.mi.method <-   function ( object, ... ) {
-    return( object$expected )
+setMethod("fitted", signature(object = "mi.method"), 
+  function(object){
+  object@expected
 }
+)

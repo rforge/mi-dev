@@ -3,8 +3,8 @@
   ver <- packageDescription("mi", lib = mylib)$Version
   builddate <- packageDescription("mi", lib = mylib)$Date
   cat(paste("\nmi (Version ", ver, ", built: ", builddate, ")\n", sep = ""))
-  if(!any(search()=="package:arm"))
-    require(arm)
   if(!any(search()=="package:abind"))
     require(abind)
+  if(!any(search()=="package:arm"))
+    require(arm)
 }
