@@ -62,7 +62,7 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
   result@model$call$formula<- as.formula(formula)
   result@model$call$start  <- round(as.double(start), 2)
   result@model$call$n.iter <- n.iter
-  result@model$coefficients <- coefficients(bglm.imp)
+  result@model$coefficients <- coef(bglm.imp)
   result@model$sigma       <- sigma.hat(bglm.imp)
   result@model$dispersion  <- bglm.imp$dispersion
   result@expected <- determ.pred

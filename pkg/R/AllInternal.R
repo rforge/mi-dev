@@ -186,7 +186,7 @@ level <- function(info){
 # Extract imputation formula (character) as list
 # ========================================================================
 
-imp.formula <-function(info){
+.imp.formula <-function(info){
   foo <- function(x){
     x$imp.formula
   }

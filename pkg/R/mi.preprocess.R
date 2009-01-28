@@ -119,10 +119,10 @@ mi.recode <- function(data, info, undo=FALSE){
   for (i in 1:dim(data)[2]){
     if(is.character(data[,i])){
       if(undo){
-        rec<- paste("'",level(info)[[i]],"' =",names(level(info)[[i]]),sep="")
+        rec<- paste("'", .level(info)[[i]],"' =",names(.level(info)[[i]]),sep="")
       }
       else{
-        rec<-paste("'",names(level(info)[[i]]),"' =",level(info)[[i]],sep="")
+        rec<-paste("'",names(.level(info)[[i]]),"' =",.level(info)[[i]],sep="")
       }
       for(j in 1:length(rec)){
         data[,i]<-recode(data[,i],rec[i])
@@ -130,10 +130,10 @@ mi.recode <- function(data, info, undo=FALSE){
     }
     else if (is.factor(data[,i])){
       if(undo){
-        levels(data[,i])<-names(level(info)[[i]])
+        levels(data[,i]) <- names(.level(info)[[i]])
       }
       else{
-        levels(data[,i])<-level(info)[[i]]
+        levels(data[,i]) <- .level(info)[[i]]
       }
     }
   }

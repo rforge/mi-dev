@@ -12,7 +12,8 @@ plot.mi <- function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
                         gray.scale = FALSE, mfrow=c( 1, 4 ), ... ) {
     if ( m(x) < m )  { 
       stop( message = paste( "Index of imputation 'm' must be within the range of 1 to", m(x) ) ) 
-    } else{
+    } 
+    else{
       mids <- imp(x,m)
       Y    <- as.data.frame( x@data[ , names( mids ) ] )
       names( Y ) <- names( mids )
@@ -180,25 +181,25 @@ plot.mi.dichotomous <- function ( x, y,
 # S4 plot function for mi.logcontinuous object
 # ==============================================================================
 
-plot.mi.logcontinuous <- function ( x, y, 
-  main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
-    par(mfrow=c(1,4))
-    fit     <- fitted( x )
-    res     <- residuals( x, y )
-    sigma   <- sigma.hat( x )
-    vrb.obs <- y
-    vrb.imp <- imputed( x, y ) 
-    loga  <- vrb.obs
-    loga[!is.na(vrb.obs)] <- log(vrb.obs[!is.na(vrb.obs)])
-    mi.hist(x, loga, type = vrb.typ, main = main, xlab=paste("log(",main,")"), gray.scale = gray.scale )
-    mtext( "log", 1, cex = 0.7, adj = 1 )
-    residual.plot( log(fit), res, sigma, main = main, xlab= "log(Predicted)",  ylab = paste( "log(Residual)" ), gray.scale = gray.scale )
-    mtext( "log", 1, cex = 0.7, adj = 1 )
-    mtext( "log", 2, cex = 0.7, adj = 1 )
-    mi.scatterplot( loga, log(vrb.imp), fit, xlab= "predicted",  ylab = paste( "log(", main, ")" ) , main = main, gray.scale = gray.scale )
-    mtext( "log", 2, cex = 0.7, adj = 1 )
-    plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-} 
+#plot.mi.logcontinuous <- function ( x, y, 
+#  main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
+#    par(mfrow=c(1,4))
+#    fit     <- fitted( x )
+#    res     <- residuals( x, y )
+#    sigma   <- sigma.hat( x )
+#    vrb.obs <- y
+#    vrb.imp <- imputed( x, y ) 
+#    loga  <- vrb.obs
+#    loga[!is.na(vrb.obs)] <- log(vrb.obs[!is.na(vrb.obs)])
+#    mi.hist(x, loga, type = vrb.typ, main = main, xlab=paste("log(",main,")"), gray.scale = gray.scale )
+#    mtext( "log", 1, cex = 0.7, adj = 1 )
+#    residual.plot( log(fit), res, sigma, main = main, xlab= "log(Predicted)",  ylab = paste( "log(Residual)" ), gray.scale = gray.scale )
+#    mtext( "log", 1, cex = 0.7, adj = 1 )
+#    mtext( "log", 2, cex = 0.7, adj = 1 )
+#    mi.scatterplot( loga, log(vrb.imp), fit, xlab= "predicted",  ylab = paste( "log(", main, ")" ) , main = main, gray.scale = gray.scale )
+#    mtext( "log", 2, cex = 0.7, adj = 1 )
+#    plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
+#} 
 
 
 #setMethod("plot", signature(x = "mi.logcontinuous",y="ANY"), 
