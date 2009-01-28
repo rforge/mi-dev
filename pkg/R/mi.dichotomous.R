@@ -61,25 +61,27 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
   else {
       random.temp <- rbinom(n.mis, 1, determ.pred[mis])
   }
-  random.pred <- random.temp
+  random.pred <- random.temp 
   random.pred <- replace(random.pred, random.temp == 0, y.levels[1])
   random.pred <- replace(random.pred, random.temp == 1, y.levels[2])
-  if (is.logical(y.levels)) {
-    random.pred <- as.logical(random.pred)
-  }
-  names(random.pred) <- names(determ.pred[mis])
+
+  if (is.logical(y.levels)) {                                      
+    random.pred <- as.logical(random.pred)                         
+  }                                                                 
+  names(random.pred) <- names(determ.pred[mis])                      
+
   result <- new(c("mi.dichotomous", "mi.method"),
               model = vector("list", 0), 
               expected = numeric(0), 
               random = numeric(0))
-  result$model$call <- bglm.imp$call
-  result$model$call$formula <- as.formula(formula)
-  result$model$call$start <- round(as.double(start), 2)
-  result$model$call$n.iter <- n.iter
-  result$model$coefficient <- bglm.imp$coefficients
-  result$model$sigma <- sigma.hat(bglm.imp)
-  result$expected <- determ.pred
-  result$random <- random.pred
+  result@model$call <- bglm.imp$call
+  result@model$call$formula <- as.formula(formula)
+  result@model$call$start <- round(as.double(start), 2)
+  result@model$call$n.iter <- n.iter
+  result@model$coefficients <- bglm.imp$coefficients
+  result@model$sigma <- sigma.hat(bglm.imp)
+  result@expected <- determ.pred
+  result@random <- random.pred
   return(result)
   on.exit(rm(bglm.imp))
 }

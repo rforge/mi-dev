@@ -80,9 +80,9 @@ setMethod("print", signature( x = "mi.method" ),
 
 print.mi.method <- function ( x, ... ) {
     cat("model:\n ")
-    print(x$model$call)
+    print(x@model$call)
     cat("\ncoefficients:\n")
-    print(x$model$coefficient)
+    print(x@model$coefficient)
     cat("\nimputed values:\n")
-    print(x$random)
+    print(x@random)
 }

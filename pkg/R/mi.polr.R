@@ -50,13 +50,12 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   bplr.imp    <- bayespolr( formula = formula, data = data, start = 0, 
                               method = c( "logistic" ), 
                               drop.unused.levels = FALSE, n.iter = n.iter )
-
   expect.prob <- predict( bplr.imp, newdata = data, type = "probs" )
   determ.pred <- as.vector( expect.prob %*% as.double( Y.levels ) )
   names( determ.pred ) <- 1:length( determ.pred )
 
   random.pred <- Rmultnm( n.mis, expect.prob[mis,],  c( 1:Y.nlevel ) )    
-  random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse="") )        
+  random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse=";") )        
   names(random.pred) <- names(determ.pred[mis])
 
   # return the result
@@ -68,7 +67,7 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   result@model$call$formula<- as.formula(formula)
   result@model$call$start  <- round(as.double(start),2)
   result@model$call$n.iter <- n.iter
-  result@model$coefficient <- bplr.imp$coefficient
+  result@model$coefficients <- bplr.imp$coefficients
   result@model$sigma       <- NULL  
   result@expected          <- as.double(determ.pred)
   result@random            <- as.double(random.pred)

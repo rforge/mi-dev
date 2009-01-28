@@ -22,12 +22,14 @@ mi.info <- function( data, threshold  = 0.99999 )
     # nmis
     info[[i]]$nmis <- sum( is.na( data[ ,i] ) )
     # type
+ 
     if(regexpr(".log", info[[i]]$name)>0){
       info[[i]]$type <- "continuous"
     }
     else{
       info[[i]]$type <- typecast( data[,i] )
     }
+ 
     info[[i]]$var.class <- class( data[,i] )
     # level
     if( info[[i]]$var.class == "character" ) {
@@ -35,17 +37,18 @@ mi.info <- function( data, threshold  = 0.99999 )
       lev <- lev[order( lev )]
       if( length( lev ) == 2 ) {
         info[[i]]$level <- c( 0, 1 )
-      } else{
+      } 
+      else{
         info[[i]]$level <- 1:length( lev )
       }
       names( info[[i]]$level ) <- lev
     } else if( info[[i]]$var.class == "factor" ) {
       lev <-levels( data[ ,i] )[ !is.na( levels( data[ ,i] ) )]
       lev <- lev[!( lev %in% c( "NA", "RF", "DK" ) )]
-      #ulev<-unique(as.character(data[,i]))[!is.na(unique(as.character(data[,i])))]     
       if( length( lev ) == 2 ) {
         info[[i]]$level <- c( 0, 1 )
-      } else {
+      } 
+      else {
         info[[i]]$level <- 1:length( lev )
       }
       names( info[[i]]$level ) <- lev
@@ -54,20 +57,28 @@ mi.info <- function( data, threshold  = 0.99999 )
     info[[i]]$is.ID <- if( length(unique( data[ !is.na(data[,i]),i] )) == length( data[,i] ) 
                         && is.integer( data[,i] ) && all(data[,i]==data[order( data[,i] ),i]) ){ 
                           TRUE
-                        } else { 
+                        } 
+                        else { 
                           FALSE
                         }   
-    info[[i]]$include <- if( info[[i]]$is.ID ){ FALSE } else { TRUE }
+    info[[i]]$include <- if( info[[i]]$is.ID ){ 
+                          FALSE 
+                          } 
+                          else { 
+                            TRUE 
+                          }
     # all missing then exclude
-    info[[i]]$all.missing <- if( sum( is.na( data[ ,i] ) ) == dim( data )[1] ){
+    info[[i]]$all.missing <- if(sum(is.na(data[ ,i])) == dim(data)[1]){
                                TRUE
-                             } else { 
+                             } 
+                             else { 
                                FALSE
                              }    
     if(info[[i]]$include){
-      info[[i]]$include <- if( info[[i]]$all.missing ) { 
+      info[[i]]$include <- if(info[[i]]$all.missing) { 
                              FALSE
-                           } else { 
+                           } 
+                           else { 
                              TRUE
                            }
     }
@@ -75,7 +86,8 @@ mi.info <- function( data, threshold  = 0.99999 )
     if(info[[i]]$include && info[[i]]$nmis>0){
       info[[i]]$imp.order <- ord
       ord <- ord + 1
-    } else{
+    } 
+    else{
       info[[i]]$imp.order <- NA
     }
     # correlated 
@@ -88,15 +100,15 @@ mi.info <- function( data, threshold  = 0.99999 )
   }
  
   # all missing
-  allmis <- sapply( info, function( inf ){ inf$all.missing } )
-  if( any( allmis ) ) {
+  allmis <- .all.missing(info)
+  if(any(allmis)){
     cat("\avariable(s)", paste( names(info)[allmis],collapse=", ",sep=""),
          "has(have) no observed value, and will be omitted.\n\n" )
   }
   # correlated then exclude  
-  data.correlated <- mi.correlated.list( data )
-  if( length( data.correlated ) > 0 ) {
-    for( c.idx in 1:length( data.correlated ) ) {
+  data.correlated <- mi.correlated.list(data)
+  if(length(data.correlated) > 0) {
+    for(c.idx in 1:length(data.correlated)) {
       c.nm <- data.correlated[[c.idx]][-1]
       for( nm.idx in 1:length(c.nm)){
         info[[c.nm[nm.idx]]]$include     <- FALSE
@@ -105,7 +117,8 @@ mi.info <- function( data, threshold  = 0.99999 )
       }
     }
   }
-  ord.temp <- imp.order(info)
+ 
+  ord.temp <- .imp.order(info)
   re.ord   <- ord.temp[ !is.na( ord.temp ) ]
   ord.temp[!is.na( ord.temp )] <- rank( re.ord, ties.method = "first" )
   for( ord.index in 1:length( ord.temp ) ) {
@@ -134,8 +147,8 @@ mi.info <- function( data, threshold  = 0.99999 )
 mi.info.formula.default <-function( data, info ){
   for( i in 1:dim(data)[2]){
     # default formula
-    inc <- sapply(info, function(inf){inf$include} )
-    inc[i]<-FALSE
+    inc <- .include(info)
+    inc[i] <- FALSE
     dimnames(data)[[2]][i]
     info[[i]]$imp.formula <- type.default.formula(
                                 dimnames(data)[[2]][i],
@@ -195,7 +208,7 @@ mi.info.fix <- function( info ) {
                     title=.make.title("change variable to include?" ))
       # change
       if(res.ord == 1){
-        inc.change <- data.frame( include=include( info ) )
+        inc.change <- data.frame( include = .include( info ) )
         inc.change <- fix( inc.change )
         # when something is wrong
         if( any( is.na( inc.change[,1] ) ) ) {
@@ -212,7 +225,7 @@ mi.info.fix <- function( info ) {
           }
         }
         # reorganize the order
-        ord.temp <- imp.order(info)
+        ord.temp <- .imp.order(info)
         re.ord <- ord.temp[!is.na(ord.temp)]
         ord.temp[!is.na(ord.temp)]<-rank(re.ord, ties.method ="first")
         for(ord.index in 1:length(ord.temp)){
@@ -235,7 +248,7 @@ mi.info.fix <- function( info ) {
                     , title=.make.title("change imputation order?" ))
       #change order
       if(res.ord == 1){
-        ord.change.temp <- as.data.frame(imp.order(info))
+        ord.change.temp <- as.data.frame(.imp.order(info))
         ord.change <- data.frame(imp.ord=ord.change.temp[!is.na(ord.change.temp)])
         dimnames(ord.change)[[1]]<-dimnames(ord.change.temp)[[1]][!is.na(ord.change.temp)]
         ord.change <- fix(ord.change)

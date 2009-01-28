@@ -3,7 +3,7 @@
 # ==============================================================================
 setMethod( "imputed", signature( object = "mi.method" ),     
   function ( object, y ) {
-    y[is.na( y )] <- object$random
+    y[is.na( y )] <- object@random
     return( y )
   }
 )

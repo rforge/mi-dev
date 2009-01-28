@@ -90,7 +90,7 @@ mi.check.correlation <- function ( data, threshhold = 1 ){
 
 mi.preprocess <- function( data, info=NULL, trans = trans.func, name = trans.name ){
   if( is.null( info ) ){ info <- mi.info( data ) }
-  inVar     <- include( info )
+  inVar     <- .include( info )
   type.list <- type( info )
   processed <-data[ ,inVar,drop=FALSE]
   

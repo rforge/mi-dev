@@ -198,7 +198,7 @@ imp.formula <-function(info){
 # Extracts the imputation order vector(integer)
 # ========================================================================
 
-imp.order <- function(info){
+.imp.order <- function(info){
   foo <- function(x){
     x$imp.order
   }
@@ -210,7 +210,7 @@ imp.order <- function(info){
 # Extracts the include or not vector (logical)
 # ========================================================================
 
-include <- function(info){
+.include <- function(info){
   foo <- function(x){
     x$include
   }
@@ -222,7 +222,7 @@ include <- function(info){
 # Extracts the number of missing vector(integer)
 # ========================================================================
 
-nmis <- function(info){
+.nmis <- function(info){
   foo <- function(x){
     x$nmis
   }
@@ -234,7 +234,7 @@ nmis <- function(info){
 # Extracts the all missing or not (logical) as vector
 # ========================================================================
 
-all.missing <-function(info){
+.all.missing <- function(info){
   foo <- function(x){
     x$all.missing
   }

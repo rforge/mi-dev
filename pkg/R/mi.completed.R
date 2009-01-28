@@ -3,7 +3,7 @@ setMethod( "mi.completed", signature( object = "mi" ),
     outcome<- match.arg(outcome)
     if( m(object) < m )  { stop( message = "Index of imputation is not within the range." ) }
     info <- info.mi(object)
-    mis.name <- names( nmis(info)[ nmis( info ) > 0 & !all.missing( info ) ] )
+    mis.name <- names(.nmis(info)[.nmis(info) > 0 & !.all.missing( info ) ] )
     mimatrix <- data.mi(object)
     for ( i in 1:length(mis.name) ){
       nm <- mis.name[i]
@@ -17,6 +17,8 @@ setMethod( "mi.completed", signature( object = "mi" ),
     }
   }
 )
+
+
 setMethod( "mi.matrix", signature( object = "mi" ),
   function ( object, m = 1) {
     mi.completed( object, m = m, outcome = "matrix") 

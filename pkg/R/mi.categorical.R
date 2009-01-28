@@ -50,7 +50,7 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   names( random.pred ) <- names( determ.pred[mis] )
   
   # return the result
-  result <- new(c("mi.continuous", "mi.method"),
+  result <- new(c("mi.categorical", "mi.method"),
             model = vector("list", 0),
               expected = numeric(0), 
               random = numeric(0),
@@ -59,7 +59,7 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   result@model$call$formula<- formula
   result@model$call$maxit  <- n.iter
   result@model$call$MaxNWts<- MaxNWts
-  result@model$coefficient <- coefficients( lm.cat.imp )
+  result@model$coefficients <- coef( lm.cat.imp )
   result@model$sigma       <- NULL 
   result@expected <- determ.pred
   result@random   <- random.pred

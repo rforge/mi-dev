@@ -22,8 +22,8 @@ mi.types.add <- function ( type.name ) {
 }
 
 ## To select the model 
-type.models <- function ( type ) {
-    type <- match.arg ( type, mi.types( ) )
+type.models <- function (type) {
+    type <- match.arg (type, mi.types( ) )
     imputation.method <- list (
         "continuous"            = "mi.continuous"
         ,"ordered-categorical"  = "mi.polr"
@@ -33,5 +33,5 @@ type.models <- function ( type ) {
         ,"predictive-mean-match"= "mi.pmm"
         ,"fixed"                = "mi.fixed" 
     )
-    return( imputation.method [ type ] ) # Will be NULL if the method is undefined
+    return(imputation.method[type]) # Will be NULL if the method is undefined
 }

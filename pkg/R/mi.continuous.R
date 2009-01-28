@@ -36,7 +36,7 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
   # main program
   if( !is.null( start ) ){ 
     n.iter <- 1
-    start[is.na(start)]<-0
+    start[is.na(start)] <- 0
   }
   bglm.imp    <- bayesglm( formula = formula, data = data, family = gaussian, 
                             n.iter = n.iter, start = start, 
