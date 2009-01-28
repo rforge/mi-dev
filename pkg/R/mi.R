@@ -62,8 +62,8 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     stop( gettextf( "object class '%s' is not acceptable", class( object ) ) )
   }
   
-  
   mis.index <-  apply(data, 2, is.na)
+
   # Automatic Preprocess
 
   if( preprocess ) {
@@ -112,9 +112,9 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         CurrentVar <- VarName[jj]
         
         # probability of cooling 
-        q <- add.priors$K/s
-        q <- ifelse(q > 1, 1, q)
-        q <- rbinom(1, 1, prob=q) 
+        prob.add.prior <- add.priors$K/s
+        prob.add.prior <- ifelse(prob.add.prior > 1, 1, prob.add.prior)
+        q <- rbinom(1, 1, prob=prob.add.prior) 
           
         if(q){
           cat(paste(CurrentVar, "*", sep=""), " ")
@@ -129,20 +129,23 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         CurVarFlg <- ( names ( data ) == CurrentVar )
         dat <- data.frame( data[ ,CurVarFlg, drop=FALSE ], 
                             mi.data[[i]][ ,!CurVarFlg ] )
+        
         if(add.priors$augment.data){
           pct.aug <- add.priors$pct.aug
           n.aug <- trunc((dim(data)[1]*pct.aug))
           dat <- rbind.data.frame(dat, .randdraw(data, n=n.aug))
         }
+        
         names(dat) <- c( CurrentVar, names( data[,!CurVarFlg, drop=FALSE] ) )
         model.type   <- as.character( type.models( info[[CurrentVar]]$type ) )
         
         # Error Handling
         .Internal(seterrmessage(""))
         errormessage <- paste("\nError while imputing variable:", CurrentVar, ", model:",model.type,"\n")
-        on.exit ( cat(errormessage,geterrmessage()))
-        on.exit ( options( show.error.messages = TRUE ),add = TRUE)
-        options( show.error.messages = FALSE )
+        on.exit(cat(errormessage,geterrmessage()))
+        on.exit(options(show.error.messages = TRUE),add = TRUE)
+        options(show.error.messages = FALSE)
+        
         # Error Handling
         mi.object[[i]][[CurrentVar]] <- with(data=dat, 
                                           do.call( model.type,
@@ -165,15 +168,14 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
           n.mis <- sum(is.na(dat[[CurrentVar]]))
           mi.object[[i]][[CurrentVar]]@random <- sample(na.exclude(dat[[CurrentVar]]), n.mis, replace=TRUE)
         }
-
-
+        
         mi.data[[i]][[CurrentVar]][is.na( data[[CurrentVar]] )] <- mi.object[[i]][[CurrentVar]]@random
         data.tmp <<- mi.data
         coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
         start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
       } ## variable loop 
       cat("\n" )
-      #AveVar[s,i,] <- c( mean( mi.data[[i]] ),sd( mi.data[[i]] ) )
+      
       foo1 <- function(v){
         mean(unclass(v), na.rm=TRUE)
       }
@@ -259,7 +261,8 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
 
 ##The simple imputation function
 impute <- function ( a, a.impute ) { 
-  return ( ifelse ( is.na ( a ), a.impute, a ) ) 
+  out <- ifelse (is.na(a), a.impute, a)
+  return (out) 
 }
 
 strict.check <- function(coefficient,n.iter,n.imp){
