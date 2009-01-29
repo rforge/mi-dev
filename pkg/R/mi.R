@@ -64,11 +64,11 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
   
   mis.index <-  apply(data, 2, is.na)
 
-  # Automatic Preprocess
-
-  if( preprocess ) {
-    data <- mi.info.recode(data, info)
-  }
+#  # Automatic Preprocess
+#
+#  if( preprocess ) {
+#    data <- mi.info.recode(data, info)
+#  }
  
   data <- data[,.include(info)]
   dimnames( AveVar ) <- list( NULL, NULL, 
@@ -219,12 +219,13 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
       else{ 
         "Unknown termination ("
       }
-      ,date(), ")\n") 
+      ,date(), ")\n"
+      ) 
       
-  # Automatic Preprocess
-  if( preprocess ) {
-    data <- mi.info.uncode(data, info)
-  }
+#  # Automatic Preprocess
+#  if( preprocess ) {
+#    data <- mi.info.uncode(data, info)
+#  }
   # impute correlated variables
   for( cor.idx in 1:length(info)) {
     if( length(info[[cor.idx]]$correlated) > 0 

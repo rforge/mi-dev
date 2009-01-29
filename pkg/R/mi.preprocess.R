@@ -83,93 +83,166 @@ mi.check.correlation <- function ( data, threshhold = 1 ){
 #}
 
 
-
-
-
-
-
-mi.preprocess <- function( data, info=NULL, trans = trans.func, name = trans.name ){
-  if( is.null( info ) ){ info <- mi.info( data ) }
-  inVar     <- .include( info )
-  type.list <- type( info )
-  processed <-data[ ,inVar,drop=FALSE]
-  
-  
-  for ( i in 1:dim( processed )[2]){
-    processed[,i] <- trans( type.list[i])( data[,i] )
-    if( !is.null( name( type.list[i] ) ) ) {
-      dimnames( processed )[[2]][i] <- paste( name( type.list[i] ),dimnames( data )[[2]][i], sep="" )
+mi.preprocess <- function(data, varnames = NULL, trans = NULL){
+  n.col <- ncol(data)
+  n.row <- nrow(data)
+  var.name <- names(data)
+  idx <- NULL
+  TMP <- NULL
+  for (i in 1:n.col){
+    typ <- typecast(data[,i])
+    print(typ)
+    tmp <- NULL
+    if (typ == "mixed"){
+      Ind <- ifelse(data[,i] > 0, 1, ifelse(data[,i]==0, 0, NA))
+      Log <- log(ifelse(data[,i] > 0, data[,i], NA))
+      Ind.lab <- paste(var.name[i], "ind", sep=".")
+      Log.lab <- paste(var.name[i], "log", sep=".")
+      tmp <- cbind(tmp, Ind, Log)
+      dimnames(tmp)[[2]] <- c(Ind.lab, Log.lab)
+      TMP <- cbind(TMP, tmp)
+      idx <- c(idx, i)
+    }
+    if (typ == "positive-continuous"){
+      Log <- log(data[,i])
+      Log.lab <- paste("log", var.name[i], sep=".")
+      tmp <- cbind(tmp, Log)
+      dimnames(tmp)[[2]] <- Log.lab
+      TMP <- cbind(TMP, tmp)
+      idx <- c(idx, i)
     }
   }
-  return( processed )
+  var.name <- var.name[-idx]
+  data <- data[,-idx]
+  data <- cbind(data, TMP)
+  data <- as.data.frame(data)
 }
-mi.postprocess<-function(data, type.list, trans = inverse.func, name = trans.name  ){
-  processed <-data
-  for (i in 1:dim(data)[2]){
-    processed[,i] <- trans(type.list[i])(data[,i])
 
-    if(!is.null(name(type.list[i]))){
-      dimnames(processed)[[2]][i]<-sub(name(type.list[i]),"",dimnames(data)[[2]][i])
-    }
+
+
+mi.postprocess <- function(trans.data){
+  n.chains <- length(trans.data)
+  var.name <- names(trans.data[[1]])
+  idx1 <- grep(".ind", names(trans.data[[1]]))
+  idx2 <- grep(".log", names(trans.data[[1]]))
+  idx3 <- c(idx1, idx2)
+  var.name1 <- var.name[idx1]
+  var.name1 <- gsub(".ind", "", var.name1)
+  var.name <- c(var.name1, var.name[-idx3])
+  for (s in 1:n.chains){
+    data <- trans.data[[s]][,idx1]*exp(trans.data[[s]][,idx2])
+    trans.data[[s]] <- trans.data[[s]][,-idx3]
+    trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
+    names(trans.data[[s]]) <- var.name
+  }  
+  var.name <- names(trans.data[[1]])
+  idx1 <- grep("log.", names(trans.data[[1]]))
+  var.name1 <- var.name[idx1]
+  var.name1 <- gsub("log.", "", var.name1)
+  var.name <- c(var.name1, var.name[-idx1])
+  for (s in 1:n.chains){
+    data <- exp(trans.data[[s]][,idx1])
+    trans.data[[s]] <- trans.data[[s]][,-idx1]
+    trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
+    names(trans.data[[s]]) <- var.name
   }
-  return(processed)
-}
-
-mi.recode <- function(data, info, undo=FALSE){
-  for (i in 1:dim(data)[2]){
-    if(is.character(data[,i])){
-      if(undo){
-        rec<- paste("'", .level(info)[[i]],"' =",names(.level(info)[[i]]),sep="")
-      }
-      else{
-        rec<-paste("'",names(.level(info)[[i]]),"' =",.level(info)[[i]],sep="")
-      }
-      for(j in 1:length(rec)){
-        data[,i]<-recode(data[,i],rec[i])
-      }
-    }
-    else if (is.factor(data[,i])){
-      if(undo){
-        levels(data[,i]) <- names(.level(info)[[i]])
-      }
-      else{
-        levels(data[,i]) <- .level(info)[[i]]
-      }
-    }
-  }
-  return(data)
-}
-
-trans.func<-function(type){
-    fun <-if     (type == "squareroot-continuous" ) {sqrt}
-          else if(type == "logscale-continuous" ) {log}
-          else if(type == "mixed" ) {function ( x ) {
-                                        x[x>0&!is.na(x)]<-sqrt(x[x>0&!is.na(x)])  
-                                        return(x)
-                                      } }
-          else { function ( x ) { x } }
-    return( fun )
-}
-trans.name<-function(type){
-    name <-if     (type == "squareroot-continuous" ) {"sqrt."}
-          else if(type == "logscale-continuous" ) {"log."}
-          else if(type == "mixed" ) {"msqrt."}
-          else { NULL }
-    return( name )
-}
-
-inverse.func<-function(type){
-    fun <-if     (type == "squareroot-continuous" ) {function ( x ) { x^2 }}
-          else if(type == "logscale-continuous" ) {function ( x ) { exp( x ) }}
-          else if(type == "mixed" ) {function ( x ) {
-                                        x[ x>0 & !is.na( x ) ] <- ( x[ x>0 & !is.na( x ) ] )^2 
-                                        return( x )
-                                      } }
-          else { function ( x ) { x } }
-    return( fun )
+  return(trans.data)
 }
 
 
+
+
+
+
+
+#
+#mi.preprocess <- function( data, info=NULL, trans = trans.func, name = trans.name ){
+#  if(is.null(info)){ 
+#    info <- mi.info( data ) 
+#  }
+#  inVar     <- .include( info )
+#  type.list <- type( info )
+#  processed <-data[ ,inVar,drop=FALSE]
+#  
+#  
+#  for ( i in 1:dim( processed )[2]){
+#    processed[,i] <- trans( type.list[i])( data[,i] )
+#    if( !is.null( name( type.list[i] ) ) ) {
+#      dimnames( processed )[[2]][i] <- paste( name( type.list[i] ),dimnames( data )[[2]][i], sep="" )
+#    }
+#  }
+#  return( processed )
+#}
+#
+#
+#
+#mi.postprocess<-function(data, type.list, trans = inverse.func, name = trans.name  ){
+#  processed <-data
+#  for (i in 1:dim(data)[2]){
+#    processed[,i] <- trans(type.list[i])(data[,i])
+#
+#    if(!is.null(name(type.list[i]))){
+#      dimnames(processed)[[2]][i]<-sub(name(type.list[i]),"",dimnames(data)[[2]][i])
+#    }
+#  }
+#  return(processed)
+#}
+
+#mi.recode <- function(data, info, undo=FALSE){
+#  for (i in 1:dim(data)[2]){
+#    if(is.character(data[,i])){
+#      if(undo){
+#        rec<- paste("'", .level(info)[[i]],"' =",names(.level(info)[[i]]),sep="")
+#      }
+#      else{
+#        rec<-paste("'",names(.level(info)[[i]]),"' =",.level(info)[[i]],sep="")
+#      }
+#      for(j in 1:length(rec)){
+#        data[,i]<-recode(data[,i],rec[i])
+#      }
+#    }
+#    else if (is.factor(data[,i])){
+#      if(undo){
+#        levels(data[,i]) <- names(.level(info)[[i]])
+#      }
+#      else{
+#        levels(data[,i]) <- .level(info)[[i]]
+#      }
+#    }
+#  }
+#  return(data)
+#}
+#
+#trans.func<-function(type){
+#    fun <-if     (type == "squareroot-continuous" ) {sqrt}
+#          else if(type == "logscale-continuous" ) {log}
+#          else if(type == "mixed" ) {function ( x ) {
+#                                        x[x>0&!is.na(x)]<-sqrt(x[x>0&!is.na(x)])  
+#                                        return(x)
+#                                      } }
+#          else { function ( x ) { x } }
+#    return( fun )
+#}
+#trans.name<-function(type){
+#    name <-if     (type == "squareroot-continuous" ) {"sqrt."}
+#          else if(type == "logscale-continuous" ) {"log."}
+#          else if(type == "mixed" ) {"msqrt."}
+#          else { NULL }
+#    return( name )
+#}
+#
+#inverse.func<-function(type){
+#    fun <-if     (type == "squareroot-continuous" ) {function ( x ) { x^2 }}
+#          else if(type == "logscale-continuous" ) {function ( x ) { exp( x ) }}
+#          else if(type == "mixed" ) {function ( x ) {
+#                                        x[ x>0 & !is.na( x ) ] <- ( x[ x>0 & !is.na( x ) ] )^2 
+#                                        return( x )
+#                                      } }
+#          else { function ( x ) { x } }
+#    return( fun )
+#}
+#
+#
 
 
 #plot.outcheck <- function( data , standardize = FALSE ) {

@@ -42,11 +42,12 @@ mi.info <- function( data, threshold  = 0.99999 )
         info[[i]]$level <- 1:length( lev )
       }
       names( info[[i]]$level ) <- lev
-    } else if( info[[i]]$var.class == "factor" ) {
+      } 
+    else if( info[[i]]$var.class == "factor" ) {
       lev <-levels( data[ ,i] )[ !is.na( levels( data[ ,i] ) )]
       lev <- lev[!( lev %in% c( "NA", "RF", "DK" ) )]
       if( length( lev ) == 2 ) {
-        info[[i]]$level <- c( 0, 1 )
+          info[[i]]$level <- c( 0, 1 )
       } 
       else {
         info[[i]]$level <- 1:length( lev )
