@@ -1,11 +1,26 @@
-importFrom("stats",
-      coef, 
+importFrom("lme4",
+      coef,
       fitted,
       resid,
-      residuals,
-      coefficients,
+      residuals
+)
+
+importFrom("Matrix",
       update
 )
+
+importFrom("stats",
+      coefficients
+)
+
+#importFrom("stats",
+#      coef, 
+#      fitted,
+#      resid,
+#      residuals,
+#      coefficients,
+#      update
+#)
 
 #importFrom("graphics",  
 #      plot
@@ -36,7 +51,7 @@ exportMethods(
   info.mi,
   is.mi,
   coef,
-  coefficients,
+#  coefficients,
   converged,
   display,
   fitted,
@@ -59,10 +74,13 @@ exportMethods(
 export(
   bugs.mi,
   call.mi,
+  coef,
+#  coefficients,
   conv.plot,
   converged,
   convergence.plot,
   data.mi,
+  fitted,
   glm.mi,
   imp,
   imputed,
@@ -105,8 +123,11 @@ export(
   mp.plot,
   prior.control,
   random.imp,
+  resid,
+  residuals,
   typecast,
-  type.models
+  type.models,
+  update
 )
 
 S3method(update, mi.info)
