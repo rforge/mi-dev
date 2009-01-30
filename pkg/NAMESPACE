@@ -51,7 +51,7 @@ exportMethods(
   info.mi,
   is.mi,
   coef,
-#  coefficients,
+  coefficients,
   converged,
   display,
   fitted,
@@ -74,13 +74,10 @@ exportMethods(
 export(
   bugs.mi,
   call.mi,
-  coef,
-#  coefficients,
   conv.plot,
   converged,
   convergence.plot,
   data.mi,
-  fitted,
   glm.mi,
   imp,
   imputed,
@@ -123,11 +120,8 @@ export(
   mp.plot,
   prior.control,
   random.imp,
-  resid,
-  residuals,
   typecast,
-  type.models,
-  update
+  type.models
 )
 
 S3method(update, mi.info)

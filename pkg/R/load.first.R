@@ -7,6 +7,4 @@
     require(abind)
   if(!any(search()=="package:arm"))
     require(arm)
-  if(!any(search()=="package:stats"))
-    require(stats)
 }

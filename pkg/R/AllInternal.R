@@ -53,8 +53,10 @@ data.tmp <<- NULL # to pass R CMD check
 # ========================================================================
 
 .randdraw <- function(data, n = 1){
-  foo <- function(x) sample(na.exclude(x), size = n, replace = TRUE)
-  added.rows <- apply(data, 2, FUN = foo)
+  foo <- function(x, n = n){
+    sample(na.exclude(x), size = n, replace = TRUE)
+  }
+  added.rows <- apply(data, 2, FUN = foo, n = n)
   return(added.rows)
 }
 
