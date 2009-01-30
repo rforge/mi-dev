@@ -78,7 +78,7 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
   result@model$call$formula <- as.formula(formula)
   result@model$call$start <- round(as.double(start), 2)
   result@model$call$n.iter <- n.iter
-  result@model$coefficients <- coef(bglm.imp)
+  result@model$coefficients <- bglm.imp$coefficients
   result@model$sigma <- sigma.hat(bglm.imp)
   result@expected <- determ.pred
   result@random <- random.pred

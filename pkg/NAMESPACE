@@ -18,6 +18,7 @@ importFrom("arm",
 
 exportClasses(
   mi,
+  mi.copy,
   mi.method,
   mi.fixed,
   mi.dichotomous,
