@@ -2,7 +2,8 @@ importFrom("lme4",
       coef,
       fitted,
       resid,
-      residuals
+      residuals,
+      plot
 )
 
 importFrom("Matrix",
@@ -63,6 +64,7 @@ exportMethods(
   mi.matrix,
   mi.data.frame,
   mi.data.list,
+  plot,
   resid,
   residuals,
   sigma.hat,
@@ -125,12 +127,6 @@ export(
 )
 
 S3method(update, mi.info)
-S3method(plot, mi)
-S3method(plot, mi.method)
-S3method(plot, mi.polr)
-S3method(plot, mi.categorical)
-S3method(plot, mi.copy)
-S3method(plot, mi.dichotomous)
 S3method(print, mi)
 S3method(print, mi.glm)
 S3method(print, mi.lm)

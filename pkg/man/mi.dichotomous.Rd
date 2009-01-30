@@ -4,7 +4,7 @@
 \alias{mi.dichotomous-class}
 % Function
 \alias{mi.dichotomous}
-\alias{plot.mi.dichotomous}
+\alias{plot,mi.dichotomous,ANY-method}
 % methods
 \alias{resid,mi.dichotomous-method}
 \alias{residuals,mi.dichotomous-method}
@@ -21,7 +21,7 @@ mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100,
   draw.from.beta = FALSE, \dots)
 \S4method{resid}{mi.dichotomous}(object, y)
 \S4method{residuals}{mi.dichotomous}(object, y)
-\S3method{plot}{mi.dichotomous}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
+\S4method{plot}{mi.dichotomous,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 
 \arguments{
@@ -77,4 +77,7 @@ mi.dichotomous(formula, data = NULL, start = NULL, n.iter = 100,
     \code{\link{mi.method}},
     \code{\link{mi}}
 }
-\keyword{ models }
+\keyword{models}
+\keyword{aplot}
+\keyword{dplot}
+\keyword{hplot}

@@ -1,12 +1,13 @@
 \name{ plot.mi }
+\alias{plot}
 \alias{plot.mi}
-%\alias{plot,mi-method}
+\alias{plot,mi,missing-method}
 \title{Diagnostic Plots for multiple imputation object}
 \description{
   Diagnostic plots for testing the fit of the imputation method to the observed data.
 }
 \usage{
-\S3method{plot}{mi}( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
+\S4method{plot}{mi,missing}( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
                     gray.scale = FALSE, mfrow=c( 1, 4 ), \dots )
 }
 \arguments{
@@ -14,8 +15,8 @@
   \item{m}{ The m-th imputation. By default is 1.}
   \item{vrb}{ A chosen variable for the scatter plot. }
   \item{vrb.name}{ A name of the vrb variable. }
-  \item{gray.scale}{When set to TRUE, makes the plot into gray scale with predefined color and line type.}
-  \item{mfrow}{See "par" for details.}
+  \item{gray.scale}{When set to \code{TRUE}, makes the plot into gray scale with predefined color and line type.}
+  \item{mfrow}{See \dQuote{par} for details.}
   \item{\dots}{Arguments for other methods, not used.}
 }
 \details{
@@ -28,11 +29,12 @@ strongly recommended to use a variable containing more information. Fitted lowes
   Binned residual plots are for each dichotomous variable.
 }
 \references{
-    Andrew Gelman and M. Grazia Pittau,  
-    A flexible program for missing-data imputation and model checking, 
-    Technical report, Columbia University, New York; Andrew Gelman and Jennifer Hill, 
-    Data Analysis Using Regression and Multilevel/Hierarchical Models, 
-    Cambridge University Press, 2007.
+    Andrew Gelman and Maria Grazia Pittau.
+    \dQuote{A flexible program for missing-data imputation and model checking.}
+    \emph{Technical report}. Columbia University, New York.
+    Andrew Gelman and Jennifer Hill. (2007).
+    \emph{Data Analysis Using Regression and Multilevel/Hierarchical Models}.
+    Cambridge University Press.
 }
 \author{
   Masanao Yajima \email{yajima@stat.columbia.edu},

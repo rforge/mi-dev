@@ -6,7 +6,7 @@
 % Function
 \alias{imputed}
 \alias{print,mi.method-method}
-\alias{plot.mi.method}
+\alias{plot,mi.method,ANY-method}
 \alias{fitted,mi.method-method}
 \alias{coef,mi.method-method}
 \alias{coefficients,mi.method-method}
@@ -30,7 +30,7 @@
   \S4method{resid}{mi.method}(object, y)
   \S4method{residuals}{mi.method}(object, y)
   \S4method{print}{mi.method}(x, \dots)
-  \S3method{plot}{mi.method}(x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
+  \S4method{plot}{mi.method,ANY}(x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -66,4 +66,7 @@
     \code{\link{mi}}
 }
 
-\keyword{ models }
+\keyword{models}
+\keyword{aplot}
+\keyword{dplot}
+\keyword{hplot}
