@@ -1,4 +1,3 @@
-
 mi.check.correlation <- function ( data, threshhold = 1 ){
   #cat("Checking for correlation")
   cor.data <- cor(data, use="pairwise.complete.obs")
@@ -12,140 +11,159 @@ mi.check.correlation <- function ( data, threshhold = 1 ){
   return(result)
 }
 
-
-
-
-#mi.check <- function ( data , filename = "model.txt" ) {
-#  n.col <- ncol(data)
-#  varnames <- names(data)
-#  result.type <- vector("character", n.col)
-#  names(result.type) <- varnames
-#  default.type <- typecast(data)
-#  cat("-----starting the check (select 0 to quit)-------\n")
-#  res0 <- menu(
-#    c("go through all of the variables.",
-#      "choose specific variable to change."),
-#      title="Would you like to"
-#      )
-#  # Go through all the variables
-#  if(res0 == 1 ) {
-#    for(i in 1:dim(data)[2]){
-#      y <- data[,i]
-#      y.name <- varnames[i]
-#      cat("checking variable:", y.name,"\n")
-#      type <- default.type[i]
-#      cat("default type for variable:", y.name, "is", type, "\n")
-#      
-#      res <- menu(c("Yes","No"), title="would you like to change it?")
-#      if(res==1){
-#        new.type <- menu(mi.types(),title="select the type:")
-#        result.type[i] <- if(new.type==0){ 
-#                            break 
-#                          } 
-#                          else{ 
-#                            new.type 
-#                          }
-#      }
-#      else if(res==2){
-#        result.type[i] <- type
-#      }
-#      else if(res==0){
-#        break
-#      }
-#      else{
-#      }    
-#    }
-#  }
-#  # Choose variable
-#  else if (res0 == 2){
-#    esc<-0
-#    while( esc == 0 ){
-#      cat("Please enter a name of variable you wish to edit\n")
-#      print(paste(varnames, sep=","))
-#      varname <- scan( what = character(), sep = "\n", strip.white = TRUE, nlines=1, quiet=TRUE )
-#      if( varname %in% dimnames(data)[[2]]){
-#                
-#      }
-#      else if ( varname == "list"){
-#       
-#      }
-#      else if ( varname == "end"){
-#        esc <- "1"
-#      }
-#      else{}
-#    }
-#  }
-#  
-#  else if (res0 == 0){
-#   break
-#  }
-#  return(result.type)
-#}
-
-
+# preprocess: this is ugly..but right..need to improve it
 mi.preprocess <- function(data, varnames = NULL, trans = NULL){
   n.col <- ncol(data)
   n.row <- nrow(data)
   var.name <- names(data)
-  idx <- NULL
-  TMP <- NULL
-  for (i in 1:n.col){
-    typ <- typecast(data[,i])
-    print(typ)
-    tmp <- NULL
-    if (typ == "mixed"){
-      Ind <- ifelse(data[,i] > 0, 1, ifelse(data[,i]==0, 0, NA))
-      Log <- log(ifelse(data[,i] > 0, data[,i], NA))
-      Ind.lab <- paste(var.name[i], "ind", sep=".")
-      Log.lab <- paste(var.name[i], "log", sep=".")
-      tmp <- cbind(tmp, Ind, Log)
-      dimnames(tmp)[[2]] <- c(Ind.lab, Log.lab)
-      TMP <- cbind(TMP, tmp)
-      idx <- c(idx, i)
+  if(!is.null(varnames)&!is.null(trans)){
+    if(length(trans)==1){
+      trans <- rep(trans, length(varnames))
     }
-    if (typ == "positive-continuous"){
-      Log <- log(data[,i])
-      Log.lab <- paste("log", var.name[i], sep=".")
-      tmp <- cbind(tmp, Log)
-      dimnames(tmp)[[2]] <- Log.lab
-      TMP <- cbind(TMP, tmp)
-      idx <- c(idx, i)
+    if (length(varnames) != length(trans)){
+      warning(message="the length of the selected variable names does not equal to 
+      the length of the transforming functions.
+      The process will use the first element of the transforming function!")
+      trans <- rep(trans[1], length(varnames))
     }
+  }    
+  if(is.null(varnames)){
+    idx <- NULL
+    TMP <- NULL
+    if (is.null(trans)){
+      trans = "log"
+    }
+    for (i in 1:n.col){
+      typ <- typecast(data[,i])
+      tmp <- NULL
+      if (typ == "mixed"){
+        if(as.numeric(trans == "sqrt")){
+          Sqrt <- sqrt(data[,i])
+          Sqrt.lab <- paste(var.name[i], "sqrt", sep=".")
+          tmp <- cbind(tmp, Sqrt)
+          dimnames(tmp)[[2]] <- Sqrt.lab
+        }
+        else{
+          Ind <- ifelse(data[,i] > 0, 1, ifelse(data[,i]==0, 0, NA))
+          Log <- log(ifelse(data[,i] > 0, data[,i], NA))
+          Ind.lab <- paste(var.name[i], "ind", sep=".")
+          Log.lab <- paste(var.name[i], "log", sep=".")
+          tmp <- cbind(tmp, Ind, Log)
+          dimnames(tmp)[[2]] <- c(Ind.lab, Log.lab)
+        }
+        TMP <- cbind(TMP, tmp)
+        idx <- c(idx, i)
+      }
+      if (typ == "positive-continuous"){
+        if(trans == "sqrt"){
+          Sqrt <- sqrt(data[,i])
+          Sqrt.lab <- paste(var.name[i], "sqrt", sep=".")
+          tmp <- cbind(tmp, Sqrt)
+          dimnames(tmp)[[2]] <- Sqrt.lab
+        }
+        else{
+          Log <- log(data[,i])
+          Log.lab <- paste("log", var.name[i], sep=".")
+          tmp <- cbind(tmp, Log)
+          dimnames(tmp)[[2]] <- Log.lab
+        }
+        TMP <- cbind(TMP, tmp)
+        idx <- c(idx, i)
+      }
+    }
+    var.name <- var.name[-idx]
+    data <- data[,-idx]
+    data <- cbind(data, TMP)
+    data <- as.data.frame(data)
   }
-  var.name <- var.name[-idx]
-  data <- data[,-idx]
-  data <- cbind(data, TMP)
-  data <- as.data.frame(data)
+  else{
+    idx <- pmatch(varnames, var.name)
+    TMP <- NULL
+    if (is.null(trans)){
+      trans = "log"
+    }
+    else{
+      trans[idx] <- trans
+    }
+    for (i in idx){
+      typ <- typecast(data[,i])
+      tmp <- NULL
+      if (typ == "mixed"){
+        if(trans[i]=="sqrt"){
+          Sqrt <- sqrt(data[,i])
+          Sqrt.lab <- paste(var.name[i], "sqrt", sep=".")
+          tmp <- cbind(tmp, Sqrt)
+          dimnames(tmp)[[2]] <- Sqrt.lab
+          TMP <- cbind(TMP, tmp)
+          idx <- c(idx, i)        
+        }
+        else{
+          Ind <- ifelse(data[,i] > 0, 1, ifelse(data[,i]==0, 0, NA))
+          Log <- log(ifelse(data[,i] > 0, data[,i], NA))
+          Ind.lab <- paste(var.name[i], "ind", sep=".")
+          Log.lab <- paste(var.name[i], "log", sep=".")
+          tmp <- cbind(tmp, Ind, Log)
+          dimnames(tmp)[[2]] <- c(Ind.lab, Log.lab)
+          TMP <- cbind(TMP, tmp)
+          idx <- c(idx, i)
+        }
+      }
+      if (typ == "positive-continuous"){
+        if(trans[i]=="sqrt"){
+          Sqrt <- sqrt(data[,i])
+          Sqrt.lab <- paste(var.name[i], "sqrt", sep=".")
+          tmp <- cbind(tmp, Sqrt)
+          dimnames(tmp)[[2]] <- Sqrt.lab
+          TMP <- cbind(TMP, tmp)
+          idx <- c(idx, i)        
+        }
+        else{
+          Log <- log(data[,i])
+          Log.lab <- paste("log", var.name[i], sep=".")
+          tmp <- cbind(tmp, Log)
+          dimnames(tmp)[[2]] <- Log.lab
+          TMP <- cbind(TMP, tmp)
+          idx <- c(idx, i)
+        }
+      }
+    }
+    var.name <- var.name[-idx]
+    data <- data[,-idx]
+    data <- cbind(data, TMP)
+    data <- as.data.frame(data)
+  }
 }
-
-
 
 mi.postprocess <- function(trans.data){
   n.chains <- length(trans.data)
   var.name <- names(trans.data[[1]])
-  idx1 <- grep(".ind", names(trans.data[[1]]))
-  idx2 <- grep(".log", names(trans.data[[1]]))
-  idx3 <- c(idx1, idx2)
-  var.name1 <- var.name[idx1]
-  var.name1 <- gsub(".ind", "", var.name1)
-  var.name <- c(var.name1, var.name[-idx3])
-  for (s in 1:n.chains){
-    data <- trans.data[[s]][,idx1]*exp(trans.data[[s]][,idx2])
-    trans.data[[s]] <- trans.data[[s]][,-idx3]
-    trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
-    names(trans.data[[s]]) <- var.name
-  }  
-  var.name <- names(trans.data[[1]])
-  idx1 <- grep("log.", names(trans.data[[1]]))
-  var.name1 <- var.name[idx1]
-  var.name1 <- gsub("log.", "", var.name1)
-  var.name <- c(var.name1, var.name[-idx1])
-  for (s in 1:n.chains){
-    data <- exp(trans.data[[s]][,idx1])
-    trans.data[[s]] <- trans.data[[s]][,-idx1]
-    trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
-    names(trans.data[[s]]) <- var.name
+  chk1 <- sum(grep("ind", var.name))
+  chk2 <- sum(grep("log", var.name))
+  if(chk1 > 0){
+    idx1 <- grep(".ind", var.name))
+    idx2 <- grep(".log", var.name))
+    idx3 <- c(idx1, idx2)
+    var.name1 <- var.name[idx1]
+    var.name1 <- gsub(".ind", "", var.name1)
+    var.name <- c(var.name1, var.name[-idx3])
+    for (s in 1:n.chains){
+      data <- trans.data[[s]][,idx1]*exp(trans.data[[s]][,idx2])
+      trans.data[[s]] <- trans.data[[s]][,-idx3]
+      trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
+      names(trans.data[[s]]) <- var.name
+    }  
+    idx1 <- grep("log.", var.name))
+    var.name1 <- var.name[idx1]
+    var.name1 <- gsub("log.", "", var.name1)
+    var.name <- c(var.name1, var.name[-idx1])
+    for (s in 1:n.chains){
+      data <- exp(trans.data[[s]][,idx1])
+      trans.data[[s]] <- trans.data[[s]][,-idx1]
+      trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
+      names(trans.data[[s]]) <- var.name
+    }
   }
+  else if(chk2 > 0 & chk1
   return(trans.data)
 }
 
@@ -277,4 +295,76 @@ mi.postprocess <- function(trans.data){
 #  cat("following variables have no observed values, thus will be omitted from the imputation procedure\n")
 #  print(dimnames(data)[[2]][colSums(is.na(data))==dim(data)[[1]]])
 #  return(data[colSums(is.na(data))!=dim(data)[[1]]])
+#}
+
+
+
+
+
+
+#mi.check <- function ( data , filename = "model.txt" ) {
+#  n.col <- ncol(data)
+#  varnames <- names(data)
+#  result.type <- vector("character", n.col)
+#  names(result.type) <- varnames
+#  default.type <- typecast(data)
+#  cat("-----starting the check (select 0 to quit)-------\n")
+#  res0 <- menu(
+#    c("go through all of the variables.",
+#      "choose specific variable to change."),
+#      title="Would you like to"
+#      )
+#  # Go through all the variables
+#  if(res0 == 1 ) {
+#    for(i in 1:dim(data)[2]){
+#      y <- data[,i]
+#      y.name <- varnames[i]
+#      cat("checking variable:", y.name,"\n")
+#      type <- default.type[i]
+#      cat("default type for variable:", y.name, "is", type, "\n")
+#      
+#      res <- menu(c("Yes","No"), title="would you like to change it?")
+#      if(res==1){
+#        new.type <- menu(mi.types(),title="select the type:")
+#        result.type[i] <- if(new.type==0){ 
+#                            break 
+#                          } 
+#                          else{ 
+#                            new.type 
+#                          }
+#      }
+#      else if(res==2){
+#        result.type[i] <- type
+#      }
+#      else if(res==0){
+#        break
+#      }
+#      else{
+#      }    
+#    }
+#  }
+#  # Choose variable
+#  else if (res0 == 2){
+#    esc<-0
+#    while( esc == 0 ){
+#      cat("Please enter a name of variable you wish to edit\n")
+#      print(paste(varnames, sep=","))
+#      varname <- scan( what = character(), sep = "\n", strip.white = TRUE, nlines=1, quiet=TRUE )
+#      if( varname %in% dimnames(data)[[2]]){
+#                
+#      }
+#      else if ( varname == "list"){
+#       
+#      }
+#      else if ( varname == "end"){
+#        esc <- "1"
+#      }
+#      else{}
+#    }
+#  }
+#  
+#  else if (res0 == 0){
+#   break
+#  }
+#  return(result.type)
 #}

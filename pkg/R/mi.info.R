@@ -3,13 +3,13 @@
 # ==============================================================================
 mi.info <- function( data, threshold  = 0.99999 )
 {
-  if( is.matrix( data ) ) { 
-    data <- data.frame( data ) 
+  if(is.matrix(data)) { 
+    data <- data.frame(data) 
   }
-  info <- vector("list", dim( data )[2] )
-  names( info ) <- dimnames( data )[[2]]
-  data.original.name <- deparse( substitute( data ) )
-  correlated <- mi.check.correlation( data, threshold )
+  info <- vector("list", dim(data)[2])
+  names(info) <- dimnames(data)[[2]]
+  data.original.name <- deparse(substitute(data))
+  correlated <- mi.check.correlation(data, threshold)
   unlist( lapply( correlated, function( lst ) { lst[-1]} ) )
   ord <- 1
   for( i in 1:dim( data )[2] ) {
@@ -20,28 +20,28 @@ mi.info <- function( data, threshold  = 0.99999 )
                             "transform","params", "other" )
     info[[i]]$name <- dimnames(data)[[2]][i]
     # nmis
-    info[[i]]$nmis <- sum( is.na( data[ ,i] ) )
+    info[[i]]$nmis <- sum(is.na(data[ ,i]))
     # type
  
     if(regexpr(".log", info[[i]]$name)>0){
       info[[i]]$type <- "continuous"
     }
     else{
-      info[[i]]$type <- typecast( data[,i] )
+      info[[i]]$type <- typecast(data[,i])
     }
  
-    info[[i]]$var.class <- class( data[,i] )
+    info[[i]]$var.class <- class(data[,i])
     # level
     if( info[[i]]$var.class == "character" ) {
-      lev <- unique( as.character( data[,i] ) )[!is.na( unique( as.character( data[,i] ) ) )]
-      lev <- lev[order( lev )]
-      if( length( lev ) == 2 ) {
-        info[[i]]$level <- c( 0, 1 )
+      lev <- unique(as.character(data[,i]))[!is.na(unique(as.character(data[,i])))]
+      lev <- lev[order(lev)]
+      if(length(lev) == 2 ) {
+        info[[i]]$level <- c(0, 1)
       } 
       else{
-        info[[i]]$level <- 1:length( lev )
+        info[[i]]$level <- 1:length(lev)
       }
-      names( info[[i]]$level ) <- lev
+      names(info[[i]]$level) <- lev
       } 
     else if( info[[i]]$var.class == "factor" ) {
       lev <-levels( data[ ,i] )[ !is.na( levels( data[ ,i] ) )]
@@ -411,7 +411,7 @@ mi.fix.params <- function( info, name ) {
 # ========================================================================
 
 mi.check.correlation <- function ( data, threshhold = 0.99999 ){
-  cor.data <- cor( data, use = "pairwise.complete.obs" )
+  cor.data <- cor(data, use = "pairwise.complete.obs")
   diag( cor.data ) <- 1
   index  <- abs( cor.data - diag( dim( cor.data )[1] ) ) >= threshhold 
   result <- vector( "list", dim( index )[1] )

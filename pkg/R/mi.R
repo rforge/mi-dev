@@ -76,7 +76,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
                                  paste( "sd(", colnames( data ), ")", sep="" ) ) )
   VarName.tm <- names(info)[.include(info) & .nmis(info)>0 ]
   VarName    <- VarName.tm[order(.imp.order( info )[.include(info) & .nmis(info)>0 ])]
-  length.list<- sum( .include(info) & .nmis(info) >0 )
+  length.list <- sum( .include(info) & .nmis(info) >0 )
   
   # list initialization
   mi.data       <- vector("list", n.imp)
