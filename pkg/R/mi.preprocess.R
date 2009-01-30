@@ -137,11 +137,14 @@ mi.preprocess <- function(data, varnames = NULL, trans = NULL){
 mi.postprocess <- function(trans.data){
   n.chains <- length(trans.data)
   var.name <- names(trans.data[[1]])
-  chk1 <- sum(grep("ind", var.name))
-  chk2 <- sum(grep("log", var.name))
+  chk1 <- sum(grep(".ind", var.name))
+  chk2 <- sum(grep(".log", var.name))
+  chk3 <- sum(grep("log.", var.name))
+  chk4 <- sum(grep(".sqrt", var.name))
   if(chk1 > 0){
-    idx1 <- grep(".ind", var.name))
-    idx2 <- grep(".log", var.name))
+    var.name <- names(trans.data[[1]])
+    idx1 <- grep(".ind", var.name)
+    idx2 <- grep(".log", var.name)
     idx3 <- c(idx1, idx2)
     var.name1 <- var.name[idx1]
     var.name1 <- gsub(".ind", "", var.name1)
@@ -152,7 +155,7 @@ mi.postprocess <- function(trans.data){
       trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
       names(trans.data[[s]]) <- var.name
     }  
-    idx1 <- grep("log.", var.name))
+    idx1 <- grep("log.", var.name)
     var.name1 <- var.name[idx1]
     var.name1 <- gsub("log.", "", var.name1)
     var.name <- c(var.name1, var.name[-idx1])
@@ -163,7 +166,32 @@ mi.postprocess <- function(trans.data){
       names(trans.data[[s]]) <- var.name
     }
   }
-  else if(chk2 > 0 & chk1
+  if(chk3 > 0){
+    var.name <- names(trans.data[[1]])
+    idx1 <- grep("log.", var.name)
+    var.name1 <- var.name[idx1]
+    var.name1 <- gsub(".log", "", var.name1)
+    var.name <- c(var.name1, var.name[-idx1])
+    for (s in 1:n.chains){
+      data <- exp(trans.data[[s]][,idx1])
+      trans.data[[s]] <- trans.data[[s]][,-idx1]
+      trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
+      names(trans.data[[s]]) <- var.name
+    }  
+  }
+  if(chk3 > 0){
+    var.name <- names(trans.data[[1]])
+    idx1 <- grep(".sqrt", var.name)
+    var.name1 <- var.name[idx1]
+    var.name1 <- gsub(".sqrt", "", var.name1)
+    var.name <- c(var.name1, var.name[-idx1])
+    for (s in 1:n.chains){
+      data <- (trans.data[[s]][,idx1])^2
+      trans.data[[s]] <- trans.data[[s]][,-idx1]
+      trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
+      names(trans.data[[s]]) <- var.name
+    }  
+  } 
   return(trans.data)
 }
 

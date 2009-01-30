@@ -42,7 +42,7 @@ mi.pmm<-function(formula, data = NULL, start = NULL, n.iter = 100, ... )
               expected = numeric(0), 
               random = numeric(0))
   result@model$call <- bglm.imp$call
-  result@model$coefficient <- bglm.imp$coefficients
+  result@model$coefficients <- bglm.imp$coefficients
   result@model$sigma <- sigma.hat( bglm.imp )
   result@expected <- yhat
   result@random   <- apply( as.array( yhat[mis] ), 1, 
