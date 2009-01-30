@@ -1,8 +1,4 @@
 
-prior.control <- function(augment.data = FALSE, pct.aug=10, K = 0){
-  return(list(augment.data = augment.data, pct.aug = pct.aug, K = K))
-}
-
 
 # ========================================================================
 # create missingness

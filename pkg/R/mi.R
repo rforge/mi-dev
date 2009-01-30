@@ -2,6 +2,12 @@
 # mi main function
 #==============================================================================
 
+
+prior.control <- function(augment.data = FALSE, pct.aug=10, K = 0){
+  return(list(augment.data = augment.data, pct.aug = pct.aug, K = K))
+}
+
+
 mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30, 
                   max.minutes = 20, rand.imp.method = "bootstrap", 
                   preprocess = FALSE, continue.on.convergence = FALSE,
