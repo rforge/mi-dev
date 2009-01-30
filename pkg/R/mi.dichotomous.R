@@ -22,11 +22,11 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
   }
   X <- as.matrix(mf[, -1, drop = FALSE])
   namesD <- if (is.null(data)) {
-      NULL
-  }
-  else {
-      deparse(substitute(data))
-  }
+                NULL
+            }
+            else {
+                deparse(substitute(data))
+            }
   mis <- is.na(Y)
   n.mis <- sum(mis)
   if (is.null(data)) {

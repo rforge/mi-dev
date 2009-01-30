@@ -21,8 +21,8 @@ mi.info <- function( data, threshold  = 0.99999 )
     info[[i]]$name <- dimnames(data)[[2]][i]
     # nmis
     info[[i]]$nmis <- sum(is.na(data[ ,i]))
+    
     # type
- 
     if(regexpr(".log", info[[i]]$name)>0){
       info[[i]]$type <- "continuous"
     }

@@ -93,7 +93,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     mi.object[[j]]<- vector( "list", ncol.mis )
     names(mi.object[[j]]) <- names( info )[ .nmis(info)>0 ]
   }
-  coef.val <- vector("list",ncol.mis)
+  coef.val <- vector("list", ncol.mis)
   names(coef.val) <- names( info )[ .nmis(info)>0 ]
   for (jjj in 1:ncol.mis){
     coef.val[[jjj]] <- vector("list", n.imp)

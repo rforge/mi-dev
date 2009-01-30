@@ -155,6 +155,9 @@ mi.postprocess <- function(trans.data){
       trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
       names(trans.data[[s]]) <- var.name
     }  
+  }
+  if(chk3 > 0){
+    var.name <- names(trans.data[[1]])
     idx1 <- grep("log.", var.name)
     var.name1 <- var.name[idx1]
     var.name1 <- gsub("log.", "", var.name1)
@@ -164,22 +167,9 @@ mi.postprocess <- function(trans.data){
       trans.data[[s]] <- trans.data[[s]][,-idx1]
       trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
       names(trans.data[[s]]) <- var.name
-    }
-  }
-  if(chk3 > 0){
-    var.name <- names(trans.data[[1]])
-    idx1 <- grep("log.", var.name)
-    var.name1 <- var.name[idx1]
-    var.name1 <- gsub(".log", "", var.name1)
-    var.name <- c(var.name1, var.name[-idx1])
-    for (s in 1:n.chains){
-      data <- exp(trans.data[[s]][,idx1])
-      trans.data[[s]] <- trans.data[[s]][,-idx1]
-      trans.data[[s]] <- cbind.data.frame(data, trans.data[[s]])
-      names(trans.data[[s]]) <- var.name
     }  
   }
-  if(chk3 > 0){
+  if(chk4 > 0){
     var.name <- names(trans.data[[1]])
     idx1 <- grep(".sqrt", var.name)
     var.name1 <- var.name[idx1]

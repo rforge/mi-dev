@@ -70,13 +70,6 @@ setClass("mi.polr",
             contains = "mi.method"
 )
 
-setClass("mi.continuous",
-        representation(
-            model    = "list", 
-            expected = "numeric", 
-            random   = "numeric"),
-            contains = "mi.method"
-)
 
 setClass("mi.fixed",
         representation(

@@ -95,6 +95,8 @@ export(
   mi.info.update.type,
   mi.interactive,
   mi.matrix,
+  mi.preprocess,
+  mi.postprocess,
   mi.polr,
   mi.scatterplot,
   mi.types,
