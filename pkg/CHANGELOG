@@ -1,6 +1,15 @@
+2008-1-31 Yu-Sung Su     <ys463@columbia.edu>  
+   * R/glm.mi: auto.postprocess
+   * R/lm.mi: auto.postprocess
+
+
+2008-1-31 Yu-Sung Su     <ys463@columbia.edu>  
+   * DESCRIPTION (Version, Date): 0.03-0.1
+
+
 2008-1-26 Yu-Sung Su     <ys463@columbia.edu>  
    * clean up redundant code
-   * no more squareroot-continuous, logscale-continuous, mi.mixed, mi.start
+   * no more squareroot-continuous, logscale-continuous, mi.mixed, mi.start, mi.matrix
    * R/AllInternal: add internal function from mi.info
    * R/mi.info: 
       1. remove some internal functions to AllInternal
