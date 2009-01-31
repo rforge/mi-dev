@@ -49,7 +49,7 @@ strongly recommended to use a variable containing more information. Fitted lowes
 }
 \examples{
   data(CHAIN)
-  imp.CHAIN <- mi(CHAIN,n.iter=6)
+  imp.CHAIN <- mi(CHAIN, n.iter=6)
   plot(imp.CHAIN)
 
   #==========================================
@@ -57,8 +57,8 @@ strongly recommended to use a variable containing more information. Fitted lowes
   #==========================================
   #The selected variable vrb is the average of the continuous variables
   #imputed in the first imputation
-  vv <- as.vector(apply(mi.matrix(imp.CHAIN), 2, typecast))=="continuous"
-  var <- apply(mi.matrix(imp.CHAIN)[,vv],1,mean)
+  vv <- as.vector(apply(mi.data.frame(imp.CHAIN), 2, typecast))=="continuous"
+  var <- apply(mi.data.frame(imp.CHAIN)[,vv],1,mean)
   plot(imp.CHAIN, vrb=var,  vrb.name="Average of the continuous variables")
 }
 \keyword{ hplot }

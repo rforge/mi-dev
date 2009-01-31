@@ -113,13 +113,7 @@ if ( !isGeneric( "mi.completed" )) {
               } 
   )
 }
-if ( !isGeneric( "mi.matrix" )) {
-  setGeneric( "mi.matrix",
-              function( object,... ){
-                standardGeneric( "mi.matrix" )
-              } 
-  )
-}
+
 
 if ( !isGeneric( "mi.data.frame" )) {
   setGeneric( "mi.data.frame",
@@ -129,13 +123,6 @@ if ( !isGeneric( "mi.data.frame" )) {
   )
 }
 
-if ( !isGeneric( "mi.data.list" )) {
-  setGeneric( "mi.data.list",
-              function( object,... ){
-                standardGeneric( "mi.data.list" )
-              } 
-  )
-}
 
 
 if ( !isGeneric("imputed")) {

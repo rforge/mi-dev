@@ -6,26 +6,13 @@ importFrom("lme4",
       plot
 )
 
-importFrom("Matrix",
-      update
-)
 
 importFrom("stats",
+      update,
       coefficients
 )
 
-#importFrom("stats",
-#      coef, 
-#      fitted,
-#      resid,
-#      residuals,
-#      coefficients,
-#      update
-#)
 
-#importFrom("graphics",  
-#      plot
-#)
 
 importFrom("arm",
       display,
@@ -61,9 +48,7 @@ exportMethods(
   m,
   mi.hist,
   mi.completed,
-  mi.matrix,
   mi.data.frame,
-  mi.data.list,
   plot,
   resid,
   residuals,
@@ -94,7 +79,6 @@ export(
   mi.completed,
   mi.continuous, 
   mi.data.frame,
-  mi.data.list,
   mi.dichotomous,
   mi.fixed,
   mi.hist,
@@ -112,7 +96,6 @@ export(
   mi.info.update.transform,
   mi.info.update.type,
   mi.interactive,
-  mi.matrix,
   mi.preprocess,
   mi.postprocess,
   mi.polr,

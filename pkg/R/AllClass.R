@@ -21,9 +21,22 @@ setClass("mi",
             contains  = "list"
 )
 
-setClass("mi.glm")
+setClass("mi.glm",
+            representation(
+                call           = "call",
+                glm.mi.pooled  = "list" ,
+                glm.mi.fit     = "list"),
+            contains  = "list"
+)
 
-setClass("mi.lm")
+
+setClass("mi.lm",
+            representation(
+                call         = "call",
+                lm.mi.pooled = "list" ,
+                lm.mi.fit    = "list"),
+            contains  = "list"
+)
 
 
 setClass("mi.method",

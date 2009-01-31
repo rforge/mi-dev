@@ -134,7 +134,7 @@ and looping through until approximate convergence.
 }
 
 \seealso{ 
-    \code{\link{mi.matrix}} 
+    \code{\link{mi.completed}} 
 }
 \examples{
 data(CHAIN)
@@ -143,7 +143,6 @@ imp.CHAIN <- mi( CHAIN, n.imp = 3, n.iter = 6 )
 is.mi( imp.CHAIN )    ## Is this a mi object?
 data.mi ( imp.CHAIN ) ## You can get the original data
 
-mi.mt <- mi.matrix( imp.CHAIN, m = 1 ) ## The imputed matrix for the first imputation
 mi.df <- mi.data.frame( imp.CHAIN, m = 1 ) ## The imputed data frame for the second imputation
 
 ##############################

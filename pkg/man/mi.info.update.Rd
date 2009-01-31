@@ -42,12 +42,14 @@ mi.info.update.other(object, list)
   \item{info}{updated \code{mi.info} object.}
 }
 
-\references{
-    Andrew Gelman and M. Grazia Pittau,  
-    A flexible program for missing-data imputation and model checking, 
-    Technical report, Columbia University, New York; Andrew Gelman and Jennifer Hill, 
-    Data Analysis Using Regression and Multilevel/Hierarchical Models, 
-    Cambridge University Press, 2007.
+\references{ 
+    Andrew Gelman and M. Grazia Pittau.
+    \dQuote{A flexible program for missing-data imputation and model checking}. 
+    \emph{Technical report}. Columbia University, New York;
+  
+    Andrew Gelman and Jennifer Hill. (2007).
+    \emph{Data Analysis Using Regression and Multilevel/Hierarchical Models}.
+    Cambridge University Press.
 }
 
 \author{
@@ -58,7 +60,7 @@ mi.info.update.other(object, list)
 }
 
 \seealso{ 
-    \code{\link{mi.matrix}} 
+    \code{\link{mi.completed}} 
 }
 \examples{
 data(CHAIN)

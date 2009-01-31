@@ -13,14 +13,13 @@
   Linear Regression Function that pulls togather the estimates from multiply imputed dataset.
 }
 \usage{
-lm.mi(formula, mi.object, data.list=NULL, ...)
+lm.mi(formula, mi.object, ...)
 \S3method{print}{mi.lm}(x, \dots)
 \S4method{display}{mi.lm}(object, digits=2)
 }
 \arguments{
   \item{formula}{ View \code{lm} for detail. }
   \item{mi.object}{ \code{mi} object. }
-  \item{data.list}{A list of data with same dimentions and variables; default is NULL.}
   \item{x}{\code{mi.lm} object.}
   \item{object}{\code{mi.lm} object.}
   \item{digits}{number of significant digits to display, default=2.}

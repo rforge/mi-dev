@@ -10,18 +10,20 @@
 
 
 \title{ Generalized Linear Modeling Function for Multiply Imputed Dataset }
+
 \description{
   Generalized Linear Modeling Function that pulls togather the estimates from multiple imputed dataset.
 }
+
 \usage{
-glm.mi(formula, mi.object, data.list = NULL, family = gaussian, ...)
+glm.mi(formula, mi.object, family = gaussian, ...)
 \S3method{print}{mi.glm}(x, \dots)
 \S4method{display}{mi.glm}(object, digits=2)
 }
+
 \arguments{
   \item{formula}{ See \code{glm} for detail. }
   \item{mi.object}{ mi object. }
-  \item{data.list}{A list of data with same dimentions and variables; default is NULL.}
   \item{family}{See \code{glm} for detail.}
   \item{x}{\code{mi.glm} object.}
   \item{object}{\code{mi.glm} object.}
@@ -29,7 +31,7 @@ glm.mi(formula, mi.object, data.list = NULL, family = gaussian, ...)
   \item{\dots}{ Any option to pass on to glm function. }
 }
 \details{
-  See glm.
+  See \code{\link[stats]{glm}}.
 }
 \value{
   \item{call}{the matched call.}
@@ -63,7 +65,7 @@ glm.mi(formula, mi.object, data.list = NULL, family = gaussian, ...)
   dat.mi <- mi(dat.xy)
 
   # fitting linear regression 
-  fit <- glm.mi(y ~ x, dat.mi,family = gaussian)
+  fit <- glm.mi(y ~ x, dat.mi, family = gaussian)
   display(fit)
 }
 \seealso{

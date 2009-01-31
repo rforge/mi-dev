@@ -25,8 +25,7 @@ print.mi <- function ( x, ... ) {
   }
   
   
-  
-  
+    
 print.mi.glm <- function(x, ...){
   display(x, ...)
 }

@@ -90,7 +90,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
   mi.object     <- vector("list", n.imp)
   for (j in 1:n.imp){ 
     mi.data[[j]]  <-  if(class(object) %in% "mi" ){ 
-                        data.frame(mi.matrix(object, m=j)[,.include(info)]) 
+                        mi.data.frame(object, m=j)[,.include(info)] 
                       } 
                       else{ 
                         random.imp(data, method = rand.imp.method )
