@@ -8,6 +8,7 @@ lm.mi <- function (formula, mi.object, ... )
     result <- vector( "list", m )
     names( result ) <- as.character( paste( "Imputation", seq( m ), sep = ""))
     mi.data <- mi.completed(mi.object)
+    mi.data <- mi.postprocess(mi.data)
     for ( i in 1:m ) {
       result[[i]] <- lm( formula, data = mi.data[[i]], ... )
     }

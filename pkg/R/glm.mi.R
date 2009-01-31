@@ -8,6 +8,7 @@ glm.mi <- function (formula, mi.object, family = gaussian, ... )
     result <- vector( "list", m )
     names( result ) <- as.character(paste( "Imputation", seq( m ), sep = "" ))
     mi.data <- mi.completed(mi.object)
+    mi.data <- mi.postprocess(mi.data)
     for ( i in 1:m ) {
       result[[i]] <- glm( formula, family = family, 
                           data = mi.data[[i]], ... )
