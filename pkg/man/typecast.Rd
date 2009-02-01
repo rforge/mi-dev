@@ -5,7 +5,8 @@
 \alias{typecast,matrix-method}
 \alias{typecast,data.frame-method}
 \alias{typecast,list-method}
-\title{ Variables type }
+
+\title{Variables type}
 
 \description{ Function for determinig the variable type. }
 
@@ -23,13 +24,13 @@
 
 
 \details{
-\item{fixed}{varaibles that contain only one value.}
-\item{dichotomous}{variables that contain two values.}
-\item{ordered-categorical}{variables that contain 3 to 5 postive values.}
-\item{unorderd-categorial}{variables that contain more than 5 postive values, NOT including 0's.}
-\item{positive-continuous}{variables that contain more than 5 postive values, NOT including 0's.}
-\item{mixed}{variables that contain more than 5 postive values, including 0's.}
-\item{continuous}{variables that are not belong to any of the above types.}
+  \item{fixed}{varaibles that contain only one value.}
+  \item{dichotomous}{variables that contain two values.}
+  \item{ordered-categorical}{variables that contain 3 to 5 postive values.}
+  \item{unorderd-categorial}{variables that contain more than 5 postive values, NOT including 0s.}
+  \item{positive-continuous}{variables that contain more than 5 postive values, NOT including 0s.}
+  \item{mixed}{variables that contain more than 5 postive values, including 0s.}
+  \item{continuous}{variables that are not belong to any of the above types.}
 }
 
 \value{ 
