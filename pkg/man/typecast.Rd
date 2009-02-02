@@ -23,7 +23,12 @@
 }
 
 
-\details{
+
+\details{ 
+  The variable type of a vector, or vector of variable types for each variable in the dataset.
+}
+
+\value{
   \item{fixed}{varaibles that contain only one value.}
   \item{dichotomous}{variables that contain two values.}
   \item{ordered-categorical}{variables that contain 3 to 5 postive values.}
@@ -33,9 +38,6 @@
   \item{continuous}{variables that are not belong to any of the above types.}
 }
 
-\value{ 
-  The variable type of a vector, or vector of variable types for each variable in the dataset.
-}
 
 \references{ 
     Andrew Gelman and M. Grazia Pittau.
