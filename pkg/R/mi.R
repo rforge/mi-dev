@@ -2,7 +2,6 @@
 # mi main function
 #==============================================================================
 
-
 prior.control <- function(augment.data = FALSE, pct.aug=10, K = 0){
   return(list(augment.data = augment.data, pct.aug = pct.aug, K = K))
 }
@@ -72,9 +71,9 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
 
 #  # Automatic Preprocess
 #
-#  if( preprocess ) {
-#    data <- mi.info.recode(data, info)
-#  }
+  if( preprocess ) {
+    data <- mi.info.recode(data, info)
+  }
  
   data <- data[,.include(info)]
   dimnames( AveVar ) <- list( NULL, NULL, 
@@ -228,10 +227,10 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
       ,date(), ")\n"
       ) 
       
-#  # Automatic Preprocess
-#  if( preprocess ) {
-#    data <- mi.info.uncode(data, info)
-#  }
+  # Automatic Preprocess
+  if( preprocess ) {
+    data <- mi.info.uncode(data, info)
+  }
   # impute correlated variables
   for( cor.idx in 1:length(info)) {
     if( length(info[[cor.idx]]$correlated) > 0 

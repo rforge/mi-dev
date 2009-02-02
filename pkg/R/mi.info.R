@@ -533,7 +533,7 @@ mi.interactive <- function ( data ){
 # ========================================================================
 # recodeing variable to numeric value
 # ========================================================================
-mi.info.recode <-function( data, info ){
+mi.info.recode <- function( data, info ){
   for(i in 1:dim(data)[2]){
     if(!is.null(info[[i]]$level)){
       # treatment since recode can't handle "=" as variable name
