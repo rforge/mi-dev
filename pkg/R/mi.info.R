@@ -1,7 +1,7 @@
 # ==============================================================================
 # Creates information matrix
 # ==============================================================================
-mi.info <- function( data, threshold  = 0.99999 )
+mi.info <- function( data, threshhold  = 0.99999 )
 {
   if(is.matrix(data)) { 
     data <- data.frame(data) 
@@ -9,8 +9,11 @@ mi.info <- function( data, threshold  = 0.99999 )
   info <- vector("list", dim(data)[2])
   names(info) <- dimnames(data)[[2]]
   data.original.name <- deparse(substitute(data))
-  correlated <- mi.check.correlation(data, threshold)
-  unlist( lapply( correlated, function( lst ) { lst[-1]} ) )
+  correlated <- mi.check.correlation(data, threshhold)
+  foo <- function(lst){
+    lst[-1]
+  }
+  unlist(lapply(correlated, FUN=foo))
   ord <- 1
   for( i in 1:dim( data )[2] ) {
     info[[i]] <- vector( "list", 15 )

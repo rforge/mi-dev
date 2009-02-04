@@ -16,7 +16,7 @@ setMethod("typecast", signature( object = "ANY" ),
       "dichotomous"
     } 
     else if (is.ordered(object)){
-      "ordered-categorial"
+      "ordered-categorical"
     }
     else if (is.factor(object)){ 
       "unordered-categorical" 

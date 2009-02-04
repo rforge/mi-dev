@@ -5,6 +5,8 @@
   cat(paste("\nmi (Version ", ver, ", built: ", builddate, ")\n", sep = ""))
   if(!any(search()=="package:abind"))
     require(abind)
+  if(!any(search()=="package:car"))
+    require(car)
   if(!any(search()=="package:arm"))
     require(arm)
 }

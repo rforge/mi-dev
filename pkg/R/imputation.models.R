@@ -27,13 +27,13 @@ type.models <- function (type) {
     type <- match.arg (type, mi.types( ) )
     imputation.method <- list (
         "continuous"            = "mi.continuous",
-        "ordered-categorical"  = "mi.polr",
-        "unordered-categorical"= "mi.categorical",
-        "dichotomous"          = "mi.dichotomous",
+        "ordered-categorical"   = "mi.polr",
+        "unordered-categorical" = "mi.categorical",
+        "dichotomous"           = "mi.dichotomous",
         "positive-continuous"   = "mi.continuous",
-        "predictive-mean-match"= "mi.pmm",
-        "fixed"                = "mi.fixed", 
-        "mixed"                = "mi.continuous"
+        "predictive-mean-match" = "mi.pmm",
+        "fixed"                 = "mi.fixed", 
+        "mixed"                 = "mi.continuous"
     )
     return(imputation.method[type]) # Will be NULL if the method is undefined
 }
