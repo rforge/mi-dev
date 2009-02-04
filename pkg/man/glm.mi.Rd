@@ -12,7 +12,7 @@
 \title{ Generalized Linear Modeling Function for Multiply Imputed Dataset }
 
 \description{
-  Generalized Linear Modeling Function that pulls togather the estimates from multiple imputed dataset.
+  Generalized Linear Modeling Function that pulls together the estimates from multiple imputed dataset.
 }
 
 \usage{

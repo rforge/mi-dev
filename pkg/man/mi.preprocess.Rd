@@ -7,15 +7,13 @@
   and \code{positive-continuous} variable types in mi data object}
 
 \usage{
-  mi.preprocess(data, varnames=NULL, trans=NULL)
+  mi.preprocess(data, varnames=NULL)
   mi.postprocess(mi.data)
 }
 
 \arguments{
   \item{data}{the data.frame to be imputed.}
   \item{varnames}{the name of the variable to be transpformed,
-      default=\code{NULL}.}
-  \item{trans}{the fucntions used to transform the variables, 
       default=\code{NULL}.}
   \item{mi.data}{the imputed data list, obtained from \code{mi.completed}}
 }
@@ -26,8 +24,8 @@
 variable types.  If the variable is of \code{mixed} type, the function transforms the variable
 into two variables: an indicator indicates whether the value is postive or not and 
 a transformed variable that takes on all positive value and is transformed either by taking
-a log or a squareroot; 0 and NA will be treated as missing for such a variable. If the variable
-is of \code{positive-continuous} type, it will be transformed by taking a log or a squareroot.
+a log; 0 and NA will be treated as missing for such a variable. If the variable
+is of \code{positive-continuous} type, it will be transformed by taking a log.
 
 \code{mi.postprocess} will transform the imputed dataset back to its original form.
 The imputed dataset is obtained from \code{\link{mi.completed}} function. 

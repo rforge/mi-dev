@@ -10,7 +10,7 @@
 
 \title{ Linear Regression Function for Multiply Imputed Dataset }
 \description{
-  Linear Regression Function that pulls togather the estimates from multiply imputed dataset.
+  Linear Regression Function that pulls together the estimates from multiply imputed dataset.
 }
 \usage{
 lm.mi(formula, mi.object, ...)

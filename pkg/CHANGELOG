@@ -1,3 +1,12 @@
+2008-2-4 Yu-Sung Su     <ys463@columbia.edu>  
+   * man/prepocess: new doc
+   * R/mi.continuous: when start is null, no longer set n.iter=1
+   * R/mi.dichotomous: when start is null, no longer set n.iter=1
+   * R/mi.preprocess: new mi.preprocess and mi.postprocess
+   * R/typecast: new typecast, new type (postitive continuous)
+
+
+
 2008-1-31 Yu-Sung Su     <ys463@columbia.edu>  
    * R/glm.mi: auto.postprocess
    * R/lm.mi: auto.postprocess

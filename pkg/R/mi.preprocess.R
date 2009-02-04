@@ -1,4 +1,4 @@
-mi.check.correlation <- function ( data, threshhold = 1 ){
+mi.check.correlation <- function (data, threshhold = 1){
   #cat("Checking for correlation")
   cor.data <- cor(data, use="pairwise.complete.obs")
   diag(cor.data) <- 1
@@ -12,61 +12,33 @@ mi.check.correlation <- function ( data, threshhold = 1 ){
 }
 
 # preprocess: this is ugly..but right..need to improve it
+
+
 mi.preprocess <- function(data, varnames = NULL, trans = NULL){
   n.col <- ncol(data)
   n.row <- nrow(data)
   var.name <- names(data)
-  if(!is.null(varnames)&!is.null(trans)){
-    if(length(trans)==1){
-      trans <- rep(trans, length(varnames))
-    }
-    if (length(varnames) != length(trans)){
-      warning(message="the length of the selected variable names does not equal to 
-      the length of the transforming functions.
-      The process will use the first element of the transforming function!")
-      trans <- rep(trans[1], length(varnames))
-    }
-  }    
   if(is.null(varnames)){
     idx <- NULL
     TMP <- NULL
-    if (is.null(trans)){
-      trans = "log"
-    }
     for (i in 1:n.col){
       typ <- typecast(data[,i])
       tmp <- NULL
       if (typ == "mixed"){
-        if(as.numeric(trans == "sqrt")){
-          Sqrt <- sqrt(data[,i])
-          Sqrt.lab <- paste(var.name[i], "sqrt", sep=".")
-          tmp <- cbind(tmp, Sqrt)
-          dimnames(tmp)[[2]] <- Sqrt.lab
-        }
-        else{
-          Ind <- ifelse(data[,i] > 0, 1, ifelse(data[,i]==0, 0, NA))
-          Log <- log(ifelse(data[,i] > 0, data[,i], NA))
-          Ind.lab <- paste(var.name[i], "ind", sep=".")
-          Log.lab <- paste(var.name[i], "log", sep=".")
-          tmp <- cbind(tmp, Ind, Log)
-          dimnames(tmp)[[2]] <- c(Ind.lab, Log.lab)
-        }
+        Ind <- ifelse(data[,i] > 0, 1, ifelse(data[,i]==0, 0, NA))
+        Log <- log(ifelse(data[,i] > 0, data[,i], NA))
+        Ind.lab <- paste(var.name[i], "ind", sep=".")
+        Log.lab <- paste(var.name[i], "log", sep=".")
+        tmp <- cbind(tmp, Ind, Log)
+        dimnames(tmp)[[2]] <- c(Ind.lab, Log.lab)
         TMP <- cbind(TMP, tmp)
         idx <- c(idx, i)
       }
       if (typ == "positive-continuous"){
-        if(trans == "sqrt"){
-          Sqrt <- sqrt(data[,i])
-          Sqrt.lab <- paste(var.name[i], "sqrt", sep=".")
-          tmp <- cbind(tmp, Sqrt)
-          dimnames(tmp)[[2]] <- Sqrt.lab
-        }
-        else{
-          Log <- log(data[,i])
-          Log.lab <- paste("log", var.name[i], sep=".")
-          tmp <- cbind(tmp, Log)
-          dimnames(tmp)[[2]] <- Log.lab
-        }
+        Log <- log(data[,i])
+        Log.lab <- paste("log", var.name[i], sep=".")
+        tmp <- cbind(tmp, Log)
+        dimnames(tmp)[[2]] <- Log.lab
         TMP <- cbind(TMP, tmp)
         idx <- c(idx, i)
       }
@@ -79,52 +51,26 @@ mi.preprocess <- function(data, varnames = NULL, trans = NULL){
   else{
     idx <- pmatch(varnames, var.name)
     TMP <- NULL
-    if (is.null(trans)){
-      trans = "log"
-    }
-    else{
-      trans[idx] <- trans
-    }
     for (i in idx){
       typ <- typecast(data[,i])
       tmp <- NULL
       if (typ == "mixed"){
-        if(trans[i]=="sqrt"){
-          Sqrt <- sqrt(data[,i])
-          Sqrt.lab <- paste(var.name[i], "sqrt", sep=".")
-          tmp <- cbind(tmp, Sqrt)
-          dimnames(tmp)[[2]] <- Sqrt.lab
-          TMP <- cbind(TMP, tmp)
-          idx <- c(idx, i)        
-        }
-        else{
-          Ind <- ifelse(data[,i] > 0, 1, ifelse(data[,i]==0, 0, NA))
-          Log <- log(ifelse(data[,i] > 0, data[,i], NA))
-          Ind.lab <- paste(var.name[i], "ind", sep=".")
-          Log.lab <- paste(var.name[i], "log", sep=".")
-          tmp <- cbind(tmp, Ind, Log)
-          dimnames(tmp)[[2]] <- c(Ind.lab, Log.lab)
-          TMP <- cbind(TMP, tmp)
-          idx <- c(idx, i)
-        }
+        Ind <- ifelse(data[,i] > 0, 1, ifelse(data[,i]==0, 0, NA))
+        Log <- log(ifelse(data[,i] > 0, data[,i], NA))
+        Ind.lab <- paste(var.name[i], "ind", sep=".")
+        Log.lab <- paste(var.name[i], "log", sep=".")
+        tmp <- cbind(tmp, Ind, Log)
+        dimnames(tmp)[[2]] <- c(Ind.lab, Log.lab)
+        TMP <- cbind(TMP, tmp)
+        idx <- c(idx, i)
       }
       if (typ == "positive-continuous"){
-        if(trans[i]=="sqrt"){
-          Sqrt <- sqrt(data[,i])
-          Sqrt.lab <- paste(var.name[i], "sqrt", sep=".")
-          tmp <- cbind(tmp, Sqrt)
-          dimnames(tmp)[[2]] <- Sqrt.lab
-          TMP <- cbind(TMP, tmp)
-          idx <- c(idx, i)        
-        }
-        else{
-          Log <- log(data[,i])
-          Log.lab <- paste("log", var.name[i], sep=".")
-          tmp <- cbind(tmp, Log)
-          dimnames(tmp)[[2]] <- Log.lab
-          TMP <- cbind(TMP, tmp)
-          idx <- c(idx, i)
-        }
+        Log <- log(data[,i])
+        Log.lab <- paste("log", var.name[i], sep=".")
+        tmp <- cbind(tmp, Log)
+        dimnames(tmp)[[2]] <- Log.lab
+        TMP <- cbind(TMP, tmp)
+        idx <- c(idx, i)
       }
     }
     var.name <- var.name[-idx]
@@ -140,7 +86,6 @@ mi.postprocess <- function(mi.data){
   chk1 <- sum(grep(".ind", var.name))
   chk2 <- sum(grep(".log", var.name))
   chk3 <- sum(grep("log.", var.name))
-  chk4 <- sum(grep(".sqrt", var.name))
   if(chk1 > 0){
     var.name <- names(mi.data[[1]])
     idx1 <- grep(".ind", var.name)
@@ -168,26 +113,9 @@ mi.postprocess <- function(mi.data){
       mi.data[[s]] <- cbind.data.frame(data, mi.data[[s]])
       names(mi.data[[s]]) <- var.name
     }  
-  }
-  if(chk4 > 0){
-    var.name <- names(mi.data[[1]])
-    idx1 <- grep(".sqrt", var.name)
-    var.name1 <- var.name[idx1]
-    var.name1 <- gsub(".sqrt", "", var.name1)
-    var.name <- c(var.name1, var.name[-idx1])
-    for (s in 1:n.chains){
-      data <- (mi.data[[s]][,idx1])^2
-      mi.data[[s]] <- mi.data[[s]][,-idx1]
-      mi.data[[s]] <- cbind.data.frame(data, mi.data[[s]])
-      names(mi.data[[s]]) <- var.name
-    }  
   } 
   return(mi.data)
 }
-
-
-
-
 
 
 

@@ -15,24 +15,31 @@ setMethod("typecast", signature( object = "ANY" ),
     else if (len == 2){ # 2 category variable
       "dichotomous"
     } 
-    else {
-      if (is.numeric(object)){     # if the variable is numeric
-        if (len > 2 & len <= 5){   # 3~5 category variable
-          "ordered-categorical"
-        } 
-        else if (len > 5 & all(values > 0)){ # more than 5 category and positive 
-          "positive-continuous" 
-        } 
-        else if (len > 5 & "0" %in% values & all(values >= 0)){# more than 5 category with 0 and all positive numbers
-          "mixed" 
-        } 
-        else { # everything else
-          "continuous" 
-        }
+    else if (is.ordered(object)){
+      "ordered-categorial"
+    }
+    else if (is.factor(object)){ 
+      "unordered-categorical" 
+    }
+    else if (is.character(object)){ 
+      "unordered-categorical" 
+    }
+    else if (is.numeric(object)){     # if the variable is numeric
+      if (len > 2 & len <= 5){   # 3~5 category variable
+        "ordered-categorical"
       } 
-      else { 
-        "unordered-categorical" 
+      else if (len > 5 & all(values > 0)){ # more than 5 category and positive 
+        "positive-continuous" 
+      } 
+      else if (len > 5 & "0" %in% values & all(values >= 0)){# more than 5 category with 0 and all positive numbers
+        "mixed" 
+      } 
+      else { # everything else
+        "continuous" 
       }
+    }
+    else{
+      "unordered-categorical" 
     }
   }
 }
