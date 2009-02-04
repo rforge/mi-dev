@@ -45,7 +45,7 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
   data <- mf
   data[, 1] <- Y
   if (!is.null(start)) {
-      n.iter <- 1
+#      n.iter <- 1
       start[is.na(start)] <- 0
   }
   bglm.imp <- bayesglm(formula = formula, data = data, family = binomial(link = "logit"), 
