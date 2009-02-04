@@ -14,7 +14,7 @@ mi.check.correlation <- function (data, threshhold = 1){
 # preprocess: this is ugly..but right..need to improve it
 
 
-mi.preprocess <- function(data, varnames = NULL, trans = NULL){
+mi.preprocess <- function(data, varnames = NULL){
   n.col <- ncol(data)
   n.row <- nrow(data)
   var.name <- names(data)
