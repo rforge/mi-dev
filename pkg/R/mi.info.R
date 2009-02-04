@@ -35,7 +35,7 @@ mi.info <- function( data, threshhold  = 0.99999 )
  
     info[[i]]$var.class <- class(data[,i])
     # level
-    if( info[[i]]$var.class == "character" ) {
+    if( info[[i]]$var.class[1] == "character" ) {
       lev <- unique(as.character(data[,i]))[!is.na(unique(as.character(data[,i])))]
       lev <- lev[order(lev)]
       if(length(lev) == 2 ) {
@@ -46,7 +46,7 @@ mi.info <- function( data, threshhold  = 0.99999 )
       }
       names(info[[i]]$level) <- lev
       } 
-    else if( info[[i]]$var.class == "factor" ) {
+    else if( info[[i]]$var.class[1] == "factor" ) {
       lev <-levels( data[ ,i] )[ !is.na( levels( data[ ,i] ) )]
       lev <- lev[!( lev %in% c( "NA", "RF", "DK" ) )]
       if( length( lev ) == 2 ) {
@@ -544,7 +544,7 @@ mi.info.recode <- function( data, info ){
         names(info[[i]]$level) <- gsub("=","@@@@@",names(info[[i]]$level))
         data[[i]]<-gsub("=","@@@@@",data[[i]])
       }
-      data[[i]]<-recode(data[[i]],paste("'",names(info[[i]]$level),"'=",info[[i]]$level,sep="",collapse=" "))
+      data[[i]]<-recode(data[[i]],paste("'",names(info[[i]]$level),"'=",info[[i]]$level,sep="",collapse="; "))
     }
   }
   return(data)
@@ -567,7 +567,7 @@ mi.info.uncode <-function( data, info ){
       else if(info[[i]]$var.class=="character"){
         data[[i]]<-as.character(data[[i]])
       }
-      data[[i]]<-recode(data[[i]],paste(info[[i]]$level,"=","'",names(info[[i]]$level),"'",sep="",collapse=" "))
+      data[[i]]<-recode(data[[i]],paste(info[[i]]$level,"=","'",names(info[[i]]$level),"'",sep="",collapse="; "))
       if(recode.equal){
         data[[i]]<-gsub("@@","=",data[[i]])
       }

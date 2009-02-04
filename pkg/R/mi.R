@@ -9,7 +9,7 @@ prior.control <- function(augment.data = FALSE, pct.aug=10, K = 0){
 
 mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30, 
                   max.minutes = 20, rand.imp.method = "bootstrap", 
-                  preprocess = FALSE, continue.on.convergence = FALSE,
+                  preprocess = TRUE, continue.on.convergence = FALSE,
                   seed = NA, check.coef.convergence = FALSE, 
                   add.priors = prior.control()) {
   
@@ -150,7 +150,6 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         on.exit(cat(errormessage,geterrmessage()))
         on.exit(options(show.error.messages = TRUE),add = TRUE)
         options(show.error.messages = FALSE)
-        
         # Error Handling
         mi.object[[i]][[CurrentVar]] <- with(data=dat, 
                                           do.call( model.type,
@@ -195,7 +194,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     Time.Elapsed <- proc.time( ) - ProcStart
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
       con.check <- as.bugs.array(AveVar[1:s, , ])
-      if(max(con.check$summary[ ,8]) < 1.1) { 
+      if(max(con.check$summary[ ,8]) < 1.5) { 
         converged.flg <- TRUE
         if(!continue.on.convergence){ 
           break
@@ -271,11 +270,15 @@ impute <- function ( a, a.impute ) {
   return (out) 
 }
 
+    
+
 strict.check <- function(coefficient,n.iter,n.imp){
   res <- array(NA,c(n.iter,n.imp,0))
   for(i in 1:length(coefficient)){
     for(j in 1:dim(coefficient[[i]][[1]])[2]){
-     res <- abind(res,matrix(unlist(lapply(coefficient[[i]], "[", , j)),,n.imp),along=3)
+     res <- abind(res,
+      matrix(unlist(lapply(coefficient[[i]], "[", , j)),,n.imp),
+      along=3)
     }
   }
   return(res)

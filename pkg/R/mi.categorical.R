@@ -63,7 +63,7 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   result@model$sigma       <- NULL 
   result@expected <- determ.pred
   result@random   <- random.pred
-  result@residuals <- Y[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ] 
+  result@residuals <- as.numeric(Y)[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ] 
   return(result)
   on.exit(rm(lm.cat.imp))
   on.exit(rm(Y))
