@@ -55,12 +55,12 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
               expected = numeric(0), 
               random = numeric(0),
               residuals = numeric(0))
-  result@model$call        <- lm.cat.imp$call
-  result@model$call$formula<- formula
-  result@model$call$maxit  <- n.iter
-  result@model$call$MaxNWts<- MaxNWts
+  result@model$call         <- lm.cat.imp$call
+  result@model$call$formula <- formula
+  result@model$call$maxit   <- n.iter
+  result@model$call$MaxNWts <- MaxNWts
   result@model$coefficients <- coef( lm.cat.imp )
-  result@model$sigma       <- NULL 
+  result@model$sigma        <- NULL 
   result@expected <- determ.pred
   result@random   <- random.pred
   result@residuals <- as.numeric(Y)[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ] 

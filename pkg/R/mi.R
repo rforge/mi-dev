@@ -243,12 +243,14 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
       }
     }
   }
-  if(is.null(coef.conv.check)){
-    coef.conv.check <- as.bugs.array(strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp))
-  }
-  else{
-    tmp <- abind(coef.conv.check,strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp),along=1)
-    coef.conv.check <- as.bugs.array(tmp)
+  if(check.coef.convergence){
+    if(is.null(coef.conv.check)){
+      coef.conv.check <- as.bugs.array(strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp))
+    }
+    else{
+      tmp <- abind(coef.conv.check,strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp),along=1)
+      coef.conv.check <- as.bugs.array(tmp)
+    }
   }
   
    mi <- new("mi", 

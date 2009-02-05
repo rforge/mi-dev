@@ -40,7 +40,7 @@
 \usage{
 mi( object, info, type = NULL, n.imp = 3, n.iter = 30, 
     max.minutes = 20, rand.imp.method = "bootstrap", 
-    preprocess = FALSE, continue.on.convergence = FALSE,
+    preprocess = TRUE, continue.on.convergence = FALSE,
     seed = NA, check.coef.convergence = FALSE, 
     add.priors = prior.control() )
 }
