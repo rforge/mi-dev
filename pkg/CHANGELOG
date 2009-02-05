@@ -4,6 +4,7 @@
    * R/mi.dichotomous: when start is null, no longer set n.iter=1
    * R/mi.preprocess: new mi.preprocess and mi.postprocess
    * R/typecast: new typecast, new type (postitive continuous)
+   * R/imputed: add mi.categorical for imputed
 
 
 

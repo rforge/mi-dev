@@ -7,3 +7,13 @@ setMethod( "imputed", signature( object = "mi.method" ),
     return( y )
   }
 )
+
+
+setMethod( "imputed", signature( object = "mi.categorical" ),     
+  function ( object, y ) {
+    y.level <- levels(y)
+    y.imp <- y.level[object@random]
+    y[is.na( y )] <- y.imp
+    return( y )
+  }
+)

@@ -11,6 +11,7 @@
 \alias{coef,mi.method-method}
 \alias{coefficients,mi.method-method}
 \alias{imputed,mi.method-method}
+\alias{imputed,mi.categorical-method}
 \alias{residuals,mi.method-method}
 \alias{resid,mi.method-method}
 \alias{sigma.hat,mi.method-method}
