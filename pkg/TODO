@@ -1,2 +1,3 @@
 2008-1-26 Yu-Sung Su     <ys463@columbia.edu>  
   *R/mi.check: auto mi recoding, not yet functional
+  *R/plot: plot.categorical need to have right labels
