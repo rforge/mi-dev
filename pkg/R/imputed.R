@@ -12,8 +12,8 @@ setMethod( "imputed", signature( object = "mi.method" ),
 setMethod( "imputed", signature( object = "mi.categorical" ),     
   function ( object, y ) {
     y.level <- levels(y)
-    y.imp <- y.level[object@random]
-    y[is.na( y )] <- y.imp
+    y <- as.numeric(y)  
+    y[is.na( y )] <- object@random
     return( y )
   }
 )
