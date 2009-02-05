@@ -46,19 +46,19 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
 }
 \arguments{
   \item{object}{A data frame containing the incomplete data. Missing data are coded as NA's or mi object.}
-  \item{info}{ mi.info object. }
+  \item{info}{\code{mi.info} object. }
   \item{type}{Vector of types.  When you specify a type, types for all the columns must be specified.}
-  \item{n.imp}{ Number of multiple imputations. The default is m = 3.}
+  \item{n.imp}{ Number of multiple imputations. The default is \code{m = 3}.}
   \item{n.iter}{ Number of iterations to get convergence. The default is 5. }
   \item{max.minutes}{ Maximum minutes to stop iterating.  The default is 20. }  
   \item{seed}{ Random seed.}
   \item{rand.imp.method}{ Method for random imputation }
   \item{preprocess}{ Preprocess the data according to the info matrix. }
-  \item{continue.on.convergence}{ If set to TRUE the mi will run until maximum iteration is reached or maximum minutes pass. }
-  \item{check.coef.convergence}{default = FALSE}
+  \item{continue.on.convergence}{ If set to \code{TRUE} the mi will run until maximum iteration is reached or maximum minutes pass. }
+  \item{check.coef.convergence}{default = \code{FALSE}}
   \item{add.priors}{a list of parameters for controlling the adding priors process. This will
       add additional data from the observed data as priors. \code{augment.data}: augment the data with \code{pct.aug} 
-      of the random draws from the observed data, default= FALSE; \code{pct.aug}: when \code{augment.data}=TRUE,
+      of the random draws from the observed data, default= \code{FALSE}; \code{pct.aug}: when \code{augment.data}=TRUE,
       \code{pct.aug} \% of data will add into the exisitng data; \code{K}: the cooling parameter, default is 0. 
         If K > 0, the imputation will randomly switch between randomly add one data point drawing 
         from the observation or drawing from the modeled based values.  And 
@@ -89,7 +89,7 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   - \code{imp[[m]]$Imp.Models}: the specified models used for imputing NA's in each columns of dat;
   
   - \code{imp[[m]]$Random.predicted}: a list of vectors of length n.mis (number of NA's), specifying the random predicted values for imputing
-  missing data. For the "mixed" variables the vectors of random values are three: the random values
+  missing data. For the \dQuote{mixed} variables the vectors of random values are three: the random values
   predicted by using the binomial distribution (corresponding to the the first step of the imputation procedure);
   the random values predicted by using the normal distribution (corresponding to the second step of the imputation procedure)
   and finally the vector of random values (obtained multiplying the previous two vectors) whose values are positive
@@ -97,11 +97,11 @@ mi( object, info, type = NULL, n.imp = 3, n.iter = 30,
   the random values are predicted by using the Multinomial ditribution;
   
   - \code{imp[[m]]$Random.predicted}: a list of vectors of length n-n.mis (number of complete observed data), specifying the
-  estimated values of the models. For the "mixed" variables the vectors of estimated values are two,
+  estimated values of the models. For the \dQuote{mixed} variables the vectors of estimated values are two,
   according to the two steps imputation procedure;
   
   - \code{imp[[m]]$Residual.values}: a list of vectors of residuals will be used for checking the models.
-  For the "mixed" variables the vectors of residuals are two,
+  For the \dQuote{mixed} variables the vectors of residuals are two,
   according to the two steps imputation procedure;
   
   - \code{imp[[m]]$Imputed.matrix}: a data frame with the missing data imputed.
