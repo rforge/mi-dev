@@ -129,7 +129,7 @@ function ( x, y, main=deparse( substitute( y ) ),gray.scale = FALSE ) {
   res     <- residuals(x)
   sigma   <- sigma.hat( x )
   vrb.obs <- as.numeric(y)
-  vrb.imp <- imputed(x, as.numeric(y))
+  vrb.imp <- as.numeric(imputed(x, y))
   mi.hist(  x, Yobs=vrb.obs, type = vrb.typ, xlab = main, main = main, gray.scale = gray.scale )
   binnedplot( fit[ !is.na(y) ], res, nclass = sqrt( length( fit[ !is.na(y)] ) ), main = main)
   mtext( "Binned Residual", 3, cex = 0.7, adj = NA ) 
