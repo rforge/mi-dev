@@ -126,12 +126,12 @@ setMethod("plot", signature(x = "mi.categorical", y="ANY"),
 function ( x, y, main=deparse( substitute( y ) ),gray.scale = FALSE ) {
   #par(mfrow=c(1,4))
   fit     <- fitted( x )
-  res     <- residuals( x, y )
+  res     <- residuals(x)
   sigma   <- sigma.hat( x )
-  vrb.obs <- y
-  vrb.imp <- imputed( x, y )
+  vrb.obs <- as.numeric(y)
+  vrb.imp <- imputed(x, as.numeric(y))
   mi.hist(  x, Yobs=vrb.obs, type = vrb.typ, xlab = main, main = main, gray.scale = gray.scale )
-  binnedplot( fit[ !is.na(y) ], res[ !is.na(y) ], nclass = sqrt( length( fit[ !is.na(y)] ) ), main = main)
+  binnedplot( fit[ !is.na(y) ], res, nclass = sqrt( length( fit[ !is.na(y)] ) ), main = main)
   mtext( "Binned Residual", 3, cex = 0.7, adj = NA ) 
   mi.scatterplot( Yobs=vrb.obs, vrb.imp, fit, xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale )
   plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
