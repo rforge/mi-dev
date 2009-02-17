@@ -23,7 +23,7 @@ lm.mi <- function (formula, mi.object, ... )
     Bhat_rep  <- t(matrix( rep( Bhat, m ), length(Bhat), m ))
     B         <- colSums( do.call( rbind, coef ) - Bhat_rep ) ^ 2 / ( m - 1 )
     pooled <- list( coefficient = NULL, se = NULL )
-    pooled$coefficient    <- Bhat
+    pooled$coefficients    <- Bhat
     pooled$se <- sqrt( W + ( 1 + 1 / m ) * B )  
     mi.lm.object <- list( call = call, lm.mi.pooled = pooled, 
                           lm.mi.fit = result )

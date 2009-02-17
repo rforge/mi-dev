@@ -194,7 +194,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     Time.Elapsed <- proc.time( ) - ProcStart
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
       con.check <- as.bugs.array(AveVar[1:s, , ])
-      if(max(con.check$summary[ ,8]) < 1.5) { 
+      if(max(con.check$summary[ ,8]) < 1.049999) { 
         converged.flg <- TRUE
         if(!continue.on.convergence){ 
           break
@@ -244,6 +244,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     }
   }
   if(check.coef.convergence){
+  aa <<- coef.val
     if(is.null(coef.conv.check)){
       coef.conv.check <- as.bugs.array(strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp))
     }

@@ -22,7 +22,8 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   X <- as.matrix( mf[ , -1, drop = FALSE ] )
   namesD <- if( is.null( data ) ) { 
               NULL
-            } else { 
+            } 
+            else { 
               deparse( substitute( data ) )
             }
   mis    <- is.na( Y )

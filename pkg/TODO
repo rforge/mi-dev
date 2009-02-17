@@ -1,3 +1,6 @@
-2008-1-26 Yu-Sung Su     <ys463@columbia.edu>  
+2009-2-16 Yu-Sung Su     <ys463@columbia.edu>  
+  * fix display.lm.mi, display.glm.mi
+
+2009-1-26 Yu-Sung Su     <ys463@columbia.edu>  
   *R/mi.check: auto mi recoding, not yet functional
   *R/plot: plot.categorical need to have right labels

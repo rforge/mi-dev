@@ -25,9 +25,9 @@ glm.mi <- function (formula, mi.object, family = gaussian, ... )
     B         <- colSums( do.call( rbind, coef ) - Bhat_rep ) ^ 2 / ( m - 1 )
     
     pooled <- list( coefficient = NULL, se = NULL )
-    pooled$coefficient <- Bhat
+    pooled$coefficients <- Bhat
     pooled$se <- sqrt( W + ( 1 + 1 / m ) * B )
-
+    
     mi.glm.object <- list( call = call, glm.mi.pooled = pooled,
                                   glm.mi.fit = result )
     class( mi.glm.object ) <- c( "mi.glm", "list" )
