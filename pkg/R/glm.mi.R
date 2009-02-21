@@ -24,7 +24,7 @@ glm.mi <- function (formula, mi.object, family = gaussian, ... )
     Bhat_rep  <- t( matrix( rep( Bhat, m ), length( Bhat ), m ) )
     B         <- colSums( do.call( rbind, coef ) - Bhat_rep ) ^ 2 / ( m - 1 )
     
-    pooled <- list( coefficient = NULL, se = NULL )
+    pooled <- list( coefficients = NULL, se = NULL )
     pooled$coefficients <- Bhat
     pooled$se <- sqrt( W + ( 1 + 1 / m ) * B )
     
