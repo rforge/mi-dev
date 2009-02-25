@@ -14,3 +14,29 @@ setMethod("coefficients", signature(object = "mi.method"),
   object@model$coefficients
 }
 )
+
+
+setMethod("coef", signature(object = "mi.lm"), 
+  function(object){
+  object@lm.mi.pooled$coefficients
+}
+)
+
+setMethod("coefficients", signature(object = "mi.lm"), 
+  function(object){
+  object@lm.mi.pooled$coefficients
+}
+)
+
+
+setMethod("coef", signature(object = "mi.glm"), 
+  function(object){
+  object@glm.mi.pooled$coefficients
+}
+)
+
+setMethod("coefficients", signature(object = "mi.glm"), 
+  function(object){
+  object@glm.mi.pooled$coefficients
+}
+)

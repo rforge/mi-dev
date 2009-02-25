@@ -10,10 +10,10 @@ mi.info <- function( data, threshhold  = 0.99999 )
   names(info) <- dimnames(data)[[2]]
   data.original.name <- deparse(substitute(data))
   correlated <- mi.check.correlation(data, threshhold)
-  foo <- function(lst){
-    lst[-1]
-  }
-  unlist(lapply(correlated, FUN=foo))
+#  foo <- function(lst){
+#    lst[-1]
+#  }
+#  unlist(lapply(correlated, FUN=foo))
   ord <- 1
   for( i in 1:dim( data )[2] ) {
     info[[i]] <- vector( "list", 15 )
@@ -177,7 +177,7 @@ mi.info.params.default <-function( info ){
 # ========================================================================
 type.default.formula <- function( response.name, predictor.name, type ) {
   if (type=="ordered-categorical"){
-    form <- paste( paste( "factor(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
+    form <- paste( paste( "ordered(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
   } 
   else if (type=="fixed"){
     form <- paste( response.name, " ~",response.name)

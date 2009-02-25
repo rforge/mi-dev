@@ -8,10 +8,12 @@
 mi.types <- function(){
   type = c( "fixed",
             "continuous",
+            "counts",
             "ordered-categorical",
             "unordered-categorical",
             "dichotomous",
             "mixed",
+            "proportion",
             "predictive-mean-match",
             "positive-continuous")
   return( type )
@@ -27,10 +29,12 @@ type.models <- function (type) {
     type <- match.arg (type, mi.types( ) )
     imputation.method <- list (
         "continuous"            = "mi.continuous",
+        "count"                 = "mi.count",
         "ordered-categorical"   = "mi.polr",
         "unordered-categorical" = "mi.categorical",
         "dichotomous"           = "mi.dichotomous",
         "positive-continuous"   = "mi.continuous",
+        "proportion"            = "mi.continuous",
         "predictive-mean-match" = "mi.pmm",
         "fixed"                 = "mi.fixed", 
         "mixed"                 = "mi.continuous"

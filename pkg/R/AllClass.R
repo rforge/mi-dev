@@ -56,6 +56,15 @@ setClass("mi.continuous",
             contains = "mi.method"
 )
 
+setClass("mi.count",
+        representation(
+            model    = "list", 
+            expected = "numeric", 
+            random   = "numeric"),
+            contains = "mi.method"
+)
+
+
 
 
 setClass("mi.dichotomous",

@@ -14,18 +14,12 @@ setMethod("typecast", signature( object = "ANY" ),
     } 
     else if (len == 2){ # 2 category variable
       "dichotomous"
-    } 
-    else if (is.ordered(object)){
-      "ordered-categorical"
-    }
-    else if (is.factor(object)){ 
-      "unordered-categorical" 
-    }
-    else if (is.character(object)){ 
-      "unordered-categorical" 
     }
     else if (is.numeric(object)){     # if the variable is numeric
-      if (len > 2 & len <= 5){   # 3~5 category variable
+      if (all(values) > 0 & all(values) < 1){
+        "proportion"
+      } 
+      else if (len > 2 & len <= 5){   # 3~5 category variable
         "ordered-categorical"
       } 
       else if (len > 5 & all(values > 0)){ # more than 5 category and positive 
@@ -38,6 +32,15 @@ setMethod("typecast", signature( object = "ANY" ),
         "continuous" 
       }
     }
+    else if (is.ordered(object)){
+      "ordered-categorical"
+    }
+    else if (is.factor(object)){ 
+      "unordered-categorical" 
+    }
+    else if (is.character(object)){ 
+      "unordered-categorical" 
+    }
     else{
       "unordered-categorical" 
     }
@@ -47,13 +50,13 @@ setMethod("typecast", signature( object = "ANY" ),
 
 setMethod("typecast", signature( object = "matrix" ), 
   function ( object ) {    
-    return( apply( object, 2, typecast ) )
+    return( sapply( object, typecast ) )
   }
 )
 
 setMethod("typecast", signature( object = "data.frame" ), 
   function ( object ) {    
-    return( apply( object, 2, typecast ) )
+    return( sapply( object, typecast ) )
   }
 )
 

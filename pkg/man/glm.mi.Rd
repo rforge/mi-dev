@@ -7,6 +7,9 @@
 % Methods
 \alias{print.mi.glm}
 \alias{display,mi.glm-method}
+\alias{coef,mi.glm-method}
+\alias{coefficients,mi.glm-method}
+\alias{se.coef,mi.glm-method}
 
 
 \title{ Generalized Linear Modeling Function for Multiply Imputed Dataset }
@@ -18,6 +21,8 @@
 \usage{
 glm.mi(formula, mi.object, family = gaussian, ...)
 \S3method{print}{mi.glm}(x, \dots)
+\S4method{coef}{mi.glm}(object)
+\S4method{se.coef}{mi.glm}(object)
 \S4method{display}{mi.glm}(object, digits=2)
 }
 
@@ -67,6 +72,8 @@ glm.mi(formula, mi.object, family = gaussian, ...)
   # fitting linear regression 
   fit <- glm.mi(y ~ x, dat.mi, family = gaussian)
   display(fit)
+  coef(fit)
+  se.coef(fit)
 }
 \seealso{
   \code{\link{mi}}, 

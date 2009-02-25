@@ -138,7 +138,7 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
         if(add.priors$augment.data){
           pct.aug <- add.priors$pct.aug
           n.aug <- trunc((dim(data)[1]*pct.aug))
-          dat <- rbind.data.frame(dat, .randdraw(data, n=n.aug))
+          dat <- rbind.data.frame(dat, .randdraw(dat, n=n.aug))
         }
         
         names(dat) <- c( CurrentVar, names( data[,!CurVarFlg, drop=FALSE] ) )
@@ -244,7 +244,6 @@ mi <- function ( object, info, type = NULL, n.imp = 3, n.iter = 30,
     }
   }
   if(check.coef.convergence){
-  aa <<- coef.val
     if(is.null(coef.conv.check)){
       coef.conv.check <- as.bugs.array(strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp))
     }

@@ -9,6 +9,7 @@ glm.mi <- function (formula, mi.object, family = gaussian, ... )
     names( result ) <- as.character(paste( "Imputation", seq( m ), sep = "" ))
     mi.data <- mi.completed(mi.object)
     mi.data <- mi.postprocess(mi.data)
+  
     for ( i in 1:m ) {
       result[[i]] <- glm( formula, family = family, 
                           data = mi.data[[i]], ... )
@@ -28,8 +29,9 @@ glm.mi <- function (formula, mi.object, family = gaussian, ... )
     pooled$coefficients <- Bhat
     pooled$se <- sqrt( W + ( 1 + 1 / m ) * B )
     
-    mi.glm.object <- list( call = call, glm.mi.pooled = pooled,
-                                  glm.mi.fit = result )
-    class( mi.glm.object ) <- c( "mi.glm", "list" )
+    mi.glm.object <- new("mi.glm",
+                          call = call, 
+                          glm.mi.pooled = pooled,
+                          glm.mi.fit = result )
     return( mi.glm.object )
 }

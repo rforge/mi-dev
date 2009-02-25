@@ -31,7 +31,7 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   mis    <- is.na(Y)
   n.mis  <- sum(mis)
   if(is.null(data)){ 
-    data<- mf 
+    data <- mf 
   }
   
   # main program

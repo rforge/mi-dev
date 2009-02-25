@@ -1,5 +1,5 @@
 2009-2-16 Yu-Sung Su     <ys463@columbia.edu>  
-  * fix display.lm.mi, display.glm.mi
+  * fix display.lm.mi, display.glm.mi   ##DONE
 
 2009-1-26 Yu-Sung Su     <ys463@columbia.edu>  
   *R/mi.check: auto mi recoding, not yet functional

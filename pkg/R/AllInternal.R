@@ -22,7 +22,7 @@
       data[sample(1:n, n.mis[i], replace=FALSE),i] <- NA
     }
   }
-  return(data)
+  return(as.data.frame(data))
 }
   
 

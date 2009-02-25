@@ -25,9 +25,10 @@ lm.mi <- function (formula, mi.object, ... )
     pooled <- list( coefficients = NULL, se = NULL )
     pooled$coefficients    <- Bhat
     pooled$se <- sqrt( W + ( 1 + 1 / m ) * B )  
-    mi.lm.object <- list( call = call, lm.mi.pooled = pooled, 
-                          lm.mi.fit = result )
-    class( mi.lm.object ) <- c( "mi.lm", "list" )
+    mi.lm.object <- new("mi.lm",  
+                        call = call, 
+                        lm.mi.pooled = pooled, 
+                        lm.mi.fit = result )
     return( mi.lm.object )
 }
 

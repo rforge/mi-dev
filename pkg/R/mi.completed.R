@@ -20,6 +20,7 @@ setMethod("mi.completed", signature( object = "mi" ),
     for(i in 1:m(object)){
       data[[i]] <- mi.completed.default(object, m = i) 
     }
+    data <- mi.postprocess(data)
     return(data)
   }
 )

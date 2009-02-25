@@ -21,6 +21,15 @@ setMethod("residuals", signature(object = "mi.categorical"),
 )
 
 
+setMethod("residuals", signature(object = "mi.count"), 
+  function(object, y){
+  res <- y - fitted(object)
+  stud.res <- res/sqrt(y)
+  return(stud.res)
+}
+)
+
+
 setMethod("resid", signature(object = "mi.method"), 
   function(object, y){
   y - fitted(object)
@@ -36,5 +45,13 @@ setMethod("resid", signature(object = "mi.dichotomous"),
 setMethod("resid", signature(object = "mi.categorical"), 
   function(object){
   object@residuals
+}
+)
+
+setMethod("resid", signature(object = "mi.count"), 
+  function(object, y){
+  res <- y - fitted(object)
+  stud.res <- res/sqrt(y)
+  return(stud.res)
 }
 )

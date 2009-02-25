@@ -16,6 +16,7 @@ importFrom("stats",
 
 importFrom("arm",
       display,
+      se.coef,
       sigma.hat
 )
 
@@ -28,6 +29,7 @@ exportClasses(
   mi.polr,
   mi.categorical,
   mi.continuous,
+  mi.count,
   mi.info,
   mi.pmm
 )
@@ -52,6 +54,7 @@ exportMethods(
   plot,
   resid,
   residuals,
+  se.coef,
   sigma.hat,
   typecast,
   print,
@@ -78,6 +81,7 @@ export(
   mi.categorical,
   mi.completed,
   mi.continuous, 
+  mi.count,
   mi.data.frame,
   mi.dichotomous,
   mi.fixed,

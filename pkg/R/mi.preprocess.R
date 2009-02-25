@@ -14,15 +14,18 @@ mi.check.correlation <- function (data, threshhold = 1){
 # preprocess: this is ugly..but right..need to improve it
 
 
-mi.preprocess <- function(data, varnames = NULL){
+mi.preprocess <- function(data, type=NULL, varnames = NULL){
   n.col <- ncol(data)
   n.row <- nrow(data)
   var.name <- names(data)
+  if(is.null(type)){
+    type <- typecast(data)
+  }
   if(is.null(varnames)){
     idx <- NULL
     TMP <- NULL
     for (i in 1:n.col){
-      typ <- typecast(data[,i])
+      typ <- type[i]
       tmp <- NULL
       if (typ == "mixed"){
         Ind <- ifelse(data[,i] > 0, 1, ifelse(data[,i]==0, 0, NA))
@@ -39,6 +42,14 @@ mi.preprocess <- function(data, varnames = NULL){
         Log.lab <- paste("log", var.name[i], sep=".")
         tmp <- cbind(tmp, Log)
         dimnames(tmp)[[2]] <- Log.lab
+        TMP <- cbind(TMP, tmp)
+        idx <- c(idx, i)
+      }
+      if (typ == "proportion"){
+        Logit <- logit(data[,i])
+        Logit.lab <- paste("logit", var.name[i], sep=".")
+        tmp <- cbind(tmp, Logit)
+        dimnames(tmp)[[2]] <- Logit.lab
         TMP <- cbind(TMP, tmp)
         idx <- c(idx, i)
       }
@@ -52,7 +63,7 @@ mi.preprocess <- function(data, varnames = NULL){
     idx <- pmatch(varnames, var.name)
     TMP <- NULL
     for (i in idx){
-      typ <- typecast(data[,i])
+      typ <- type[i]
       tmp <- NULL
       if (typ == "mixed"){
         Ind <- ifelse(data[,i] > 0, 1, ifelse(data[,i]==0, 0, NA))
@@ -69,6 +80,14 @@ mi.preprocess <- function(data, varnames = NULL){
         Log.lab <- paste("log", var.name[i], sep=".")
         tmp <- cbind(tmp, Log)
         dimnames(tmp)[[2]] <- Log.lab
+        TMP <- cbind(TMP, tmp)
+        idx <- c(idx, i)
+      }
+      if (typ == "proportion"){
+        Logit <- logit(data[,i])
+        Logit.lab <- paste("logit", var.name[i], sep=".")
+        tmp <- cbind(tmp, Logit)
+        dimnames(tmp)[[2]] <- Logit.lab
         TMP <- cbind(TMP, tmp)
         idx <- c(idx, i)
       }
@@ -86,6 +105,7 @@ mi.postprocess <- function(mi.data){
   chk1 <- sum(grep(".ind", var.name))
   chk2 <- sum(grep(".log", var.name))
   chk3 <- sum(grep("log.", var.name))
+  chk4 <- sum(grep("logit.", var.name))
   if(chk1 > 0){
     var.name <- names(mi.data[[1]])
     idx1 <- grep(".ind", var.name)
@@ -109,6 +129,19 @@ mi.postprocess <- function(mi.data){
     var.name <- c(var.name1, var.name[-idx1])
     for (s in 1:n.chains){
       data <- exp(mi.data[[s]][,idx1])
+      mi.data[[s]] <- mi.data[[s]][,-idx1]
+      mi.data[[s]] <- cbind.data.frame(data, mi.data[[s]])
+      names(mi.data[[s]]) <- var.name
+    }  
+  } 
+  if(chk4 > 0){
+    var.name <- names(mi.data[[1]])
+    idx1 <- grep("logit.", var.name)
+    var.name1 <- var.name[idx1]
+    var.name1 <- gsub("logit.", "", var.name1)
+    var.name <- c(var.name1, var.name[-idx1])
+    for (s in 1:n.chains){
+      data <- invlogit(mi.data[[s]][,idx1])
       mi.data[[s]] <- mi.data[[s]][,-idx1]
       mi.data[[s]] <- cbind.data.frame(data, mi.data[[s]])
       names(mi.data[[s]]) <- var.name
