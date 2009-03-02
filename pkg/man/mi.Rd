@@ -1,9 +1,11 @@
 \name{mi}
-\docType{class}
+\docType{genericFunction}
 % Classes
 \alias{mi-class}
 % functions
 \alias{mi}
+\alias{mi,data.frame-method}
+\alias{mi,mi-method}
 \alias{is.mi}
 \alias{bugs.mi}
 \alias{call.mi}
@@ -38,11 +40,17 @@
 }
 
 \usage{
-mi( object, info, type = NULL, n.imp = 3, n.iter = 30, 
+\S4method{mi}{data.frame}( object, info, type = NULL, n.imp = 3, n.iter = 30, 
     max.minutes = 20, rand.imp.method = "bootstrap", 
-    preprocess = TRUE, continue.on.convergence = FALSE,
+    preprocess = FALSE, continue.on.convergence = FALSE,
     seed = NA, check.coef.convergence = FALSE, 
     add.priors = prior.control() )
+    
+\S4method{mi}{mi}( object, info, type = NULL, n.imp = 3, n.iter = 30, 
+    max.minutes = 20, rand.imp.method = "bootstrap", 
+    preprocess = FALSE, continue.on.convergence = FALSE,
+    seed = NA, check.coef.convergence = FALSE)
+
 }
 \arguments{
   \item{object}{A data frame containing the incomplete data. Missing data are coded as NA's or mi object.}
@@ -160,4 +168,5 @@ bugs.mi( imp.CHAIN )     ## BUGS object to look at the R hat statistics
 # NOT RUN
 #imp.CHAIN <- mi( imp.CHAIN, n.iter=5 ) ## You can pick up from where you left off
 }
+
 \keyword{ models }
