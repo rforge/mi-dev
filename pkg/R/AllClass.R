@@ -30,6 +30,23 @@ setClass("mi.glm",
 )
 
 
+#setClass("mi.initialize",
+#            representation(
+#              data          = "data.frame",
+#              mi.data       = "list",
+#              VarName       = "vector",
+#              start.val     = "list",
+#              coef.val      = "list",
+#              mi.object     = "list",
+#              length.list   = "list",
+#              col.mis       = "logical",
+#              ncol.mis      = "numeric",
+#              iteration.idx = "integer"),            
+#              contains  = "list"
+#)
+
+
+
 setClass("mi.lm",
             representation(
                 call         = "call",

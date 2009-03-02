@@ -52,10 +52,10 @@ mi.fixed <- function( formula, data = NULL, ... ) {
 }
 
 mi.copy <- function(Y, X, ... ) {
-  nameY <- deparse( substitute( Y ) )
-  nameX <- deparse( substitute( X ) )
-  mis   <- is.na( Y )
-  n.mis <- sum ( mis )
+  nameY <- deparse(substitute(Y))
+  nameX <- deparse(substitute(X))
+  mis   <- is.na(Y)
+  n.mis <- sum(mis)
   # main program
   fixd.imp    <- nameX
   determ.pred <- unlist(X)

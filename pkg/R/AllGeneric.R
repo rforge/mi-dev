@@ -105,6 +105,15 @@ if ( !isGeneric( "is.mi" )) {
   )
 }
 
+if ( !isGeneric("mi")) {
+    setGeneric( "mi",
+               function(object, ... ){
+               standardGeneric("mi") 
+               }
+    )
+}
+
+
 
 if ( !isGeneric( "mi.completed" )) {
   setGeneric( "mi.completed",
@@ -132,6 +141,17 @@ if ( !isGeneric("imputed")) {
                } 
     )
 }
+
+if ( !isGeneric("mi")) {
+    setGeneric( "mi",
+               function( object, ... ){
+               standardGeneric( "mi" ) 
+               }
+    )
+}
+
+
+
 if ( !isGeneric("mi.hist")) {
     setGeneric( "mi.hist",
                function( object, Yobs,... ){
@@ -139,6 +159,14 @@ if ( !isGeneric("mi.hist")) {
                }
     )
 }
+
+
+#if ( !isGeneric("mi.initialize")) {
+#  setGeneric( "mi.initialize",
+#              function(object, ...){
+#              standardGeneric( "mi.initialize" )
+#              } 
+#  )
 
 
 #if ( !isGeneric( "resid" )) {
