@@ -16,7 +16,7 @@ setMethod("typecast", signature( object = "ANY" ),
       "dichotomous"
     }
     else if (is.numeric(object)){     # if the variable is numeric
-      if (all(values) > 0 & all(values) < 1){
+      if (all(values>0) & all(values < 1)){
         "proportion"
       } 
       else if (len > 2 & len <= 5){   # 3~5 category variable

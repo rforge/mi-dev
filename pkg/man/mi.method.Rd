@@ -12,6 +12,7 @@
 \alias{coefficients,mi.method-method}
 \alias{imputed,mi.method-method}
 \alias{imputed,mi.categorical-method}
+\alias{imputed,mi.polr-method}
 \alias{residuals,mi.method-method}
 \alias{resid,mi.method-method}
 \alias{sigma.hat,mi.method-method}
@@ -24,6 +25,8 @@
 }
 \usage{
   \S4method{imputed}{mi.method}(object,y)
+  \S4method{imputed}{mi.categorical}(object,y)
+  \S4method{imputed}{mi.polr}(object,y)
   \S4method{coef}{mi.method}(object)
   \S4method{coefficients}{mi.method}(object)
   \S4method{sigma.hat}{mi.method}(object)
@@ -33,7 +36,7 @@
   \S4method{print}{mi.method}(x, \dots)
   \S4method{plot}{mi.method,ANY}(x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{object}{\code{mi.method} object.}
   \item{\dots}{ Currently not used. }

@@ -41,7 +41,7 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   }
 
   Y.org <- Y
-  levels( Y ) <- c(1:Y.nlevel)
+  levels( Y ) <- 1:Y.nlevel
   Y  <- factor( as.double( Y ) )
 
   if( is.null(data)){ 
@@ -52,10 +52,9 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
                               method = c( "logistic" ), 
                               drop.unused.levels = FALSE, n.iter = n.iter )
   expect.prob <- predict( bplr.imp, newdata = data, type = "probs" )
-  determ.pred <- as.vector( expect.prob %*% as.double( Y.levels ) )
+  determ.pred <- predict(bplr.imp, newdata=data, type="class")#as.vector( expect.prob %*% as.double( Y.levels ) )
   names( determ.pred ) <- 1:length( determ.pred )
-
-  random.pred <- Rmultnm( n.mis, expect.prob[mis,],  c( 1:Y.nlevel ) )    
+  random.pred <- Rmultnm( n.mis, expect.prob[mis,],  (1:Y.nlevel))    
   random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse=";") )        
   names(random.pred) <- names(determ.pred[mis])
 

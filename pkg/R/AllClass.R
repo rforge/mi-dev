@@ -17,7 +17,9 @@ setClass("mi",
                 imp       = "list",
                 converged = "logical",
                 coef.conv = "ANY",
-                bugs      = "ANY"),
+                bugs      = "ANY",
+                preprocess = "logical",
+                mi.info.preprocessed = "ANY"),
             contains  = "list"
 )
 
@@ -59,8 +61,8 @@ setClass("mi.lm",
 setClass("mi.method",
         representation(
           model = "list",
-          expected = "numeric",
-          random = "numeric"),
+          expected = "ANY",
+          random = "ANY"),
           contains = "list"
 )
 
@@ -95,8 +97,8 @@ setClass("mi.dichotomous",
 setClass("mi.categorical",
         representation(
             model    = "list", 
-            expected = "numeric", 
-            random   = "numeric",
+            expected = "ANY", 
+            random   = "ANY",
             residuals = "numeric"),
             contains = "mi.method"
 )
@@ -104,8 +106,8 @@ setClass("mi.categorical",
 setClass("mi.polr",
         representation(
             model = "list", 
-            expected = "numeric", 
-            random = "numeric"),
+            expected = "ANY", 
+            random = "ANY"),
             contains = "mi.method"
 )
 

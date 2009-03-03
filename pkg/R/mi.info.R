@@ -148,16 +148,21 @@ mi.info <- function( data, threshhold  = 0.99999 )
   return( info )
 }
 
-mi.info.formula.default <-function( data, info ){
-  for( i in 1:dim(data)[2]){
+mi.info.formula.default <-function(data, info){
+  varnames <- dimnames(data)[[2]]
+  type <- info$type
+  varnames <- ifelse(type=="ordered-categorical", paste("ordered(",varnames,")",sep=""), 
+    ifelse(type=="unordered-categorical", paste("factor(",varnames,")",sep=""), varnames))
+  for(i in 1:dim(data)[2]){
     # default formula
     inc <- .include(info)
     inc[i] <- FALSE
-    dimnames(data)[[2]][i]
+    response <- varnames[i]
+    predvarn <- varnames[inc]
     info[[i]]$imp.formula <- type.default.formula(
-                                dimnames(data)[[2]][i],
-                                dimnames(data[,inc,drop=FALSE])[[2]],
-                                info[[i]]$type)
+                                response,
+                                predvarn,
+                                type)
   }
   return(info)
 }
@@ -176,16 +181,16 @@ mi.info.params.default <-function( info ){
 # Default formula for the type
 # ========================================================================
 type.default.formula <- function( response.name, predictor.name, type ) {
-  if (type=="ordered-categorical"){
-    form <- paste( paste( "ordered(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
-  } 
-  else if (type=="fixed"){
-    form <- paste( response.name, " ~",response.name)
-  } 
-  else{
-    form <- paste( response.name,"~",paste(predictor.name,collapse=" + "))
-  }
-  return(form) 
+#  if (type=="ordered-categorical"){
+#    form <- paste( paste( "ordered(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
+#  } 
+#  else if (type=="fixed"){
+#    form <- paste( response.name, " ~",response.name)
+#  } 
+#  else{
+  form <- paste( response.name,"~",paste(predictor.name,collapse=" + "))
+  #}
+  return(form)
 }
 
 

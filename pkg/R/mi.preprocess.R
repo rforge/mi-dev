@@ -21,7 +21,7 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
   }
   if(is.null(varnames)){
     TYPE <- NULL
-    idx <- 0
+    idx <- NULL
     TMP <- NULL
     for (i in 1:n.col){
       typ <- type[i]
@@ -56,7 +56,7 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
         idx <- c(idx, i)
       }
     }
-    if(all(idx)>0){      
+    if(!is.null(idx)){
       type <- type[-idx]
       type <- c(type, TYPE)
       var.name <- var.name[-idx]
@@ -106,7 +106,7 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
         idx <- c(idx, i)
       }
     }
-    if(all(idx)>0){
+    if(!is.null(idx)){
       type <- type[-idx]
       type <- c(type, TYPE)
       var.name <- var.name[-idx]
@@ -119,6 +119,7 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
       type <- type
     }
   }
+  names(type) <- names(data)
   return(list(data=data, type=type))
 }
 

@@ -39,20 +39,23 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
                             trace = FALSE , MaxNWts = MaxNWts, ...)
   
   deter.prob  <- predict( lm.cat.imp, newdata = data, type = "p" )
-  y.cat       <- as.double( levels ( factor ( Y ) ) )
+  y.cat       <- levels(factor(Y))
+  y.ncat <- length(y.cat)
 
   if(length(y.cat)<=2){
     stop(message="number of category must be bigger than 2")
   }
-  determ.pred <- as.vector( deter.prob %*% y.cat )
+  #determ.pred <- as.vector( deter.prob %*% y.cat )
+  determ.pred <- predict(lm.cat.imp, newdata=data, type="class")
   names( determ.pred ) <- 1:length( determ.pred )
-  random.pred <- Rmultnm( n.mis, deter.prob[mis,], y.cat )
+  random.pred <- Rmultnm( n.mis, deter.prob[mis,], 1:y.ncat)
+  random.pred <- y.cat[random.pred]
   names( random.pred ) <- names( determ.pred[mis] )
-  
+  resids <- as.numeric(Y)[!is.na(Y)] - as.numeric(determ.pred)[!is.na(Y)] 
   # return the result
   result <- new(c("mi.categorical", "mi.method"),
             model = vector("list", 0),
-              expected = numeric(0), 
+              expected = NA, 
               random = numeric(0),
               residuals = numeric(0))
   result@model$call         <- lm.cat.imp$call
@@ -63,7 +66,7 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   result@model$sigma        <- NULL 
   result@expected <- determ.pred
   result@random   <- random.pred
-  result@residuals <- as.numeric(Y)[ !is.na( Y ) ] - determ.pred[ !is.na( Y ) ] 
+  result@residuals <- resids
   return(result)
   on.exit(rm(lm.cat.imp))
   on.exit(rm(Y))

@@ -11,8 +11,18 @@ setMethod( "imputed", signature( object = "mi.method" ),
 
 setMethod( "imputed", signature( object = "mi.categorical" ),     
   function ( object, y ) {
-    y.level <- levels(y)
-    y <- as.numeric(y)  
+    #y.level <- levels(y)
+    #y <- as.numeric(y)  
+    y[is.na( y )] <- object@random
+    return( y )
+  }
+)
+
+
+setMethod( "imputed", signature( object = "mi.polr" ),     
+  function ( object, y ) {
+    #y.level <- levels(y)
+    #y <- as.numeric(y)  
     y[is.na( y )] <- object@random
     return( y )
   }

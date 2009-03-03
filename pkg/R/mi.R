@@ -2,7 +2,7 @@
 # mi main function
 #==============================================================================
 
-prior.control <- function(augment.data = FALSE, pct.aug=10, K = 0){
+prior.control <- function(augment.data = FALSE, pct.aug=10, K = 1){
   if(K > 0&augment.data){
     augment.data = FALSE
   }
@@ -49,11 +49,13 @@ setMethod("mi", signature(object = "data.frame"),
   if( preprocess ) {
     proc.tmp <- mi.preprocess(data, type=info$type)
     data <- as.data.frame(proc.tmp$data)
+    info.org <- info
     info <- mi.info(data)
     info$type <- proc.tmp$type
-    data <- mi.info.recode(data, info)
+    info$imp.formula <- mi.info.formula.default(data, info)$imp.formula
+#    data <- mi.info.recode(data, info)
   }  
-  
+
   col.mis    <- !complete.cases(t(data)) 
   ncol.mis   <- sum(col.mis)
   AveVar  <- array(NA, c(n.iter, n.imp, dim(data[,info$include])[2]*2))
@@ -241,6 +243,14 @@ setMethod("mi", signature(object = "data.frame"),
       coef.conv.check <- as.bugs.array(tmp)
     }
   }
+  if(preprocess){
+    info2 <- info
+    info <- info.org
+  }
+  else{
+    info2 <- NULL
+  }
+  
   mi <- new("mi", 
             call      = call,
             data      = org.data,
@@ -249,11 +259,13 @@ setMethod("mi", signature(object = "data.frame"),
             imp       = mi.object,
             converged = converged.flg,
             coef.conv = coef.conv.check,
-            bugs      = con.check)
+            bugs      = con.check,
+            preprocess = preprocess,
+            mi.info.preprocessed = info2)
+  with(globalenv(), rm(data.tmp))
   if(add.priors$K>0){
     mi <- mi(mi, continue.on.convergence=TRUE, n.iter=20)
   }
-  with(globalenv(), rm(data.tmp))
   return(mi)
 }
 )
@@ -285,13 +297,19 @@ setMethod("mi", signature(object = "mi"),
   # for mi object
   org.data  <- data.mi(object)
   data      <- data.mi(object)
-  info      <- info.mi(object)  
+  if(missing(info)){
+    info <- info.mi(object)
+  }
+  #  # Automatic Preprocess
   if( preprocess ) {
     proc.tmp <- mi.preprocess(data, type=info$type)
     data <- as.data.frame(proc.tmp$data)
+    info.org <- info
     info <- mi.info(data)
     info$type <- proc.tmp$type
-  }
+    info$imp.formula <- mi.info.formula.default(data, info)$imp.formula
+#    data <- mi.info.recode(data, info)
+  }  
 
   col.mis   <- !complete.cases(t(data))
   ncol.mis  <- sum(col.mis)
@@ -299,7 +317,7 @@ setMethod("mi", signature(object = "mi"),
   prev.iter <- dim(bugs.mi(object)$sims.array)[1]
   AveVar    <- array(NA, c(prev.iter + n.iter, n.imp, sum(.include(info))*2))
   coef.conv.check <- object@coef.conv$sims.array
-  AveVar[ 1:prev.iter , , ]<- bugs.mi(object)$sims.array
+  AveVar[ 1:prev.iter , , ] <- bugs.mi(object)$sims.array
   s_start <- prev.iter + 1
   s_end   <- prev.iter + n.iter
     
@@ -317,17 +335,22 @@ setMethod("mi", signature(object = "mi"),
   start.val     <- vector("list", n.imp)
   mi.object     <- vector("list", n.imp)
   for (j in 1:n.imp){ 
-    mi.data[[j]]  <- mi.data.frame(object, m=j)[,.include(info)] 
-    start.val[[j]]<- vector( "list", length.list )
-    mi.object[[j]]<- vector( "list", ncol.mis )
-    names(mi.object[[j]]) <- names( info )[ .nmis(info)>0 ]
+    mi.data[[j]]  <- if(preprocess){
+                        random.imp(data, method = rand.imp.method)
+                      }
+                      else{
+                        mi.data.frame(object, m=j)[,.include(info)] 
+                      }
+    start.val[[j]]<- vector("list", length.list)
+    mi.object[[j]]<- vector("list", ncol.mis)
+    names(mi.object[[j]]) <- names(info)[.nmis(info)>0]
   }
   coef.val <- vector("list", ncol.mis)
-  names(coef.val) <- names( info )[ .nmis(info)>0 ]
+  names(coef.val) <- names(info)[.nmis(info)>0]
   for (jjj in 1:ncol.mis){
     coef.val[[jjj]] <- vector("list", n.imp)
   }
-  names(mi.object)<- paste( "Imputation", 1:n.imp, sep="" )
+  names(mi.object) <- paste( "Imputation", 1:n.imp, sep="" )
 
   cat( "Beginning Multiple Imputation (", date(), "):\n" )
   # iteration loop
@@ -338,6 +361,7 @@ setMethod("mi", signature(object = "mi"),
       cat( " Imputation", i,  ": " )
       # variable loop
       for( jj in 1:length(VarName) ) {
+
         CurrentVar <- VarName[jj]
         cat(CurrentVar, "  ")      
         CurVarFlg <- ( names ( data ) == CurrentVar )
@@ -446,6 +470,16 @@ setMethod("mi", signature(object = "mi"),
       coef.conv.check <- as.bugs.array(tmp)
     }
   }
+  
+  if(preprocess){
+    info2 <- info
+    info <- info.org
+  }
+  else{
+    info2 <- NULL
+  }
+
+  
    mi <- new("mi", 
             call      = call,
             data      = org.data,
@@ -454,7 +488,9 @@ setMethod("mi", signature(object = "mi"),
             imp       = mi.object,
             converged = converged.flg,
             coef.conv = coef.conv.check,
-            bugs      = con.check)
+            bugs      = con.check,
+            preprocess = preprocess,
+            mi.info.preprocessed = info2)
   with(globalenv(), rm(data.tmp))
   return(mi)
 }
