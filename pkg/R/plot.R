@@ -26,25 +26,10 @@ plot.mi <- function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
       }
     }
   }
+
 # ==============================================================================
 # S4 plot function for mi.method object
 # ==============================================================================
-
-#plot.mi.method <- function( x, y, 
-#  main = deparse( substitute( y ) ), gray.scale = FALSE, ... ){      
-#    fit   <- fitted( x )
-#    res   <- residuals( x, y )
-#    sigma <- sigma.hat( x )
-#    vrb.obs <- y
-#    vrb.imp <- imputed( x, y )
-#    mi.hist(x, vrb.obs, xlab=main, main = main, gray.scale = gray.scale )
-#    residual.plot( fit, res, sigma, main = main, gray.scale = gray.scale )
-#    binnedplot ( fit[ !is.na( y )], res[ !is.na( y )], 
-#              nclass = sqrt( length( fit[  !is.na( y )] ) ), main = main )
-#    mi.scatterplot( vrb.obs, vrb.imp, fit, xlab = "predicted", ylab = main, 
-#                      main = main, gray.scale = gray.scale )
-#    #plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-#}
 
 
 setMethod( "plot", signature( x = "mi.method", y ="ANY"), 
@@ -68,24 +53,6 @@ setMethod( "plot", signature( x = "mi.method", y ="ANY"),
 # S4 plot function for mi.polr object
 # ==============================================================================
 
-
-#plot.mi.polr <- function ( x, y, 
-#  main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
-#  #par(mfrow=c(1,4))
-#  y       <- .factor2num( y )
-#  fit     <- .factor2num( fitted( x ))
-#  res     <- .factor2num( residuals( x, y ))
-#  sigma   <- .factor2num( sigma.hat( x ) )
-#  vrb.obs <- .factor2num( y )
-#  vrb.imp <- .factor2num( imputed( x, y ) )
-#  mi.hist(  x, vrb.obs, xlab = main, main = main, gray.scale = gray.scale ) 
-#  binnedplot( fit[  !is.na( y ) ], res[  !is.na( y ) ], nclass = sqrt( length( fit[ !is.na( y ) ] ) ), main = main )
-#  mtext( "Binned Residual", 3, cex = 0.7, adj = NA ) 
-#  mi.scatterplot( vrb.obs, vrb.imp, fit, xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale )
-#  plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-#} 
-
-
 setMethod("plot", signature(x = "mi.polr",y="ANY"), 
 function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
   #par(mfrow=c(1,4))
@@ -107,21 +74,6 @@ function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
 # S4 plot function for mi.categorical object
 # ==============================================================================
 
-#plot.mi.categorical <- function ( x, y, 
-#  main=deparse( substitute( y ) ),gray.scale = FALSE, ... ) {
-#  #par(mfrow=c(1,4))
-#  fit     <- fitted( x )
-#  res     <- residuals( x, y )
-#  sigma   <- sigma.hat( x )
-#  vrb.obs <- y
-#  vrb.imp <- imputed( x, y )
-#  mi.hist(  x, Yobs=vrb.obs, type = vrb.typ, xlab = main, main = main, gray.scale = gray.scale )
-#  binnedplot( fit[ !is.na(y) ], res[ !is.na(y) ], nclass = sqrt( length( fit[ !is.na(y)] ) ), main = main)
-#  mtext( "Binned Residual", 3, cex = 0.7, adj = NA ) 
-#  mi.scatterplot( Yobs=vrb.obs, vrb.imp, fit, xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale )
-#  plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-#} 
-
 setMethod("plot", signature(x = "mi.categorical", y="ANY"), 
 function ( x, y, main=deparse( substitute( y ) ),gray.scale = FALSE ) {
   #par(mfrow=c(1,4))
@@ -142,22 +94,6 @@ function ( x, y, main=deparse( substitute( y ) ),gray.scale = FALSE ) {
 # S4 plot function for mi.dichotomous object
 # ==============================================================================
 
-#plot.mi.dichotomous <- function ( x, y, 
-#  main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
-#   #par(mfrow=c(1,4))
-#   fit     <- fitted( x )
-#   res     <- residuals( x, y )
-#   sigma   <- sigma.hat( x )
-#   vrb.obs <- y
-#   vrb.imp <- imputed( x, y )
-#   mi.hist ( x, Yobs=vrb.obs, xlab = main, main = main, gray.scale = gray.scale )
-#   binnedplot ( fit[ !is.na( y )], res[ !is.na( y )], nclass = sqrt( length( fit[  !is.na( y )] ) ), main = main )
-#   mtext( "Binned Residual", 3, cex = 0.7, adj = NA )
-#   mi.scatterplot( Yobs=vrb.obs, vrb.imp, fit, xlab = "Predicted", ylab = main, main = main, gray.scale = gray.scale )
-#   plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-#} 
-
-
 
 setMethod("plot", signature(x = "mi.dichotomous",y="ANY"), 
 function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
@@ -176,51 +112,6 @@ function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
 )
 
 
-# ==============================================================================
-# S4 plot function for mi.logcontinuous object
-# ==============================================================================
-
-#plot.mi.logcontinuous <- function ( x, y, 
-#  main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
-#    par(mfrow=c(1,4))
-#    fit     <- fitted( x )
-#    res     <- residuals( x, y )
-#    sigma   <- sigma.hat( x )
-#    vrb.obs <- y
-#    vrb.imp <- imputed( x, y ) 
-#    loga  <- vrb.obs
-#    loga[!is.na(vrb.obs)] <- log(vrb.obs[!is.na(vrb.obs)])
-#    mi.hist(x, loga, type = vrb.typ, main = main, xlab=paste("log(",main,")"), gray.scale = gray.scale )
-#    mtext( "log", 1, cex = 0.7, adj = 1 )
-#    residual.plot( log(fit), res, sigma, main = main, xlab= "log(Predicted)",  ylab = paste( "log(Residual)" ), gray.scale = gray.scale )
-#    mtext( "log", 1, cex = 0.7, adj = 1 )
-#    mtext( "log", 2, cex = 0.7, adj = 1 )
-#    mi.scatterplot( loga, log(vrb.imp), fit, xlab= "predicted",  ylab = paste( "log(", main, ")" ) , main = main, gray.scale = gray.scale )
-#    mtext( "log", 2, cex = 0.7, adj = 1 )
-#    plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-#} 
-
-
-#setMethod("plot", signature(x = "mi.logcontinuous",y="ANY"), 
-#  function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, ... ) {
-#    par(mfrow=c(1,4))
-#    fit     <- fitted( x )
-#    res     <- resid( x, y )
-#    sigma   <- sigma.hat( x )
-#    vrb.obs <- y
-#    vrb.imp <- imputed( x, y ) 
-#    loga  <- vrb.obs
-#    loga[!is.na(vrb.obs)] <-log(vrb.obs[!is.na(vrb.obs)])
-#    mi.hist(  x, loga, type = vrb.typ, main = main, xlab=paste("log(",main,")"), gray.scale = gray.scale )
-#    mtext( "log", 1, cex = 0.7, adj = 1 )
-#    residual.plot( log(fit), res, sigma, main = main, xlab= "log(Predicted)",  ylab = paste( "log(Residual)" ), gray.scale = gray.scale )
-#    mtext( "log", 1, cex = 0.7, adj = 1 )
-#    mtext( "log", 2, cex = 0.7, adj = 1 )
-#    mi.scatterplot( loga, log(vrb.imp), fit, xlab= "predicted",  ylab = paste( "log(", main, ")" ) , main = main, gray.scale = gray.scale )
-#    mtext( "log", 2, cex = 0.7, adj = 1 )
-#    plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )
-#  } 
-#)
 
 # ==============================================================================
 # S4 plot function for mi.copy object

@@ -11,9 +11,7 @@ mi.check.correlation <- function (data, threshhold = 1){
   return(result)
 }
 
-# preprocess: this is ugly..but right..need to improve it
-
-
+# preprocess: this is ugly..but working!..need to improve it
 mi.preprocess <- function(data, type=NULL, varnames = NULL){
   n.col <- ncol(data)
   n.row <- nrow(data)
@@ -22,6 +20,7 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
     type <- typecast(data)
   }
   if(is.null(varnames)){
+    TYPE <- NULL
     idx <- NULL
     TMP <- NULL
     for (i in 1:n.col){
@@ -34,6 +33,7 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
         Log.lab <- paste(var.name[i], "log", sep=".")
         tmp <- cbind(tmp, Ind, Log)
         dimnames(tmp)[[2]] <- c(Ind.lab, Log.lab)
+        TYPE <- c(TYPE, "dichotomous", "continuous")
         TMP <- cbind(TMP, tmp)
         idx <- c(idx, i)
       }
@@ -42,6 +42,7 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
         Log.lab <- paste("log", var.name[i], sep=".")
         tmp <- cbind(tmp, Log)
         dimnames(tmp)[[2]] <- Log.lab
+        TYPE <- c(TYPE, "continuous")
         TMP <- cbind(TMP, tmp)
         idx <- c(idx, i)
       }
@@ -50,18 +51,23 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
         Logit.lab <- paste("logit", var.name[i], sep=".")
         tmp <- cbind(tmp, Logit)
         dimnames(tmp)[[2]] <- Logit.lab
+        TYPE <- c(TYPE, "proportion")
         TMP <- cbind(TMP, tmp)
         idx <- c(idx, i)
       }
     }
+    type <- type[-idx]
+    type <- c(type, TYPE)
     var.name <- var.name[-idx]
     data <- data[,-idx]
+    var.name.new <- dimnames(TMP)[[2]]
     data <- cbind(data, TMP)
     data <- as.data.frame(data)
   }
   else{
     idx <- pmatch(varnames, var.name)
     TMP <- NULL
+    TYPE <- NULL
     for (i in idx){
       typ <- type[i]
       tmp <- NULL
@@ -72,6 +78,7 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
         Log.lab <- paste(var.name[i], "log", sep=".")
         tmp <- cbind(tmp, Ind, Log)
         dimnames(tmp)[[2]] <- c(Ind.lab, Log.lab)
+        TYPE <- c(TYPE, "dichotomous", "continuous")
         TMP <- cbind(TMP, tmp)
         idx <- c(idx, i)
       }
@@ -80,6 +87,7 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
         Log.lab <- paste("log", var.name[i], sep=".")
         tmp <- cbind(tmp, Log)
         dimnames(tmp)[[2]] <- Log.lab
+        TYPE <- c(TYPE, "continuous")
         TMP <- cbind(TMP, tmp)
         idx <- c(idx, i)
       }
@@ -88,15 +96,19 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
         Logit.lab <- paste("logit", var.name[i], sep=".")
         tmp <- cbind(tmp, Logit)
         dimnames(tmp)[[2]] <- Logit.lab
+        TYPE <- c(TYPE, "proportion")
         TMP <- cbind(TMP, tmp)
         idx <- c(idx, i)
       }
     }
+    type <- type[-idx]
+    type <- c(type, TYPE)
     var.name <- var.name[-idx]
     data <- data[,-idx]
     data <- cbind(data, TMP)
     data <- as.data.frame(data)
   }
+  return(list(data=data, type=type))
 }
 
 mi.postprocess <- function(mi.data){

@@ -12,9 +12,9 @@ prior.control <- function(augment.data = FALSE, pct.aug=10, K = 0){
 
 
 setMethod("mi", signature(object = "data.frame"), 
-        function (object, info, type=NULL, n.imp = 3, n.iter = 30, 
+        function (object, info, n.imp = 3, n.iter = 30, 
                   max.minutes = 20, rand.imp.method = "bootstrap", 
-                  preprocess = FALSE, continue.on.convergence = FALSE,
+                  preprocess = TRUE, continue.on.convergence = FALSE,
                   seed = NA, check.coef.convergence = FALSE, 
                   add.priors = prior.control()) 
 { 
@@ -41,22 +41,26 @@ setMethod("mi", signature(object = "data.frame"),
   nameD      <- deparse(substitute(object))
   org.data   <- object
   data       <- object
-  col.mis    <- !complete.cases(t(data)) 
-  ncol.mis   <- sum(col.mis)
   if(missing(info)) {     
     info <- mi.info(data)    # create mi.info
   }      
+
+  #  # Automatic Preprocess
+  if( preprocess ) {
+    proc.tmp <- mi.preprocess(data, type=info$type)
+    data <- as.data.frame(proc.tmp$data)
+    info <- mi.info(data)
+    info$type <- proc.tmp$type
+    data <- mi.info.recode(data, info)
+  }  
+  
+  col.mis    <- !complete.cases(t(data)) 
+  ncol.mis   <- sum(col.mis)
   AveVar  <- array(NA, c(n.iter, n.imp, dim(data[,info$include])[2]*2))
   s_start <- 1
   s_end   <- n.iter
   
-  mis.index <-  apply(data, 2, is.na)
-
-#  # Automatic Preprocess
-  if( preprocess ) {
-    data <- mi.info.recode(data, info)
-  }
- 
+  mis.index <-  apply(data, 2, is.na) 
   data <- data[,.include(info)]
   dimnames( AveVar ) <- list(NULL, NULL, 
                              c(paste("mean(", colnames(data),")",sep=""), 
@@ -126,7 +130,8 @@ setMethod("mi", signature(object = "data.frame"),
         
         names(dat) <- c(CurrentVar, names(data[,!CurVarFlg, drop=FALSE] ))
         model.type <- as.character(type.models( info[[CurrentVar]]$type))
-        
+        aa <<- info
+        print(model.type)
         # Error Handling
         .Internal(seterrmessage(""))
         errormessage <- paste("\nError while imputing variable:", CurrentVar, ", model:",model.type,"\n")
@@ -256,9 +261,9 @@ setMethod("mi", signature(object = "data.frame"),
 )
 
 setMethod("mi", signature(object = "mi"), 
-        function (object, info, type=NULL, n.imp = 3, n.iter = 30, 
+        function (object, info, n.imp = 3, n.iter = 30, 
                   max.minutes = 20, rand.imp.method = "bootstrap", 
-                  preprocess = FALSE, continue.on.convergence = FALSE,
+                  preprocess = TRUE, continue.on.convergence = FALSE,
                   seed = NA, check.coef.convergence = FALSE) 
 { 
   call <- match.call()                         # call
@@ -282,10 +287,17 @@ setMethod("mi", signature(object = "mi"),
   # for mi object
   org.data  <- data.mi(object)
   data      <- data.mi(object)
+  info      <- info.mi(object)  
+  if( preprocess ) {
+    proc.tmp <- mi.preprocess(data, type=info$type)
+    data <- as.data.frame(proc.tmp$data)
+    info <- mi.info(data)
+    info$type <- proc.tmp$type
+  }
+
   col.mis   <- !complete.cases(t(data))
   ncol.mis  <- sum(col.mis)
   n.imp     <- m(object)
-  info      <- info.mi(object)
   prev.iter <- dim(bugs.mi(object)$sims.array)[1]
   AveVar    <- array(NA, c(prev.iter + n.iter, n.imp, sum(.include(info))*2))
   coef.conv.check <- object@coef.conv$sims.array
@@ -294,12 +306,6 @@ setMethod("mi", signature(object = "mi"),
   s_end   <- prev.iter + n.iter
     
   mis.index <-  apply(data, 2, is.na)
-
-#  # Automatic Preprocess
-#  if( preprocess ) {
-#    data <- mi.info.recode(data, info)
-#  }
- 
   data <- data[,.include(info)]
   dimnames( AveVar ) <- list(NULL, NULL, 
                              c(paste("mean(", colnames(data),")",sep=""), 

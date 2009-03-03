@@ -7,12 +7,13 @@
   and \code{positive-continuous} variable types in mi data object}
 
 \usage{
-  mi.preprocess(data, varnames=NULL)
+  mi.preprocess(data, type=NULL, varnames=NULL)
   mi.postprocess(mi.data)
 }
 
 \arguments{
   \item{data}{the data.frame to be imputed.}
+  \item{type}{the type of the variable, see \code{\link{typecast}}, default=\code{NULL}}
   \item{varnames}{the name of the variable to be transpformed,
       default=\code{NULL}.}
   \item{mi.data}{the imputed data list, obtained from \code{mi.completed}}

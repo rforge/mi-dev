@@ -32,10 +32,10 @@ mi.count(formula, data = NULL, start = NULL, n.iter = 100,
   \item{draw.from.beta}{ Draws from posterior distribution of the betas to add randomness. }
   \item{\dots}{ Currently not used. }
   \item{object}{\code{mi.countr} object.}
-  \item{x}{ \code{mi.countr} object.}
-  \item{y}{ Observed values.}
-  \item{main}{ main title of the plot. }
-  \item{gray.scale}{ When set to TRUE, makes the plot into gray scale with predefined color and line type. }
+%  \item{x}{ \code{mi.countr} object.}
+%  \item{y}{ Observed values.}
+%  \item{main}{ main title of the plot. }
+%  \item{gray.scale}{ When set to TRUE, makes the plot into gray scale with predefined color and line type. }
 
 }
 \details{
