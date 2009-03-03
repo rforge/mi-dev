@@ -37,7 +37,7 @@ setMethod("mi", signature(object = "data.frame"),
   coef.conv.check <- NULL
 
   # For data frame and matrix  
-  object     <- data.frame(object)
+  #object     <- data.frame(object)
   nameD      <- deparse(substitute(object))
   org.data   <- object
   data       <- object
@@ -130,8 +130,6 @@ setMethod("mi", signature(object = "data.frame"),
         
         names(dat) <- c(CurrentVar, names(data[,!CurVarFlg, drop=FALSE] ))
         model.type <- as.character(type.models( info[[CurrentVar]]$type))
-        aa <<- info
-        print(model.type)
         # Error Handling
         .Internal(seterrmessage(""))
         errormessage <- paste("\nError while imputing variable:", CurrentVar, ", model:",model.type,"\n")

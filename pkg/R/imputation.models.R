@@ -8,7 +8,7 @@
 mi.types <- function(){
   type = c( "fixed",
             "continuous",
-            "counts",
+            "count",
             "ordered-categorical",
             "unordered-categorical",
             "dichotomous",

@@ -21,7 +21,7 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
   }
   if(is.null(varnames)){
     TYPE <- NULL
-    idx <- NULL
+    idx <- 0
     TMP <- NULL
     for (i in 1:n.col){
       typ <- type[i]
@@ -56,13 +56,18 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
         idx <- c(idx, i)
       }
     }
-    type <- type[-idx]
-    type <- c(type, TYPE)
-    var.name <- var.name[-idx]
-    data <- data[,-idx]
-    var.name.new <- dimnames(TMP)[[2]]
-    data <- cbind(data, TMP)
-    data <- as.data.frame(data)
+    if(all(idx)>0){      
+      type <- type[-idx]
+      type <- c(type, TYPE)
+      var.name <- var.name[-idx]
+      data <- data[,-idx]
+      data <- cbind(data, TMP)
+      data <- as.data.frame(data)
+    }
+    else{
+      data <- data
+      type <- type
+    }
   }
   else{
     idx <- pmatch(varnames, var.name)
@@ -101,12 +106,18 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
         idx <- c(idx, i)
       }
     }
-    type <- type[-idx]
-    type <- c(type, TYPE)
-    var.name <- var.name[-idx]
-    data <- data[,-idx]
-    data <- cbind(data, TMP)
-    data <- as.data.frame(data)
+    if(all(idx)>0){
+      type <- type[-idx]
+      type <- c(type, TYPE)
+      var.name <- var.name[-idx]
+      data <- data[,-idx]
+      data <- cbind(data, TMP)
+      data <- as.data.frame(data)
+    }
+    else{
+      data <- data
+      type <- type
+    }
   }
   return(list(data=data, type=type))
 }
