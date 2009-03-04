@@ -10,17 +10,19 @@ mi.info <- function( data, threshhold  = 0.99999 )
   names(info) <- dimnames(data)[[2]]
   data.original.name <- deparse(substitute(data))
   correlated <- mi.check.correlation(data, threshhold)
-  foo <- function(lst){
-    lst[-1]
-  }
-  unlist(lapply(correlated, FUN=foo))
+#  foo <- function(lst){
+#    lst[-1]
+#  }
+#  unlist(lapply(correlated, FUN=foo))
   ord <- 1
   for( i in 1:dim( data )[2] ) {
-    info[[i]] <- vector( "list", 15 )
-    names( info[[i]] ) <- c( "name","imp.order", "nmis", "type", "var.class",
-                            "level", "include", "is.ID", "all.missing",
+    info[[i]] <- vector( "list", 12 )
+    names( info[[i]] ) <- c( "name","imp.order", "nmis", "type", #"var.class",
+                            #"level", 
+                            "include", "is.ID", "all.missing",
                             "correlated", "determ.pred", "imp.formula", 
-                            "transform","params", "other" )
+                            #"transform",
+                            "params", "other" )
     info[[i]]$name <- dimnames(data)[[2]][i]
     # nmis
     info[[i]]$nmis <- sum(is.na(data[,i]))
@@ -146,18 +148,22 @@ mi.info <- function( data, threshhold  = 0.99999 )
 mi.info.formula.default <-function(data, info){
   varnames <- dimnames(data)[[2]]
   type <- info$type
-  varnames <- ifelse(type=="ordered-categorical", paste("ordered(",varnames,")",sep=""), 
-    ifelse(type=="unordered-categorical", paste("factor(",varnames,")",sep=""), varnames))
+  for(i in 1:length(varnames)){
+    if(type[i]=="ordered-categorical"){
+      varnames[i] <- paste("ordered(",varnames,")",sep="")
+    }
+    if(type[i]=="unordered-categorical"){
+      varnames[i] <- paste("factor(",varnames,")",sep="")
+    }
+  }
   for(i in 1:dim(data)[2]){
     # default formula
     inc <- .include(info)
     inc[i] <- FALSE
     response <- varnames[i]
     predvarn <- varnames[inc]
-    info[[i]]$imp.formula <- type.default.formula(
-                                response,
-                                predvarn,
-                                type)
+    form <- paste(response,"~",paste(predvarn,collapse=" + "))
+    info[[i]]$imp.formula <- form
   }
   return(info)
 }
@@ -175,7 +181,7 @@ mi.info.params.default <-function( info ){
 # ========================================================================
 # Default formula for the type
 # ========================================================================
-type.default.formula <- function( response.name, predictor.name, type ) {
+type.default.formula <- function(response.name, predictor.name, type) {
 #  if (type=="ordered-categorical"){
 #    form <- paste( paste( "ordered(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
 #  } 
