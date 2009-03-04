@@ -132,8 +132,8 @@ mi.postprocess <- function(mi.data){
   chk4 <- sum(grep("logit.", var.name))
   if(chk1 > 0){
     var.name <- names(mi.data[[1]])
-    idx1 <- grep(".ind", var.name)
-    idx2 <- grep(".log", var.name)
+    idx1 <- grep(".ind", var.name, fixed=TRUE)
+    idx2 <- grep(".log", var.name, fixed=TRUE)
     idx3 <- c(idx1, idx2)
     var.name1 <- var.name[idx1]
     var.name1 <- gsub(".ind", "", var.name1)
@@ -147,7 +147,7 @@ mi.postprocess <- function(mi.data){
   }
   if(chk3 > 0){
     var.name <- names(mi.data[[1]])
-    idx1 <- grep("log.", var.name)
+    idx1 <- grep("log.", var.name, fixed=TRUE)
     var.name1 <- var.name[idx1]
     var.name1 <- gsub("log.", "", var.name1)
     var.name <- c(var.name1, var.name[-idx1])
@@ -160,7 +160,7 @@ mi.postprocess <- function(mi.data){
   } 
   if(chk4 > 0){
     var.name <- names(mi.data[[1]])
-    idx1 <- grep("logit.", var.name)
+    idx1 <- grep("logit.", var.name, fixed=TRUE)
     var.name1 <- var.name[idx1]
     var.name1 <- gsub("logit.", "", var.name1)
     var.name <- c(var.name1, var.name[-idx1])

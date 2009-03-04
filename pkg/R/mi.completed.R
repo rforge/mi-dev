@@ -3,7 +3,7 @@ mi.completed.default <- function(object, m = 1){
   if(object@preprocess){
     info <- object@mi.info.preprocessed
     mimatrix <- data.mi(object)
-    mimatrix <- mi.preprocess(mimatrix)$data
+    mimatrix <- mi.preprocess(mimatrix, type=object@mi.info$type)$data
   }
   else{
     info <- info.mi(object)
@@ -14,9 +14,6 @@ mi.completed.default <- function(object, m = 1){
   for ( i in 1:length(mis.name) ){
     nm <- mis.name[i]
     mimatrix[ ,nm] <- imputed(imp(object,m)[[nm]], mimatrix[ ,nm] )
-  }
-  if(object@preprocess){
-    mimatrix <- mi.postprocess(mimatrix)
   }
   return(as.data.frame(mimatrix))
 }  
@@ -30,6 +27,9 @@ setMethod("mi.completed", signature( object = "mi" ),
     data <- vector("list", n.chains)
     for(i in 1:m(object)){
       data[[i]] <- mi.completed.default(object, m = i) 
+    }
+    if(object@preprocess){
+      data <- mi.postprocess(data)
     }
     return(data)
   }

@@ -47,10 +47,10 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   }
   #determ.pred <- as.vector( deter.prob %*% y.cat )
   determ.pred <- predict(lm.cat.imp, newdata=data, type="class")
-  names( determ.pred ) <- 1:length( determ.pred )
+#  names( determ.pred ) <- 1:length( determ.pred )
   random.pred <- Rmultnm( n.mis, deter.prob[mis,], 1:y.ncat)
   random.pred <- y.cat[random.pred]
-  names( random.pred ) <- names( determ.pred[mis] )
+#  names( random.pred ) <- names( determ.pred[mis] )
   resids <- as.numeric(Y)[!is.na(Y)] - as.numeric(determ.pred)[!is.na(Y)] 
   # return the result
   result <- new(c("mi.categorical", "mi.method"),

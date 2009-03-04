@@ -13,11 +13,12 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   mf <- eval( mf, parent.frame( ) )
   mt <- attr( mf, "terms" )
   Y  <- model.response( mf, "any" )
-  if ( length( dim( Y ) ) == 1 ) {
+  if (length(dim(Y)) == 1 ) {
     nm <- rownames( Y )
     dim( Y ) <- NULL
-    if ( !is.null( nm ) ) 
+    if (!is.null(nm)){
       names ( Y ) <- nm
+    }
   }
   X <- as.matrix( mf[ , -1, drop = FALSE ] )
   namesD <- if( is.null( data ) ) { 
@@ -33,16 +34,18 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   }
 
   # convert the levels
-  Y.levels <- levels(factor(Y))
-  Y.nlevel <- nlevels(factor(Y))
+  Y.levels <- levels(ordered(Y))
+  Y.nlevel <- nlevels(ordered(Y))
 
-  if( is.numeric(Y)){ 
-    Y.levels <- as.double(Y.levels) 
-  }
 
-  Y.org <- Y
-  levels( Y ) <- 1:Y.nlevel
-  Y  <- factor( as.double( Y ) )
+#
+#  if( is.numeric(Y)){ 
+#    Y.levels <- as.double(Y.levels) 
+#  }
+#
+#  Y.org <- Y
+#  levels( Y ) <- 1:Y.nlevel
+#  Y  <- factor( as.double( Y ) )
 
   if( is.null(data)){ 
     data <- data.frame(mf)
@@ -53,10 +56,11 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
                               drop.unused.levels = FALSE, n.iter = n.iter )
   expect.prob <- predict( bplr.imp, newdata = data, type = "probs" )
   determ.pred <- predict(bplr.imp, newdata=data, type="class")#as.vector( expect.prob %*% as.double( Y.levels ) )
-  names( determ.pred ) <- 1:length( determ.pred )
-  random.pred <- Rmultnm( n.mis, expect.prob[mis,],  (1:Y.nlevel))    
-  random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse=";") )        
-  names(random.pred) <- names(determ.pred[mis])
+#  names( determ.pred ) <- 1:length( determ.pred )
+  random.pred <- Rmultnm( n.mis, expect.prob[mis,], 1:Y.nlevel)    
+  #random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse=";") )        
+  random.pred <- Y.levels[random.pred]
+#  names(random.pred) <- names(determ.pred[mis])
 
   # return the result
   result <- new(c("mi.polr", "mi.method"),
@@ -64,13 +68,13 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
               expected = numeric(0), 
               random = numeric(0))
   result@model$call        <- bplr.imp$call
-  result@model$call$formula<- as.formula(formula)
+  result@model$call$formula<- formula
   result@model$call$start  <- round(as.double(start),2)
   result@model$call$n.iter <- n.iter
-  result@model$coefficients <- bplr.imp$coefficients
+  result@model$coefficients <- coef(bplr.imp)
   result@model$sigma       <- NULL  
-  result@expected          <- as.double(determ.pred)
-  result@random            <- as.double(random.pred)
+  result@expected          <- determ.pred
+  result@random            <- random.pred
   return(result)
   on.exit(rm(bplr.imp))
 }
