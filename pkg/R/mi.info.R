@@ -10,10 +10,10 @@ mi.info <- function( data, threshhold  = 0.99999 )
   names(info) <- dimnames(data)[[2]]
   data.original.name <- deparse(substitute(data))
   correlated <- mi.check.correlation(data, threshhold)
-#  foo <- function(lst){
-#    lst[-1]
-#  }
-#  unlist(lapply(correlated, FUN=foo))
+  foo <- function(lst){
+    lst[-1]
+  }
+  unlist(lapply(correlated, FUN=foo))
   ord <- 1
   for( i in 1:dim( data )[2] ) {
     info[[i]] <- vector( "list", 15 )
@@ -23,40 +23,35 @@ mi.info <- function( data, threshhold  = 0.99999 )
                             "transform","params", "other" )
     info[[i]]$name <- dimnames(data)[[2]][i]
     # nmis
-    info[[i]]$nmis <- sum(is.na(data[ ,i]))
+    info[[i]]$nmis <- sum(is.na(data[,i]))
     
     # type
-    if(regexpr(".log", info[[i]]$name)>0){
-      info[[i]]$type <- "continuous"
-    }
-    else{
-      info[[i]]$type <- typecast(data[,i])
-    }
+    info[[i]]$type <- typecast(data[,i])
  
-    info[[i]]$var.class <- class(data[,i])
-    # level
-    if( info[[i]]$var.class[1] == "character" ) {
-      lev <- unique(as.character(data[,i]))[!is.na(unique(as.character(data[,i])))]
-      lev <- lev[order(lev)]
-      if(length(lev) == 2 ) {
-        info[[i]]$level <- c(0, 1)
-      } 
-      else{
-        info[[i]]$level <- 1:length(lev)
-      }
-      names(info[[i]]$level) <- lev
-      } 
-    else if( info[[i]]$var.class[1] == "factor" ) {
-      lev <-levels( data[ ,i] )[ !is.na( levels( data[ ,i] ) )]
-      lev <- lev[!( lev %in% c( "NA", "RF", "DK" ) )]
-      if( length( lev ) == 2 ) {
-          info[[i]]$level <- c( 0, 1 )
-      } 
-      else {
-        info[[i]]$level <- 1:length( lev )
-      }
-      names( info[[i]]$level ) <- lev
-    }
+#    info[[i]]$var.class <- class(data[,i])
+#    # level
+#    if( info[[i]]$var.class[1] == "character" ) {
+#      lev <- unique(as.character(data[,i]))[!is.na(unique(as.character(data[,i])))]
+#      lev <- lev[order(lev)]
+#      if(length(lev) == 2 ) {
+#        info[[i]]$level <- c(0, 1)
+#      } 
+#      else{
+#        info[[i]]$level <- 1:length(lev)
+#      }
+#      names(info[[i]]$level) <- lev
+#      } 
+#    else if( info[[i]]$var.class[1] == "factor" ) {
+#      lev <-levels( data[ ,i] )[ !is.na( levels( data[ ,i] ) )]
+#      lev <- lev[!( lev %in% c( "NA", "RF", "DK" ) )]
+#      if( length( lev ) == 2 ) {
+#          info[[i]]$level <- c( 0, 1 )
+#      } 
+#      else {
+#        info[[i]]$level <- 1:length( lev )
+#      }
+#      names( info[[i]]$level ) <- lev
+#    }
 
     info[[i]]$is.ID <- if( length(unique( data[ !is.na(data[,i]),i] )) == length( data[,i] ) 
                         && is.integer( data[,i] ) && all(data[,i]==data[order( data[,i] ),i]) ){ 

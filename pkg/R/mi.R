@@ -87,7 +87,7 @@ setMethod("mi", signature(object = "data.frame"),
     coef.val[[jjj]] <- vector("list", n.imp)
   }
   names(mi.object)<- paste( "Imputation", 1:n.imp, sep="" )
-
+  
   cat( "Beginning Multiple Imputation (", date(), "):\n" )
   # iteration loop
   for ( s in s_start:s_end ) {
@@ -170,12 +170,25 @@ setMethod("mi", signature(object = "data.frame"),
       } ## variable loop 
       cat("\n" )
       
+      #==================================================
+      # should move these foo's way to save computational time      
       foo1 <- function(v){
-        mean(unclass(v), na.rm=TRUE)
+        if(is.numeric(v)){
+          mean(unclass(v), na.rm=TRUE)
+        }
+        else{
+          mean(as.numeric(factor(v)), na.rm=TRUE)
+        }
       }
       foo2 <- function(v){
-        sd(unclass(v), na.rm=TRUE) 
+        if(is.numeric(v)){
+          sd(unclass(v), na.rm=TRUE)
+        }
+        else{
+          sd(as.numeric(factor(v)), na.rm=TRUE)
+        }
       }
+      #==================================================
       AveVar[s,i,] <- c(sapply(mi.data[[i]], FUN = foo1), sapply(mi.data[[i]], FUN = foo2))                        
     
     } # imputation loop
@@ -396,14 +409,26 @@ setMethod("mi", signature(object = "mi"),
         coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
         start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
       } ## variable loop 
-      cat("\n" )
-      
+      cat("\n" )      
+      #==================================================
+      # should move these foo's way to save computational time      
       foo1 <- function(v){
-        mean(unclass(v), na.rm=TRUE)
+        if(is.numeric(v)){
+          mean(unclass(v), na.rm=TRUE)
+        }
+        else{
+          mean(as.numeric(factor(v)), na.rm=TRUE)
+        }
       }
       foo2 <- function(v){
-        sd(unclass(v), na.rm=TRUE) 
+        if(is.numeric(v)){
+          sd(unclass(v), na.rm=TRUE)
+        }
+        else{
+          sd(as.numeric(factor(v)), na.rm=TRUE)
+        }
       }
+      #==================================================
       AveVar[s,i,] <- c(sapply(mi.data[[i]], FUN = foo1), sapply(mi.data[[i]], FUN = foo2))                        
     
     } # imputation loop
