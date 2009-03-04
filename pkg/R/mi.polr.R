@@ -13,12 +13,11 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   mf <- eval( mf, parent.frame( ) )
   mt <- attr( mf, "terms" )
   Y  <- model.response( mf, "any" )
-  if (length(dim(Y)) == 1 ) {
+  if ( length( dim( Y ) ) == 1 ) {
     nm <- rownames( Y )
     dim( Y ) <- NULL
-    if (!is.null(nm)){
+    if ( !is.null( nm)) 
       names ( Y ) <- nm
-    }
   }
   X <- as.matrix( mf[ , -1, drop = FALSE ] )
   namesD <- if( is.null( data ) ) { 
