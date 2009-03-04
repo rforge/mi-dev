@@ -147,13 +147,16 @@ mi.info <- function( data, threshhold  = 0.99999 )
 
 mi.info.formula.default <-function(data, info){
   varnames <- dimnames(data)[[2]]
-  type <- info$type
   for(i in 1:length(varnames)){
-    if(type[i]=="ordered-categorical"){
-      varnames[i] <- paste("ordered(",varnames,")",sep="")
+    type <- info[[i]]$type
+    if(type=="ordered-categorical"){
+      varnames[i] <- paste("ordered(",varnames[i],")",sep="")
     }
-    if(type[i]=="unordered-categorical"){
-      varnames[i] <- paste("factor(",varnames,")",sep="")
+    else if(type=="unordered-categorical"){
+      varnames[i] <- paste("factor(",varnames[i],")",sep="")
+    }
+    else{
+      varnames[i] <- varnames[i]
     }
   }
   for(i in 1:dim(data)[2]){
