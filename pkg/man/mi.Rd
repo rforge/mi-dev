@@ -169,7 +169,7 @@ inf <- update(inf, "type", list(x9="count"))
 
 # run the imputation
 ## this is for test only
-IMP <- mi(dat, info=inf, n.iter=6, add.priors=prior.control(K=1), post.run = FALSE)
+IMP <- mi(dat, info=inf, n.iter=6, add.priors=prior.control(K=1))
 
 # pick up where you left off
 # IMP <- mi(IMP)       ## NOT RUN

@@ -46,10 +46,6 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
 #  levels( Y ) <- 1:Y.nlevel
 #  Y  <- factor( as.double( Y ) )
 
-  if( is.null(data)){ 
-    data <- data.frame(mf)
-  }
-
   bplr.imp    <- bayespolr( formula = formula, data = data, start = 0, 
                               method = c( "logistic" ), 
                               drop.unused.levels = FALSE, n.iter = n.iter )
@@ -59,15 +55,15 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   random.pred <- Rmultnm( n.mis, expect.prob[mis,], 1:Y.nlevel)    
   random.pred <-  recode( random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse=";") )        
   #random.pred <- Y.levels[random.pred]
-#  names(random.pred) <- names(determ.pred[mis])
+  names(random.pred) <- names(determ.pred[mis])
 
 #  resids <- as.numeric(Y)[!is.na(Y)] - as.numeric(determ.pred)[!is.na(Y)] 
 
   # return the result
   result <- new(c("mi.polr", "mi.method"),
               model = vector("list", 0),
-              expected = numeric(0), 
-              random = numeric(0))
+              expected = NULL, 
+              random = NULL)
   result@model$call        <- bplr.imp$call
   result@model$call$formula<- formula
   result@model$call$start  <- round(as.double(start),2)

@@ -129,7 +129,6 @@ setMethod("mi", signature(object = "data.frame"),
           n.aug <- trunc(nrow(data)*(pct.aug/100))
           dat <- rbind(dat, .randdraw(dat, n=n.aug))
         }                
-        aa <<- dat
         # Error Handling
         .Internal(seterrmessage(""))
         errormessage <- paste("\nError while imputing variable:", CurrentVar, ", model:",model.type,"\n")

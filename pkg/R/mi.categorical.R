@@ -51,13 +51,13 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   random.pred <- Rmultnm( n.mis, deter.prob[mis,], 1:y.ncat)
   random.pred <-  recode(random.pred, paste(1:y.ncat,"='",y.cat,"'",sep="",collapse=";") )        
   #  random.pred <- y.cat[random.pred]
-#  names( random.pred ) <- names( determ.pred[mis] )
+  names( random.pred ) <- names( determ.pred[mis] )
   #resids <- as.numeric(Y)[!is.na(Y)] - as.numeric(determ.pred)[!is.na(Y)] 
   # return the result
   result <- new(c("mi.categorical", "mi.method"),
             model = vector("list", 0),
-              expected = NA, 
-              random = numeric(0))
+              expected = NULL, 
+              random = NULL)
   result@model$call         <- lm.cat.imp$call
   result@model$call$formula <- formula
   result@model$call$maxit   <- n.iter
