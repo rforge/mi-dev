@@ -57,8 +57,7 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   result <- new(c("mi.categorical", "mi.method"),
             model = vector("list", 0),
               expected = NA, 
-              random = numeric(0),
-              residuals = numeric(0))
+              random = numeric(0))
   result@model$call         <- lm.cat.imp$call
   result@model$call$formula <- formula
   result@model$call$maxit   <- n.iter
