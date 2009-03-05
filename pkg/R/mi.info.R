@@ -423,6 +423,7 @@ mi.fix.params <- function( info, name ) {
 # ========================================================================
 
 mi.check.correlation <- function ( data, threshhold = 0.99999 ){
+  options(warn = -1)
   cor.data <- cor(data, use = "pairwise.complete.obs")
   diag( cor.data ) <- 1
   index  <- abs( cor.data - diag( dim( cor.data )[1] ) ) >= threshhold 
@@ -440,7 +441,9 @@ mi.check.correlation <- function ( data, threshhold = 0.99999 ){
 #  unique.cor<-unique(result)
 #  unique.cor<- unique.cor[!sapply(unique.cor,is.null)] 
 #  return(unique.cor)
-return(result)
+  on.exit()
+  options(warn = 0)
+  return(result)
 }
 
 # ========================================================================
@@ -448,6 +451,7 @@ return(result)
 # ========================================================================
 
 mi.correlated.list <- function ( data, threshhold = 0.99999 ){
+  options(warn = -1)
   cor.data<-cor( data, use="pairwise.complete.obs" )
   diag(cor.data)<-1
   index<-abs( cor.data - diag(dim(cor.data)[1])) >= threshhold 
@@ -465,8 +469,8 @@ mi.correlated.list <- function ( data, threshhold = 0.99999 ){
   unique.cor<-unique(result)
   unique.cor<- unique.cor[!sapply(unique.cor,is.null)] 
   unique.cor<- unique.cor[!sapply(sapply(unique.cor,is.na),any)]
+  options(warn = 0)
   return(unique.cor)
-return(result)
 }
 
 # ========================================================================

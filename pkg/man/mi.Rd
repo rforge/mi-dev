@@ -150,6 +150,12 @@ and looping through until approximate convergence.
     \code{\link{mi.completed}} 
 }
 \examples{
+
+
+
+
+
+
 data(CHAIN)
 imp.CHAIN <- mi( CHAIN, n.imp = 3, n.iter = 6 )
 

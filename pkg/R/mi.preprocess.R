@@ -1,15 +1,17 @@
-mi.check.correlation <- function (data, threshhold = 1){
-  #cat("Checking for correlation")
-  cor.data <- cor(data, use="pairwise.complete.obs")
-  diag(cor.data) <- 1
-  #index<-abs( cor.data*upper.tri(cor.data)) >= threshhold  
-  index <- abs(cor.data - diag(dim(cor.data)[1])) >= threshhold 
-  result <- vector("list", dim(index)[1])
-  for(i in 1:dim(index)[1]){
-    result[[i]] <- c(names(which(index[i,]==1)))
-  }
-  return(result)
-}
+#mi.check.correlation <- function (data, threshhold = 1){
+#  #cat("Checking for correlation")
+#  options(show.error.messages = FALSE)
+#  cor.data <- cor(data, use="pairwise.complete.obs")
+#  diag(cor.data) <- 1
+#  #index<-abs( cor.data*upper.tri(cor.data)) >= threshhold  
+#  index <- abs(cor.data - diag(dim(cor.data)[1])) >= threshhold 
+#  result <- vector("list", dim(index)[1])
+#  for(i in 1:dim(index)[1]){
+#    result[[i]] <- c(names(which(index[i,]==1)))
+#  }
+#  options(show.error.messages = TRUE)
+#  return(result)
+#}
 
 # preprocess: this is ugly..but working!..need to improve it
 mi.preprocess <- function(data, type=NULL, varnames = NULL){
