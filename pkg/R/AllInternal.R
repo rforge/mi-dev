@@ -73,7 +73,8 @@ data.tmp <<- NULL # to pass R CMD check
 .factor2num <- function( a ) {
   if(is.factor( a ) ) {
     as.double( levels( a ) )[ as.double( a ) ]
-  } else {
+  } 
+  else {
     a
   }
 }

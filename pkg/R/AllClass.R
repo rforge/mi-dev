@@ -98,8 +98,7 @@ setClass("mi.categorical",
         representation(
             model     = "list", 
             expected  = "ANY", 
-            random    = "ANY",
-            residuals = "numeric"),
+            random    = "ANY"),
             contains  = "mi.method"
 )
 
@@ -107,8 +106,7 @@ setClass("mi.polr",
         representation(
             model     = "list", 
             expected  = "ANY", 
-            random    = "ANY",
-            residuals = "numeric"),
+            random    = "ANY"),
             contains  = "mi.method"
 )
 

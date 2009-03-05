@@ -33,6 +33,7 @@
   \item{start}{ Starting value for bayespolr. }
   \item{n.iter}{ Maximum number of iteration for bayespolr. The default is 100.}
   \item{\dots}{ Currently not used. }
+  \item{object}{ \code{mi.polr} object.}
   \item{x}{\code{mi.polr} object.}
   \item{y}{ Observed values.}
   \item{main}{ main title of the plot. }
