@@ -3,29 +3,33 @@
 # ==============================================================================
 
 setMethod( "plot", signature( x = "mi", y="missing" ),
-  function ( x, ... ) {
-    plot.mi( x, ... )
+  function(x, ...) {
+    plot.mi(x, ...)
   }
 )
 
 plot.mi <- function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
-                        gray.scale = FALSE, mfrow=c( 1, 4 ), ... ) {
-    if ( m(x) < m )  { 
-      stop( message = paste( "Index of imputation 'm' must be within the range of 1 to", m(x) ) ) 
-    } 
-    else{
-      mids <- imp(x, m)
-      Y    <- as.data.frame( x@data[ , names( mids ) ] )
-      names( Y ) <- names( mids )
-      par( mfrow = mfrow )
-      for( i in 1:dim( Y )[2] ) {
-        par( ask = TRUE )
-        if( !is.null( mids[[i]] ) ) {
-          plot( x = mids[[i]], y = Y[ ,names( mids )[i]], main = names( Y )[ i ] )
-        }
+                        gray.scale = FALSE, mfrow=c(1, 4), ... ) 
+{
+  if (m(x) < m) { 
+    stop(message = paste("Index of imputation 'm' must be within the range of 1 to", m(x))) 
+  } 
+  else{
+    mids <- imp(x, m)
+    if(x@preprocess){
+      x@data <- mi.preprocess(x@data, type=x@mi.info$type)$data
+    }
+    Y    <- as.data.frame(x@data[ , names(mids)])
+    names(Y) <- names(mids)
+    par(mfrow = mfrow)
+    for(i in 1:dim(Y)[2]){
+      par( ask = TRUE )
+      if(!is.null(mids[[i]])) {
+        plot(x = mids[[i]], y = Y[ ,names(mids)[i]], main = names(Y)[i])
       }
     }
   }
+}
 
 # ==============================================================================
 # S4 plot function for mi.method object
@@ -53,16 +57,15 @@ setMethod( "plot", signature( x = "mi.method", y ="ANY"),
 # S4 plot function for mi.polr object
 # ==============================================================================
 
-setMethod("plot", signature(x = "mi.polr",y="ANY"), 
+setMethod("plot", signature(x = "mi.polr", y="ANY"), 
 function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
   #par(mfrow=c(1,4))
-  y       <- .factor2num( y )
   fit     <- .factor2num( fitted( x ))
   res     <- .factor2num( residuals( x, y ))
   sigma   <- .factor2num( sigma.hat( x ) )
   vrb.obs <- .factor2num( y )
   vrb.imp <- .factor2num( imputed( x, y ) )
-  mi.hist(  x, vrb.obs, xlab = main, main = main, gray.scale = gray.scale ) 
+  mi.hist(  x, y, xlab = main, main = main, gray.scale = gray.scale ) 
   binnedplot( fit[  !is.na( y ) ], res[  !is.na( y ) ], nclass = sqrt( length( fit[ !is.na( y ) ] ) ), main = main )
   mtext( "Binned Residual", 3, cex = 0.7, adj = NA ) 
   mi.scatterplot( vrb.obs, vrb.imp, fit, xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale )
@@ -77,13 +80,13 @@ function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
 setMethod("plot", signature(x = "mi.categorical", y="ANY"), 
 function ( x, y, main=deparse( substitute( y ) ),gray.scale = FALSE ) {
   #par(mfrow=c(1,4))
-  fit     <- fitted( x )
-  res     <- residuals(x)
+  fit     <- as.numeric(fitted( x ))
+  res     <- residuals(x, y)
   sigma   <- sigma.hat( x )
   vrb.imp <- as.numeric(imputed(x, y))
   vrb.obs <- as.numeric(y)
-  mi.hist(  x, Yobs=vrb.obs, type = vrb.typ, xlab = main, main = main, gray.scale = gray.scale )
-  binnedplot( fit[ !is.na(y) ], res, nclass = sqrt( length( fit[ !is.na(y)] ) ), main = main)
+  mi.hist(  x, y, type = vrb.typ, xlab = main, main = main, gray.scale = gray.scale )
+  binnedplot( fit[ !is.na(y) ], res[!is.na(y)], nclass = sqrt( length( fit[ !is.na(y)] ) ), main = main)
   mtext( "Binned Residual", 3, cex = 0.7, adj = NA ) 
   mi.scatterplot( Yobs=vrb.obs, vrb.imp, fit, xlab = "predicted", ylab = main, main = main, gray.scale = gray.scale )
   plot( 0, 0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "", frame.plot = FALSE )

@@ -4,6 +4,8 @@
 \alias{mi.polr-class}
 % Function
 \alias{mi.polr}
+\alias{resid,mi.polr-method}
+\alias{residuals,mi.polr-method}
 \alias{plot,mi.polr,ANY-method}
 \title{
     Elementary function: multinomial log-linear models to impute a ordered categorical variable.
@@ -14,6 +16,7 @@
 \usage{
   mi.polr(formula, data = NULL, drop.unused.levels = TRUE, start = NULL, 
     n.iter = 100, \dots)
+  \S4method{residuals}{mi.polr}(object, y)
   \S4method{plot}{mi.polr,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots )
 }
 

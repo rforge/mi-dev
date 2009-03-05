@@ -61,6 +61,8 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   random.pred <- Y.levels[random.pred]
 #  names(random.pred) <- names(determ.pred[mis])
 
+  resids <- as.numeric(Y)[!is.na(Y)] - as.numeric(determ.pred)[!is.na(Y)] 
+
   # return the result
   result <- new(c("mi.polr", "mi.method"),
               model = vector("list", 0),
@@ -74,6 +76,7 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   result@model$sigma       <- NULL  
   result@expected          <- determ.pred
   result@random            <- random.pred
+  #result@residuals         <- resids 
   return(result)
   on.exit(rm(bplr.imp))
 }

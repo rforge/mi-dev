@@ -51,19 +51,19 @@ setClass("mi.glm",
 
 setClass("mi.lm",
             representation(
-                call         = "call",
-                lm.mi.pooled = "list" ,
-                lm.mi.fit    = "list"),
-            contains  = "list"
+                call          = "call",
+                lm.mi.pooled  = "list" ,
+                lm.mi.fit     = "list"),
+                contains      = "list"
 )
 
 
 setClass("mi.method",
         representation(
-          model = "list",
-          expected = "ANY",
-          random = "ANY"),
-          contains = "list"
+          model     = "list",
+          expected  = "ANY",
+          random    = "ANY"),
+          contains  = "list"
 )
 
 
@@ -96,19 +96,20 @@ setClass("mi.dichotomous",
 
 setClass("mi.categorical",
         representation(
-            model    = "list", 
-            expected = "ANY", 
-            random   = "ANY",
+            model     = "list", 
+            expected  = "ANY", 
+            random    = "ANY",
             residuals = "numeric"),
-            contains = "mi.method"
+            contains  = "mi.method"
 )
 
 setClass("mi.polr",
         representation(
-            model = "list", 
-            expected = "ANY", 
-            random = "ANY"),
-            contains = "mi.method"
+            model     = "list", 
+            expected  = "ANY", 
+            random    = "ANY",
+            residuals = "numeric"),
+            contains  = "mi.method"
 )
 
 
@@ -123,11 +124,11 @@ setClass("mi.fixed",
 
 setClass("mi.pmm",
         representation(
-            model    = "list", 
-            expected = "ANY", 
-            random   = "ANY",
+            model     = "list", 
+            expected  = "ANY", 
+            random    = "ANY",
             residuals = "numeric"),
-            contains = "mi.method"
+            contains  = "mi.method"
 )
 
 setClass("mi.copy",

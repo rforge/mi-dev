@@ -15,8 +15,14 @@ setMethod("residuals", signature(object = "mi.dichotomous"),
 )
 
 setMethod("residuals", signature(object = "mi.categorical"), 
-  function(object){
-  object@residuals
+  function(object, y){
+  as.numeric(y) - as.numeric(fitted(object))
+}
+)
+
+setMethod("residuals", signature(object = "mi.polr"), 
+  function(object, y){
+  as.numeric(y) - as.numeric(fitted(object))
 }
 )
 
@@ -43,10 +49,17 @@ setMethod("resid", signature(object = "mi.dichotomous"),
 )
 
 setMethod("resid", signature(object = "mi.categorical"), 
-  function(object){
-  object@residuals
+  function(object, y){
+  as.numeric(y) - as.numeric(fitted(object))
 }
 )
+
+setMethod("resid", signature(object = "mi.polr"), 
+  function(object, y){
+  as.numeric(y) - as.numeric(fitted(object))
+}
+)
+
 
 setMethod("resid", signature(object = "mi.count"), 
   function(object, y){

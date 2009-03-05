@@ -249,8 +249,8 @@ setMethod("mi.hist", signature( object = "mi.polr",Yobs = "ANY"),
             obs.lty = 1, imp.lty = 1, mis.lty = 1,
             obs.lwd = 1, imp.lwd = 1, mis.lwd = 1, mlt = 0.1, ... )
 {
-  Yobs <-as.numeric(Yobs)
-  Yimp <-imputed(object,Yobs)
+  Yimp <- as.numeric(imputed(object, Yobs))
+  Yobs <- as.numeric(Yobs)
   mis  <- Yimp[ is.na( Yobs ) ] ##the vector of the imputed values
   if( !is.null( is.na( Yobs ) ) ) { obs.nomis <- Yobs[ !is.na( Yobs ) ] }
   if(is.factor(Yobs)){
@@ -328,7 +328,8 @@ setMethod("mi.hist", signature(object = "mi.categorical",Yobs="ANY"),
               obs.lty = 1, imp.lty = 1, mis.lty = 1,
               obs.lwd = 1, imp.lwd = 1, mis.lwd = 1, mlt = 0.1, ... )
  {
-  Yimp <-imputed(object,Yobs)
+  Yimp <- as.numeric(imputed(object,Yobs))
+  Yobs <- as.numeric(Yobs)
   mis  <- Yimp[ is.na( Yobs ) ] ##the vector of the imputed values
   if( !is.null( is.na( Yobs ) ) ) { obs.nomis <- Yobs[ !is.na( Yobs ) ] }
   if( is.null( binwidth ) ) { binwidth = ( max( Yimp ) - min( Yimp ) ) / sqrt( length( Yimp ) )}
