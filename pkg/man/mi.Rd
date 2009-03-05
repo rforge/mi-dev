@@ -43,7 +43,7 @@
     max.minutes = 20, rand.imp.method = "bootstrap", 
     preprocess = TRUE, continue.on.convergence = FALSE,
     seed = NA, check.coef.convergence = FALSE, 
-    add.priors = prior.control())
+    add.priors = prior.control(), post.run = TRUE)
     
 \S4method{mi}{mi}( object, info, n.imp = 3, n.iter = 30, 
     max.minutes = 20, rand.imp.method = "bootstrap", 
@@ -67,6 +67,9 @@
   \item{check.coef.convergence}{default = \code{FALSE}}
   \item{add.priors}{a list of parameters for controlling the process of adding priors for
       \code{\link{mi}}. See the documentation for \code{\link{prior.control}} for details.}  
+  \item{post.run}{default is \code{TRUE} which will run 20 more iterations after the \code{mi} is finished
+    if and only if some priors have been added into the \code{mi} process. This is to mitigate the 
+    influence the importance of the priors to the whole procedure.}
 }
 
 \value{ 
@@ -154,21 +157,32 @@ x9 <- rpois(n, 50)
 x10 <- runif(n, 0.1, .99)
 y <- x1 + x2 + rnorm(n)
 fakedata <- cbind.data.frame(y, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10)
+
 # randomly create missing values
 dat <- mi:::.create.missing(fakedata, pct.mis=10)
+
 # get information matrix of the data
 inf <- mi.info(dat)
-# change the variable type of specific variable to mi.info
+
+# update the variable type of a specific variable to mi.info
 inf <- update(inf, "type", list(x9="count"))
+
 # run the imputation
-IMP <- mi(dat, info=inf, n.iter=6, add.priors=prior.control(K=1))
+## this is for test only
+IMP <- mi(dat, info=inf, n.iter=6, add.priors=prior.control(K=1), post.run = FALSE)
+
+# pick up where you left off
+# IMP <- mi(IMP)       ## NOT RUN
+
+## this is the suggested (defautl) way of running mi, NOT RUN
+# IMP <- mi(dat, info=inf, add.priors=prior.control(K=1))
+
 # convergence checking
-converged(IMP)        
-bugs.mi(IMP)  ## BUGS object to look at the R hat statistics
+converged(IMP)  ## You should get FALSE here because only n.iter is small 
+bugs.mi(IMP)    ## BUGS object to look at the R hat statistics
+
 # visually check the imputation
 plot(IMP)
-# NOT RUN
-#IMP <- mi(IMP)       ## You can pick up from where you left off
 }
 \keyword{manip}
 \keyword{models}

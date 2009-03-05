@@ -69,8 +69,7 @@
 }
 \examples{
   data(CHAIN)
-  info.CHAIN<-mi.info(CHAIN)
-  info.CHAIN
+  info.CHAIN <- mi.info(CHAIN)
   
   info.CHAIN$imp.order # imputation order
   

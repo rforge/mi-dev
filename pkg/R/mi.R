@@ -16,7 +16,7 @@ setMethod("mi", signature(object = "data.frame"),
                   max.minutes = 20, rand.imp.method = "bootstrap", 
                   preprocess = TRUE, continue.on.convergence = FALSE,
                   seed = NA, check.coef.convergence = FALSE, 
-                  add.priors = prior.control()) 
+                  add.priors = prior.control(), post.run = TRUE) 
 { 
   call <- match.call()                         # call
   if(!is.na(seed)){
@@ -274,11 +274,13 @@ setMethod("mi", signature(object = "data.frame"),
             preprocess = preprocess,
             mi.info.preprocessed = info2)
   with(globalenv(), rm(data.tmp))
-  if(add.priors$K>0){
-    mi <- mi(mi, continue.on.convergence=TRUE, n.iter=20)
-  }
-  if(add.priors$augment.data){
-    mi <- mi(mi, continue.on.convergence=TRUE, n.iter=20)
+  if(post.run){
+    if(add.priors$K>0){
+      mi <- mi(mi, continue.on.convergence=TRUE, n.iter=20)
+    }
+    if(add.priors$augment.data){
+      mi <- mi(mi, continue.on.convergence=TRUE, n.iter=20)
+    }
   }
   return(mi)
 }

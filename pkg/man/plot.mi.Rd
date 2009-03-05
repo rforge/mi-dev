@@ -58,14 +58,5 @@ strongly recommended to use a variable containing more information. Fitted lowes
   imp.CHAIN <- mi(CHAIN, n.iter=6, preprocess=FALSE, 
     add.prior=prior.control(K=0))
   plot(imp.CHAIN)
-
-  #==========================================
-  #Selecting the variable for the scatterplot
-  #==========================================
-  #The selected variable vrb is the average of the continuous variables
-  #imputed in the first imputation
-#  vv <- as.vector(apply(mi.data.frame(imp.CHAIN), 2, typecast))=="continuous"
-#  var <- apply(mi.data.frame(imp.CHAIN)[,vv],1,mean)
-#  plot(imp.CHAIN, vrb=var,  vrb.name="Average of the continuous variables")
 }
 \keyword{ hplot }
