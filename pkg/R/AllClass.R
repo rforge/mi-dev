@@ -89,8 +89,8 @@ setClass("mi.count",
 setClass("mi.dichotomous",
         representation(
             model    = "list", 
-            expected = "numeric", 
-            random   = "numeric"),
+            expected = "ANY", 
+            random   = "ANY"),
             contains = "mi.method"
 )
 
@@ -115,8 +115,8 @@ setClass("mi.polr",
 setClass("mi.fixed",
         representation(
             model    = "list", 
-            expected = "numeric", 
-            random   = "numeric"),
+            expected = "ANY", 
+            random   = "ANY"),
             contains = "mi.method"
 )
 
@@ -124,8 +124,8 @@ setClass("mi.fixed",
 setClass("mi.pmm",
         representation(
             model    = "list", 
-            expected = "numeric", 
-            random   = "numeric",
+            expected = "ANY", 
+            random   = "ANY",
             residuals = "numeric"),
             contains = "mi.method"
 )
@@ -133,7 +133,7 @@ setClass("mi.pmm",
 setClass("mi.copy",
         representation(
             model    = "list", 
-            expected = "numeric", 
-            random   = "numeric"),
+            expected = "ANY", 
+            random   = "ANY"),
             contains = "mi.method"
 )

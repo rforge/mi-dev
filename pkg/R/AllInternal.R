@@ -53,10 +53,14 @@ data.tmp <<- NULL # to pass R CMD check
 # ========================================================================
 
 .randdraw <- function(data, n = 1){
-  foo <- function(x, n = n){
-    sample(na.exclude(x), size = n, replace = TRUE)
+  added.rows <- rep(0, n)
+  varnames <- names(data)
+  for(i in 1:ncol(data)){
+    tmp <- sample(na.exclude(data[,i]), n, replace=TRUE)
+    added.rows <- cbind.data.frame(added.rows, tmp)
   }
-  added.rows <- apply(data, 2, FUN = foo, n = n)
+  added.rows <- added.rows[,-1]
+  names(added.rows) <- varnames
   return(added.rows)
 }
 

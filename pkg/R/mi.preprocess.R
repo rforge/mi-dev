@@ -121,7 +121,7 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
       type <- type
     }
   }
-  names(type) <- dimnames(data)[2]
+  names(type) <- names(data)
   return(list(data=data, type=type))
 }
 

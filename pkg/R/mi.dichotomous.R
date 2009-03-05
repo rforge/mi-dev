@@ -29,9 +29,6 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
             }
   mis <- is.na(Y)
   n.mis <- sum(mis)
-  if (is.null(data)) {
-      data <- mf
-  }
   y.levels <- if (is.numeric(Y)) {
       sort(unique(Y))
   }
@@ -42,12 +39,19 @@ mi.dichotomous <- function( formula, data = NULL, start = NULL, n.iter = 100,
       levels(factor(Y))
   }
   Y <- recode(Y, paste("'", y.levels, "'=", c(0, 1), sep = "", collapse = "; "))
-  data <- mf
-  data[, 1] <- Y
+
   if (!is.null(start)) {
-#      n.iter <- 1
+      n.iter <- 1
       start[is.na(start)] <- 0
+  }  
+  if (is.null(data)) {
+      data <- mf
+      data[,1] <- Y
   }
+  else{
+     data[,1] <- Y
+  }
+  
   bglm.imp <- bayesglm(formula = formula, data = data, family = binomial(link = "logit"), 
       n.iter = n.iter, start = start, drop.unused.levels = FALSE, 
       Warning = FALSE, ...)

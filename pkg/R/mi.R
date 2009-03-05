@@ -51,9 +51,10 @@ setMethod("mi", signature(object = "data.frame"),
     data <- as.data.frame(proc.tmp$data)
     info.org <- info
     info <- mi.info(data)
-    info$type <- proc.tmp$type
-    info$imp.formula <- mi.info.formula.default(data, info)$imp.formula
-#    data <- mi.info.recode(data, info)
+    for(i in 1:ncol(data)){
+      info[[i]]$type <- proc.tmp$type[[i]]
+    }
+    info <- mi.info.formula.default(data, info)
   }  
 
   col.mis    <- !complete.cases(t(data)) 
@@ -119,19 +120,16 @@ setMethod("mi", signature(object = "data.frame"),
         
         CurVarFlg <- ( names ( data ) == CurrentVar )
 
-        if(add.priors$augment.data){
-          pct.aug <- add.priors$pct.aug
-          n.aug <- trunc(nrow(data)*pct.aug)
-          data.aug <- rbind.data.frame(data[,CurVarFlg, drop=FALSE],.randdraw(data[,CurVarFlg, drop=FALSE], n=n.aug))
-          mi.data.aug <- rbind.data.frame(mi.data[[i]][,!CurVarFlg], .randdraw(mi.data[[i]][,!CurVarFlg], n=n.aug))
-          dat <- data.frame(data.aug, mi.data.aug)
-        }        
-        else{
-          dat <- data.frame(data[,CurVarFlg, drop=FALSE], mi.data[[i]][,!CurVarFlg])
-        }
-        
+        dat <- data.frame(data[,CurVarFlg, drop=FALSE], mi.data[[i]][,!CurVarFlg])
         names(dat) <- c(CurrentVar, names(data[,!CurVarFlg, drop=FALSE] ))
         model.type <- as.character(type.models( info[[CurrentVar]]$type))
+
+        if(add.priors$augment.data){
+          pct.aug <- add.priors$pct.aug
+          n.aug <- trunc(nrow(data)*(pct.aug/100))
+          dat <- rbind(dat, .randdraw(dat, n=n.aug))
+        }                
+        aa <<- dat
         # Error Handling
         .Internal(seterrmessage(""))
         errormessage <- paste("\nError while imputing variable:", CurrentVar, ", model:",model.type,"\n")
@@ -279,6 +277,9 @@ setMethod("mi", signature(object = "data.frame"),
   if(add.priors$K>0){
     mi <- mi(mi, continue.on.convergence=TRUE, n.iter=20)
   }
+  if(add.priors$augment.data){
+    mi <- mi(mi, continue.on.convergence=TRUE, n.iter=20)
+  }
   return(mi)
 }
 )
@@ -319,9 +320,10 @@ setMethod("mi", signature(object = "mi"),
     data <- as.data.frame(proc.tmp$data)
     info.org <- info
     info <- mi.info(data)
-    info$type <- proc.tmp$type
-    info$imp.formula <- mi.info.formula.default(data, info)$imp.formula
-#    data <- mi.info.recode(data, info)
+    for(i in 1:ncol(data)){
+      info[[i]]$type <- proc.tmp$type[[i]]
+    }
+    info <- mi.info.formula.default(data, info)
   }  
 
   col.mis   <- !complete.cases(t(data))
