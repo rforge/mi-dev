@@ -194,14 +194,22 @@ setMethod("mi", signature(object = "data.frame"),
     Time.Elapsed <- proc.time() - ProcStart
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
       con.check <- as.bugs.array(AveVar[1:s, , ])
-      if(max(con.check$summary[,8]) < 1.049) { 
+      if(max(con.check$summary[,8]) < 1.1) { 
         converged.flg <- TRUE
         if(!continue.on.convergence){ 
+          if(post.run){
+            if(add.priors$K>0){
+              mi <- mi(mi, continue.on.convergence=TRUE, n.iter=20)
+            }
+            if(add.priors$augment.data){
+              mi <- mi(mi, continue.on.convergence=TRUE, n.iter=20)
+            }
+          }
           break
         }
       }
       if(((Time.Elapsed)/60)[3] > max.minutes){ 
-        time.out.flg <- TRUE 
+        time.out.flg <- TRUE
         break
       }
     }
