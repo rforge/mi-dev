@@ -17,9 +17,9 @@ setClass("mi",
                 imp       = "list",
                 converged = "logical",
                 coef.conv = "ANY",
-                bugs      = "ANY",
+                bugs      = "bugs",
                 preprocess = "logical",
-                mi.info.preprocessed = "ANY"),
+                mi.info.preprocessed = "mi.info"),
             contains  = "list"
 )
 
@@ -71,7 +71,7 @@ setClass("mi.continuous",
         representation(
             model    = "list", 
             expected = "numeric", 
-            random   = "numeric"),
+            random   = "ANY"),
             contains = "mi.method"
 )
 
@@ -79,7 +79,7 @@ setClass("mi.count",
         representation(
             model    = "list", 
             expected = "numeric", 
-            random   = "numeric"),
+            random   = "ANY"),
             contains = "mi.method"
 )
 

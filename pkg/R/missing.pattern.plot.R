@@ -2,7 +2,7 @@
 # missing pattern plot
 # ==============================================================================
 mp.plot <- missing.pattern.plot <- function ( data, y.order = FALSE, x.order = FALSE, 
-                                    xlab = "Index", ylab = "", 
+                                    xlab = "Index", ylab = "Variable", 
                                     main = NULL, gray.scale = FALSE,
                                     obs.col = "blue", mis.col = "red", ... ) 
 {
