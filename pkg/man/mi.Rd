@@ -56,7 +56,7 @@
   \item{object}{A data frame containing the incomplete data. Missing data are coded as NA or mi object.}
   \item{info}{\code{\link{mi.info}} object.}
   \item{n.imp}{Number of multiple imputations. The default is \code{m = 3}.}
-  \item{n.iter}{Number of iterations to get convergence. The default is 5.}
+  \item{n.iter}{Number of iterations to get convergence. The default is 30.}
   \item{R.hat}{R.hat statistic for convergence check, default is 1.1.}
   \item{max.minutes}{Maximum minutes to stop iterating.  The default is 20.}  
   \item{seed}{Random seed}
@@ -70,7 +70,7 @@
       \code{\link{mi}}. See the documentation for \code{\link{prior.control}} for details.}  
   \item{post.run}{default is \code{TRUE} which will run 20 more iterations after the \code{mi} is finished
     if and only if some priors have been added into the \code{mi} process. This is to mitigate the 
-    influence the importance of the priors to the whole procedure.}
+    influence of the priors to the whole procedure.}
 }
 
 \value{ 
