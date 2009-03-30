@@ -20,7 +20,7 @@ mi.types()
         \code{dichotomous},
         \code{positive-continuous},
         \code{proportion},
-        \code{predictive-mean-match},
+        \code{predictive-mean-matching},
         \code{mixed},
         \code{fixed}}
 }
