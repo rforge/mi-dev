@@ -63,7 +63,7 @@ mi.info <- function( data, threshhold  = 0.99999 )
                           FALSE
                         }   
     info[[i]]$include <- if( info[[i]]$is.ID ){ 
-                          FALSE 
+                            FALSE 
                           } 
                           else { 
                             TRUE 
