@@ -87,6 +87,7 @@ export(
   mi.categorical,
   mi.completed,
   mi.continuous, 
+  mi.copy,
   mi.count,
   mi.data.frame,
   mi.dichotomous,
