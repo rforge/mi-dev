@@ -140,7 +140,7 @@ and looping through until approximate convergence.
 
 \examples{
 # simulate fake data
-set.seed(10)
+set.seed(100)
 n <- 100
 u1 <- rbinom(n, 1, .5)
 v1 <- log(rnorm(n, 5, 1))
@@ -156,11 +156,11 @@ x7 <- rnorm(n)
 x8 <- factor(rep(seq(1,6),10)[sample(1:n, n)])
 x9 <- rpois(n, 50)
 x10 <- runif(n, 0.1, .99)
-y <- x1 + x2 + x9 + rnorm(n)
+y <- x1 + x2 + x7 + x9 + rnorm(n)
 fakedata <- cbind.data.frame(y, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10)
 
 # randomly create missing values
-dat <- mi:::.create.missing(fakedata, pct.mis=10)
+dat <- mi:::.create.missing(fakedata, pct.mis=30)
 
 # get information matrix of the data
 inf <- mi.info(dat)
