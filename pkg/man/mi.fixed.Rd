@@ -59,7 +59,7 @@
 # fake data
 n <- 100
 x1 <- rbinom(n, 1, .45)
-x2 <- 2*x
+x2 <- 2*x1
 x1[c(1, 3, 5, 20, 26)] <- NA
 
 # impute data
