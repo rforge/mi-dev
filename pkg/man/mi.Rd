@@ -67,7 +67,8 @@
     until maximum iteration is reached or maximum minutes pass.}
   \item{check.coef.convergence}{default = \code{FALSE}}
   \item{add.priors}{a list of parameters for controlling the process of adding priors for
-      \code{\link{mi}}. See the documentation for \code{\link{prior.control}} for details.}  
+      \code{\link{mi}}. See the documentation for \code{\link{prior.control}} for details.
+      Set \code{add.priors=FALSE} to use no prior.}  
   \item{post.run}{default is \code{TRUE} which will run 20 more iterations after the \code{mi} is finished
     if and only if some priors have been added into the \code{mi} process. This is to mitigate the 
     influence of the priors to the whole procedure.}
