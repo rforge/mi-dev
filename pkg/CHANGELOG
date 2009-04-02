@@ -1,3 +1,6 @@
+2008-4-2 Yu-Sung Su     <ys463@columbia.edu>  
+   * R/mi: allow add.priors to be logical, set FALSE to speicify no prior
+
 2008-3-31 Yu-Sung Su     <ys463@columbia.edu>  
    * DESCRIPTION (Version, Date): 0.04-6
    * R/coef: add mi.mer method

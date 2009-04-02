@@ -28,6 +28,10 @@ setMethod("mi", signature(object = "data.frame"),
   }
   ProcStart     <- proc.time()                  # starting time
   
+  if(!add.priors){
+    add.priors <- prior.control(augment.data=FALSE, K=0)
+  }
+  
   # variable initialization
   time.out.flg  <- FALSE
   converged.flg <- FALSE
