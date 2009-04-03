@@ -2,7 +2,7 @@
   * add option qui for convergence check
   * add color visualization for convergence check
   * check convergence of unodered-categorical variable 
-    using binary decomposition
+    using binary decomposition # DONE
 
 2009-3-5 Yu-Sung Su     <ys463@columbia.edu>  
   * add more examples that use all the type

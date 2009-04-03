@@ -154,7 +154,7 @@ x4 <- ordered(rep(seq(1, 5),100)[sample(1:n, n)])
 x5 <- rep(letters[1:10],10)[sample(1:n, n)]
 x6 <- trunc(runif(n, 1, 10))
 x7 <- rnorm(n)
-x8 <- factor(rep(seq(1,6),10)[sample(1:n, n)])
+x8 <- factor(rep(seq(1,10),10)[sample(1:n, n)])
 x9 <- rpois(n, 50)
 x10 <- runif(n, 0.1, .99)
 y <- x1 + x2 + x7 + x9 + rnorm(n)
