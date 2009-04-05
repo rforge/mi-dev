@@ -14,13 +14,11 @@
 #}
 
 # preprocess: this is ugly..but working!..need to improve it
-mi.preprocess <- function(data, type=NULL, varnames = NULL){
+mi.preprocess <- function(data, info, varnames = NULL){
   n.col <- ncol(data)
   n.row <- nrow(data)
   var.name <- names(data)
-  if(is.null(type)){
-    type <- typecast(data)
-  }
+  type <- info$type
   if(is.null(varnames)){
     TYPE <- NULL
     idx <- NULL
@@ -128,6 +126,13 @@ mi.preprocess <- function(data, type=NULL, varnames = NULL){
     }
   }
   names(type) <- names(data)
+  for(i in 1:length(type)){
+    if(type[i]=="unordered-categorical"){
+      y.cat <- names(info[[names(type[i])]]$level)
+      y.ncat <- length(y.cat)
+      data[,i] <-  recode(data[,i], paste(1:y.ncat,"='",y.cat,"'",sep="",collapse=";") )        
+    }
+  }        
   return(list(data=data, type=type))
 }
 

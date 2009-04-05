@@ -53,7 +53,7 @@ setMethod("mi", signature(object = "data.frame"),
 
   #  # Automatic Preprocess
   if( preprocess ) {
-    proc.tmp <- mi.preprocess(data, type=info$type)
+    proc.tmp <- mi.preprocess(data, info)
     data <- as.data.frame(proc.tmp$data)
     info.org <- info
     info <- mi.info(data)
@@ -173,7 +173,14 @@ setMethod("mi", signature(object = "data.frame"),
         }
         mi.data[[i]][[CurrentVar]][is.na(data[[CurrentVar]])] <- mi.object[[i]][[CurrentVar]]@random
         data.tmp <<- mi.data
-        coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
+        if(info[[CurrentVar]]$type=="unordered-categorical"){
+          n.level <- length(info[[CurrentVar]]$level)
+          coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],
+            unlist(as.list(coef(mi.object[[i]][[CurrentVar]]))))
+        }
+        else{
+          coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
+        }
         start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
       } ## variable loop 
       cat("\n" )
@@ -310,7 +317,7 @@ setMethod("mi", signature(object = "mi"),
   }
   #  # Automatic Preprocess
   if( preprocess ) {
-    proc.tmp <- mi.preprocess(data, type=info$type)
+    proc.tmp <- mi.preprocess(data, info)
     data <- as.data.frame(proc.tmp$data)
     info.org <- info
     info <- mi.info(data)
@@ -402,8 +409,15 @@ setMethod("mi", signature(object = "mi"),
         # Error Handling        
         mi.data[[i]][[CurrentVar]][is.na(data[[CurrentVar]])] <- mi.object[[i]][[CurrentVar]]@random
         data.tmp <<- mi.data
-        coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
-        start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
+        if(info[[CurrentVar]]$type=="unordered-categorical"){
+          n.level <- length(info[[CurrentVar]]$level)
+          coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],
+            unlist(as.list(coef(mi.object[[i]][[CurrentVar]]))))
+        }
+        else{
+          coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
+        }
+            start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
       } ## variable loop 
       cat("\n" )      
 

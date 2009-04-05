@@ -220,7 +220,7 @@ type <-function(info){
 
 
 .catvarnames <- function(varname, level){
-  new.varnames <-  paste(varname, "(", level, ")", sep="")
+  new.varnames <-  paste(varname, "(", names(level), ")", sep="")
   return(new.varnames)
 }
 

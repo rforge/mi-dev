@@ -3,7 +3,7 @@ mi.completed.default <- function(object, m = 1){
   if(object@preprocess){
     info <- object@mi.info.preprocessed
     mimatrix <- data.mi(object)
-    mimatrix <- mi.preprocess(mimatrix, type=object@mi.info$type)$data
+    mimatrix <- mi.preprocess(mimatrix, info=object@mi.info)$data
   }
   else{
     info <- info.mi(object)
