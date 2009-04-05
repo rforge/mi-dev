@@ -155,8 +155,8 @@ x5 <- rep(letters[1:10],10)[sample(1:n, n)]
 x6 <- trunc(runif(n, 1, 10))
 x7 <- rnorm(n)
 x8 <- factor(rep(seq(1,10),10)[sample(1:n, n)])
-x9 <- rpois(n, 10)
-x10 <- runif(n, 0.1, .99)
+x9 <- runif(n, 0.1, .99)
+x10 <- rpois(n, 10)
 y <- x1 + x2 + x7 + x9 + rnorm(n)
 fakedata <- cbind.data.frame(y, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10)
 
@@ -167,11 +167,11 @@ dat <- mi:::.create.missing(fakedata, pct.mis=30)
 inf <- mi.info(dat)
 
 # update the variable type of a specific variable to mi.info
-inf <- update(inf, "type", list(x9="count"))
+inf <- update(inf, "type", list(x10="count"))
 
 # run the imputation
 ## this is for test only
-IMP <- mi(dat, info=inf, n.iter=6, add.priors=prior.control(K=1))
+IMP <- mi(dat, info=inf, n.iter=6, post.run=FALSE)
 # no prior
 # IMP <- mi(dat, info=inf, n.iter=6, add.priors=FALSE)
 
