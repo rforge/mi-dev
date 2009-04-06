@@ -16,7 +16,7 @@
 \title{Fit A Linear Mixed Model or A Generalized Linear Mixed Model for Multiply Imputed Dataset }
 
 \description{
-  Fit A Linear Mixed Model or A Generalized Linear Mixed Model that pulls together the estimates from multiple imputed dataset.
+  Fit A Linear Mixed Model or A Generalized Linear Mixed Model that pulls together the estimates from multiply imputed dataset.
 }
 
 \usage{

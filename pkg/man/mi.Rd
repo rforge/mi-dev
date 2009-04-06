@@ -33,7 +33,7 @@
 \title{ Multiple Iterative Regression Imputation }
 
 \description{
- Produce a multiple imputed matrix applying the elementary functions iteratively 
+ Produce a multiply imputed matrix applying the elementary functions iteratively 
  to the variables with missingness in the data randomly imputing each variable
  and looping through until approximate convergence.
 }

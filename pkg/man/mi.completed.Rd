@@ -5,7 +5,7 @@
 \alias{mi.data.frame,mi-method}
 
 \title{ 
-    Multiple Imputed Dataframes
+    Multiply Imputed Dataframes
 }
 
 \description{
