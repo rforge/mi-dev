@@ -1,3 +1,9 @@
+2009-4-7 Yu-Sung Su     <ys463@columbia.edu>  
+   * man/mi.pooled: new doc for mi.pooled
+   * R/AllClass: mi.lm, mi.glm, mi.mer are obsoleted
+   * R/mi.pooled: new function to pool estimates
+
+
 2009-4-5 Yu-Sung Su     <ys463@columbia.edu>  
    * R/mi: fix dimensional probelm when model is of mulitnom; 
       now coef.convergence is working!
