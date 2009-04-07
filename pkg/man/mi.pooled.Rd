@@ -1,6 +1,7 @@
 \name{mi.pooled}
 \docType{class}
 % Classes
+\alias{mi.pooled}
 \alias{mi.pooled-class}
 % Functions
 \alias{lm.mi}
@@ -25,7 +26,7 @@
 }
 
 \usage{
-pooled(coef, se, m)
+mi.pooled(coef, se, m)
 lm.mi(formula, mi.object, ...)
 glm.mi(formula, mi.object, family = gaussian, ...)
 bayesglm.mi(formula, mi.object, family = gaussian, ...)
@@ -33,10 +34,10 @@ polr.mi(formula, mi.object, ...)
 bayespolr.mi(formula, mi.object, ...)
 lmer.mi(formula, mi.object, rescale=FALSE, ...)
 glmer.mi(formula, mi.object, family = gaussian, rescale=FALSE, ...)
-\S3method{print}{mi.glm}(x, \dots)
-\S4method{coef}{mi.glm}(object)
-\S4method{se.coef}{mi.glm}(object)
-\S4method{display}{mi.glm}(object, digits=2)
+\S3method{print}{mi.pooled}(x, \dots)
+\S4method{coef}{mi.pooled}(object)
+\S4method{se.coef}{mi.pooled}(object)
+\S4method{display}{mi.pooled}(object, digits=2)
 }
 
 \arguments{
@@ -49,6 +50,7 @@ glmer.mi(formula, mi.object, family = gaussian, rescale=FALSE, ...)
   \item{mi.object}{\code{mi} object}
   \item{family}{See \code{\link[stats]{glm}}, \code{\link[MASS]{polr}}, 
     \code{\link[lme4]{lmer}}for detail.}
+  \item{rescale}{default is \code{FALSE}, see \code{\link[arm]{rescale}} for detail.}
   \item{x}{\code{mi.pooled} object.}
   \item{object}{\code{mi.pooled} object.}
   \item{digits}{number of significant digits to display, default=2.}
@@ -88,8 +90,6 @@ glmer.mi(formula, mi.object, family = gaussian, rescale=FALSE, ...)
   y <- rnorm(n)
   group <- rep(1:10, 10)
 
-
-
   # create artificial missingness
   dat.xy <- data.frame(x, z, y)
   dat.xy <- mi:::.create.missing(dat.xy, pct.mis=10)  
@@ -103,32 +103,32 @@ glmer.mi(formula, mi.object, family = gaussian, rescale=FALSE, ...)
   coef(M1)
   se.coef(M1)
 
-  M2 <- glm.mi(x ~ y + z, dat.mi, family = binomial(link="logit"))
+  M2 <- glm.mi(x ~ y , dat.mi, family = binomial(link="logit"))
   display(M2)
   coef(M2)
   se.coef(M2)
 
-  M3 <- bayesglm.mi(x ~ y + z, dat.mi, family = binomial(link="logit"))
+  M3 <- bayesglm.mi(x ~ y , dat.mi, family = binomial(link="logit"))
   display(M3)
   coef(M3)
   se.coef(M3)
 
-  M4 <- polr.mi(ordered(z) ~ x + y, dat.mi)
+  M4 <- polr.mi(ordered(z) ~  y, dat.mi)
   display(M4)
   coef(M4)
   se.coef(M4)
 
-  M5 <- bayespolr.mi(ordered(z) ~ x + y, dat.mi)
+  M5 <- bayespolr.mi(ordered(z) ~  y, dat.mi)
   display(M5)
   coef(M5)
   se.coef(M5)
 
-  M6 <- lmer.mi(y ~ x + z + (1|group), dat.mi)
+  M6 <- lmer.mi(y ~ x  + (1|group), dat.mi)
   display(M6)
   coef(M6)
   se.coef(M6)
 
-  M7 <- lmer.mi(x ~ y + z + (1|group), dat.mi, family = binomial(link="logit"))
+  M7 <- glmer.mi(x ~ y  + (1|group), dat.mi, family = binomial(link="logit"))
   display(M7)
   coef(M7)
   se.coef(M7)  
