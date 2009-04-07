@@ -31,7 +31,8 @@ exportClasses(
   mi.continuous,
   mi.count,
   mi.info,
-  mi.pmm
+  mi.pmm,
+  mi.pooled
 )
 
 exportMethods(
@@ -110,6 +111,7 @@ export(
   mi.preprocess,
   mi.postprocess,
   mi.polr,
+  mi.pooled,
   mi.scatterplot,
   mi.types,
   missing.pattern.plot,
@@ -122,9 +124,7 @@ export(
 
 S3method(update, mi.info)
 S3method(print, mi)
-S3method(print, mi.glm)
-S3method(print, mi.lm)
-S3method(print, mi.mer)
+S3method(print, mi.pooled)
 S3method(print, mi.info)
 S3method(print, mi.method)
 S3method("[<-", mi.info)
