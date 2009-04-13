@@ -61,6 +61,7 @@ setMethod("mi", signature(object = "data.frame"),
       info[[i]]$type <- proc.tmp$type[[i]]
     }
     info <- mi.info.formula.default(data, info)
+    info$imp.formula[1:length(info.org)] <- info.org$imp.formula
   }  
 
   col.mis    <- !complete.cases(t(data)) 

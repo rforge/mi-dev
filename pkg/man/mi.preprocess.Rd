@@ -7,15 +7,13 @@
   and \code{positive-continuous} variable types in mi data object}
 
 \usage{
-  mi.preprocess(data, info, varnames=NULL)
-  mi.postprocess(mi.data)
+  mi.preprocess(data, info)
+  mi.postprocess(mi.data, info)
 }
 
 \arguments{
   \item{data}{the data.frame to be imputed.}
   \item{info}{the information matrix, see \code{mi.info}.}
-  \item{varnames}{the name of the variable to be transpformed,
-      default=\code{NULL}.}
   \item{mi.data}{the imputed data list, obtained from \code{mi.completed}}
 }
 

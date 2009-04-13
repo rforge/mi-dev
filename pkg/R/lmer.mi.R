@@ -4,7 +4,6 @@ lmer.mi <- function(formula, mi.object, rescale=FALSE, ...){
   result <- vector("list", m)
   names(result) <- as.character(paste("Imputation", seq(m), sep = ""))
   mi.data <- mi.completed(mi.object)
-  mi.data <- mi.postprocess(mi.data)
   if(rescale){
     tmp <- vector("list", m)
     for(i in 1:m){
@@ -37,7 +36,6 @@ glmer.mi <- function(formula, mi.object, family=gaussian, rescale=FALSE, ...){
   result <- vector("list", m)
   names(result) <- as.character(paste("Imputation", seq(m), sep = ""))
   mi.data <- mi.completed(mi.object)
-  mi.data <- mi.postprocess(mi.data)
   if(rescale){
     tmp <- vector("list", m)
     for(i in 1:m){
