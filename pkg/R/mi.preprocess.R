@@ -98,10 +98,10 @@ mi.postprocess <- function(mi.data, info){
         }
       }
       if(sum(idx)==0){
-        mi.data <- mi.data
+        mi.data[[s]] <- mi.data[[s]]
       }
       else{
-       mi.data <- mi.data[,-idx]
+        mi.data[[s]] <- mi.data[[s]][,-idx]
       }
     } 
   }

@@ -469,13 +469,15 @@ mi.correlated.list <- function ( data, threshhold = 0.99999 ){
   unique.cor <- unique(result)
   unique.cor <- unique.cor[!sapply(unique.cor,is.null)] 
   unique.cor <- unique.cor[!sapply(sapply(unique.cor,is.na),any)]
-  for(k in 1:length(unique.cor)){
-    chk <- is.na(data[,unique.cor[[k]][1]]) -  is.na(data[,unique.cor[[k]][2]])
-    if(!all(chk==0)){
-      unique.cor[[k]] <- NA
+  if(length(unique.cor)>0){
+    for(k in 1:length(unique.cor)){
+      chk <- is.na(data[,unique.cor[[k]][1]]) -  is.na(data[,unique.cor[[k]][2]])
+      if(!all(chk==0)){
+        unique.cor[[k]] <- NA
+      }
     }
+    unique.cor <- unique.cor[!sapply(sapply(unique.cor,is.na),any)]
   }
-  unique.cor <- unique.cor[!sapply(sapply(unique.cor,is.na),any)]
   options(warn = 0)
   return(unique.cor)
 }
