@@ -68,14 +68,14 @@ setMethod("mi", signature(object = "data.frame"),
   ncol.mis   <- sum(col.mis)
   tot.nlevel <- sum(sapply(.level(info), length))
   tot.n.unord.cat.var <- sum(sapply(.level(info), is.numeric))
-  n.col.sims.array <- dim(data[, info$include])[2] + tot.nlevel - tot.n.unord.cat.var
+  n.col.sims.array <- dim(data[, .include(info)])[2] + tot.nlevel - tot.n.unord.cat.var
   AveVar  <- array(NA, c(n.iter, n.imp, n.col.sims.array*2))
   s_start <- 1
   s_end   <- n.iter
   
   mis.index <-  apply(data, 2, is.na) 
   data <- data[,.include(info)]
-  namelist <- as.list(info$name)
+  namelist <- as.list(info$name[.include(info)])
   cat.pos <- grep("unordered-categorical", info$type)
   for(i in cat.pos){
     namelist[[i]] <- .catvarnames(namelist[[i]], info$level[[i]])
@@ -236,8 +236,8 @@ setMethod("mi", signature(object = "data.frame"),
     if( length(info[[cor.idx]]$correlated) > 0 
          && info[[cor.idx]]$nmis > 0 
           && info[[cor.idx]]$include == FALSE ) {
+      rho <- coef(lm(org.data[[names(info)[cor.idx]]] ~ org.data[[info[[cor.idx]]$determ.pred]]))[2]
       for ( ii in 1:n.imp ){
-        rho <- coef(lm(org.data[[names(info)[cor.idx]]] ~ org.data[[info[[cor.idx]]$determ.pred]]))[2]
         mi.object[[ii]][[names(info)[[cor.idx]]]] <- do.call( mi.copy, 
                                                               args=list(
                                                                 Y=org.data[[names(info)[cor.idx]]],
@@ -471,6 +471,7 @@ setMethod("mi", signature(object = "mi"),
     if( length(info[[cor.idx]]$correlated) > 0 
          && info[[cor.idx]]$nmis > 0 
           && info[[cor.idx]]$include == FALSE ) {
+      rho <- coef(lm(org.data[[names(info)[cor.idx]]] ~ org.data[[info[[cor.idx]]$determ.pred]]))[2]
       for ( ii in 1:n.imp ){
         mi.object[[ii]][[names(info)[[cor.idx]]]] <- do.call( mi.copy, 
                                                               args=list(
