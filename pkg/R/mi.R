@@ -2,11 +2,14 @@
 # mi main function
 #==============================================================================
 
-prior.control <- function(augment.data = FALSE, pct.aug=10, K = 1){
-  if(K > 0&augment.data){
-    augment.data = FALSE
+prior.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1){
+  method <- match.arg(method)
+  if(method=="reshuffling"){
+    return(list(method=method, K=K))
   }
-  return(list(augment.data = augment.data, pct.aug = pct.aug, K = K))
+  if(method=="fading"){
+    return(list(method=method, pct.aug=pct.aug))  
+  }
 }
 
 
@@ -29,9 +32,10 @@ setMethod("mi", signature(object = "data.frame"),
   ProcStart     <- proc.time()                  # starting time
   
   if(is.logical(add.priors)){
-    if(!add.priors){
-      add.priors <- prior.control(augment.data=FALSE, K=0)
-    }
+    add.priors.method <- "other"
+  }
+  else{
+    add.priors.method <- add.priors$method
   }
   
   # variable initialization
@@ -120,13 +124,15 @@ setMethod("mi", signature(object = "data.frame"),
         # K/s decides whether samples from marginal or not by q
         # q = Binomial(p=K/s, n=1)
         #=================================================================
-        prob.add.prior <- add.priors$K/s
-        prob.add.prior <- ifelse(prob.add.prior > 1, 1, prob.add.prior)
-        q <- rbinom(1, 1, prob=prob.add.prior)           
-        if(q){
-          cat(paste(CurrentVar, "*", sep=""), " ")
+        if(add.priors.method=="reshuffling"){
+          prob.add.prior <- add.priors$K/s
+          prob.add.prior <- ifelse(prob.add.prior > 1, 1, prob.add.prior)
+          q <- rbinom(1, 1, prob=prob.add.prior)           
+          if(q){
+            cat(paste(CurrentVar, "*", sep=""), " ")
+          }
         }
-        else if(add.priors$augment.data){
+        else if(add.priors.method=="fading"){
           cat(paste(CurrentVar, "*", sep=""), " ")
         }
         else{
@@ -139,10 +145,12 @@ setMethod("mi", signature(object = "data.frame"),
         names(dat) <- c(CurrentVar, names(data[,!CurVarFlg, drop=FALSE] ))
         model.type <- as.character(type.models( info[[CurrentVar]]$type))
         
-        if(q){
-          dat <- random.imp(dat, method = rand.imp.method)
+        if(add.priors.method=="reshuffling"){
+          if(q){
+            dat <- random.imp(dat, method = rand.imp.method)
+          }
         }
-        if(add.priors$augment.data){
+        if(add.priors.method=="fading"){
           pct.aug <- add.priors$pct.aug
           n.aug <- trunc(nrow(data)*(pct.aug/100))
           dat <- rbind(dat, .randdraw(dat, n=n.aug))
@@ -169,8 +177,10 @@ setMethod("mi", signature(object = "data.frame"),
         on.exit()
         options(show.error.messages = TRUE)
         # Error Handling        
-        if(q){
-          mi.object[[i]][[CurrentVar]]@random <- dat[is.na(data[,CurrentVar, drop=FALSE]),CurrentVar]
+        if(add.priors.method=="reshuffling"){        
+          if(q){
+            mi.object[[i]][[CurrentVar]]@random <- dat[is.na(data[,CurrentVar, drop=FALSE]),CurrentVar]
+          }
         }
         mi.data[[i]][[CurrentVar]][is.na(data[[CurrentVar]])] <- mi.object[[i]][[CurrentVar]]@random
         data.tmp <<- mi.data
@@ -256,6 +266,7 @@ setMethod("mi", signature(object = "data.frame"),
   }
   if(preprocess){
     info2 <- info
+
     info <- info.org
   }
   else{
@@ -275,10 +286,7 @@ setMethod("mi", signature(object = "data.frame"),
             mi.info.preprocessed = info2)
   with(globalenv(), rm(data.tmp))
   if(post.run){
-    if(add.priors$K>0){
-      m <- mi(m, continue.on.convergence=TRUE, n.iter=20, R.hat=R.hat)
-    }
-    if(add.priors$augment.data){
+    if(!is.logical(add.priors)){
       m <- mi(m, continue.on.convergence=TRUE, n.iter=20, R.hat=R.hat)
     }
   }
@@ -418,10 +426,10 @@ setMethod("mi", signature(object = "mi"),
         else{
           coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
         }
-            start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
+        start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
       } ## variable loop 
       cat("\n" )      
-
+      
       AveVar[s,i,] <- c(unlist(sapply(mi.data[[i]], FUN = .foo1)), unlist(sapply(mi.data[[i]], FUN = .foo2)))
     
     } # imputation loop
