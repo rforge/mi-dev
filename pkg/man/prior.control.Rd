@@ -24,7 +24,7 @@ randomly imputing data from marginal (imputing data from the observed values)
 and drawing from the modeled based values. And with each iteration (s), the probability of cooling (q) decreases by number of iterations, 
 such that \code{q = K/s}.
 
-If code{fading} method is used, the imputation will augment 
+If \code{fading} method is used, the imputation will augment 
 }
 
 

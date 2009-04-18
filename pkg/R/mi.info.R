@@ -185,15 +185,15 @@ mi.info.params.default <-function( info ){
 # Default formula for the type
 # ========================================================================
 type.default.formula <- function(response.name, predictor.name, type) {
-#  if (type=="ordered-categorical"){
-#    form <- paste( paste( "ordered(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
-#  } 
-#  else if (type=="fixed"){
-#    form <- paste( response.name, " ~",response.name)
-#  } 
-#  else{
+  if (type=="ordered-categorical"){
+    form <- paste( paste( "ordered(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
+  } 
+  else if (type=="fixed"){
+    form <- paste( response.name, " ~",response.name)
+  } 
+  else{
   form <- paste( response.name,"~",paste(predictor.name,collapse=" + "))
-  #}
+  }
   return(form)
 }
 
