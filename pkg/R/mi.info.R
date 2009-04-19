@@ -188,6 +188,9 @@ type.default.formula <- function(response.name, predictor.name, type) {
   if (type=="ordered-categorical"){
     form <- paste( paste( "ordered(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
   } 
+  else if (type=="unordered-categorical"){
+    form <- paste( paste( "factor(", response.name, ") ~",sep=""),paste(predictor.name,collapse=" + "))
+  } 
   else if (type=="fixed"){
     form <- paste( response.name, " ~",response.name)
   } 
