@@ -322,7 +322,9 @@ mi.info.fix <- function( info ) {
                   #type
                   res.var3.type <- menu(mi.types(),title="choose a type to change to")
                   print(res.var3.type)
-                  info[[Var.to.fix]]$type <- mi.types()[res.var3.type]
+                  change.list <- list(Var.to.fix=mi.types()[res.var3.type])
+                  names(change.list) <- Var.to.fix
+                  info <- update(info, target="type", change.list)
                   #type.default.formula(,info[[Var.to.fix]]$type)
                 }
                 else if(res.var3 ==2){
@@ -657,15 +659,14 @@ update.mi.info <- function(object, target, list, ...){
   for ( i in 1:length( list ) ) {
     object[[nam[i]]][[target]] <- list[[nam[i]]]
     if(target=="type"){
-      varnames <- names(object)
-      object$include[nam[i]] <- FALSE
-      inc <- object$include
-      varnames <- varnames[inc,drop=TRUE]
-      object[[nam[i]]]["imp.formula"] <- type.default.formula(
-                                          nam[i], 
-                                          varnames, 
-                                          object$type[nam[i]])
-      object$include[nam[i]] <- TRUE
+      if(object$type[nam[i]]=="ordered-categorical"){
+        object$imp.formula <- sapply(object$imp.formula, 
+          .change.formula.ordered, varnames=nam[i])
+      }
+      if(object$type[nam[i]]=="unordered-categorical"){
+        object$imp.formula <- sapply(object$imp.formula, 
+          .change.formula.unordered, varnames=nam[i])
+      }
     }
   }
   return(info=object)
