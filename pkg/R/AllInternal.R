@@ -228,7 +228,6 @@ type <-function(info){
 # internal used for AveVar in mi
 #==================================
 .foo1 <- function(v, type){
-  browser()
   for(i in 1:length(v)){
     if(type=="unordered-categorical"){
       new.v <- .cat2binary(v)
@@ -270,6 +269,8 @@ type <-function(info){
   x <- gsub(varnames, paste("ordered(", varnames, ")", sep=""), x)
   return(x)
 }
+
+
 
 .change.formula.unordered <- function(x, varnames){
   x <- gsub(varnames, paste("factor(", varnames, ")", sep=""), x)

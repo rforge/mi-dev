@@ -216,6 +216,7 @@ setMethod("mi", signature(object = "data.frame"),
         } 
       } ## variable loop 
       cat("\n" )
+      browser()
       AveVar[s,i,] <- avevar.tmp
      
     
