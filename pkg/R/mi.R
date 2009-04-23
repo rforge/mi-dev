@@ -92,7 +92,13 @@ setMethod("mi", signature(object = "data.frame"),
     tot.nlevel <- sum(sapply(info$level[idx.include.cat], length))
     tot.n.unord.cat.var <- sum(idx.include.cat)
   }
-  n.col.sims.array <- dim(data[, (.include(info)&.nmis(info)>0)])[2] + tot.nlevel - tot.n.unord.cat.var
+  idx.include.var <- (.include(info)&.nmis(info)>0)
+  if(sum(idx.include.var)==1){
+    n.col.sims.array <- 1 + tot.nlevel - tot.n.unord.cat.var
+  }
+  else{
+    n.col.sims.array <- dim(data[, idx.include.var])[2] + tot.nlevel - tot.n.unord.cat.var
+  }
   AveVar  <- array(NA, c(n.iter, n.imp, n.col.sims.array*2))
   s_start <- 1
   s_end   <- n.iter
