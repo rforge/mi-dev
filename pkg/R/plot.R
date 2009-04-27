@@ -25,7 +25,7 @@ plot.mi <- function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
     for(i in 1:dim(Y)[2]){
       par( ask = TRUE )
       if(!is.null(mids[[i]])) {
-        plot(x = mids[[i]], y = Y[ ,names(mids)[i]], main = names(Y)[i])
+        plot(x = mids[[i]], y = Y[ ,names(mids)[i]], main = names(Y)[i], gray.scale=gray.scale)
       }
     }
   }
