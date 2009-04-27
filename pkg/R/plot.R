@@ -94,11 +94,11 @@ function ( x, y, main=deparse( substitute( y ) ),gray.scale = FALSE ) {
 )
 
 # ==============================================================================
-# S4 plot function for mi.dichotomous object
+# S4 plot function for mi.binary object
 # ==============================================================================
 
 
-setMethod("plot", signature(x = "mi.dichotomous",y="ANY"), 
+setMethod("plot", signature(x = "mi.binary",y="ANY"), 
 function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
    #par(mfrow=c(1,4))
    fit     <- fitted( x )

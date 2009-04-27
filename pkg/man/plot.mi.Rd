@@ -26,7 +26,7 @@ strongly recommended to use a variable containing more information. Fitted lowes
 
 \value{
   Histograms, scatterplots, and residual plots of the fit of the imputation models.  
-  Binned residual plots are for each dichotomous variable.
+  Binned residual plots are for each binary variable.
 }
 \references{
     Kobi Abayomi, Andrew Gelman and Marc Levy. (2008).
@@ -55,7 +55,7 @@ strongly recommended to use a variable containing more information. Fitted lowes
 }
 \examples{
   data(CHAIN)
-  imp.CHAIN <- mi(CHAIN, n.iter=6, preprocess=FALSE, add.priors=FALSE)
+  imp.CHAIN <- mi(CHAIN, n.iter=6, preprocess=FALSE, add.noise=FALSE)
   plot(imp.CHAIN)
 }
 \keyword{ hplot }
