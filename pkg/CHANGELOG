@@ -1,3 +1,10 @@
+2009-4-28 Yu-Sung Su     <ys463@columbia.edu>  
+   * DESCRIPTION (Version, Date): 0.07-1
+   * rename mi.dichotomous to mi.binary
+   * rename correlated slot to collinear
+   * rename continue.on.convergence to run.past.convergence
+
+
 2009-4-22 Yu-Sung Su     <ys463@columbia.edu>  
    * DESCRIPTION (Version, Date): 0.06-5
    * redesign formulas

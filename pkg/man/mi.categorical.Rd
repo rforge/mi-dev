@@ -17,7 +17,7 @@
 \usage{
   mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots)
   \S4method{residuals}{mi.categorical}(object, y)
-  \S4method{plot}{mi.categorical,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
+  \S4method{plot}{mi.categorical,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE)
 }
 \arguments{
   \item{formula}{ a formula expression as for regression models, of the form
@@ -33,7 +33,6 @@
   \item{data}{ A data frame containing the incomplete data and the matrix of the complete predictors. }
   \item{n.iter}{ Maximum number of iteration. }
   \item{MaxNWts}{ The maximum allowable number of weights. See nnet for detail. }
-  \item{\dots}{ Currently not used. }
   \item{object}{ \code{mi.categorical} object.}
   \item{x}{ \code{mi.categorical} object.}
   \item{y}{ Observed values.}
@@ -66,14 +65,14 @@
     \code{\link{mi}}
 }
 \examples{
-  x<-rnorm(100,0,1)
-  y<-x+4
-  y<-round(y)
-  y[y<0]<-0
+  x <-rnorm(100,0,1)
+  y <- x+4
+  y <- round(y)
+  y[y<0] <- 0
   # create artificial missingness on y
-  y[seq(1,100,10)]<-NA
+  y[seq(1,100,10)] <- NA
   dat.xy <- data.frame(x,y)
-  mi.categorical(formula =y~x,data=dat.xy)
+  mi.categorical(formula = y ~ x, data = dat.xy)
 }
 \keyword{models}
 \keyword{aplot}

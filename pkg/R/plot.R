@@ -81,7 +81,7 @@ function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
 # ==============================================================================
 
 setMethod("plot", signature(x = "mi.categorical", y="ANY"), 
-function ( x, y, main=deparse( substitute( y ) ),gray.scale = FALSE ) {
+function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
   #par(mfrow=c(1,4))
   fit     <- as.numeric(fitted( x ))
   res     <- residuals(x, y)

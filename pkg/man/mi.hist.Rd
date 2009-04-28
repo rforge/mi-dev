@@ -25,11 +25,11 @@
 }
 \usage{
   mi.hist( object, Yobs, \dots)
-\S4method{mi.hist}{mi.method,ANY}( object, Yobs, ... )
-\S4method{mi.hist}{mi.categorical,ANY}( object, Yobs, ... )
-\S4method{mi.hist}{mi.binary,ANY}( object, Yobs, ... )
-\S4method{mi.hist}{mi.polr,ANY}( object, Yobs, ... )
-\S4method{mi.hist}{mi.pmm,ANY}( object, Yobs, ... )
+\S4method{mi.hist}{mi.method,ANY}( object, Yobs, \dots)
+\S4method{mi.hist}{mi.categorical,ANY}( object, Yobs, \dots)
+\S4method{mi.hist}{mi.binary,ANY}( object, Yobs,\dots)
+\S4method{mi.hist}{mi.polr,ANY}( object, Yobs, \dots)
+\S4method{mi.hist}{mi.pmm,ANY}( object, Yobs, \dots)
 }
 \arguments{
     \item{Yobs}{ observed values.}
