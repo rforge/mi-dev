@@ -24,11 +24,14 @@ plot.mi <- function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
     par(mfrow = mfrow)
     for(i in 1:dim(Y)[2]){
       par( ask = TRUE )
+      old.par <- par(no.readonly = TRUE)  
+      par(mar=c(3,3,3,1), mgp=c(1.5,.25,0), tcl=-0.2)
       if(!is.null(mids[[i]])) {
         plot(x = mids[[i]], y = Y[ ,names(mids)[i]], main = names(Y)[i], gray.scale=gray.scale)
       }
     }
   }
+  par(old.par)
 }
 
 # ==============================================================================
