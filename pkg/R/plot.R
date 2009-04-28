@@ -40,7 +40,7 @@ plot.mi <- function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
 
 
 setMethod( "plot", signature( x = "mi.method", y ="ANY"), 
-  function( x, y, main = deparse( substitute( y ) ), gray.scale = FALSE ){      
+  function( x, y, main = deparse( substitute( y ) ), gray.scale = FALSE, ...){      
     fit   <- fitted( x )
     res   <- residuals( x, y )
     sigma <- sigma.hat( x )
@@ -61,7 +61,7 @@ setMethod( "plot", signature( x = "mi.method", y ="ANY"),
 # ==============================================================================
 
 setMethod("plot", signature(x = "mi.polr", y="ANY"), 
-function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
+function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, ...) {
   #par(mfrow=c(1,4))
   fit     <- .factor2num( fitted( x ))
   res     <- .factor2num( residuals( x, y ))
@@ -81,7 +81,7 @@ function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
 # ==============================================================================
 
 setMethod("plot", signature(x = "mi.categorical", y="ANY"), 
-function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
+function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, ...) {
   #par(mfrow=c(1,4))
   fit     <- as.numeric(fitted( x ))
   res     <- residuals(x, y)
@@ -102,7 +102,7 @@ function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
 
 
 setMethod("plot", signature(x = "mi.binary",y="ANY"), 
-function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE ) {
+function ( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, ...) {
    #par(mfrow=c(1,4))
    fit     <- fitted( x )
    res     <- residuals( x, y )

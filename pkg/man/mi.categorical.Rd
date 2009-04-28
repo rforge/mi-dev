@@ -17,7 +17,7 @@
 \usage{
   mi.categorical( formula, data = NULL, n.iter = 100, MaxNWts = 1500, \dots)
   \S4method{residuals}{mi.categorical}(object, y)
-  \S4method{plot}{mi.categorical,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE)
+  \S4method{plot}{mi.categorical,ANY}( x, y, main=deparse( substitute( y ) ), gray.scale = FALSE, \dots)
 }
 \arguments{
   \item{formula}{ a formula expression as for regression models, of the form
@@ -38,6 +38,7 @@
   \item{y}{ Observed values.}
   \item{main}{ main title of the plot. }
   \item{gray.scale}{ When set to TRUE, makes the plot into gray scale with predefined color and line type. }
+  \item{\dots}{Currently not used.}
 
 }
 \details{
