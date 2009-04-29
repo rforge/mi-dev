@@ -6,6 +6,7 @@
 % Function
 \alias{imputed}
 \alias{print,mi.method-method}
+\alias{plot,mi.method-method}
 \alias{plot,mi.method,ANY-method}
 \alias{fitted,mi.method-method}
 \alias{coef,mi.method-method}

@@ -2,13 +2,13 @@
 # S4 plot function for mi object
 # ==============================================================================
 
-setMethod( "plot", signature( x = "mi", y="missing" ),
-  function(x, ...) {
-    plot.mi(x, ...)
+setMethod( "plot", signature( x = "mi", y="ANY" ),
+  function(x, y, ...) {
+    plot.mi(x, y, ...)
   }
 )
 
-plot.mi <- function ( x, m = 1, vrb = NULL, vrb.name = "Variable Score",
+plot.mi <- function ( x, y, m = 1, vrb = NULL, vrb.name = "Variable Score",
                         gray.scale = FALSE, mfrow=c(1, 4), ... ) 
 {
   if (m(x) < m) { 

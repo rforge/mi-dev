@@ -4,6 +4,7 @@
 \alias{mi.binary-class}
 % Function
 \alias{mi.binary}
+\alias{plot,mi.binary-method}
 \alias{plot,mi.binary,ANY-method}
 % methods
 \alias{resid,mi.binary-method}

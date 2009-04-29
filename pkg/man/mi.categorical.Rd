@@ -6,6 +6,7 @@
 \alias{mi.categorical}
 \alias{resid,mi.categorical-method}
 \alias{residuals,mi.categorical-method}
+\alias{plot,mi.categorical-method}
 \alias{plot,mi.categorical,ANY-method}
 
 \title{ 
