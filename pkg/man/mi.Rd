@@ -81,7 +81,6 @@ A list of object of class \code{mi}, which stands for \dQuote{multiple imputatio
   \item{bugs}{BUGS array of the mean and sd of each iteration.}
   \item{preprocess}{Binary variable to indicate if \code{preprocess=TRUE} in the \code{mi} process}
   \item{mi.info.preprocessed}{Information matrix that actually used in the \code{mi} if \code{preprocess=TRUE}.}
-  \par
   
   Each \code{imp[[m]]} is itself a list containg k variable lists of 3 objects:
   

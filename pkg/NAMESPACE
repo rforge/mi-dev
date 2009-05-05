@@ -81,7 +81,6 @@ export(
   is.mi.info,
   lm.mi,
   lmer.mi,
-  glmer.mi,
   m,
   mi,
   marginal.scatterplot,
