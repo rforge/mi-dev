@@ -120,7 +120,8 @@ export(
   noise.control,
   random.imp,
   typecast,
-  type.models
+  type.models,
+  write.mi
 )
 
 S3method(update, mi.info)

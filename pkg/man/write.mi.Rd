@@ -16,7 +16,7 @@ write.mi(object, format = c("csv", "dta", "table"), \dots)
   \item{\dots}{further arguments for \code{write} functions}
 }
 \details{
-\code{write.mi} write each imputed dataset to a file in one of the three formats: code{csv}, 
+\code{write.mi} write each imputed dataset to a file in one of the three formats: \code{csv}, 
 \code{dta} and \code{table}, using \code{write.csv}, \code{write.dta} and \code{write.table}
 repectively.
 
