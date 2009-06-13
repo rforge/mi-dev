@@ -1,3 +1,8 @@
+2009-6-13 Yu-Sung Su     <ys463@columbia.edu>  
+   * DESCRIPTION (Version, Date): 0.08-01
+   * R/mi.continuous, mi.binary, mi.count: draw.from.beta=TRUE
+
+
 2009-6-10 Yu-Sung Su     <ys463@columbia.edu>  
    * DESCRIPTION (Version, Date): 0.07-4
    * R/mi.pooled: fix a bug in mi.pooled (B term)

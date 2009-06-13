@@ -2,7 +2,7 @@
 # imputation function for binary variable
 # ==============================================================================
 mi.binary <- function( formula, data = NULL, start = NULL, n.iter = 100,
-                             draw.from.beta=FALSE,... ) {
+                             draw.from.beta=TRUE,... ) {
   call <- match.call()
   mf <- match.call(expand.dots = FALSE)
   m <- match(c("formula", "data"), names(mf), 0)
