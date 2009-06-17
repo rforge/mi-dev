@@ -65,8 +65,8 @@ mi.binary(formula, data = NULL, start = NULL, n.iter = 100,
 
 \examples{
   # true data
-  x<-rnorm(100,0,1) # N(0,1)
-  y<-rbinom(100,1,invlogit(1+2*x)) # y ~ Bin(1,invlogit(1 + 2*x)
+  x <- rnorm(100,0,1) # N(0,1)
+  y <- rbinom(100,1,invlogit(1+2*x)) # y ~ Bin(1,invlogit(1 + 2*x)
   # create artificial missingness on y
   y[seq(1,100,10)]<-NA
   dat.xy <- data.frame(x,y)
