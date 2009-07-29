@@ -51,7 +51,7 @@ mi.binary(formula, data = NULL, start = NULL, n.iter = 100,
 }
 \references{
     Andrew Gelman and Jennifer Hill, 
-    Data Analysis Using Regression and Multilevel/Hierarchical Models, 
+    \emph{Data Analysis Using Regression and Multilevel/Hierarchical Models}, 
     Cambridge University Press, 2007.
 }
 \author{

@@ -52,7 +52,7 @@
 }
 \references{
     Andrew Gelman and Jennifer Hill, 
-    Data Analysis Using Regression and Multilevel/Hierarchical Models, 
+    \emph{Data Analysis Using Regression and Multilevel/Hierarchical Models}, 
     Cambridge University Press, 2007.
 }
 \author{
