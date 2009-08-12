@@ -36,7 +36,7 @@ If \code{fading} method is used, the imputation will augment
 
 
 \author{
-  Yu-Sung Su \email{yajima@stat.columbia.edu}
+  Yu-Sung Su \email{yusung@stat.columbia.edu}
 }
 
 \seealso{ 

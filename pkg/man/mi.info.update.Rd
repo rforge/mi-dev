@@ -54,7 +54,7 @@ mi.info.update.other(object, list)
 
 \author{
   Masanao Yajima \email{yajima@stat.columbia.edu},
-  Yu-Sung Su \email{yusung@stat.columbia.edu},
+  Yu-Sung Su \email{ys463@columbia.edu},
   M.Grazia Pittau \email{grazia@stat.columbia.edu},
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
