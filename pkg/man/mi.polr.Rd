@@ -51,7 +51,7 @@
     \item{residual }{The residual vector of length same as y}
 }
 \references{
-    Yu-Sung Su, Andrew Gelman, Jennifer Hill, Masanao Yajimi. \emph{Forthcoming}.
+    Yu-Sung Su, Andrew Gelman, Jennifer Hill, Masanao Yajima. \emph{Forthcoming}.
     \dQuote{Multiple Imputation with Diagnostics (mi) in R: Opening Windows into the Black Box}.
     \emph{Journal of Statistical Software}.
 

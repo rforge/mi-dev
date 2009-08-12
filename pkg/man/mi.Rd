@@ -102,7 +102,7 @@ and looping through until approximate convergence.
 }
 
 \references{
-    Yu-Sung Su, Andrew Gelman, Jennifer Hill, Masanao Yajimi. \emph{Forthcoming}.
+    Yu-Sung Su, Andrew Gelman, Jennifer Hill, Masanao Yajima. \emph{Forthcoming}.
     \dQuote{Multiple Imputation with Diagnostics (mi) in R: Opening Windows into the Black Box}.
     \emph{Journal of Statistical Software}.
 
@@ -117,8 +117,8 @@ and looping through until approximate convergence.
 
 \author{
   Masanao Yajima \email{yajima@stat.columbia.edu},
-  Yu-Sung Su \email{yajima@stat.columbia.edu},
-  M.Grazia Pittau \email{grazia@stat.columbia.edu},
+  Yu-Sung Su \email{ys463@columbia.edu},
+  M. Grazia Pittau \email{grazia@stat.columbia.edu},
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
 
