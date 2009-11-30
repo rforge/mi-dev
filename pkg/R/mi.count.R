@@ -42,17 +42,16 @@ mi.count <- function ( formula, data = NULL, start = NULL,
   bglm.imp    <- bayesglm( formula = formula, data = data, family = quasipoisson, 
                             n.iter = n.iter, start = start, 
                             drop.unused.levels = FALSE, Warning=FALSE,... )
-####get right design matrix#
-  tt <- terms(bglm.imp)
-  Terms <- delete.response(tt)
-  m <- model.frame(Terms, data=data,  xlev = bglm.imp$xlevels)
-  X <- as.matrix(model.matrix(Terms, m, contrasts.arg = bglm.imp$contrasts))
-############################
-
   determ.pred <- predict(bglm.imp, newdata = data, type = "response" )
 
   if(n.mis>0){
     if(draw.from.beta){
+    ####get right design matrix#
+      tt <- terms(bglm.imp)
+      Terms <- delete.response(tt)
+      m <- model.frame(Terms, data=data,  xlev = bglm.imp$xlevels)
+      X <- as.matrix(model.matrix(Terms, m, contrasts.arg = bglm.imp$contrasts))
+    ############################
       sim.coef  <- sim(bglm.imp,1)$coef
       lambda <- exp(tcrossprod(X[mis,,drop=FALSE], sim.coef))
       random.pred <- rpois(n.mis, lambda)
