@@ -95,6 +95,7 @@ mi.info <- function( data, threshhold  = 0.99999 )
     # collinear 
     info[[i]]$collinear <- collinear[[i]]
     # params
+    browser()
     formal.args <- formals( as.character( type.models( info[[i]]$type ) ) )
     info[[i]]$params <- formal.args[!names( formal.args ) %in% c( "formula", "data", "start", "..." )]    
     # transform

@@ -49,11 +49,11 @@ mi.count <- function ( formula, data = NULL, start = NULL,
     ####get right design matrix#
       tt <- terms(bglm.imp)
       Terms <- delete.response(tt)
-      m <- model.frame(Terms, data=data,  xlev = bglm.imp$xlevels)
-      X <- as.matrix(model.matrix(Terms, m, contrasts.arg = bglm.imp$contrasts))
+      mf <- model.frame(Terms, data=data,  xlev = bglm.imp$xlevels)
+      mf <- as.matrix(model.matrix(Terms, mf, contrasts.arg = bglm.imp$contrasts))
     ############################
       sim.coef  <- sim(bglm.imp,1)$coef
-      lambda <- exp(tcrossprod(X[mis,,drop=FALSE], sim.coef))
+      lambda <- exp(tcrossprod(mf[mis,,drop=FALSE], sim.coef))
       random.pred <- rpois(n.mis, lambda)
     }
     else{
