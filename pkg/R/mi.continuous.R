@@ -49,7 +49,6 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
       tt <- terms(bglm.imp)
       Terms <- delete.response(tt)
       mf <- model.frame(Terms, data=data[mis,],  xlev = bglm.imp$xlevels)
-      browser()
       mf <- as.matrix(model.matrix(Terms, mf, contrasts.arg = bglm.imp$contrasts))
     ############################
       sim.bglm.imp  <- sim(bglm.imp,1)

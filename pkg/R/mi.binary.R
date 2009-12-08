@@ -70,7 +70,7 @@ mi.binary <- function( formula, data = NULL, start = NULL, n.iter = 100,
         random.temp <- rbinom(n.mis, 1, prob.pred)
     }
     else {
-        random.temp <- rbinom(n.mis, 1, determ.pred[mis])
+        random.temp <- rbinom(n.mis, 1, determ.pred)
     }
     random.pred <- random.temp 
     random.pred <- replace(random.pred, random.temp == 0, y.levels[1])
