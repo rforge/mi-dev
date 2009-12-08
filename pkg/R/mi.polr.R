@@ -58,13 +58,13 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
 
 
 
-  expect.prob <- predict( bplr.imp, newdata = data[mis,], type = "probs" )
-  determ.pred <- predict(bplr.imp, newdata=data[mis,], type="class")#as.vector( expect.prob %*% as.double( Y.levels ) )
+  expect.prob <- predict( bplr.imp, newdata = data, type = "probs" )
+  determ.pred <- predict(bplr.imp, newdata=data, type="class")#as.vector( expect.prob %*% as.double( Y.levels ) )
   names( determ.pred ) <- 1:length( determ.pred )
   if(n.mis>0){
-    random.pred <- Rmultnm(n.mis, expect.prob, 1:Y.nlevel)    
+    random.pred <- Rmultnm(n.mis, expect.prob[mis,], 1:Y.nlevel)    
     random.pred <-  recode(random.pred, paste(1:Y.nlevel,"='",Y.levels,"'",sep="",collapse=";") )        
-    names(random.pred) <- names(determ.pred)
+    names(random.pred) <- names(determ.pred[mis])
   #random.pred <- Y.levels[random.pred]
   }
   else{

@@ -42,7 +42,7 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
                             n.iter = n.iter, start = start, 
                             drop.unused.levels = FALSE, Warning=FALSE,... )
   determ.pred <- predict(bglm.imp, newdata = data[mis,], type = "response" )
-
+  #determ.pred <- determ.pred[mis]
   if(n.mis>0){
     if(draw.from.beta){
     ####get right design matrix#
