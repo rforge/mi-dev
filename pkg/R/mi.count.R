@@ -81,6 +81,5 @@ mi.count <- function ( formula, data = NULL, start = NULL,
   result@random   <- random.pred
   return(result)
   on.exit(rm(Y))
-  on.exit(rm(X))
   on.exit(rm(bglm.imp))
 }

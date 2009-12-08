@@ -81,6 +81,6 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
   result@random   <- random.pred
   return(result)
   on.exit(rm(Y))
-  on.exit(rm(X))
+  on.exit(rm(mf))
   on.exit(rm(bglm.imp))
 }
