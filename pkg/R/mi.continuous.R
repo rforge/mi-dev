@@ -41,14 +41,14 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
   bglm.imp    <- bayesglm( formula = formula, data = data, family = gaussian, 
                             n.iter = n.iter, start = start, 
                             drop.unused.levels = FALSE, Warning=FALSE,... )
-  determ.pred <- predict(bglm.imp, newdata = data[mis,], type = "response" )
-  #determ.pred <- determ.pred[mis]
+  determ.pred <- predict(bglm.imp, newdata = data, type = "response" )
+
   if(n.mis>0){
     if(draw.from.beta){
     ####get right design matrix#
       tt <- terms(bglm.imp)
       Terms <- delete.response(tt)
-      mf <- model.frame(Terms, data=data[mis,],  xlev = bglm.imp$xlevels)
+      mf <- model.frame(Terms, data=data[mis,,drop=FALSE],  xlev = bglm.imp$xlevels)
       mf <- as.matrix(model.matrix(Terms, mf, contrasts.arg = bglm.imp$contrasts))
     ############################
       sim.bglm.imp  <- sim(bglm.imp,1)
@@ -57,9 +57,9 @@ mi.continuous <- function ( formula, data = NULL, start = NULL,
       random.pred <- rnorm(n.mis, tcrossprod(mf, sim.coef), sim.sigma)
     }
     else{
-      random.pred <- rnorm(n.mis, determ.pred, sigma.hat(bglm.imp))
+      random.pred <- rnorm(n.mis, determ.pred[mis], sigma.hat(bglm.imp))
     }
-    names(random.pred) <- names(determ.pred)
+    names(random.pred) <- names(determ.pred[mis])
   }
   else{
     random.pred <- numeric(0)
