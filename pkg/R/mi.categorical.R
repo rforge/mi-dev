@@ -38,7 +38,7 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
   lm.cat.imp  <- multinom( formula = formula, data = data, maxit = n.iter, 
                             trace = FALSE , MaxNWts = MaxNWts, ...)
   
-  deter.prob  <- predict( lm.cat.imp, newdata = data, type = "p" )
+  deter.prob  <- predict( lm.cat.imp, newdata = data[mis,], type = "p" )
   y.cat       <- levels(factor(Y))
   y.ncat <- length(y.cat)
 
@@ -46,12 +46,12 @@ mi.categorical <- function( formula, data = NULL, n.iter = 100,
     stop(message="number of category must be bigger than 2")
   }
   #determ.pred <- as.vector( deter.prob %*% y.cat )
-  determ.pred <- predict(lm.cat.imp, newdata=data, type="class")
+  determ.pred <- predict(lm.cat.imp, newdata=data[mis,], type="class")
   names( determ.pred ) <- 1:length( determ.pred )
   if(n.mis>0){
-    random.pred <-  Rmultnm( n.mis, deter.prob[mis,], 1:y.ncat)
+    random.pred <-  Rmultnm( n.mis, deter.prob, 1:y.ncat)
     random.pred <-  recode(random.pred, paste(1:y.ncat,"='",y.cat,"'",sep="",collapse=";") )        
-    names( random.pred ) <- names( determ.pred[mis] )
+    names( random.pred ) <- names( determ.pred )
   }
   #  random.pred <- y.cat[random.pred]
   else{
