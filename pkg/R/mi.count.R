@@ -53,8 +53,8 @@ mi.count <- function ( formula, data = NULL, start = NULL,
       mf <- Matrix(model.matrix(Terms, mf, contrasts.arg = bglm.imp$contrasts), sparse=TRUE)
     ############################
       sim.coef  <- sim(bglm.imp,1)$coef
-      lambda <- log(as.matrix(tcrossprod(mf, sim.coef)))
-      random.pred <- rpois(n.mis, exp(lambda))
+      lambda <- exp(as.matrix(tcrossprod(mf, sim.coef)))
+      random.pred <- rpois(n.mis, lambda)
     }
     else{
       random.pred <- rpois(n.mis, determ.pred[mis])
