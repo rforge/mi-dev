@@ -311,7 +311,10 @@ setMethod("mi", signature(object = "data.frame"),
     }
   }
   
-  if(!preprocess) info <- NULL
+  if(!preprocess){
+    info.org <- info
+    info <- NULL
+  }
   
   m <- new("mi", 
             call      = call,
@@ -327,7 +330,7 @@ setMethod("mi", signature(object = "data.frame"),
   with(globalenv(), rm(data.tmp))
   if(post.run){
     if(!is.logical(add.noise)){
-      m <- mi(m, run.past.convergence=TRUE, n.iter=20, R.hat=R.hat)
+      m <- mi(m, run.past.convergence = TRUE, n.iter = 20, R.hat = R.hat)
     }
   }
   return(m)
