@@ -311,6 +311,7 @@ setMethod("mi", signature(object = "data.frame"),
     }
   }
   
+  if(!preprocess) info <- NULL
   
   m <- new("mi", 
             call      = call,
@@ -322,7 +323,7 @@ setMethod("mi", signature(object = "data.frame"),
             coef.conv = coef.conv.check,
             bugs      = con.check,
             preprocess = preprocess,
-            mi.info.preprocessed = ifelse(preprocess, info, NULL))
+            mi.info.preprocessed = info)
   with(globalenv(), rm(data.tmp))
   if(post.run){
     if(!is.logical(add.noise)){

@@ -11,7 +11,8 @@ mi.completed.default <- function(object, m = 1){
     info <- info.mi(object)
     miMatrix <- data.mi(object)
   }
-  mis.name <- names(.nmis(info)[.nmis(info) > 0 & !.all.missing( info ) ] )
+  
+  mis.name <- names(info)[.nmis(info) > 0 & !.all.missing(info)]
 
   for ( i in 1:length(mis.name) ){
     nm <- mis.name[i]
