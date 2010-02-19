@@ -1,18 +1,6 @@
 #==============================================================================
 # mi main function
 #==============================================================================
-
-noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1){
-  method <- match.arg(method)
-  if(method=="reshuffling"){
-    return(list(method=method, K=K))
-  }
-  if(method=="fading"){
-    return(list(method=method, pct.aug=pct.aug))  
-  }
-}
-
-
 setMethod("mi", signature(object = "data.frame"), 
         function (object, info, n.imp = 3, n.iter = 30, R.hat = 1.1,
                   max.minutes = 20, rand.imp.method = "bootstrap", 
@@ -20,18 +8,20 @@ setMethod("mi", signature(object = "data.frame"),
                   seed = NA, check.coef.convergence = FALSE, 
                   add.noise = noise.control(), post.run = TRUE) 
 { 
-  call <- match.call()                         # call
-
+  call <- match.call()
+  # set random seed
   if(!is.na(seed)){
     set.seed(seed) 
-  }    # set random seed
+  }    
   
   if(n.iter <= 5){ 
     stop(message="number of iteration must be more than 5")
   }
-
-  ProcStart     <- proc.time()                  # starting time
   
+  # starting time
+  ProcStart     <- proc.time()                  
+  
+  # pick a add.noise method
   if(is.logical(add.noise)){
     add.noise.method <- "other"
   }
@@ -46,9 +36,9 @@ setMethod("mi", signature(object = "data.frame"),
   Time.Elapsed  <- 0
   con.check     <- NULL
   coef.conv.check <- NULL
+  
 
-  # For data frame and matrix  
-  nameD      <- deparse(substitute(object))
+  # duplicate data for further usage
   org.data   <- object
   data       <- object
 
@@ -59,105 +49,58 @@ setMethod("mi", signature(object = "data.frame"),
   # this makes sure categorical data is factorized
   data <- .update.data(data, info)        
 
-  #  # Automatic Preprocess
+  # preprocess data and get new mi.info
   if( preprocess ) {
-    proc.tmp <- mi.preprocess(data, info)
-    data <- as.data.frame(proc.tmp$data)
-    info.org <- info
-    info <- mi.info(data)
-    for(i in 1:length(info.org)){
-      info[[i]] <- info.org[[i]]    
-    }
-    for(i in 1:ncol(data)){
-      info[[i]]$type <- proc.tmp$type[[i]]
-    }
-    info <- mi.info.formula.default(info)
-    info$imp.formula[1:length(info.org)] <- info.org$imp.formula
-    rm(proc.tmp)
+    data <- .preprocessMiInfo(data, info)
+    info <- data$info
+    info.org <- data$info.org
+    data <- data$data
   }  
   
-  # level check
-  for(i in 1:ncol(data)){
-    if (info$type[[i]]=="unordered-categorical"){
-      if(is.null(info$level[[i]])){
-        info$level[[i]] <- sort(na.exclude(unique(data[,i])))
-      }
-    }
-  }
+  # store level info in mi.info for unordered cat vars
+  info <- .catVarLevelCheck(data, info)
   
-
-  #col.mis    <- !complete.cases(t(data)) 
-  #ncol.mis   <- sum(col.mis)
-  ncol.mis <- sum(.nmis(info)>0)
-  #tot.n.unord.cat.var <- sum(sapply(.level(info), is.numeric))
-
-  idx.include.cat <- (.include(info)&.nmis(info)>0& .type(info)=="unordered-categorical")
-  if(all(idx.include.cat==0)){
-    tot.nlevel <- 0
-    tot.n.unord.cat.var <- 0
-  }
-  else{
-    tot.nlevel <- sum(sapply(info$level[idx.include.cat], length))
-    tot.n.unord.cat.var <- sum(idx.include.cat)
-  }
-  idx.include.var <- (.include(info)&.nmis(info)>0)
-  if(sum(idx.include.var)==1){
-    n.col.sims.array <- 1 + tot.nlevel - tot.n.unord.cat.var
-  }
-  else{
-    n.col.sims.array <- dim(data[, idx.include.var])[2] + tot.nlevel - tot.n.unord.cat.var
-  }
-  
-  AveVar  <- array(NA, c(n.iter, n.imp, n.col.sims.array*2))
+  # initialize starting and end point of mcmc list
   s_start <- 1
-  s_end   <- n.iter
-  mis.index <-  apply(data, 2, is.na) 
-  data <- data[,.include(info), drop=FALSE]
+  s_end <- n.iter
   
-  namelist <- as.list(info$name)
-  if(!all(idx.include.cat==0)){
-    cat.include <- info$name[idx.include.cat]
-    cat.pos <- charmatch(cat.include, info$name)
-    for(i in cat.pos){
-      namelist[[i]] <- .catvarnames(namelist[[i]], info$level[[i]])
-    }
-  }
-  namelist <- namelist[(.include(info)&.nmis(info)>0)]
-  sim.varnames <- unlist(namelist)
-  dimnames( AveVar ) <- list(NULL, NULL, 
-                             c(paste("mean(", sim.varnames,")",sep=""), 
-                               paste("sd(", sim.varnames, ")", sep="")))
-  VarName.tm <- names(info)[.include(info) & .nmis(info)>0]
-  VarName    <- VarName.tm[order(.imp.order( info )[.include(info) & .nmis(info)>0])]
-  length.list <- sum(.include(info) & .nmis(info)>0)
+  # creating misc info for further usage
+  missingVar.idx <- .nmis(info) > 0
+  includeVar.idx <- .include(info)
+  unorderedCatVar.idx <- .type(info)=="unordered-categorical"
+  includeCatVar.idx <- (includeVar.idx & missingVar.idx & unorderedCatVar.idx)
+  ncol.mis <- sum(missingVar.idx)
+  mcmc.list.length <- sum(includeVar.idx & missingVar.idx)
+  varNames <- names(info)[includeVar.idx & missingVar.idx]
+  varNames <- varNames[order(.imp.order(info)[includeVar.idx & missingVar.idx])]
+  data <- data[ ,includeVar.idx, drop = FALSE]
   
-  # list initialization
-  mi.data       <- vector("list", n.imp)
-  start.val     <- vector("list", n.imp)
-  mi.object     <- vector("list", n.imp)
-  for (j in 1:n.imp){ 
-    mi.data[[j]]  <-  random.imp(data, method = rand.imp.method)
-    start.val[[j]]<- vector( "list", length.list )
-    mi.object[[j]]<- vector( "list", ncol.mis )
-    names(mi.object[[j]]) <- names( info )[ .nmis(info)>0 ]
-  }
-  coef.val <- vector("list", ncol.mis)
-  names(coef.val) <- names( info )[ .nmis(info)>0 ]
-  for (jjj in 1:ncol.mis){
-    coef.val[[jjj]] <- vector("list", n.imp)
-  }
-  names(mi.object)<- paste( "Imputation", 1:n.imp, sep="" )
+  # convergence array initialization
+  convArray <- .initializeConvCheckArray(data, info, n.iter, n.imp, 
+    missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
   
-  cat( "Beginning Multiple Imputation (", date(), "):\n" )
+  aveVar <- convArray$aveVar
+  varNames <- convArray$varNames
+  rm(convArray)
+  
+  # mi list initialization
+  miList <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis)
+  mi.data <- miList$mi.data
+  start.val <- miList$start.val
+  mi.object <- miList$mi.object
+  coef.val <- miList$coef.val
+  rm(miList)
+  
+  cat("Beginning Multiple Imputation (", date(), "):\n")
   # iteration loop
-  for ( s in s_start:s_end ) {
+  for(s in s_start:s_end){
     cat( "Iteration", s,"\n" )
     # imputation loop
-    for ( i in 1:n.imp ){
+    for( i in 1:n.imp ){
       cat( " Imputation", i,  ": " )
       # variable loop
-      for( jj in 1:length(VarName) ) {
-        CurrentVar <- VarName[jj]
+      for(jj in 1:length(varNames)){
+        CurrentVar <- varNames[jj]
         if(add.noise.method=="reshuffling"){
           prob.add.noise <- add.noise$K/s
           prob.add.noise <- ifelse(prob.add.noise > 1, 1, prob.add.noise)
@@ -176,7 +119,7 @@ setMethod("mi", signature(object = "data.frame"),
           cat(CurrentVar, "  ")
         }
         
-        CurVarFlg <- ( names ( data ) == CurrentVar )
+        CurVarFlg <- (names(data) == CurrentVar)
         dat <- data.frame(data[,CurVarFlg, drop=FALSE], mi.data[[i]][,!CurVarFlg])
         names(dat) <- c(CurrentVar, names(data[,!CurVarFlg, drop=FALSE] ))
         ####Deside which model to use #################################
@@ -191,7 +134,8 @@ setMethod("mi", signature(object = "data.frame"),
         if(add.noise.method=="fading"){
           n.aug <- trunc(nrow(data)*(add.noise$pct.aug/100))
           dat <- rbind(dat, .randdraw(dat, n=n.aug))
-        }                
+        }  
+              
         # Error Handling
         .Internal(seterrmessage(""))
         errormessage <- paste("\nError while imputing variable:", CurrentVar, ", model:",model.type,"\n")
@@ -213,6 +157,7 @@ setMethod("mi", signature(object = "data.frame"),
                                           info[[CurrentVar]]$params)))
         # Error Handling
         on.exit(options(show.error.messages = TRUE))
+
         # Error Handling        
         if(add.noise.method=="reshuffling"){        
           if(q){
@@ -221,7 +166,7 @@ setMethod("mi", signature(object = "data.frame"),
         }
         mi.data[[i]][[CurrentVar]][is.na(data[[CurrentVar]])] <- mi.object[[i]][[CurrentVar]]@random
         data.tmp <<- mi.data
-        
+
         if(info[[CurrentVar]]$type=="unordered-categorical"){
           n.level <- length(info[[CurrentVar]]$level)
           coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],
@@ -233,23 +178,22 @@ setMethod("mi", signature(object = "data.frame"),
         
         start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
       } ## variable loop 
+
       cat("\n" )
       avevar.mean <- NULL
       avevar.sd <- NULL
-      for (mm in 1:length(VarName)){
-        avevar.mean <- c(avevar.mean, .getmean(mi.data[[i]][,VarName[mm]], type=info$type[VarName[mm]]))
-        avevar.sd <- c(avevar.sd, .getsd(mi.data[[i]][,VarName[mm]], type=info$type[VarName[mm]]))
+      for (mm in 1:length(varNames)){
+        avevar.mean <- c(avevar.mean, .getmean(mi.data[[i]][,varNames[mm]], type=info$type[varNames[mm]]))
+        avevar.sd <- c(avevar.sd, .getsd(mi.data[[i]][,varNames[mm]], type=info$type[varNames[mm]]))
       }
 
-      AveVar[s,i,] <- c(avevar.mean, avevar.sd)
-     
-    
+      aveVar[s,i,] <- c(avevar.mean, avevar.sd)
     } # imputation loop
 
     # Check for convergence
     Time.Elapsed <- proc.time() - ProcStart
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
-      con.check <- as.bugs.array(AveVar[1:s, , ])
+      conv.check <- as.bugs.array(aveVar[1:s, , ])
       if(all(con.check$summary[,8] < R.hat)) { 
         converged.flg <- TRUE
         if(!run.past.convergence){ 
@@ -261,13 +205,20 @@ setMethod("mi", signature(object = "data.frame"),
         break
       }
     }
-    if(s==s_end) { 
+    if(s==s_end){ 
       max.iter.flg <- TRUE 
     }
   } # iteration loop
   
+  
+ # converged.flg <- convCheck$converged.flg
+#  time.out.flg <- convCheck$tim.out.flg
+#  max.iter.flg <- convCheck$max.iter.flg
+#  conv.check <- convCheck$conv.check
+#  rm(convFlg)
+  
   # Print out reason for termination
-  cat(if(converged.flg ){
+  cat(if(converged.flg){
         "mi converged (" 
       } 
       else if( time.out.flg  ){
@@ -279,13 +230,10 @@ setMethod("mi", signature(object = "data.frame"),
       else{ 
         "Unknown termination ("
       }
-      ,date(), ")\n"
+      , date(), ")\n"
       ) 
+
       
-  # Automatic Preprocess
-#  if( preprocess ) {
-#    data <- mi.info.uncode(data, info)
-#  }
 
   # impute correlated variables
   for( cor.idx in 1:length(info)) {
@@ -301,22 +249,16 @@ setMethod("mi", signature(object = "data.frame"),
       }
     }
   }
+
   if(check.coef.convergence){
-    if(is.null(coef.conv.check)){
-      coef.conv.check <- as.bugs.array(strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp))
-    }
-    else{
-      tmp <- abind(coef.conv.check,strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp),along=1)
-      coef.conv.check <- as.bugs.array(tmp)
-    }
+    coef.conv.check <- .checkCoefConvergence(coef.conv.check, coef.val, n.imp)
   }
   
   if(!preprocess){
     info.org <- info
     info <- NULL
   }
-  
-  m <- new("mi", 
+  ans <- new("mi", 
             call      = call,
             data      = org.data,
             m         = n.imp,
@@ -324,16 +266,16 @@ setMethod("mi", signature(object = "data.frame"),
             imp       = mi.object,
             converged = converged.flg,
             coef.conv = coef.conv.check,
-            bugs      = con.check,
+            bugs      = conv.check,
             preprocess = preprocess,
             mi.info.preprocessed = info)
   with(globalenv(), rm(data.tmp))
   if(post.run){
     if(!is.logical(add.noise)){
-      m <- mi(m, run.past.convergence = TRUE, n.iter = 20, R.hat = R.hat)
+      ans <- mi(ans, run.past.convergence = TRUE, n.iter = 20, R.hat = R.hat)
     }
   }
-  return(m)
+  return(ans)
 }
 )
 
@@ -389,41 +331,44 @@ setMethod("mi", signature(object = "mi"),
   }  
   
   
-  ncol.mis <- sum(.nmis(info)>0)
+  #ncol.mis <- sum(.nmis(info)>0)
   n.imp     <- m(object)
   prev.iter <- dim(bugs.mi(object)$sims.array)[1]
-  n.col.sims.array <- dim(bugs.mi(object)$sims.array)[3] 
-  sims.array.names <- names(bugs.mi(object)$sims.list)
-  AveVar    <- array(NA, c(prev.iter + n.iter, n.imp, n.col.sims.array))
-  coef.conv.check <- object@coef.conv$sims.array
-  AveVar[ 1:prev.iter , , ] <- bugs.mi(object)$sims.array
-  s_start <- prev.iter + 1
-  s_end   <- prev.iter + n.iter
-    
-  mis.index <-  apply(data, 2, is.na)
-  data <- data[,.include(info)]
-  dimnames( AveVar ) <- list(NULL, NULL, sims.array.names)
-  VarName.tm <- names(info)[.include(info) & .nmis(info)>0]
-  VarName    <- VarName.tm[order(.imp.order( info )[.include(info) & .nmis(info)>0])]
-  length.list <- sum(.include(info) & .nmis(info)>0)
   
-  # list initialization
-  mi.data       <- vector("list", n.imp)
-  start.val     <- vector("list", n.imp)
-  mi.object     <- vector("list", n.imp)
-  for (j in 1:n.imp){ 
-    mi.data[[j]]  <- random.imp(data, method = rand.imp.method)
-    start.val[[j]]<- vector("list", length.list)
-    mi.object[[j]]<- vector("list", ncol.mis)
-    names(mi.object[[j]]) <- names(info)[.nmis(info)>0]
-  }
-  coef.val <- vector("list", ncol.mis)
-  names(coef.val) <- names(info)[.nmis(info)>0]
-  for (jjj in 1:ncol.mis){
-    coef.val[[jjj]] <- vector("list", n.imp)
-  }
-  names(mi.object) <- paste( "Imputation", 1:n.imp, sep="" )
+  # creating misc info for further usage
+  missingVar.idx <- .nmis(info) > 0
+  includeVar.idx <- .include(info)
+  unorderedCatVar.idx <- .type(info)=="unordered-categorical"
+  includeCatVar.idx <- (includeVar.idx & missingVar.idx & unorderedCatVar.idx)
+  ncol.mis <- sum(missingVar.idx)
+  mcmc.list.length <- sum(includeVar.idx & missingVar.idx)
+  varNames <- names(info)[includeVar.idx & missingVar.idx]
+  varNames <- varNames[order(.imp.order(info)[includeVar.idx & missingVar.idx])]
+  data <- data[ ,includeVar.idx, drop = FALSE]
 
+
+  
+  # convergence array initialization
+  convArray <- .initializeConvCheckArray(data, info, n.iter=n.iter + prev.iter, n.imp, 
+    missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
+  aveVar <- convArray$aveVar
+  varNames <- convArray$varNames
+  rm(convArray)
+  
+  aveVar[ 1:prev.iter , , ] <- bugs.mi(object)$sims.array 
+  coef.conv.check <- object@coef.conv$sims.array
+  s_start <- prev.iter  + 1
+  s_end <- prev.iter + n.iter
+
+ # mi list initialization
+  miList <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis)
+  mi.data <- miList$mi.data
+  start.val <- miList$start.val
+  mi.object <- miList$mi.object
+  coef.val <- miList$coef.val
+  rm(miList)
+
+  
   cat( "Beginning Multiple Imputation (", date(), "):\n" )
   # iteration loop
   for ( s in s_start:s_end ) {
@@ -432,8 +377,8 @@ setMethod("mi", signature(object = "mi"),
     for ( i in 1:n.imp ){
       cat( " Imputation", i,  ": " )
       # variable loop
-      for( jj in 1:length(VarName) ) {
-        CurrentVar <- VarName[jj]
+      for( jj in 1:length(varNames) ) {
+        CurrentVar <- varNames[jj]
         cat(CurrentVar, "  ")      
         CurVarFlg <- ( names ( data ) == CurrentVar )
         dat <- data.frame(data[,CurVarFlg, drop=FALSE], mi.data[[i]][,!CurVarFlg])
@@ -479,12 +424,12 @@ setMethod("mi", signature(object = "mi"),
       cat("\n" )      
       avevar.mean <- NULL
       avevar.sd <- NULL
-      for (mm in 1:length(VarName)){
-        avevar.mean <- c(avevar.mean, .getmean(mi.data[[i]][,VarName[mm]], type=info$type[VarName[mm]]))
-        avevar.sd <- c(avevar.sd, .getsd(mi.data[[i]][,VarName[mm]], type=info$type[VarName[mm]]))
+      for (mm in 1:length(varNames)){
+        avevar.mean <- c(avevar.mean, .getmean(mi.data[[i]][,varNames[mm]], type=info$type[varNames[mm]]))
+        avevar.sd <- c(avevar.sd, .getsd(mi.data[[i]][,varNames[mm]], type=info$type[varNames[mm]]))
       }
 
-      AveVar[s,i,] <- c(avevar.mean, avevar.sd)
+      aveVar[s,i,] <- c(avevar.mean, avevar.sd)
      
     
     } # imputation loop
@@ -492,7 +437,7 @@ setMethod("mi", signature(object = "mi"),
     # Check for convergence
     Time.Elapsed <- proc.time() - ProcStart
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
-      con.check <- as.bugs.array(AveVar[1:s, , ])
+      conv.check <- as.bugs.array(aveVar[1:s, , ])
       if(all(con.check$summary[,8] < R.hat)) { 
         converged.flg <- TRUE
         if(!run.past.convergence){ 
@@ -500,15 +445,16 @@ setMethod("mi", signature(object = "mi"),
         }
       }
       if(((Time.Elapsed)/60)[3] > max.minutes){ 
-        time.out.flg <- TRUE 
+        time.out.flg <- TRUE
         break
       }
     }
-    if(s==s_end) { 
+    if(s==s_end){ 
       max.iter.flg <- TRUE 
     }
   } # iteration loop
   
+
   # Print out reason for termination
   cat(if(converged.flg ){
         "mi converged (" 
@@ -523,11 +469,7 @@ setMethod("mi", signature(object = "mi"),
         "Unknown termination ("
       }
       , date(), ")\n")
-      
-  # Automatic Preprocess
-#  if( preprocess ) {
-#    data <- mi.info.uncode(data, info)
-#  }
+
 
   # impute collinear variables
   for( cor.idx in 1:length(info)) {
@@ -543,18 +485,13 @@ setMethod("mi", signature(object = "mi"),
       }
     }
   }
+
+
   if(check.coef.convergence){
-    if(is.null(coef.conv.check)){
-      coef.conv.check <- as.bugs.array(strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp))
-    }
-    else{
-      tmp <- abind(coef.conv.check,strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp),along=1)
-      coef.conv.check <- as.bugs.array(tmp)
-    }
+    coef.conv.check <- .checkCoefConvergence(coef.conv.check, coef.val, n.imp)
   }
   
-  
-   m <- new("mi", 
+   ans <- new("mi", 
             call      = call,
             data      = data.mi(object),
             m         = n.imp,
@@ -562,11 +499,11 @@ setMethod("mi", signature(object = "mi"),
             imp       = mi.object,
             converged = converged.flg,
             coef.conv = coef.conv.check,
-            bugs      = con.check,
+            bugs      = conv.check,
             preprocess = preprocess,
             mi.info.preprocessed = object@mi.info.preprocessed)
   with(globalenv(), rm(data.tmp))
-  return(m)
+  return(ans)
 }
 )
 
@@ -579,17 +516,7 @@ impute <- function ( a, a.impute ) {
 
     
 
-strict.check <- function(coefficient,n.iter,n.imp){
-  res <- array(NA,c(n.iter,n.imp,0))
-  for(i in 1:length(coefficient)){
-    for(j in 1:dim(coefficient[[i]][[1]])[2]){
-     res <- abind(res,
-      matrix(unlist(lapply(coefficient[[i]], "[", , j)),,n.imp),
-      along=3)
-    }
-  }
-  return(res)
-}
+
 
 
 setMethod("is.mi", signature( object = "mi" ),
