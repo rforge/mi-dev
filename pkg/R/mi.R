@@ -76,20 +76,16 @@ setMethod("mi", signature(object = "data.frame"),
   data <- data[ , includeVar.idx, drop = FALSE]
   
   # convergence array initialization
-  convArray <- .initializeConvCheckArray(data, info, n.iter, n.imp, 
+  aveVar <- .initializeConvCheckArray(data, info, n.iter, n.imp, 
     missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
   
-  aveVar <- convArray$aveVar
-  varNames <- convArray$varNames
-  rm(convArray)
   
   # mi list initialization
-  miList <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
-  mi.data <- miList$mi.data
-  start.val <- miList$start.val
-  mi.object <- miList$mi.object
-  coef.val <- miList$coef.val
-  rm(miList)
+  mi.data <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
+  start.val <- mi.data$start.val
+  mi.object <- mi.data$mi.object
+  coef.val <- mi.data$coef.val
+  mi.data <- mi.data$mi.data
   
   cat("Beginning Multiple Imputation (", date(), "):\n")
   # iteration loop
@@ -349,24 +345,20 @@ setMethod("mi", signature(object = "mi"),
 
   
   # convergence array initialization
-  convArray <- .initializeConvCheckArray(data, info, n.iter=n.iter + prev.iter, n.imp, 
+  aveVar <- .initializeConvCheckArray(data, info, n.iter=n.iter + prev.iter, n.imp, 
     missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
-  aveVar <- convArray$aveVar
-  varNames <- convArray$varNames
-  rm(convArray)
   
   aveVar[ 1:prev.iter , , ] <- bugs.mi(object)$sims.array 
   coef.conv.check <- object@coef.conv$sims.array
   s_start <- prev.iter  + 1
   s_end <- prev.iter + n.iter
 
- # mi list initialization
-  miList <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
-  mi.data <- miList$mi.data
-  start.val <- miList$start.val
-  mi.object <- miList$mi.object
-  coef.val <- miList$coef.val
-  rm(miList)
+  # mi list initialization
+  mi.data <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
+  start.val <- mi.data$start.val
+  mi.object <- mi.data$mi.object
+  coef.val <- mi.data$coef.val
+  mi.data <- mi.data$mi.data
 
   
   cat( "Beginning Multiple Imputation (", date(), "):\n" )
