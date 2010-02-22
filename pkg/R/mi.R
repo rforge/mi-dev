@@ -6,7 +6,7 @@ setMethod("mi", signature(object = "data.frame"),
                   max.minutes = 20, rand.imp.method = "bootstrap", 
                   preprocess = TRUE, run.past.convergence = FALSE,
                   seed = NA, check.coef.convergence = FALSE, 
-                  add.noise = noise.control(), post.run = TRUE) 
+                  add.noise = noise.control())#, post.run = TRUE) 
 { 
   call <- match.call()
   # set random seed
@@ -15,7 +15,7 @@ setMethod("mi", signature(object = "data.frame"),
   }    
   
   if(n.iter <= 5){ 
-    stop(message="number of iteration must be more than 5")
+    stop(message="number of iterations must be more than 5")
   }
   
   # starting time
@@ -28,14 +28,16 @@ setMethod("mi", signature(object = "data.frame"),
   else{
     add.noise.method <- add.noise$method
   }
-  
+
   # variable initialization
   time.out.flg  <- FALSE
   converged.flg <- FALSE
+  coef.converged.flg <- FALSE
   max.iter.flg  <- FALSE
   Time.Elapsed  <- 0
-  con.check     <- NULL
-  coef.conv.check <- NULL
+  conv.check     <- NULL
+  coef.mcmc <- NULL
+  
   
 
   # duplicate data for further usage
@@ -70,7 +72,7 @@ setMethod("mi", signature(object = "data.frame"),
   unorderedCatVar.idx <- .type(info)=="unordered-categorical"
   includeCatVar.idx <- (includeVar.idx & missingVar.idx & unorderedCatVar.idx)
   ncol.mis <- sum(missingVar.idx)
-  mcmc.list.length <- sum(includeVar.idx & missingVar.idx)
+  start.val.length <- sum(includeVar.idx & missingVar.idx)
   varNames <- names(info)[includeVar.idx & missingVar.idx]
   varNames <- varNames[order(.imp.order(info)[includeVar.idx & missingVar.idx])]
   data <- data[ , includeVar.idx, drop = FALSE]
@@ -78,10 +80,10 @@ setMethod("mi", signature(object = "data.frame"),
   # convergence array initialization
   aveVar <- .initializeConvCheckArray(data, info, n.iter, n.imp, 
     missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
-  
+  #dim.mcmc <- dim(aveVar)
   
   # mi list initialization
-  mi.data <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
+  mi.data <- .initializeMiList(data, info, start.val.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
   start.val <- mi.data$start.val
   mi.object <- mi.data$mi.object
   coef.val <- mi.data$coef.val
@@ -97,6 +99,8 @@ setMethod("mi", signature(object = "data.frame"),
       # variable loop
       for(jj in 1:length(varNames)){
         CurrentVar <- varNames[jj]
+        
+        ##### add noises
         if(add.noise.method=="reshuffling"){
           prob.add.noise <- add.noise$K/s
           prob.add.noise <- ifelse(prob.add.noise > 1, 1, prob.add.noise)
@@ -185,12 +189,13 @@ setMethod("mi", signature(object = "data.frame"),
 
       aveVar[s,i,] <- c(avevar.mean, avevar.sd)
     } # imputation loop
-
+    
+    
     # Check for convergence
     Time.Elapsed <- proc.time() - ProcStart
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
-      conv.check <- as.bugs.array(aveVar[1:s, , ])
-      if(all(con.check$summary[,8] < R.hat)) { 
+      conv.check <- monitor(aveVar[1:s, , ])[,"Rhat"]
+      if(all(conv.check < R.hat)) { 
         converged.flg <- TRUE
         if(!run.past.convergence){ 
           break
@@ -206,7 +211,7 @@ setMethod("mi", signature(object = "data.frame"),
     }
   } # iteration loop
   
-  
+
  # converged.flg <- convCheck$converged.flg
 #  time.out.flg <- convCheck$tim.out.flg
 #  max.iter.flg <- convCheck$max.iter.flg
@@ -247,30 +252,52 @@ setMethod("mi", signature(object = "data.frame"),
   }
 
   if(check.coef.convergence){
-    coef.conv.check <- .checkCoefConvergence(coef.conv.check, coef.val, n.imp)
+    coef.mcmc <- .checkCoefConvergence(coef.conv.check, coef.val, n.imp)
+    if(all(monitor(coef.mcmc)[,"Rhat"] < R.hat)){
+      coef.converged.flg <- TRUE
+    }
   }
+  
   
   if(!preprocess){
     info.org <- info
     info <- NULL
   }
+  
+  
+  if(!is.logical(add.noise)){
+    add.noise.flg <- TRUE
+  }
+  else{
+    add.noise.flg <- FALSE
+  }
+
   ans <- new("mi", 
             call      = call,
             data      = org.data,
             m         = n.imp,
             mi.info   = info.org,
             imp       = mi.object,
+            mcmc = aveVar,
             converged = converged.flg,
-            coef.conv = coef.conv.check,
-            bugs      = conv.check,
+            coef.mcmc = coef.mcmc,
+            coef.converged = coef.converged.flg,
             preprocess = preprocess,
-            mi.info.preprocessed = info)
+            mi.info.preprocessed = info,
+            add.noise = add.noise.flg)
+            
   with(globalenv(), rm(data.tmp))
-  if(post.run){
-    if(!is.logical(add.noise)){
+  
+  if(add.noise.flg){
+    if(add.noise$post.run.iters > 0){
+      cat("Run", add.noise$post.run.iters, "more iterations to mitigate the influence of the noise...\n")
       ans <- mi(ans, run.past.convergence = TRUE, n.iter = 20, R.hat = R.hat)
     }
+    else{
+      warning("Run additional iterations is suggested to mitigate the influence of the noise\n")
+    }
   }
+  
   return(ans)
 }
 )
@@ -287,17 +314,18 @@ setMethod("mi", signature(object = "mi"),
   }    # set random seed
   
   if(n.iter <= 5){ 
-    stop(message="number of iteration must be more than 5")
+    stop(message="number of iterations must be more than 5")
   }
   ProcStart     <- proc.time()                  # starting time
-  
+
   # variable initialization
   time.out.flg  <- FALSE
   converged.flg <- FALSE
+  coef.converged.flg <- FALSE
   max.iter.flg  <- FALSE
   Time.Elapsed  <- 0
-  con.check     <- NULL
-  coef.conv.check <- NULL
+  conv.check     <- NULL
+  coef.mcmc <- NULL
 
   # for mi object
   data  <- data.mi(object)
@@ -313,7 +341,8 @@ setMethod("mi", signature(object = "mi"),
     preprocess <- FALSE
   }
   
-  if(is.null(object@coef.conv)){
+  
+  if(is.null(object@coef.mcmc)){
     check.coef.convergence <- FALSE
   }
   else{
@@ -326,10 +355,9 @@ setMethod("mi", signature(object = "mi"),
     info <- object@mi.info.preprocessed
   }  
   
-  
   #ncol.mis <- sum(.nmis(info)>0)
   n.imp     <- m(object)
-  prev.iter <- dim(bugs.mi(object)$sims.array)[1]
+  prev.iter <- dim(object@mcmc)[1]
   
   # creating misc info for further usage
   missingVar.idx <- .nmis(info) > 0
@@ -337,24 +365,28 @@ setMethod("mi", signature(object = "mi"),
   unorderedCatVar.idx <- .type(info)=="unordered-categorical"
   includeCatVar.idx <- (includeVar.idx & missingVar.idx & unorderedCatVar.idx)
   ncol.mis <- sum(missingVar.idx)
-  mcmc.list.length <- sum(includeVar.idx & missingVar.idx)
+  start.val.length <- sum(includeVar.idx & missingVar.idx)
   varNames <- names(info)[includeVar.idx & missingVar.idx]
   varNames <- varNames[order(.imp.order(info)[includeVar.idx & missingVar.idx])]
   data <- data[ ,includeVar.idx, drop = FALSE]
 
-
-  
   # convergence array initialization
-  aveVar <- .initializeConvCheckArray(data, info, n.iter=n.iter + prev.iter, n.imp, 
-    missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
-  
-  aveVar[ 1:prev.iter , , ] <- bugs.mi(object)$sims.array 
-  coef.conv.check <- object@coef.conv$sims.array
-  s_start <- prev.iter  + 1
-  s_end <- prev.iter + n.iter
+  if(object@add.noise){
+    aveVar <- .initializeConvCheckArray(data, info, n.iter = n.iter, n.imp, 
+      missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)  
+    s_start <- 1
+    s_end <- n.iter
+  }
+  else{
+   aveVar <- .initializeConvCheckArray(data, info, n.iter = n.iter + prev.iter, n.imp, 
+      missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
+    aveVar[ 1:prev.iter , , ] <- object@mcmc
+    s_start <- prev.iter  + 1
+    s_end <- prev.iter + n.iter
+  }  
 
   # mi list initialization
-  mi.data <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
+  mi.data <- .initializeMiList(data, info, start.val.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
   start.val <- mi.data$start.val
   mi.object <- mi.data$mi.object
   coef.val <- mi.data$coef.val
@@ -429,8 +461,8 @@ setMethod("mi", signature(object = "mi"),
     # Check for convergence
     Time.Elapsed <- proc.time() - ProcStart
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
-      conv.check <- as.bugs.array(aveVar[1:s, , ])
-      if(all(con.check$summary[,8] < R.hat)) { 
+      conv.check <- monitor(aveVar[1:s, , ])[,"Rhat"]
+      if(all(conv.check < R.hat)) { 
         converged.flg <- TRUE
         if(!run.past.convergence){ 
           break
@@ -446,7 +478,6 @@ setMethod("mi", signature(object = "mi"),
     }
   } # iteration loop
   
-
   # Print out reason for termination
   cat(if(converged.flg ){
         "mi converged (" 
@@ -480,8 +511,13 @@ setMethod("mi", signature(object = "mi"),
 
 
   if(check.coef.convergence){
-    coef.conv.check <- .checkCoefConvergence(coef.conv.check, coef.val, n.imp)
+    coef.mcmc <- object$coef.mcmc
+    coef.mcmc[((prev.iter+1):(prev.iter+n.iter)),,] <- .checkCoefConvergence(coef.conv.check, coef.val, n.imp)
+    if(all(monitor(coef.mcmc)[,"Rhat"] < R.hat)){
+      coef.converged.flg <- TRUE
+    }
   }
+ 
   
    ans <- new("mi", 
             call      = call,
@@ -489,11 +525,13 @@ setMethod("mi", signature(object = "mi"),
             m         = n.imp,
             mi.info   = info.mi(object),
             imp       = mi.object,
+            mcmc  = aveVar,
             converged = converged.flg,
-            coef.conv = coef.conv.check,
-            bugs      = conv.check,
+            coef.mcmc = coef.mcmc,
+            coef.converged = coef.converged.flg,
             preprocess = preprocess,
-            mi.info.preprocessed = object@mi.info.preprocessed)
+            mi.info.preprocessed = object@mi.info.preprocessed, 
+            add.noise = FALSE)
   with(globalenv(), rm(data.tmp))
   return(ans)
 }
@@ -540,11 +578,11 @@ setMethod("m", signature( object = "mi" ),
     return( object@m ) 
   }
 )
-setMethod("bugs.mi", signature( object = "mi" ),
-  function ( object ){
-    return( object@bugs ) 
-  }
-)
+#setMethod("bugs.mi", signature( object = "mi" ),
+#  function ( object ){
+#    return( object@bugs ) 
+#  }
+#)
 
 setMethod("info.mi", signature(object = "mi" ),
    function(object){

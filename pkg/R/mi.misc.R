@@ -1,11 +1,11 @@
 
-noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1){
+noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1, post.run.iters=20){
   method <- match.arg(method)
   if(method=="reshuffling"){
-    return(list(method=method, K=K))
+    return(list(method=method, K=K, post.run.iters=post.run.iters))
   }
   if(method=="fading"){
-    return(list(method=method, pct.aug=pct.aug))  
+    return(list(method=method, pct.aug=pct.aug, post.run.iters=post.run.iters))  
   }
 }
 
@@ -82,7 +82,7 @@ noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1){
 }
 
 
-.initializeMiList <- function(data, info, mcmc.list.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
+.initializeMiList <- function(data, info, start.val.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
 {
   mi.data       <- vector("list", n.imp)
   start.val     <- vector("list", n.imp)
@@ -90,7 +90,7 @@ noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1){
   mi.object.name <- names(info)[missingVar.idx]
   for (j in 1:n.imp){ 
     mi.data[[j]]  <-  random.imp(data, method = rand.imp.method)
-    start.val[[j]]<- vector( "list", mcmc.list.length)
+    start.val[[j]]<- vector( "list", start.val.length)
     mi.object[[j]]<- vector( "list", ncol.mis)
     names(mi.object[[j]]) <- mi.object.name
   }
@@ -131,14 +131,13 @@ noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1){
 #}
 
 .checkCoefConvergence <- function(coef.conv.check, coef.val, n.imp){
-  check <- if(is.null(coef.conv.check)){
-        as.bugs.array(.strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp))
+  mcmc <- if(is.null(coef.conv.check)){
+        .strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp)
       }
       else{
-        as.bugs.array(abind(coef.conv.check,.strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp),along=1))
+        abind(coef.conv.check,.strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp),along=1)
       }
-  check$sims.matrix <- NULL
-  return(check)
+  return(mcmc)
 }
 
 
