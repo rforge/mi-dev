@@ -6,7 +6,7 @@ setMethod("mi", signature(object = "data.frame"),
                   max.minutes = 20, rand.imp.method = "bootstrap", 
                   preprocess = TRUE, run.past.convergence = FALSE,
                   seed = NA, check.coef.convergence = FALSE, 
-                  add.noise = noise.control())#, post.run = TRUE) 
+                  add.noise = noise.control())
 { 
   call <- match.call()
   # set random seed
