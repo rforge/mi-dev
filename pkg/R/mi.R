@@ -66,14 +66,14 @@ setMethod("mi", signature(object = "data.frame"),
   
   # creating misc info for further usage
   missingVar.idx <- .nmis(info) > 0
-  includeVar.idx <- .include(info)
+  includeVar.idx <- .include(info)& missingVar.idx
   unorderedCatVar.idx <- .type(info)=="unordered-categorical"
   includeCatVar.idx <- (includeVar.idx & missingVar.idx & unorderedCatVar.idx)
   ncol.mis <- sum(missingVar.idx)
   mcmc.list.length <- sum(includeVar.idx & missingVar.idx)
   varNames <- names(info)[includeVar.idx & missingVar.idx]
   varNames <- varNames[order(.imp.order(info)[includeVar.idx & missingVar.idx])]
-  data <- data[ ,includeVar.idx, drop = FALSE]
+  data <- data[ , includeVar.idx, drop = FALSE]
   
   # convergence array initialization
   convArray <- .initializeConvCheckArray(data, info, n.iter, n.imp, 
@@ -84,7 +84,7 @@ setMethod("mi", signature(object = "data.frame"),
   rm(convArray)
   
   # mi list initialization
-  miList <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis)
+  miList <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
   mi.data <- miList$mi.data
   start.val <- miList$start.val
   mi.object <- miList$mi.object
@@ -337,7 +337,7 @@ setMethod("mi", signature(object = "mi"),
   
   # creating misc info for further usage
   missingVar.idx <- .nmis(info) > 0
-  includeVar.idx <- .include(info)
+  includeVar.idx <- .include(info) & missingVar.idx
   unorderedCatVar.idx <- .type(info)=="unordered-categorical"
   includeCatVar.idx <- (includeVar.idx & missingVar.idx & unorderedCatVar.idx)
   ncol.mis <- sum(missingVar.idx)
@@ -361,7 +361,7 @@ setMethod("mi", signature(object = "mi"),
   s_end <- prev.iter + n.iter
 
  # mi list initialization
-  miList <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis)
+  miList <- .initializeMiList(data, info, mcmc.list.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
   mi.data <- miList$mi.data
   start.val <- miList$start.val
   mi.object <- miList$mi.object
