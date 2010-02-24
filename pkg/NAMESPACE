@@ -40,6 +40,7 @@ exportClasses(
 )
 
 exportMethods(
+  bugs.mi,
   call.mi,
   data.mi,
   info.mi,
@@ -69,6 +70,7 @@ exportMethods(
 export(
   bayesglm.mi,
   bayespolr.mi,
+  bugs.mi,
   call.mi,
   conv.plot,
   converged,
