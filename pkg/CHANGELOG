@@ -1,3 +1,11 @@
+2009-2-23 Yu-Sung Su     <ys463@columbia.edu> 
+   * R/mi: 
+      1. clean up code.
+      2. rewrite mi() to burnin iterations with noises.
+      3. move post.run control into noise.control() as post.run.iters.
+   * R/mi.misc: more internal functions for mi() are stored here.
+   * R/AllGeneric: rewrite converged and bugs.mi generic functions.
+
 2009-12-31 Yu-Sung Su     <ys463@columbia.edu> 
    * DESCRIPTION (Version, Date): 0.08-06
    * R/mi.info: fix a bug in the include slot of update.mi.info

@@ -250,14 +250,16 @@ setMethod("mi", signature(object = "data.frame"),
       }
     }
   }
-
+  
   if(check.coef.convergence){
-    coef.mcmc <- .checkCoefConvergence(coef.conv.check, coef.val, n.imp)
+    coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
     if(all(monitor(coef.mcmc)[,"Rhat"] < R.hat)){
       coef.converged.flg <- TRUE
     }
   }
-  
+
+ 
+  aveVar <- aveVar[1:s,,]
   
   if(!preprocess){
     info.org <- info
@@ -278,9 +280,9 @@ setMethod("mi", signature(object = "data.frame"),
             m         = n.imp,
             mi.info   = info.org,
             imp       = mi.object,
-            mcmc = aveVar[1:s,,],
+            mcmc = aveVar,
             converged = converged.flg,
-            coef.mcmc = coef.mcmc[1:s,,],
+            coef.mcmc = coef.mcmc,
             coef.converged = coef.converged.flg,
             preprocess = preprocess,
             mi.info.preprocessed = info,
@@ -291,7 +293,7 @@ setMethod("mi", signature(object = "data.frame"),
   if(add.noise.flg){
     if(add.noise$post.run.iters > 0){
       cat("Run", add.noise$post.run.iters, "more iterations to mitigate the influence of the noise...\n")
-      ans <- mi(ans, run.past.convergence = TRUE, n.iter = 20, R.hat = R.hat)
+      ans <- mi(ans, run.past.convergence = TRUE, n.iter = add.noise$post.run.iters, R.hat = R.hat)
     }
     else{
       warning("Run additional iterations is suggested to mitigate the influence of the noise\n")
@@ -372,18 +374,17 @@ setMethod("mi", signature(object = "mi"),
 
   # convergence array initialization
   if(object@add.noise){
-    aveVar <- .initializeConvCheckArray(data, info, n.iter = n.iter, n.imp, 
-      missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)  
-    s_start <- 1
-    s_end <- n.iter
+    prev.iter <- 0
+    object@coef.mcmc <- NULL
   }
-  else{
-   aveVar <- .initializeConvCheckArray(data, info, n.iter = n.iter + prev.iter, n.imp, 
-      missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
-    aveVar[ 1:prev.iter , , ] <- object@mcmc
-    s_start <- prev.iter  + 1
-    s_end <- prev.iter + n.iter
-  }  
+  
+  aveVar <- .initializeConvCheckArray(data, info, n.iter = n.iter + prev.iter, n.imp, 
+      missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)  
+  if(prev.iter > 0){
+    aveVar[1:prev.iter,,] <- object@mcmc
+  }
+  s_start <- 1 + prev.iter
+  s_end <- n.iter + prev.iter
 
   # mi list initialization
   mi.data <- .initializeMiList(data, info, start.val.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
@@ -509,15 +510,16 @@ setMethod("mi", signature(object = "mi"),
     }
   }
 
-
   if(check.coef.convergence){
-    coef.mcmc <- object$coef.mcmc
-    coef.mcmc[((prev.iter+1):(prev.iter+n.iter)),,] <- .checkCoefConvergence(coef.conv.check, coef.val, n.imp)
+    coef.mcmc <- object@coef.mcmc
+    coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
     if(all(monitor(coef.mcmc)[,"Rhat"] < R.hat)){
       coef.converged.flg <- TRUE
     }
   }
  
+  aveVar <- aveVar[1:s,,]
+
   
    ans <- new("mi", 
             call      = call,
@@ -525,9 +527,9 @@ setMethod("mi", signature(object = "mi"),
             m         = n.imp,
             mi.info   = info.mi(object),
             imp       = mi.object,
-            mcmc  = aveVar[1:s,,],
+            mcmc      = aveVar,
             converged = converged.flg,
-            coef.mcmc = coef.mcmc[1:s,,],
+            coef.mcmc = coef.mcmc,
             coef.converged = coef.converged.flg,
             preprocess = preprocess,
             mi.info.preprocessed = object@mi.info.preprocessed, 
@@ -568,8 +570,14 @@ setMethod("data.mi", signature( object = "mi" ),
 )
 
 setMethod("converged", signature( object = "mi" ),
-  function ( object ) { 
-    return( object@converged ) 
+  function (object, check = c("data", "coefs") ) { 
+    if(check=="coefs"){
+      out <- object@coef.converged
+    }
+    if(check=="data"){
+      out <- object@converged
+    }
+    return(out)     
   }
 )
 
@@ -578,11 +586,18 @@ setMethod("m", signature( object = "mi" ),
     return( object@m ) 
   }
 )
-#setMethod("bugs.mi", signature( object = "mi" ),
-#  function ( object ){
-#    return( object@bugs ) 
-#  }
-#)
+
+setMethod("bugs.mi", signature( object = "mi" ),
+  function (object, check = c("data", "coefs")){
+    if(check=="coefs"){
+      out <- as.bugs.array(objet@coef.mcmc)
+    }
+    if(check=="data"){
+      out <- as.bugs.array(object@mcmc)
+    }
+    return(out) 
+  }
+)
 
 setMethod("info.mi", signature(object = "mi" ),
    function(object){

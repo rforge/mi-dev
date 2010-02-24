@@ -5,7 +5,7 @@
 % functions
 \alias{mi}
 \alias{is.mi}
-%\alias{bugs.mi}
+\alias{bugs.mi}
 \alias{call.mi}
 \alias{converged}
 \alias{data.mi}
@@ -74,12 +74,12 @@ A list of object of class \code{mi}, which stands for \dQuote{multiple imputatio
   \item{m}{The number of imputations.}
   \item{mi.info}{Information matrix of the \code{mi}.}
   \item{imp}{A list of length(m) of imputations.}
-  \item{mcmc}{A mcmc list that stores lists of means and sds of the data.}
+  \item{mcmc}{A mcmc list that stores lists of means and sds of the imputed data.}
   \item{converged}{Binary variable to indicate if the \code{mi} has converged.}
-  \item{coef.mcmc}{A mcmc list that stores lists of means of regression coefficients of conditonal models.}
+  \item{coef.mcmc}{A mcmc list that stores lists of means of regression coefficients of the conditonal models.}
   \item{coef.converged}{Binary variable to indicate if the coefs of \code{mi} model have converged, return
     \code{NULL} if \code{check.coef.convergence = FALSE}}
-  \item{bugs}{BUGS array of the mean and sd of each iteration.}
+%  \item{bugs}{BUGS array of the mean and sd of each iteration.}
   \item{preprocess}{Binary variable to indicate if \code{preprocess=TRUE} in the \code{mi} process}
   \item{mi.info.preprocessed}{Information matrix that actually used in the \code{mi} if \code{preprocess=TRUE}.}
   
@@ -164,21 +164,24 @@ inf <- update(inf, "type", list(x10="count"))
 
 # run the imputation
 ## this is for test only
-IMP <- mi(dat, info=inf, n.iter=6, add.noise=noise.control(post.run.iters=0))
+IMP <- mi(dat, info=inf, n.iter=6, check.coef.convergence=TRUE, 
+  add.noise=noise.control(post.run.iters=10))
 
 # no noise
 # IMP <- mi(dat, info=inf, n.iter=6, add.noise=FALSE) ## NOT RUN
 
 # pick up where you left off
-# IMP <- mi(IMP)       ## NOT RUN
+ IMP <- mi(IMP, n.iter = 6)      
 
 ## this is the suggested (defautl) way of running mi
 # IMP <- mi(dat, info=inf) ## NOT RUN
 
 # convergence checking
-converged(IMP)  ## You should get FALSE here because only n.iter is small 
-IMP.bugs <- as.bugs.array(IMP@mcmc)    ## BUGS object to look at the R hat statistics
-plot(IMP.bugs)  ## visually check R.hat
+converged(IMP, check = "data")  ## You should get FALSE here because only n.iter is small 
+converged(IMP, check = "coefs")
+IMP.bugs1 <- bugs.mi(IMP, check = "data")    ## BUGS object to look at the R hat statistics
+IMP.bugs2 <- bugs.mi(IMP, check = "coefs")    ## BUGS object to look at the R hat statistics
+plot(IMP.bugs1)  ## visually check R.hat
 
 # visually check the imputation
 plot(IMP)

@@ -130,12 +130,12 @@ noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1, 
 #  return(convCheck)
 #}
 
-.checkCoefConvergence <- function(coef.conv.check, coef.val, n.imp){
-  mcmc <- if(is.null(coef.conv.check)){
+.checkCoefConvergence <- function(coef.mcmc, coef.val, n.imp){
+  mcmc <- if(is.null(coef.mcmc)){
         .strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp)
       }
       else{
-        abind(coef.conv.check,.strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp),along=1)
+        abind(coef.mcmc,.strict.check(coef.val,dim(coef.val[[1]][[1]])[1],n.imp),along=1)
       }
   return(mcmc)
 }
