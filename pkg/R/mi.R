@@ -590,7 +590,7 @@ setMethod("m", signature( object = "mi" ),
 setMethod("bugs.mi", signature( object = "mi" ),
   function (object, check = c("data", "coefs")){
     if(check=="coefs"){
-      out <- as.bugs.array(objet@coef.mcmc)
+      out <- as.bugs.array(object@coef.mcmc)
     }
     if(check=="data"){
       out <- as.bugs.array(object@mcmc)
