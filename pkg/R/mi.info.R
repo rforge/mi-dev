@@ -429,8 +429,9 @@ mi.fix.params <- function( info, name ) {
 # check correlation
 # ========================================================================
 
-mi.check.correlation <- function ( data, threshhold = 0.99999 ){
+mi.check.correlation <- function (data, threshhold = 0.99999 ){
   options(warn = -1)
+  data <- as.data.frame(apply(data, 2, as.numeric))
   cor.data <- cor(data, use = "pairwise.complete.obs")
   diag( cor.data ) <- 1
   index  <- abs( cor.data - diag( dim( cor.data )[1] ) ) >= threshhold 
