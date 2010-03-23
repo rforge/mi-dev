@@ -35,15 +35,13 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   # convert the levels
   #Y.levels <- levels(ordered(Y))
   #Y.nlevel <- nlevels(ordered(Y))
-  response.name <- names(mf)[1]  
-  form <- formula
-  form <- gsub(response.name, paste("ordered(", response.name, ")", sep=""), form)
+  response.name <- paste("ordered(", names(mf)[1], ")", sep="")
+  form <- as.character(as.formula(formula))
+  form[2] <- response.name
   if(!is.na(form[2])){
     form <- as.formula(paste(form[2], form[1], form[3]))
   }
-
-
-
+  
 #
 #  if( is.numeric(Y)){ 
 #    Y.levels <- as.double(Y.levels) 

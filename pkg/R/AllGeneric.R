@@ -92,22 +92,22 @@ if ( !isGeneric( "info.mi" )) {
 if ( !isGeneric( "imp" )) {
   setGeneric( "imp",
               function( object,... ){
-                standardGeneric( "imp" )
+                standardGeneric("imp")
               } 
   )
 }
 
 if ( !isGeneric( "is.mi" )) {
   setGeneric( "is.mi",
-              function( object ){
-                standardGeneric( "is.mi" )
+              function(object){
+                standardGeneric("is.mi")
               } 
   )
 }
 
 if ( !isGeneric("mi")) {
     setGeneric( "mi",
-               function(object, ... ){
+               function(object, ...){
                standardGeneric("mi") 
                }
     )

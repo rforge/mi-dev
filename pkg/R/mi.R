@@ -58,7 +58,6 @@ setMethod("mi", signature(object = "data.frame"),
     info.org <- data$info.org
     data <- data$data
   }  
-  
   # store level info in mi.info for unordered cat vars
   info <- .catVarLevelCheck(data, info)
   
@@ -273,7 +272,6 @@ setMethod("mi", signature(object = "data.frame"),
   else{
     add.noise.flg <- FALSE
   }
-
   ans <- new("mi", 
             call      = call,
             data      = org.data,
@@ -299,7 +297,6 @@ setMethod("mi", signature(object = "data.frame"),
       warning("Run additional iterations is suggested to mitigate the influence of the noise\n")
     }
   }
-  
   return(ans)
 }
 )
@@ -521,7 +518,7 @@ setMethod("mi", signature(object = "mi"),
   aveVar <- aveVar[1:s,,]
 
   
-   ans <- new("mi", 
+  ans <- new("mi", 
             call      = call,
             data      = data.mi(object),
             m         = n.imp,

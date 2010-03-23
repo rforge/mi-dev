@@ -460,6 +460,7 @@ mi.check.correlation <- function (data, threshhold = 0.99999 ){
 
 mi.correlated.list <- function ( data, threshhold = 0.99999 ){
   options(warn = -1)
+  data <- as.data.frame(apply(data, 2, as.numeric))
   cor.data <- cor( data, use="pairwise.complete.obs" )
   diag(cor.data) <- 1
   index <- abs( cor.data - diag(dim(cor.data)[1])) >= threshhold 
@@ -573,7 +574,7 @@ mi.info.recode <- function( data, info ){
       # treatment since recode can't handle "=" as variable name
       if(length(grep("=",names(info[[i]]$level)))>0){
         names(info[[i]]$level) <- gsub("=","@@@@@",names(info[[i]]$level))
-        data[[i]]<-gsub("=","@@@@@",data[[i]])
+        data[[i]]<- gsub("=","@@@@@",data[[i]])
       }
       data[[i]]<-recode(data[[i]],paste("'",names(info[[i]]$level),"'=",info[[i]]$level,sep="",collapse="; "))
     }
@@ -593,14 +594,14 @@ mi.info.uncode <-function( data, info ){
         recode.equal <- TRUE
       }
       if(info[[i]]$var.class=="factor"){
-        data[[i]]<-factor(data[[i]])
+        data[[i]] <- factor(data[[i]])
       }
       else if(info[[i]]$var.class=="character"){
-        data[[i]]<-as.character(data[[i]])
+        data[[i]] <- as.character(data[[i]])
       }
-      data[[i]]<-recode(data[[i]],paste(info[[i]]$level,"=","'",names(info[[i]]$level),"'",sep="",collapse="; "))
+      data[[i]] <- recode(data[[i]],paste(info[[i]]$level,"=","'",names(info[[i]]$level),"'",sep="",collapse="; "))
       if(recode.equal){
-        data[[i]]<-gsub("@@","=",data[[i]])
+        data[[i]] <- gsub("@@","=",data[[i]])
       }
     }
   }
@@ -684,7 +685,7 @@ update.mi.info <- function(object, target, list, ...){
   # imp.order
   ord <- 1
   for(i in 1:length(object)){
-    if(object[[i]][["include"]] | object[[i]][["nmis"]]>0){
+    if(object[[i]][["include"]] && object[[i]][["nmis"]]>0){
       object[[i]][["imp.order"]] <- ord
       ord <- ord + 1
     }

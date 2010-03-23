@@ -1,3 +1,5 @@
+## many internal functions are stored in mi.misc.R
+
 
 noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1, post.run.iters=20){
   method <- match.arg(method)
