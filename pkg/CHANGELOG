@@ -1,4 +1,9 @@
-2009-2-23 Yu-Sung Su     <ys463@columbia.edu> 
+2010-3-23 Yu-Sung Su     <ys463@columbia.edu> 
+   * DESCRIPTION (Version, Date): 0.08-07
+   * R/mi.info: coerce data into numeric to pass the new rule of cor()
+   * R/mi.polr: fix a formula bug.
+
+2010-2-23 Yu-Sung Su     <ys463@columbia.edu> 
    * R/mi: 
       1. clean up code.
       2. rewrite mi() to burnin iterations with noises.
