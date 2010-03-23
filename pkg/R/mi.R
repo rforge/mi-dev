@@ -88,7 +88,7 @@ setMethod("mi", signature(object = "data.frame"),
   mi.object <- mi.data$mi.object
   coef.val <- mi.data$coef.val
   mi.data <- mi.data$mi.data
-  browser()
+
   cat("Beginning Multiple Imputation (", date(), "):\n")
   # iteration loop
   for(s in s_start:s_end){
@@ -458,7 +458,7 @@ setMethod("mi", signature(object = "mi"),
      
     
     } # imputation loop
-
+  browser()
     # Check for convergence
     Time.Elapsed <- proc.time() - ProcStart
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
@@ -495,6 +495,7 @@ setMethod("mi", signature(object = "mi"),
       , date(), ")\n")
 
 
+
   # impute collinear variables
   for( cor.idx in 1:length(info)) {
     if( !is.na(info[[cor.idx]]$collinear) 
@@ -509,6 +510,7 @@ setMethod("mi", signature(object = "mi"),
       }
     }
   }
+  browser()
 
   if(check.coef.convergence){
     coef.mcmc <- object@coef.mcmc
