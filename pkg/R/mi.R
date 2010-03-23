@@ -74,12 +74,13 @@ setMethod("mi", signature(object = "data.frame"),
   start.val.length <- sum(includeVar.idx & missingVar.idx)
   varNames <- names(info)[includeVar.idx & missingVar.idx]
   varNames <- varNames[order(.imp.order(info)[includeVar.idx & missingVar.idx])]
-  data <- data[ , includeVar.idx, drop = FALSE]
-  
   # convergence array initialization
+  
   aveVar <- .initializeConvCheckArray(data, info, n.iter, n.imp, 
     missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
   #dim.mcmc <- dim(aveVar)
+  data <- data[ , .include(info), drop = FALSE]
+  
   
   # mi list initialization
   mi.data <- .initializeMiList(data, info, start.val.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
@@ -87,14 +88,14 @@ setMethod("mi", signature(object = "data.frame"),
   mi.object <- mi.data$mi.object
   coef.val <- mi.data$coef.val
   mi.data <- mi.data$mi.data
-  
+  browser()
   cat("Beginning Multiple Imputation (", date(), "):\n")
   # iteration loop
   for(s in s_start:s_end){
-    cat( "Iteration", s,"\n" )
+    cat("Iteration", s,"\n" )
     # imputation loop
     for( i in 1:n.imp ){
-      cat( " Imputation", i,  ": " )
+      cat(" Imputation", i,  ": " )
       # variable loop
       for(jj in 1:length(varNames)){
         CurrentVar <- varNames[jj]
@@ -289,9 +290,9 @@ setMethod("mi", signature(object = "data.frame"),
   with(globalenv(), rm(data.tmp))
   
   if(add.noise.flg){
-    if(add.noise$post.run.iters > 0){
-      cat("Run", add.noise$post.run.iters, "more iterations to mitigate the influence of the noise...\n")
-      ans <- mi(ans, run.past.convergence = TRUE, n.iter = add.noise$post.run.iters, R.hat = R.hat)
+    if(add.noise$post.run.iter > 0){
+      cat("Run", add.noise$post.run.iter, "more iterations to mitigate the influence of the noise...\n")
+      ans <- mi(ans, run.past.convergence = TRUE, n.iter = add.noise$post.run.iter, R.hat = R.hat)
     }
     else{
       warning("Run additional iterations is suggested to mitigate the influence of the noise\n")
@@ -367,7 +368,6 @@ setMethod("mi", signature(object = "mi"),
   start.val.length <- sum(includeVar.idx & missingVar.idx)
   varNames <- names(info)[includeVar.idx & missingVar.idx]
   varNames <- varNames[order(.imp.order(info)[includeVar.idx & missingVar.idx])]
-  data <- data[ ,includeVar.idx, drop = FALSE]
 
   # convergence array initialization
   if(object@add.noise){
@@ -377,12 +377,15 @@ setMethod("mi", signature(object = "mi"),
   
   aveVar <- .initializeConvCheckArray(data, info, n.iter = n.iter + prev.iter, n.imp, 
       missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)  
+  data <- data[ , .include(info), drop = FALSE]
+
   if(prev.iter > 0){
     aveVar[1:prev.iter,,] <- object@mcmc
   }
   s_start <- 1 + prev.iter
   s_end <- n.iter + prev.iter
-
+  
+  
   # mi list initialization
   mi.data <- .initializeMiList(data, info, start.val.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
   start.val <- mi.data$start.val

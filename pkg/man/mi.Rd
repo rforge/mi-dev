@@ -165,7 +165,7 @@ inf <- update(inf, "type", list(x10="count"))
 # run the imputation
 ## this is for test only
 IMP <- mi(dat, info=inf, n.iter=6, check.coef.convergence=TRUE, 
-  add.noise=noise.control(post.run.iters=10))
+  add.noise=noise.control(post.run.iter=10))
 
 # no noise
 # IMP <- mi(dat, info=inf, n.iter=6, add.noise=FALSE) ## NOT RUN

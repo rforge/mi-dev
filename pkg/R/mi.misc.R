@@ -1,13 +1,13 @@
 ## many internal functions are stored in mi.misc.R
 
 
-noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1, post.run.iters=20){
+noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1, post.run.iter=20){
   method <- match.arg(method)
   if(method=="reshuffling"){
-    return(list(method=method, K=K, post.run.iters=post.run.iters))
+    return(list(method=method, K=K, post.run.iter=post.run.iter))
   }
   if(method=="fading"){
-    return(list(method=method, pct.aug=pct.aug, post.run.iters=post.run.iters))  
+    return(list(method=method, pct.aug=pct.aug, post.run.iter=post.run.iter))  
   }
 }
 

@@ -8,7 +8,7 @@
 }
 
 \usage{
-noise.control(method=c("reshuffling", "fading"), pct.aug=10, K=1, post.run.iters=20)
+noise.control(method=c("reshuffling", "fading"), pct.aug=10, K=1, post.run.iter=20)
 
 }
 \arguments{
@@ -16,7 +16,7 @@ noise.control(method=c("reshuffling", "fading"), pct.aug=10, K=1, post.run.iters
   \item{pct.aug}{percent of N being add into the exisitng data, where N is the number of 
     observation of the completed data set, default is 10.}  
   \item{K}{the cooling parameter, default is 1.}
-  \item{post.run.iters}{number of iterations after a imputation, default is 20.  This is to mitigate the 
+  \item{post.run.iter}{number of iterations after a imputation, default is 20.  This is to mitigate the 
     influence of a imputation with the noise.}
 }
 
@@ -50,19 +50,17 @@ If \code{fading} method is used, the imputation will augment
 #===========================================================
 # add fadding empirical noise by augmenting 10% of the data
 #===========================================================
-if(0){
  data(CHAIN)
- IMP <- mi(CHAIN, add.noise=noise.control(method="fading", pct.aug=10, post.run.iters=1))
+ IMP <- mi(CHAIN, add.noise=noise.control(method="fading", pct.aug=10, post.run.iter=0))
 #=================================================
 # add noise by randomly drawing from the marginal
 #=================================================
 ## This is the default setting
- IMP <- mi(CHAIN, add.noise=noise.control(method="reshuffling", K=1, post.run.iters=1))
+ IMP <- mi(CHAIN, add.noise=noise.control(method="reshuffling", K=1, post.run.iter=0))
 #=================================================
 # add no noise
 #=================================================
  IMP <- mi(CHAIN, add.noise=FALSE)
-}
 }
 
 \keyword{manip}
