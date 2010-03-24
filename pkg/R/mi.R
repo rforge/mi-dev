@@ -189,12 +189,11 @@ setMethod("mi", signature(object = "data.frame"),
 
       aveVar[s,i,] <- c(avevar.mean, avevar.sd)
     } # imputation loop
-    
-    
+       
     # Check for convergence
     Time.Elapsed <- proc.time() - ProcStart
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
-      conv.check <- monitor(aveVar[1:s, , ])[,"Rhat"]
+      conv.check <- as.bugs.array(aveVar[1:s, , ])$summary[,"Rhat"]
       if(all(conv.check < R.hat)) { 
         converged.flg <- TRUE
         if(!run.past.convergence){ 
@@ -234,8 +233,7 @@ setMethod("mi", signature(object = "data.frame"),
       , date(), ")\n"
       ) 
 
-      
-
+  browser()  
   # impute correlated variables
   for( cor.idx in 1:length(info)) {
     if( !is.na(info[[cor.idx]]$collinear) 
@@ -253,7 +251,7 @@ setMethod("mi", signature(object = "data.frame"),
   
   if(check.coef.convergence){
     coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
-    if(all(monitor(coef.mcmc)[,"Rhat"] < R.hat)){
+    if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
       coef.converged.flg <- TRUE
     }
   }
@@ -458,11 +456,10 @@ setMethod("mi", signature(object = "mi"),
      
     
     } # imputation loop
-  browser()
     # Check for convergence
     Time.Elapsed <- proc.time() - ProcStart
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
-      conv.check <- monitor(aveVar[1:s, , ])[,"Rhat"]
+      conv.check <- as.bugs.array(aveVar[1:s, , ])$summary[,"Rhat"]
       if(all(conv.check < R.hat)) { 
         converged.flg <- TRUE
         if(!run.past.convergence){ 
@@ -510,12 +507,11 @@ setMethod("mi", signature(object = "mi"),
       }
     }
   }
-  browser()
 
   if(check.coef.convergence){
     coef.mcmc <- object@coef.mcmc
     coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
-    if(all(monitor(coef.mcmc)[,"Rhat"] < R.hat)){
+    if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
       coef.converged.flg <- TRUE
     }
   }

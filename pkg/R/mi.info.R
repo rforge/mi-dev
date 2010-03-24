@@ -467,9 +467,9 @@ mi.correlated.list <- function ( data, threshhold = 0.99999 ){
   result <- vector("list",dim(index)[1])
   for( i in 1:dim(index)[1] ){
     if(length(names(which(index[i,]==1)))>0){
-      result[[i]]<-c(names(data)[i],names(which(index[i,]==1)))
+      result[[i] ]<- c(names(data)[i], names(which(index[i,]==1)))
       #result[[i]]<-c(names(which(index[i,]==1)))
-      result[[i]]<-result[[i]][order(result[[i]])]
+      result[[i]] <- result[[i]][order(result[[i]])]
     }
     else{
       result[[i]]<-NA
