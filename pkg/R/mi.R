@@ -210,7 +210,7 @@ setMethod("mi", signature(object = "data.frame"),
     }
   } # iteration loop
   
-
+  options(show.error.messages = TRUE)
  # converged.flg <- convCheck$converged.flg
 #  time.out.flg <- convCheck$tim.out.flg
 #  max.iter.flg <- convCheck$max.iter.flg
@@ -232,19 +232,18 @@ setMethod("mi", signature(object = "data.frame"),
       }
       , date(), ")\n"
       ) 
-
-  browser()  
+  
   # impute correlated variables
   for( cor.idx in 1:length(info)) {
     if( !is.na(info[[cor.idx]]$collinear) 
          && info[[cor.idx]]$nmis > 0 
           && info[[cor.idx]]$include==FALSE ) {
-      rho <- coef(lm(org.data[[names(info)[cor.idx]]] ~ org.data[[info[[cor.idx]]$determ.pred]]))[2]
+      rho <- coef(lm(org.data[[names(info)[cor.idx]]] ~ org.data[[info[[cor.idx]]$collinear]]))[2]
       for ( ii in 1:n.imp ){
         mi.object[[ii]][[names(info)[[cor.idx]]]] <- do.call( mi.copy, 
                                                               args=list(
                                                                 Y=org.data[[names(info)[cor.idx]]],
-                                                                X=(mi.data[[ii]][info[[cor.idx]]$determ.pred])*rho))
+                                                                X=(mi.data[[ii]][info[[cor.idx]]$collinear])*rho))
       }
     }
   }
@@ -497,7 +496,7 @@ setMethod("mi", signature(object = "mi"),
   for( cor.idx in 1:length(info)) {
     if( !is.na(info[[cor.idx]]$collinear) 
          && info[[cor.idx]]$nmis > 0 
-          && info[[cor.idx]]$include == FALSE ) {
+          && !info[[cor.idx]]$include ) {
       rho <- coef(lm(org.data[[names(info)[cor.idx]]] ~ org.data[[info[[cor.idx]]$determ.pred]]))[2]
       for ( ii in 1:n.imp ){
         mi.object[[ii]][[names(info)[[cor.idx]]]] <- do.call( mi.copy, 
