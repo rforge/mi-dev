@@ -50,17 +50,21 @@ If \code{fading} method is used, the imputation will augment
 #===========================================================
 # add fadding empirical noise by augmenting 10% of the data
 #===========================================================
- data(CHAIN)
- IMP <- mi(CHAIN, add.noise=noise.control(method="fading", pct.aug=10, post.run.iter=0))
+## data(CHAIN)
+## IMP <- mi(CHAIN, add.noise=noise.control(method="fading", pct.aug=10, post.run.iter=20))
 #=================================================
 # add noise by randomly drawing from the marginal
 #=================================================
 ## This is the default setting
- IMP <- mi(CHAIN, add.noise=noise.control(method="reshuffling", K=1, post.run.iter=0))
+## IMP <- mi(CHAIN, add.noise=noise.control(method="reshuffling", K=1, post.run.iter=20))
 #=================================================
 # add no noise
 #=================================================
- IMP <- mi(CHAIN, add.noise=FALSE)
+## IMP <- mi(CHAIN, add.noise=FALSE)
+#=================================================
+# add noise but no post.run
+#=================================================
+## IMP <- mi(CHAIN, add.noise=noise.control(post.run.iter=0))
 }
 
 \keyword{manip}
