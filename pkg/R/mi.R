@@ -168,16 +168,17 @@ setMethod("mi", signature(object = "data.frame"),
 
         if(info[[CurrentVar]]$type=="unordered-categorical"){
           n.level <- length(info[[CurrentVar]]$level)
-          coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],
-            unlist(as.list(coef(mi.object[[i]][[CurrentVar]]))))
+          if(!is.null(coef(mi.object[[i]][[CurrentVar]]))){
+            coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],
+              unlist(as.list(coef(mi.object[[i]][[CurrentVar]]))))
+          }
         }
         else{
-          coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
+          if(!is.null(coef(mi.object[[i]][[CurrentVar]]))){
+            coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
+          }
         }
-        if(is.null(coef(mi.object[[i]][[CurrentVar]]))){
-          start.val[[i]][[jj]] <- 0
-        }
-        else{
+        if(!is.null(coef(mi.object[[i]][[CurrentVar]]))){
           start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
         }
       } ## variable loop 
@@ -437,16 +438,17 @@ setMethod("mi", signature(object = "mi"),
         data.tmp <<- mi.data
         if(info[[CurrentVar]]$type=="unordered-categorical"){
           n.level <- length(info[[CurrentVar]]$level)
-          coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],
-            unlist(as.list(coef(mi.object[[i]][[CurrentVar]]))))
+          if(!is.null(coef(mi.object[[i]][[CurrentVar]]))){
+            coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],
+              unlist(as.list(coef(mi.object[[i]][[CurrentVar]]))))
+          }        
         }
         else{
-          coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
+          if(!is.null(coef(mi.object[[i]][[CurrentVar]]))){
+            coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
+          }
         }
-        if(is.null(coef(mi.object[[i]][[CurrentVar]]))){
-          start.val[[i]][[jj]] <- 0
-        }
-        else{
+        if(!is.null(coef(mi.object[[i]][[CurrentVar]]))){
           start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
         }
       } ## variable loop 
