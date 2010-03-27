@@ -55,11 +55,11 @@ noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1, 
     tot.n.unord.cat.var <- sum(includeCatVar.idx)
   }
   
-  if(sum(includeVar.idx)==1){
+  if(sum(includeVar.idx & missingVar.idx)==1){
     n.col.sims.array <- 1 + tot.nlevel - tot.n.unord.cat.var
   }
   else{
-    n.col.sims.array <- dim(data[, includeVar.idx])[2] + tot.nlevel - tot.n.unord.cat.var
+    n.col.sims.array <- dim(data[, includeVar.idx & missingVar.idx])[2] + tot.nlevel - tot.n.unord.cat.var
   }
   
   aveVar  <- array(NA, c(n.iter, n.imp, n.col.sims.array*2))
