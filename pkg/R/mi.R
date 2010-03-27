@@ -141,7 +141,7 @@ setMethod("mi", signature(object = "data.frame"),
         errormessage <- paste("\nError while imputing variable:", CurrentVar, ", model:",model.type,"\n")
         on.exit(cat(errormessage,geterrmessage()))
         on.exit(options(show.error.messages = TRUE),add = TRUE)
-        #options(show.error.messages = FALSE)
+        options(show.error.messages = FALSE)
         # Error Handling
         mi.object[[i]][[CurrentVar]] <- with(data = dat, 
                                           do.call(model.type,
@@ -172,14 +172,23 @@ setMethod("mi", signature(object = "data.frame"),
             coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],
               unlist(as.list(coef(mi.object[[i]][[CurrentVar]]))))
           }
+          else{
+            coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],0)
+          }
         }
         else{
           if(!is.null(coef(mi.object[[i]][[CurrentVar]]))){
             coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
           }
+          else{
+            coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],0)
+          }
         }
         if(!is.null(coef(mi.object[[i]][[CurrentVar]]))){
           start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
+        }
+        else{
+          start.val[[i]][[jj]] <- 0
         }
       } ## variable loop 
 
@@ -215,20 +224,19 @@ setMethod("mi", signature(object = "data.frame"),
   } # iteration loop
   
   options(show.error.messages = TRUE)
- # converged.flg <- convCheck$converged.flg
-#  time.out.flg <- convCheck$tim.out.flg
-#  max.iter.flg <- convCheck$max.iter.flg
-#  conv.check <- convCheck$conv.check
-#  rm(convFlg)
-  
-  # Print out reason for termination
-  cat(if(converged.flg){
+
+  if(check.coef.convergence){
+    coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
+    if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
+      coef.converged.flg <- TRUE
+    }
+    cat(if(converged.flg && coef.converged.flg){
         "mi converged (" 
       } 
-      else if( time.out.flg  ){
+      else if(time.out.flg){
         "Time out, mi did not converge ("
       } 
-      else if( max.iter.flg ){
+      else if(max.iter.flg){
         "Reached the maximum iteration, mi did not converge ("
       } 
       else{ 
@@ -236,7 +244,24 @@ setMethod("mi", signature(object = "data.frame"),
       }
       , date(), ")\n"
       ) 
-  
+  }
+  else{
+  # Print out reason for termination
+  cat(if(converged.flg){
+        "mi converged (" 
+      } 
+      else if(time.out.flg){
+        "Time out, mi did not converge ("
+      } 
+      else if(max.iter.flg){
+        "Reached the maximum iteration, mi did not converge ("
+      } 
+      else{ 
+        "Unknown termination ("
+      }
+      , date(), ")\n"
+      ) 
+  }
   # impute correlated variables
   for( cor.idx in 1:length(info)) {
     if( !is.na(info[[cor.idx]]$collinear) 
@@ -252,12 +277,6 @@ setMethod("mi", signature(object = "data.frame"),
     }
   }
   
-  if(check.coef.convergence){
-    coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
-    if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
-      coef.converged.flg <- TRUE
-    }
-  }
 
  
   aveVar <- aveVar[1:s,,]
@@ -417,7 +436,7 @@ setMethod("mi", signature(object = "mi"),
         errormessage <- paste("\nError while imputing variable:", CurrentVar, ", model:",model.type,"\n")
         on.exit(cat(errormessage,geterrmessage()))
         on.exit(options(show.error.messages = TRUE),add = TRUE)
-        #options(show.error.messages = FALSE)
+        options(show.error.messages = FALSE)
         # Error Handling
         mi.object[[i]][[CurrentVar]] <- with(data = dat, 
                                           do.call(model.type,
@@ -442,14 +461,23 @@ setMethod("mi", signature(object = "mi"),
             coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],
               unlist(as.list(coef(mi.object[[i]][[CurrentVar]]))))
           }        
+          else{
+            coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],0)
+          }
         }
         else{
           if(!is.null(coef(mi.object[[i]][[CurrentVar]]))){
             coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
           }
+          else{
+            coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],0)          
+          }
         }
         if(!is.null(coef(mi.object[[i]][[CurrentVar]]))){
           start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
+        }
+        else{
+          start.val[[i]][[jj]] <- 0
         }
       } ## variable loop 
       cat("\n" )      
@@ -483,9 +511,16 @@ setMethod("mi", signature(object = "mi"),
       max.iter.flg <- TRUE 
     }
   } # iteration loop
-  
-  # Print out reason for termination
-  cat(if(converged.flg ){
+ 
+ 
+  if(check.coef.convergence){
+    coef.mcmc <- object@coef.mcmc
+    coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
+    if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
+      coef.converged.flg <- TRUE
+    }
+   # Print out reason for termination
+    cat(if(converged.flg && coef.converged.flg){
         "mi converged (" 
       } 
       else if(time.out.flg ){
@@ -498,7 +533,23 @@ setMethod("mi", signature(object = "mi"),
         "Unknown termination ("
       }
       , date(), ")\n")
-
+  }
+  else{
+  # Print out reason for termination
+  cat(if(converged.flg){
+        "mi converged (" 
+      } 
+      else if(time.out.flg ){
+        "Time out, mi did not converge ("
+      } 
+      else if( max.iter.flg ){
+        "Reached the maximum iteration, mi did not converge ("
+      } 
+      else{ 
+        "Unknown termination ("
+      }
+      , date(), ")\n")
+  }
 
 
   # impute collinear variables
@@ -516,13 +567,7 @@ setMethod("mi", signature(object = "mi"),
     }
   }
 
-  if(check.coef.convergence){
-    coef.mcmc <- object@coef.mcmc
-    coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
-    if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
-      coef.converged.flg <- TRUE
-    }
-  }
+ 
  
   aveVar <- aveVar[1:s,,]
 
