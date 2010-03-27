@@ -143,7 +143,6 @@ setMethod("mi", signature(object = "data.frame"),
         on.exit(options(show.error.messages = TRUE),add = TRUE)
         options(show.error.messages = FALSE)
         # Error Handling
-        browser()
         mi.object[[i]][[CurrentVar]] <- with(data = dat, 
                                           do.call(model.type,
                                             args = c(list(formula = info[[CurrentVar]]$imp.formula, 
