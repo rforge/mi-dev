@@ -28,30 +28,19 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
             }
   mis    <- is.na( Y )
   n.mis  <- sum( mis )
+  assign(names(mf)[1], as.ordered(mf[,1]))
+
+  mf[,1] <- get(names(mf)[1])
+  
   if(is.null(data)){
     data <- mf
   }
-
-  # convert the levels
-  #Y.levels <- levels(ordered(Y))
-  #Y.nlevel <- nlevels(ordered(Y))
-  response.name <- paste("ordered(", names(mf)[1], ")", sep="")
-  form <- as.character(as.formula(formula))
-  form[2] <- response.name
-  if(!is.na(form[2])){
-    form <- as.formula(paste(form[2], form[1], form[3]))
+  else{    
+    data[,names(mf)[1]] <- get(names(mf)[1])
   }
-  
-#
-#  if( is.numeric(Y)){ 
-#    Y.levels <- as.double(Y.levels) 
-#  }
-#
-#  Y.org <- Y
-#  levels( Y ) <- 1:Y.nlevel
-#  Y  <- factor( as.double( Y ) )
+ 
 
-  bplr.imp    <- bayespolr( formula = form, data = data, start = 0, 
+  bplr.imp    <- bayespolr( formula = formula, data = data, start = 0, 
                               method = c( "logistic" ), 
                               drop.unused.levels = FALSE, n.iter = n.iter )
   expect.prob <- predict(bplr.imp, newdata = data, type = "probs" )
