@@ -682,19 +682,21 @@ update.mi.info <- function(object, target, list, ...){
       }
     }
   }
-  # imp.order
-  ord <- 1
-  for(i in 1:length(object)){
-    if(object[[i]][["include"]] && object[[i]][["nmis"]]>0){
-      object[[i]][["imp.order"]] <- ord
-      ord <- ord + 1
+  if(target %in% c("is.ID", "all.missing")){
+    # imp.order
+    ord <- 1
+    for(i in 1:length(object)){
+      if(object[[i]][["include"]] && object[[i]][["nmis"]]>0){
+        object[[i]][["imp.order"]] <- ord
+        ord <- ord + 1
+      }
+      else{
+        object[[i]][["imp.order"]] <- NA
+        ord <- ord
+      }
     }
-    else{
-      object[[i]][["imp.order"]] <- NA
-      ord <- ord
-    }
+    object <- mi.info.formula.default(object)
   }
-  object <- mi.info.formula.default(object)
   if(target=="imp.formula"){
     object[[nam]][["imp.formula"]] <- list[[nam]]
   }
