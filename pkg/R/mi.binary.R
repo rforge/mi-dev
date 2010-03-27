@@ -51,7 +51,6 @@ mi.binary <- function( formula, data = NULL, start = NULL, n.iter = 100,
   else{
      data[,names(mf)[1]] <- Y
   }
-  
   bglm.imp <- bayesglm(formula = formula, data = data, family = binomial(link = "logit"), 
       n.iter = n.iter, start = start, drop.unused.levels = FALSE, 
       Warning = FALSE, ...)

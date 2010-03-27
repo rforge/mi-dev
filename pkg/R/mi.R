@@ -67,7 +67,7 @@ setMethod("mi", signature(object = "data.frame"),
   
   # creating misc info for further usage
   missingVar.idx <- .nmis(info) > 0
-  includeVar.idx <- .include(info)& missingVar.idx
+  includeVar.idx <- .include(info)#& missingVar.idx
   unorderedCatVar.idx <- .type(info)=="unordered-categorical"
   includeCatVar.idx <- (includeVar.idx & missingVar.idx & unorderedCatVar.idx)
   ncol.mis <- sum(missingVar.idx)
@@ -79,11 +79,11 @@ setMethod("mi", signature(object = "data.frame"),
   aveVar <- .initializeConvCheckArray(data, info, n.iter, n.imp, 
     missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
   #dim.mcmc <- dim(aveVar)
-  data <- data[ , .include(info), drop = FALSE]
+  data <- data[ , includeVar.idx, drop = FALSE]
   
   
   # mi list initialization
-  mi.data <- .initializeMiList(data, info, start.val.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
+  mi.data <- .initializeMiList(data, info, start.val.length, varNames, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
   start.val <- mi.data$start.val
   mi.object <- mi.data$mi.object
   coef.val <- mi.data$coef.val
@@ -174,7 +174,12 @@ setMethod("mi", signature(object = "data.frame"),
         else{
           coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
         }
-        start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
+        if(is.null(coef(mi.object[[i]][[CurrentVar]]))){
+          start.val[[i]][[jj]] <- 0
+        }
+        else{
+          start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
+        }
       } ## variable loop 
 
       cat("\n" )
@@ -356,7 +361,7 @@ setMethod("mi", signature(object = "mi"),
   
   # creating misc info for further usage
   missingVar.idx <- .nmis(info) > 0
-  includeVar.idx <- .include(info) & missingVar.idx
+  includeVar.idx <- .include(info) #& missingVar.idx
   unorderedCatVar.idx <- .type(info)=="unordered-categorical"
   includeCatVar.idx <- (includeVar.idx & missingVar.idx & unorderedCatVar.idx)
   ncol.mis <- sum(missingVar.idx)
@@ -372,7 +377,7 @@ setMethod("mi", signature(object = "mi"),
   
   aveVar <- .initializeConvCheckArray(data, info, n.iter = n.iter + prev.iter, n.imp, 
       missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)  
-  data <- data[ , .include(info), drop = FALSE]
+  data <- data[ , includeVar.idx, drop = FALSE]
 
   if(prev.iter > 0){
     aveVar[1:prev.iter,,] <- object@mcmc
@@ -382,7 +387,7 @@ setMethod("mi", signature(object = "mi"),
   
   
   # mi list initialization
-  mi.data <- .initializeMiList(data, info, start.val.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
+  mi.data <- .initializeMiList(data, info, start.val.length, varNames, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
   start.val <- mi.data$start.val
   mi.object <- mi.data$mi.object
   coef.val <- mi.data$coef.val
@@ -438,8 +443,12 @@ setMethod("mi", signature(object = "mi"),
         else{
           coef.val[[CurrentVar]][[i]] <- rbind(coef.val[[CurrentVar]][[i]],coef(mi.object[[i]][[CurrentVar]]))
         }
-        start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
-
+        if(is.null(coef(mi.object[[i]][[CurrentVar]]))){
+          start.val[[i]][[jj]] <- 0
+        }
+        else{
+          start.val[[i]][[jj]] <- coef(mi.object[[i]][[CurrentVar]])
+        }
       } ## variable loop 
       cat("\n" )      
       avevar.mean <- NULL

@@ -84,12 +84,12 @@ noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1, 
 }
 
 
-.initializeMiList <- function(data, info, start.val.length, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
+.initializeMiList <- function(data, info, start.val.length, varNames, n.imp, ncol.mis, missingVar.idx, rand.imp.method)
 {
   mi.data       <- vector("list", n.imp)
   start.val     <- vector("list", n.imp)
   mi.object     <- vector("list", n.imp)
-  mi.object.name <- names(info)[missingVar.idx]
+  mi.object.name <- varNames#names(info)[missingVar.idx]
   for (j in 1:n.imp){ 
     mi.data[[j]]  <-  random.imp(data, method = rand.imp.method)
     start.val[[j]]<- vector( "list", start.val.length)

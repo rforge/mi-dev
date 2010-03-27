@@ -28,15 +28,16 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
             }
   mis    <- is.na( Y )
   n.mis  <- sum( mis )
-  assign(names(mf)[1], as.ordered(mf[,1]))
+  Y <- ordered(Y)
+ # assign(names(mf)[1], as.ordered(mf[,1]))
 
-  mf[,1] <- get(names(mf)[1])
+  mf[,1] <- Y
   
   if(is.null(data)){
     data <- mf
   }
   else{    
-    data[,names(mf)[1]] <- get(names(mf)[1])
+    data[,names(mf)[1]] <- Y
   }
  
 
