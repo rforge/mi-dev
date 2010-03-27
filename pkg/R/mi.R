@@ -75,11 +75,11 @@ setMethod("mi", signature(object = "data.frame"),
   varNames <- names(info)[includeVar.idx & missingVar.idx]
   varNames <- varNames[order(.imp.order(info)[includeVar.idx & missingVar.idx])]
   # convergence array initialization
-  data <- data[ , includeVar.idx, drop = FALSE]
+  
   aveVar <- .initializeConvCheckArray(data, info, n.iter, n.imp, 
     missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
   #dim.mcmc <- dim(aveVar)
-  
+  data <- data[ , includeVar.idx, drop = FALSE]
   
   
   # mi list initialization
@@ -374,10 +374,11 @@ setMethod("mi", signature(object = "mi"),
     prev.iter <- 0
     object@coef.mcmc <- NULL
   }
-  data <- data[ , includeVar.idx, drop = FALSE]
+
   aveVar <- .initializeConvCheckArray(data, info, n.iter = n.iter + prev.iter, n.imp, 
       missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)  
-  
+  data <- data[ , includeVar.idx, drop = FALSE]
+    
   if(prev.iter > 0){
     aveVar[1:prev.iter,,] <- object@mcmc
   }
