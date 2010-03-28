@@ -147,7 +147,12 @@ noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1, 
 .strict.check <- function(coefficient, n.iter, n.imp){
   res <- array(NA,c(n.iter,n.imp,0))
   for(i in 1:length(coefficient)){
-    for(j in 1:NCOL(coefficient[[i]][[1]])){
+    if(is.null(coefficient[[i]][[1]])){
+      coefficient[[i]] <- NULL
+    }
+  }
+  for(i in 1:length(coefficient)){
+    for(j in 1:NCOL(coefficient[[i]][[1]])){      
      res <- abind(res,
       matrix(unlist(lapply(coefficient[[i]], "[", , j)),,n.imp),
       along=3)
