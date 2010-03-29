@@ -682,7 +682,7 @@ update.mi.info <- function(object, target, list, ...){
       }
     }
   }
-  if(target %in% c("is.ID", "all.missing")){
+  if(target %in% c("include", "is.ID", "all.missing")){
     # imp.order
     ord <- 1
     for(i in 1:length(object)){
