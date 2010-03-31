@@ -700,6 +700,7 @@ update.mi.info <- function(object, target, list, ...){
   if(target=="imp.formula"){
     object[[nam]][["imp.formula"]] <- list[[nam]]
   }
+  # fix the formula to get rid of the exclude variable
   excludeVar <- names(object)[!object$include] 
   for(jj in 1:length(object)){
     for(kk in 1:length(excludeVar)){
