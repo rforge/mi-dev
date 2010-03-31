@@ -695,19 +695,26 @@ update.mi.info <- function(object, target, list, ...){
         ord <- ord
       }
     }
-    object <- mi.info.formula.default(object)
+    #object <- mi.info.formula.default(object)
   }
   if(target=="imp.formula"){
     object[[nam]][["imp.formula"]] <- list[[nam]]
+  }
+  excludeVar <- names(object)[!object$include] 
+  for(jj in 1:length(object)){
+    for(kk in 1:length(excludeVar)){
+      object[[jj]]$imp.formula <- gsubFormula(object[[jj]]$imp.formula, excludeVar[kk])
+    }
   }
   class(object) <- "mi.info"
   return(object)
 }
 
-#  for(i in 1:length(info)){
-#    formal.args <- formals(as.character(type.models(info[[i]]$type)))
-#    info[[i]]$params <-  formal.args[!names( formal.args )%in%c("formula","data","start","...")]  
-#  }
+.gsubFormula <- function(object, pattern){
+  form <- gsub(paste ("\\+[[:blank:]]*[^[:alnum:]]", pattern, "[^[:alnum:]]", sep=""), "", object)
+  form <- gsub(paste ("~[[:blank:]]*[^[:alnum:]]", pattern, "[^[:alnum:]][[:blank:]]*\\+", sep=""), "~", form)
+  return(form)
+}
 
                           
 mi.info.update.type <- function (object, list ) {
