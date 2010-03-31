@@ -1,3 +1,6 @@
+2010-3-31 Yu-Sung Su     <ys463@columbia.edu> 
+   * R/mi.info: update.mi.info: fix the formula to get rid of excluded variables
+
 2010-3-23 Yu-Sung Su     <ys463@columbia.edu> 
    * DESCRIPTION (Version, Date): 0.08-07
    * R/mi.info: coerce data into numeric to pass the new rule of cor()
