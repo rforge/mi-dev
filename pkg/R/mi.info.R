@@ -703,7 +703,7 @@ update.mi.info <- function(object, target, list, ...){
   excludeVar <- names(object)[!object$include] 
   for(jj in 1:length(object)){
     for(kk in 1:length(excludeVar)){
-      object[[jj]]$imp.formula <- gsubFormula(object[[jj]]$imp.formula, excludeVar[kk])
+      object[[jj]]$imp.formula <- .gsubFormula(object[[jj]]$imp.formula, excludeVar[kk])
     }
   }
   class(object) <- "mi.info"
