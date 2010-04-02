@@ -17,12 +17,12 @@ mi.info <- function( data, threshhold  = 0.99999 )
 
   ord <- 1
   for( i in 1:dim( data )[2] ) {
-    info[[i]] <- vector( "list", 14 )
+    info[[i]] <- vector( "list", 15)
     names( info[[i]] ) <- c( "name","imp.order", "nmis", "type", "var.class",
                             "level", 
                             "include", "is.ID", "all.missing",
                             "collinear", "determ.pred", "imp.formula", 
-                            #"transform",
+                            "missing.index",
                             "params", "other" )
     info[[i]]$name <- dimnames(data)[[2]][i]
     # nmis
@@ -30,6 +30,9 @@ mi.info <- function( data, threshhold  = 0.99999 )
     
     # type
     info[[i]]$type <- typecast(data[,i])
+    
+    # missing.index 
+    info[[i]]$missing.index <- .getMissingIndex(data[,i])
  
     info[[i]]$var.class <- class(data[,i])
     # level
@@ -126,7 +129,7 @@ mi.info <- function( data, threshhold  = 0.99999 )
   for( ord.index in 1:length( ord.temp ) ) {
     info[[ord.index]]$imp.order <- ord.temp[ord.index]
   }
-  # default formula
+  # default formmula
   info <- mi.info.formula.default(info)
   if( length( mi.correlated.list( data ) ) > 0 ) {
     cat( "\afollowing variables are collinear\n" )
