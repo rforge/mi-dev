@@ -164,7 +164,7 @@ setMethod("mi", signature(object = "data.frame"),
         # Error Handling        
         if(add.noise.method=="reshuffling"){        
           if(q){
-            mi.object[[i]][CurrentVar]]@random <- dat[missing.index,CurrentVar]
+            mi.object[[i]][[CurrentVar]]@random <- dat[missing.index,CurrentVar]
           }
         }
         mi.data[[i]][missing.index, CurrentVar] <- mi.object[[i]][[CurrentVar]]@random
@@ -461,7 +461,7 @@ setMethod("mi", signature(object = "mi"),
         on.exit(options(show.error.messages = TRUE))
 
         # Error Handling        
-        mi.data[[i]][missing.index, CurrentVar]] <- mi.object[[i]][[CurrentVar]]@random
+        mi.data[[i]][missing.index, CurrentVar] <- mi.object[[i]][[CurrentVar]]@random
         data.tmp <<- mi.data
         if(info[[CurrentVar]]$type=="unordered-categorical"){
           n.level <- length(info[[CurrentVar]]$level)
