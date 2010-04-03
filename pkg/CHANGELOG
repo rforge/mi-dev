@@ -1,3 +1,10 @@
+2010-4-3 Yu-Sung Su     <ys463@columbia.edu> 
+   * DESCRIPTION (Version, Date): 0.08-08
+   * R/mi.info: add missing.index slot
+   * R/plot.im: mi.scatterplot, take out alpha paramter
+   * R/mi: new mi process, the missing of the outcome is imputed with observed value to start with
+
+
 2010-3-31 Yu-Sung Su     <ys463@columbia.edu> 
    * R/mi.info: update.mi.info: fix the formula to get rid of excluded variables
 
