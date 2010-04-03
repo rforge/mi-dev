@@ -135,7 +135,7 @@ setMethod("mi", signature(object = "data.frame"),
         }
         if(add.noise.method=="fading"){
           n.aug <- trunc(nrow(dat)*(add.noise$pct.aug/100))
-          dat <- rbind(dat, .randdraw(dat, n=n.aug))
+          dat <- rbind(dat, .randdraw(data, n=n.aug))
         }  
               
         # Error Handling

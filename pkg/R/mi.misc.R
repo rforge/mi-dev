@@ -16,9 +16,10 @@ noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1, 
   proc.tmp <- mi.preprocess(data, info)
   data <- as.data.frame(proc.tmp$data)
   info.org <- info
-  info <- mi.info(data)
+  info <- tmp <- mi.info(data)
   for(i in 1:length(info.org)){
     info[[i]] <- info.org[[i]]    
+    info[[i]]$missing.index <- tmp[[i]]$missing.index
   }
   for(i in 1:ncol(data)){
     info[[i]]$type <- proc.tmp$type[[i]]
