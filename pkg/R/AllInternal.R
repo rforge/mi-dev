@@ -4,7 +4,7 @@
 
 .getMissingIndex <- function(x){
   x <- is.na(x)
-  x <- x*(1:N)
+  x <- x*(1:length(x))
   return(x[x>0])
 }
 

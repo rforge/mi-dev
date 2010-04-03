@@ -120,19 +120,21 @@ setMethod("mi", signature(object = "data.frame"),
         }
         
         CurVarFlg <- (names(data) == CurrentVar)
-        dat <- data.frame(data[,CurVarFlg, drop=FALSE], mi.data[[i]][,!CurVarFlg])
-        names(dat) <- c(CurrentVar, names(data[,!CurVarFlg, drop=FALSE] ))
+        #dat <- data.frame(data[,CurVarFlg, drop=FALSE], mi.data[[i]][,!CurVarFlg])
+        #names(dat) <- c(CurrentVar, names(data[,!CurVarFlg, drop=FALSE] ))
+        dat <- mi.data[[i]]
+        missing.index <- info$missing.index[[CurrentVar]]
         ####Deside which model to use #################################
         model.type <- as.character(type.models( info[[CurrentVar]]$type))
         ###############################################################
 
         if(add.noise.method=="reshuffling"){
           if(q){
-            dat <- random.imp(dat, method = rand.imp.method)
+            dat <- random.imp(data, method = rand.imp.method)
           }
         }
         if(add.noise.method=="fading"){
-          n.aug <- trunc(nrow(data)*(add.noise$pct.aug/100))
+          n.aug <- trunc(nrow(dat)*(add.noise$pct.aug/100))
           dat <- rbind(dat, .randdraw(dat, n=n.aug))
         }  
               
@@ -147,23 +149,25 @@ setMethod("mi", signature(object = "data.frame"),
                                           do.call(model.type,
                                             args = c(list(formula = info[[CurrentVar]]$imp.formula, 
                                             data = dat,
-                                          start = if(!is.null(start.val[[i]][[jj]])){
-                                                    start.val[[i]][[jj]]
-                                                  }
-                                                  else{
+                                            start = if(!is.null(start.val[[i]][[jj]])){
+                                                      start.val[[i]][[jj]]
+                                                    } else{
                                                     NULL
-                                                  }),
-                                          info[[CurrentVar]]$params)))
+                                                    },
+                                            missing.index = missing.index
+                                            ),
+                                          info[[CurrentVar]]$params$n.iter)
+                                          ))
         # Error Handling
         on.exit(options(show.error.messages = TRUE))
 
         # Error Handling        
         if(add.noise.method=="reshuffling"){        
           if(q){
-            mi.object[[i]][[CurrentVar]]@random <- dat[is.na(data[,CurrentVar, drop=FALSE]),CurrentVar]
+            mi.object[[i]][CurrentVar]]@random <- dat[missing.index,CurrentVar]
           }
         }
-        mi.data[[i]][[CurrentVar]][is.na(data[[CurrentVar]])] <- mi.object[[i]][[CurrentVar]]@random
+        mi.data[[i]][missing.index, CurrentVar] <- mi.object[[i]][[CurrentVar]]@random
         data.tmp <<- mi.data
 
         if(info[[CurrentVar]]$type=="unordered-categorical"){
@@ -426,8 +430,10 @@ setMethod("mi", signature(object = "mi"),
         CurrentVar <- varNames[jj]
         cat(CurrentVar, "  ")      
         CurVarFlg <- ( names ( data ) == CurrentVar )
-        dat <- data.frame(data[,CurVarFlg, drop=FALSE], mi.data[[i]][,!CurVarFlg])
-        names(dat) <- c(CurrentVar, names(data[,!CurVarFlg, drop=FALSE] ))
+#        dat <- data.frame(data[,CurVarFlg, drop=FALSE], mi.data[[i]][,!CurVarFlg])
+#        names(dat) <- c(CurrentVar, names(data[,!CurVarFlg, drop=FALSE] ))
+
+        missing.index <- info$missing.index[[CurrentVar]]
         #########which model to use#########################################
         model.type <- as.character(type.models( info[[CurrentVar]]$type))
         ####################################################################
@@ -438,22 +444,24 @@ setMethod("mi", signature(object = "mi"),
         on.exit(options(show.error.messages = TRUE),add = TRUE)
         options(show.error.messages = FALSE)
         # Error Handling
-        mi.object[[i]][[CurrentVar]] <- with(data = dat, 
+        mi.object[[i]][[CurrentVar]] <- with(data = mi.data[[i]], 
                                           do.call(model.type,
                                             args = c(list(formula = info[[CurrentVar]]$imp.formula, 
-                                            data = dat,
-                                          start = if(!is.null(start.val[[i]][[jj]])){
-                                                    start.val[[i]][[jj]]
-                                                  }
-                                                  else{
+                                            data = mi.data[[i]],
+                                            start = if(!is.null(start.val[[i]][[jj]])){
+                                                      start.val[[i]][[jj]]
+                                                    } else{
                                                     NULL
-                                                  }),
-                                          info[[CurrentVar]]$params)))
+                                                    },
+                                            missing.index = missing.index
+                                            ),
+                                          info[[CurrentVar]]$params$n.iter)
+                                          ))
         # Error Handling
         on.exit(options(show.error.messages = TRUE))
 
         # Error Handling        
-        mi.data[[i]][[CurrentVar]][is.na(data[[CurrentVar]])] <- mi.object[[i]][[CurrentVar]]@random
+        mi.data[[i]][missing.index, CurrentVar]] <- mi.object[[i]][[CurrentVar]]@random
         data.tmp <<- mi.data
         if(info[[CurrentVar]]$type=="unordered-categorical"){
           n.level <- length(info[[CurrentVar]]$level)

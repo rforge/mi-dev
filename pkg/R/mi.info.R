@@ -1,19 +1,18 @@
 # ==============================================================================
 # Creates information matrix
 # ==============================================================================
-mi.info <- function( data, threshhold  = 0.99999 )
-{
+mi.info <- function(data, threshhold = 0.99999){
   if(is.matrix(data)) { 
     data <- data.frame(data) 
   }
   info <- vector("list", dim(data)[2])
   names(info) <- dimnames(data)[[2]]
-  data.original.name <- deparse(substitute(data))
+  #data.original.name <- deparse(substitute(data))
   collinear <- mi.check.correlation(data, threshhold)
 #  foo <- function(lst){
 #    lst[-1]
 #  }
-#  unlist(lapply(correlated, FUN=foo))
+#  lapply(collinear, FUN=foo)
 
   ord <- 1
   for( i in 1:dim( data )[2] ) {
@@ -24,6 +23,7 @@ mi.info <- function( data, threshhold  = 0.99999 )
                             "collinear", "determ.pred", "imp.formula", 
                             "missing.index",
                             "params", "other" )
+                            
     info[[i]]$name <- dimnames(data)[[2]][i]
     # nmis
     info[[i]]$nmis <- sum(is.na(data[,i]))
@@ -32,78 +32,75 @@ mi.info <- function( data, threshhold  = 0.99999 )
     info[[i]]$type <- typecast(data[,i])
     
     # missing.index 
-    info[[i]]$missing.index <- .getMissingIndex(data[,i])
+    info[[i]]$missing.index <- as.numeric(.getMissingIndex(data[,i]))
  
     info[[i]]$var.class <- class(data[,i])
     # level
-    if( info[[i]]$var.class[1] == "character" ) {
+    if(info[[i]]$var.class[1] == "character" ) {
       lev <- sort(unique(as.character(data[,i]))[!is.na(unique(as.character(data[,i])))])
       #lev <- lev[order(lev)]
       if(length(lev) == 2 ) {
         info[[i]]$level <- c(0, 1)
-      } 
-      else{
+      } else{
         info[[i]]$level <- 1:length(lev)
       }
       names(info[[i]]$level) <- lev
-    } 
-    else if( info[[i]]$var.class[1] == "factor" ) {
+    } else if( info[[i]]$var.class[1] == "factor" ) {
       lev <- levels( data[ ,i] )[ !is.na( levels( data[ ,i] ) )]
       lev <- lev[!( lev %in% c( "NA", "RF", "DK" ) )]
       if( length( lev ) == 2 ) {
           info[[i]]$level <- c( 0, 1 )
-      } 
-      else {
+      } else {
         info[[i]]$level <- 1:length( lev )
       }
       names( info[[i]]$level ) <- lev
     }
 
+    # is.ID then exclude
     info[[i]]$is.ID <- if(length(unique(data[!is.na(data[,i]),i]))==length(data[,i]) &&
                         all(data[,i]==sort(data[,i]))){ 
                           TRUE
-                        } 
-                        else { 
+                        } else { 
                           FALSE
                         }   
     info[[i]]$include <- if( info[[i]]$is.ID ){ 
                             FALSE 
-                          } 
-                          else { 
+                          } else { 
                             TRUE 
                           }
+
     # all missing then exclude
     info[[i]]$all.missing <- if(sum(is.na(data[ ,i])) == dim(data)[1]){
                                TRUE
-                             } 
-                             else { 
+                             } else { 
                                FALSE
                              }    
     if(info[[i]]$include){
       info[[i]]$include <- if(info[[i]]$all.missing) { 
                              FALSE
-                           } 
-                           else { 
+                           } else { 
                              TRUE
                            }
     }
+    
     # order
     if(info[[i]]$include && info[[i]]$nmis>0){
       info[[i]]$imp.order <- ord
       ord <- ord + 1
-    } 
-    else{
+    } else{
       info[[i]]$imp.order <- NA
     }
+    
     # collinear 
     info[[i]]$collinear <- collinear[[i]]
+    
     # params
-    formal.args <- formals( as.character( type.models( info[[i]]$type ) ) )
+    formal.args <- formals(as.character(type.models(info[[i]]$type)))
     info[[i]]$params <- formal.args[!names( formal.args ) %in% c( "formula", "data", "start", "..." )]    
-    # transform
-    #info[[i]]$transform <- if(info[[i]]$type%in%c("unordered-categorical","binary")){}
   }
  
+
+
   # all missing
   allmis <- .all.missing(info)
   if(any(allmis)){
