@@ -123,7 +123,7 @@ setMethod("mi", signature(object = "data.frame"),
         #dat <- data.frame(data[,CurVarFlg, drop=FALSE], mi.data[[i]][,!CurVarFlg])
         #names(dat) <- c(CurrentVar, names(data[,!CurVarFlg, drop=FALSE] ))
         dat <- mi.data[[i]]
-        missing.index <- info$missing.index[[CurrentVar]]
+        missing.index <- info[[CurrentVar]]$missing.index
         ####Deside which model to use #################################
         model.type <- as.character(type.models( info[[CurrentVar]]$type))
         ###############################################################
@@ -433,7 +433,8 @@ setMethod("mi", signature(object = "mi"),
 #        dat <- data.frame(data[,CurVarFlg, drop=FALSE], mi.data[[i]][,!CurVarFlg])
 #        names(dat) <- c(CurrentVar, names(data[,!CurVarFlg, drop=FALSE] ))
 
-        missing.index <- info$missing.index[[CurrentVar]]
+        #missing.index <- info$missing.index[[CurrentVar]]
+        missing.index <- info[[CurrentVar]]$missing.index
         #########which model to use#########################################
         model.type <- as.character(type.models( info[[CurrentVar]]$type))
         ####################################################################
