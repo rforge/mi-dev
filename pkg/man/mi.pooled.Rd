@@ -37,7 +37,7 @@ glmer.mi(formula, mi.object, family = gaussian, rescale=FALSE, ...)
 \S3method{print}{mi.pooled}(x, \dots)
 \S4method{coef}{mi.pooled}(object)
 \S4method{se.coef}{mi.pooled}(object)
-\S4method{display}{mi.pooled}(object, digits=2)
+\S4method{display}{mi.pooled}(object, digits=2, only.pooled = FALSE)
 }
 
 \arguments{
@@ -54,6 +54,7 @@ glmer.mi(formula, mi.object, family = gaussian, rescale=FALSE, ...)
   \item{x}{\code{mi.pooled} object.}
   \item{object}{\code{mi.pooled} object.}
   \item{digits}{number of significant digits to display, default=2.}
+  \item{only.pooled}{default is FASLE. if TRUE, it will display only the pooled estimates.}
   \item{\dots}{ Any option to pass on to \code{\link[stats]{lm}}, \code{\link[stats]{glm}}, 
     \code{\link[arm]{bayesglm}}, \code{\link[arm]{bayespolr}}, \code{\link[MASS]{polr}}, 
     and \code{\link[lme4]{lmer}} functions}
