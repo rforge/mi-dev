@@ -213,7 +213,7 @@ setMethod("mi", signature(object = "data.frame"),
       conv.check <- as.bugs.array(aveVar[1:s, , ])$summary[,"Rhat"]
       if(all(conv.check < R.hat)) { 
         if (check.coef.convergence) {
-          coef.mcmc <- .checkCoefConvergence(NULL, coef.val, n.imp)
+          coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
           if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
             coef.converged.flg <- TRUE
             converged.flg <- TRUE
@@ -516,7 +516,7 @@ setMethod("mi", signature(object = "mi"),
       conv.check <- as.bugs.array(aveVar[1:s, , ])$summary[,"Rhat"]
       if(all(conv.check < R.hat)) { 
         if (check.coef.convergence) {
-          coef.mcmc <- .checkCoefConvergence(NULL, coef.val, n.imp)
+          coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
           if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
             coef.converged.flg <- TRUE
             converged.flg <- TRUE
