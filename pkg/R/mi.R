@@ -358,7 +358,7 @@ setMethod("mi", signature(object = "mi"),
   max.iter.flg  <- FALSE
   Time.Elapsed  <- 0
   conv.check     <- NULL
-  coef.mcmc <- NULL
+  coef.mcmc <- object@coef.mcmc
 
   # for mi object
   data  <- data.mi(object)
