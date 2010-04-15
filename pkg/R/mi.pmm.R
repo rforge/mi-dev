@@ -48,8 +48,8 @@ mi.pmm <- function(formula, data = NULL, start = NULL, n.iter = 100, missing.ind
     n.iter <- 10
   }
   
-  bglm.imp  <- bayesglm( formula , start = start, n.iter = n.iter )
-  yhat <- predict( bglm.imp , newdata = data.frame( Y, X ) ) 
+  bglm.imp  <- bayesglm(formula, data = data, start = start, n.iter = n.iter )
+  yhat <- predict(bglm.imp , newdata = data.frame( Y, X ) ) 
   result <- new(c("mi.pmm", "mi.method"),
               model = vector("list", 0),
               expected = numeric(0), 
