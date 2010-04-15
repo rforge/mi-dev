@@ -212,16 +212,8 @@ setMethod("mi", signature(object = "data.frame"),
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
       conv.check <- as.bugs.array(aveVar[1:s, , ])$summary[,"Rhat"]
       if(all(conv.check < R.hat)) { 
-        if (check.coef.convergence) {
-          coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
-          if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
-            coef.converged.flg <- TRUE
-            converged.flg <- TRUE
-          }
-        } else {
-          converged.flg <- TRUE
-        }
-        if(!run.past.convergence & converged.flg){ 
+        converged.flg <- TRUE
+        if(!run.past.convergence & !check.coef.convergence){ 
           break
         }
       }
@@ -238,10 +230,10 @@ setMethod("mi", signature(object = "data.frame"),
   options(show.error.messages = TRUE)
 
   if(check.coef.convergence){
-    #coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
-#    if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
-#      coef.converged.flg <- TRUE
-#    }
+    coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
+    if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
+      coef.converged.flg <- TRUE
+    }
     cat(if(converged.flg & coef.converged.flg){
         converged.flg <- TRUE
         "mi converged (" 
@@ -358,7 +350,7 @@ setMethod("mi", signature(object = "mi"),
   max.iter.flg  <- FALSE
   Time.Elapsed  <- 0
   conv.check     <- NULL
-  coef.mcmc <- object@coef.mcmc
+  coef.mcmc <- NULL
 
   # for mi object
   data  <- data.mi(object)
@@ -515,16 +507,8 @@ setMethod("mi", signature(object = "mi"),
     if (s > 5 || ((((Time.Elapsed)/60)[3] > 0.5) && s > 2)){
       conv.check <- as.bugs.array(aveVar[1:s, , ])$summary[,"Rhat"]
       if(all(conv.check < R.hat)) { 
-        if (check.coef.convergence) {
-          coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
-          if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
-            coef.converged.flg <- TRUE
-            converged.flg <- TRUE
-          }
-        } else {
-          converged.flg <- TRUE
-        }
-        if(!run.past.convergence & converged.flg){ 
+        converged.flg <- TRUE
+        if(!run.past.convergence & !check.coef.convergence){ 
           break
         }
       }
@@ -540,11 +524,11 @@ setMethod("mi", signature(object = "mi"),
  
  
   if(check.coef.convergence){
-   # coef.mcmc <- object@coef.mcmc
-#    coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
-#    if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
-#      coef.converged.flg <- TRUE
-#    }
+    coef.mcmc <- object@coef.mcmc
+    coef.mcmc <- .checkCoefConvergence(coef.mcmc, coef.val, n.imp)
+    if(all(as.bugs.array(coef.mcmc)$summary[,"Rhat"] < R.hat)){
+      coef.converged.flg <- TRUE
+    }
    # Print out reason for termination
     cat(if(converged.flg & coef.converged.flg){
         converged.flg <- TRUE
