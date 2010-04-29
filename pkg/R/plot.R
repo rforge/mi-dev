@@ -46,7 +46,6 @@ setMethod( "plot", signature( x = "mi.method", y ="ANY"),
     sigma <- sigma.hat( x )
     vrb.obs <- y
     vrb.imp <- imputed( x, y )
-    browser()
     mi.hist(x, vrb.obs, xlab=main, main = main, gray.scale = gray.scale )
     residual.plot( fit, res, sigma, main = main, gray.scale = gray.scale )
     binnedplot ( fit[ !is.na( y )], res[ !is.na( y )], col.pts = ifelse(gray.scale, "black", "blue"), 
