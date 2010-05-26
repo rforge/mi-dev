@@ -31,7 +31,7 @@
 \title{Multiple Iterative Regression Imputation}
 
 \description{
- Produce a multiply imputed matrix applying the elementary functions iteratively 
+ Generate a multiply imputed matrix applying the elementary functions iteratively 
  to the variables with missingness in the data randomly imputing each variable
  and looping through until approximate convergence.
 }
@@ -62,7 +62,6 @@
   \item{seed}{The random number seed.}
   \item{check.coef.convergence}{Default is \code{FALSE}. If the value is set to be \code{TRUE}, \code{mi} will check the convergence of the coefficients of imputation models.}
   \item{add.noise}{A list of parameters for controlling the process of adding noise to \code{mi} via \code{\link{noise.control}}.}
-  %\item{post.run}{Default is \code{TRUE}. \code{mi} will run 20 more iterations after an imputation process is finished if and only if \code{add.noise} is not \code{FALSE}. This is to mitigate the influence of the noise to the whole imputation process.}
 }
 
 \value{ 
@@ -79,7 +78,6 @@ A list of object of class \code{mi}, which stands for \dQuote{multiple imputatio
   \item{coef.mcmc}{A mcmc list that stores lists of means of regression coefficients of the conditonal models.}
   \item{coef.converged}{Binary variable to indicate if the coefs of \code{mi} model have converged, return
     \code{NULL} if \code{check.coef.convergence = FALSE}}
-%  \item{bugs}{BUGS array of the mean and sd of each iteration.}
   \item{preprocess}{Binary variable to indicate if \code{preprocess=TRUE} in the \code{mi} process}
   \item{mi.info.preprocessed}{Information matrix that actually used in the \code{mi} if \code{preprocess=TRUE}.}
   
