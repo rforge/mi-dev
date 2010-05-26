@@ -61,7 +61,7 @@ mi.default <- function(data, info, n.imp = 3, n.iter = 30, R.hat = 1.1,
   # convergence array initialization
   
   aveVar <- .initializeConvCheckArray(data, info, n.iter, n.imp, 
-    missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
+    missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedCatVar.idx, ncol.mis)
   
   #dim.mcmc <- dim(aveVar)
   data <- data[ , includeVar.idx, drop = FALSE]
@@ -73,7 +73,7 @@ mi.default <- function(data, info, n.imp = 3, n.iter = 30, R.hat = 1.1,
   mi.object <- mi.data$mi.object
   coef.val <- mi.data$coef.val
   mi.data <- mi.data$mi.data
-
+  
 
   cat("Beginning Multiple Imputation (", date(), "):\n")
   #===============================================================
@@ -134,7 +134,7 @@ mi.default <- function(data, info, n.imp = 3, n.iter = 30, R.hat = 1.1,
         on.exit(options(show.error.messages = TRUE),add = TRUE)
         options(show.error.messages = FALSE)
         #===============================================================
-
+        
         mi.object[[i]][[CurrentVar]] <- with(data = dat, 
                                           do.call(model.type,
                                             args = c(list(formula = info[[CurrentVar]]$imp.formula, 
@@ -435,7 +435,7 @@ setMethod("mi", signature(object = "mi"),
   }
 
   aveVar <- .initializeConvCheckArray(data, info, n.iter = n.iter + prev.iter, n.imp, 
-      missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)  
+      missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedCatVar.idx, ncol.mis)  
   data <- data[ , includeVar.idx, drop = FALSE]
     
   if(prev.iter > 0){

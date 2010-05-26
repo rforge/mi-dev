@@ -9,21 +9,18 @@ mi.preprocess <- function(data, info){
   proc.tmp <- .mi.transform(data, info)
   data <- as.data.frame(proc.tmp$data)
   type <- proc.tmp$type
-  info.org <- info
-  info <- tmp <- mi.info(data)
+  #info.org <- info
+  info <- mi.info(data)
   
-  for(i in 1:length(info.org)){
-    info[[i]] <- info.org[[i]]    
-    info[[i]]$name <- names(type)[i]
-    info[[i]]$missing.index <- tmp[[i]]$missing.index
+  for(i in 1:length(info)){
+    #info[[i]] <- info.org[[i]]    
+    #info[[i]]$name <- names(type)[i]
+    #info[[i]]$missing.index <- tmp[[i]]$missing.index
+    info[[i]]$type <- type[[i]]
+    #info[[i]]$imp.formula <- tmp[[i]]$imp.formula
   }
-  
-  for(i in 1:ncol(data)){
-    info[[i]]$type <- proc.tmp$type[[i]]
-  }
-  
   info <- mi.info.formula.default(info)
-  info$imp.formula[1:length(info.org)] <- info.org$imp.formula
+  #info$imp.formula[1:length(info.org)] <- info.org$imp.formula
   
   ans <- new("mi.preprocessed", 
             data      = data,
@@ -92,12 +89,15 @@ mi.postprocess <- function(mi.data, info){
       typ <- type[i]
       if(typ == "log-continuous"){
         mi.data[,i] <- exp(mi.data[,i])
+        names(mi.data)[i] <- gsub("mi.log.", "", names(mi.data)[i], fixed=TRUE)
       }
       if(typ == "proportion"){
         mi.data[,i] <- invlogit(mi.data[,i])
+        names(mi.data)[i] <- gsub("mi.logit.", "", names(mi.data)[i], fixed=TRUE)
       }
       if(sum(grep(".ind", varnames[i]))){
-        nonnegative.name <- gsub(".ind", "", varnames[i], fixed=TRUE)
+        nonnegative.name <- gsub(".mi.ind", "", varnames[i], fixed=TRUE)
+        #nonnegative.name <- paste("mi.log", nonnegative.name, sep=".")
         mi.data[,nonnegative.name] <- mi.data[,nonnegative.name] * mi.data[,varnames[i]]
       }
     }
@@ -114,12 +114,16 @@ mi.postprocess <- function(mi.data, info){
         typ <- type[i]
         if(typ == "log-continuous"){
           mi.data[[s]][,i] <- exp(mi.data[[s]][,i])
+          names(mi.data[[s]])[i] <- gsub("mi.log.", "", names(mi.data[[s]])[i], fixed=TRUE)
         }
         if(typ == "proportion"){
           mi.data[[s]][,i] <- invlogit(mi.data[[s]][,i])
+          names(mi.data[[s]])[i] <- gsub("mi.logit.", "", names(mi.data[[s]])[i], fixed=TRUE)
         }
-        if(sum(grep(".ind", varnames[i]))){
-          nonnegative.name <- gsub(".ind", "", varnames[i])
+        if(sum(grep(".mi.ind", varnames[i]))){
+          nonnegative.name <- gsub(".mi.ind", "", varnames[i])
+          #nonnegative.name <- paste("mi.log", nonnegative.name, sep=".")
+          browser()
           mi.data[[s]][,nonnegative.name] <- mi.data[[s]][,nonnegative.name] * mi.data[[s]][,varnames[i]]
         }
       }

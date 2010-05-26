@@ -44,7 +44,7 @@ noise.control <- function(method=c("reshuffling", "fading"), pct.aug=10, K = 1, 
 
 
 .initializeConvCheckArray <- function(data, info, n.iter, n.imp, 
-  missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedVar.idx, ncol.mis)
+  missingVar.idx, includeVar.idx, includeCatVar.idx, unorderedCatVar.idx, ncol.mis)
 {
 
   if(all(includeCatVar.idx==0)){
