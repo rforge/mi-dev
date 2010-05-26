@@ -1,35 +1,34 @@
-
-  # this makes sure categorical data is factorized
-  data <- .update.data(data, info)        
-
-  # preprocess data and get new mi.info
-  if(preprocess){
-    data <- .preprocessMiInfo(data, info)
-    info <- data$info
-    info.org <- data$info.org
-    data <- data$data
-  }  
-  # store level info in mi.info for unordered cat vars
-  info <- .catVarLevelCheck(data, info)
-
-
-
 mi.preprocess <- function(data, info){
-  proc.tmp <- mi.transform(data, info)
+
+  if(missing(info)){
+    info <- mi.info(data)
+  } else if (is.null(info)){
+    info <- mi.info(data)
+  } 
+  
+  proc.tmp <- .mi.transform(data, info)
   data <- as.data.frame(proc.tmp$data)
   type <- proc.tmp$type
-  #info.org <- info
+  info.org <- info
   info <- tmp <- mi.info(data)
+  
   for(i in 1:length(info.org)){
     info[[i]] <- info.org[[i]]    
+    info[[i]]$name <- names(type)[i]
     info[[i]]$missing.index <- tmp[[i]]$missing.index
   }
+  
   for(i in 1:ncol(data)){
     info[[i]]$type <- proc.tmp$type[[i]]
   }
+  
   info <- mi.info.formula.default(info)
   info$imp.formula[1:length(info.org)] <- info.org$imp.formula
-  return(list(data=data, info=info, info.org=info.org))
+  
+  ans <- new("mi.preprocessed", 
+            data      = data,
+            mi.info   = info)
+  return(ans)
 }
 
 
@@ -40,7 +39,7 @@ mi.preprocess <- function(data, info){
 
 
 # preprocess: this is ugly..but working!..need to improve it
-mi.transform <- function(data, info){
+.mi.transform <- function(data, info){
   n.col <- ncol(data)
   n.row <- nrow(data)
   var.name <- info$name
@@ -54,23 +53,25 @@ mi.transform <- function(data, info){
       names(data)[ncol(data)] <- Ind.lab
       type[ncol(data)] <- "binary"
       names(type)[ncol(data)] <- Ind.lab
-      names(data[,i]) <- paste("mi.log", names(data[,1]), sep=".")
+      names(data)[i] <- paste("mi.log", names(data)[i], sep=".")
       data[,i] <- log(ifelse(data[,i]>0, data[,i], NA))
       type[i] <- "log-continuous"
     }
     else if (type[i] == "positive-continuous" & incl[i]){
       data[,i] <- log(data[,i])
-      names(data[,i]) <- paste("mi.log", names(data[,1]), sep=".")
+      names(data)[i] <- paste("mi.log", names(data)[i], sep=".")
       type[i] <- "log-continuous"
     }
     else if (type[i] == "proportion" & incl[i]){
       data[,i] <- logit(data[,i])
-      names(data[,i]) <- paste("mi.logit", names(data[,1]), sep=".")
+      names(data)[i] <- paste("mi.logit", names(data)[i], sep=".")
       type[i] <- "proportion"
     }
   }
+  names(type) <- names(data)
   return(list(data=data, type=type))
 }
+
 
 mi.postprocess <- function(mi.data, info){
   if(class(mi.data)=="list"){
@@ -85,7 +86,7 @@ mi.postprocess <- function(mi.data, info){
   n.col <- length(info)
   varnames <- info$name
   type <- info$type
-  idx <- grep(".ind", varnames, fixed=TRUE)
+  idx <- grep(".mi.ind", varnames, fixed=TRUE)
   if(n.chains==1){
     for (i in 1:n.col){
       typ <- type[i]

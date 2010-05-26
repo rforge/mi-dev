@@ -133,3 +133,11 @@ setClass("mi.pooled",
                 mi.fit     = "list"),
                 contains   = "list"
 )
+
+
+setClass("mi.preprocessed",
+            representation(
+                data      = "data.frame" ,
+                mi.info   = "mi.info"),
+            contains  = "list"
+)
