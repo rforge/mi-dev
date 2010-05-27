@@ -50,18 +50,18 @@ mi.preprocess <- function(data, info){
       names(data)[ncol(data)] <- Ind.lab
       type[ncol(data)] <- "binary"
       names(type)[ncol(data)] <- Ind.lab
-      names(data)[i] <- paste("mi.log", names(data)[i], sep=".")
+      names(data)[i] <- paste(names(data)[i], "mi.log", sep=".")
       data[,i] <- log(ifelse(data[,i]>0, data[,i], NA))
       type[i] <- "log-continuous"
     }
     else if (type[i] == "positive-continuous" & incl[i]){
       data[,i] <- log(data[,i])
-      names(data)[i] <- paste("mi.log", names(data)[i], sep=".")
+      names(data)[i] <- paste(names(data)[i], "mi.log", sep=".")
       type[i] <- "log-continuous"
     }
     else if (type[i] == "proportion" & incl[i]){
       data[,i] <- logit(data[,i])
-      names(data)[i] <- paste("mi.logit", names(data)[i], sep=".")
+      names(data)[i] <- paste(names(data)[i], "mi.logit", ep=".")
       type[i] <- "proportion"
     }
   }
@@ -89,11 +89,11 @@ mi.postprocess <- function(mi.data, info){
       typ <- type[i]
       if(typ == "log-continuous"){
         mi.data[,i] <- exp(mi.data[,i])
-        names(mi.data)[i] <- gsub("mi.log.", "", names(mi.data)[i], fixed=TRUE)
+        names(mi.data)[i] <- gsub(".mi.log.", "", names(mi.data)[i], fixed=TRUE)
       }
       if(typ == "proportion"){
         mi.data[,i] <- invlogit(mi.data[,i])
-        names(mi.data)[i] <- gsub("mi.logit.", "", names(mi.data)[i], fixed=TRUE)
+        names(mi.data)[i] <- gsub(".mi.logit.", "", names(mi.data)[i], fixed=TRUE)
       }
       if(sum(grep(".ind", varnames[i]))){
         nonnegative.name <- gsub(".mi.ind", "", varnames[i], fixed=TRUE)
@@ -114,11 +114,11 @@ mi.postprocess <- function(mi.data, info){
         typ <- type[i]
         if(typ == "log-continuous"){
           mi.data[[s]][,i] <- exp(mi.data[[s]][,i])
-          names(mi.data[[s]])[i] <- gsub("mi.log.", "", names(mi.data[[s]])[i], fixed=TRUE)
+          names(mi.data[[s]])[i] <- gsub(".mi.log.", "", names(mi.data[[s]])[i], fixed=TRUE)
         }
         if(typ == "proportion"){
           mi.data[[s]][,i] <- invlogit(mi.data[[s]][,i])
-          names(mi.data[[s]])[i] <- gsub("mi.logit.", "", names(mi.data[[s]])[i], fixed=TRUE)
+          names(mi.data[[s]])[i] <- gsub(".mi.logit.", "", names(mi.data[[s]])[i], fixed=TRUE)
         }
         if(sum(grep(".mi.ind", varnames[i]))){
           nonnegative.name <- gsub(".mi.ind", "", varnames[i])

@@ -45,15 +45,16 @@ mi.count <- function ( formula, data = NULL, start = NULL,
 
   # main program
   if( !is.null( start ) ){ 
-    n.iter <- 10
-    start[is.na(start)] <- 0
+    n.iter <- 25
+    #start[is.na(start)] <- 0
+    start <- 0
   }
   
   bglm.imp    <- bayesglm( formula = formula, data = data, family = quasipoisson, 
-                            n.iter = n.iter, start = start, 
+                            n.iter = n.iter, start = start,
                             drop.unused.levels = FALSE, Warning=FALSE,... )
   determ.pred <- predict(bglm.imp, newdata = data, type = "response" )
-
+  draw.from.beta = FALSE
   if(n.mis>0){
     if(draw.from.beta){
     ####get right design matrix#
