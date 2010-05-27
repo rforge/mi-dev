@@ -159,7 +159,6 @@ mi.default <- function(data, info, n.imp = 3, n.iter = 30, R.hat = 1.1,
           }
         }
         mi.data[[i]][missing.index, CurrentVar] <- mi.object[[i]][[CurrentVar]]@random
-        data.tmp <<- mi.data
 
         if(info[[CurrentVar]]$type=="unordered-categorical"){
           n.level <- length(info[[CurrentVar]]$level)
@@ -295,7 +294,6 @@ mi.default <- function(data, info, n.imp = 3, n.iter = 30, R.hat = 1.1,
             coef.mcmc = coef.mcmc,
             coef.converged = coef.converged.flg,
             add.noise = add.noise.flg)
-  with(globalenv(), rm(data.tmp))
   return(object)
 }
 
@@ -311,6 +309,7 @@ setMethod("mi", signature(object = "data.frame"),
                   seed = NA, check.coef.convergence = FALSE, 
                   add.noise = noise.control())
 { 
+
   if(missing(info)){
     info <- mi.info(object)
   }
@@ -347,6 +346,7 @@ setMethod("mi", signature(object = "mi.preprocessed"),
                   seed = NA, check.coef.convergence = FALSE, 
                   add.noise = noise.control())
 { 
+
   info <- object@mi.info
   object <- object@data
   
@@ -496,7 +496,6 @@ setMethod("mi", signature(object = "mi"),
 
         # Error Handling        
         mi.data[[i]][missing.index, CurrentVar] <- mi.object[[i]][[CurrentVar]]@random
-        data.tmp <<- mi.data
         if(info[[CurrentVar]]$type=="unordered-categorical"){
           n.level <- length(info[[CurrentVar]]$level)
           if(!is.null(coef(mi.object[[i]][[CurrentVar]]))){
@@ -631,7 +630,6 @@ setMethod("mi", signature(object = "mi"),
             coef.mcmc = coef.mcmc,
             coef.converged = coef.converged.flg,
             add.noise = FALSE)
-  with(globalenv(), rm(data.tmp))
   return(object)
 }
 )
