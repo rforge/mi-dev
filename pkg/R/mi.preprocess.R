@@ -61,7 +61,7 @@ mi.preprocess <- function(data, info){
     }
     else if (type[i] == "proportion" & incl[i]){
       data[,i] <- logit(data[,i])
-      names(data)[i] <- paste(names(data)[i], "mi.logit", ep=".")
+      names(data)[i] <- paste(names(data)[i], "mi.logit", sep=".")
       type[i] <- "proportion"
     }
   }
@@ -96,8 +96,7 @@ mi.postprocess <- function(mi.data, info){
         names(mi.data)[i] <- gsub(".mi.logit.", "", names(mi.data)[i], fixed=TRUE)
       }
       if(sum(grep(".ind", varnames[i]))){
-        nonnegative.name <- gsub(".mi.ind", "", varnames[i], fixed=TRUE)
-        #nonnegative.name <- paste("mi.log", nonnegative.name, sep=".")
+        nonnegative.name <- paste(gsub(".mi.ind", "", varnames[i]), "mi.log", sep=".")
         mi.data[,nonnegative.name] <- mi.data[,nonnegative.name] * mi.data[,varnames[i]]
       }
     }
@@ -121,9 +120,7 @@ mi.postprocess <- function(mi.data, info){
           names(mi.data[[s]])[i] <- gsub(".mi.logit.", "", names(mi.data[[s]])[i], fixed=TRUE)
         }
         if(sum(grep(".mi.ind", varnames[i]))){
-          nonnegative.name <- gsub(".mi.ind", "", varnames[i])
-          #nonnegative.name <- paste("mi.log", nonnegative.name, sep=".")
-          browser()
+          nonnegative.name <- paste(gsub(".mi.ind", "", varnames[i]), "mi.log", sep=".")
           mi.data[[s]][,nonnegative.name] <- mi.data[[s]][,nonnegative.name] * mi.data[[s]][,varnames[i]]
         }
       }
