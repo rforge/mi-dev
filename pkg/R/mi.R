@@ -276,7 +276,7 @@ mi.default <- function(data, info, n.imp = 3, n.iter = 30, R.hat = 1.1,
   }
   
   aveVar <- aveVar[1:s,,]
-  dim.mcmc <- dim(aveVar) 
+  total.iters <- s
   
   if(!is.logical(add.noise)){
     add.noise.flg <- TRUE
@@ -303,7 +303,7 @@ mi.default <- function(data, info, n.imp = 3, n.iter = 30, R.hat = 1.1,
             coef.mcmc = coef.mcmc,
             coef.converged = coef.converged.flg,
             add.noise = add.noise.flg,
-            dim.mcmc = dim.mcmc)
+            total.iters = total.iters)
   return(object)
 }
 
@@ -427,7 +427,7 @@ setMethod("mi", signature(object = "mi"),
   #ncol.mis <- sum(.nmis(info)>0)
   n.imp     <- m(object)
   prev.iter <- dim(object@mcmc)[1]
-  prevIterNoThin <- object@dim.mcmc[1]
+  prevIterNoThin <- object@total.iters
   
   # creating misc info for further usage
   missingVar.idx <- .nmis(info) > 0
@@ -622,7 +622,7 @@ setMethod("mi", signature(object = "mi"),
   }
 
   aveVar <- aveVar[1:s,,]
-  dim.mcmc <- dim(aveVar[1:s,,])
+  total.iters <- s + prevIterNoThin
   
   if(s > 30){
     n.thin = max(1, floor(s/30))
@@ -644,7 +644,7 @@ setMethod("mi", signature(object = "mi"),
             coef.mcmc = coef.mcmc,
             coef.converged = coef.converged.flg,
             add.noise = FALSE,
-            dim.mcmc = dim.mcmc)
+            total.iters = total.iters)
   return(object)
 }
 )
@@ -698,6 +698,7 @@ setMethod("m", signature( object = "mi" ),
 
 setMethod("bugs.mi", signature( object = "mi" ),
   function (object, check = c("data", "coefs")){
+    check <- match.arg(check)
     if(check=="coefs"){
       out <- as.bugs.array(object@coef.mcmc)
     }

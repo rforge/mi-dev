@@ -3,7 +3,7 @@
 # ==============================================================================
 
 mi.count <- function ( formula, data = NULL, start = NULL, 
-                            n.iter = 100, draw.from.beta = TRUE, 
+                            n.iter = 100, draw.from.beta = FALSE, 
                             missing.index = NULL, ...  ) {
   call <- match.call()
   mf   <- match.call(expand.dots = FALSE)
@@ -55,6 +55,7 @@ mi.count <- function ( formula, data = NULL, start = NULL,
                             drop.unused.levels = FALSE, Warning=FALSE,... )
   determ.pred <- predict(bglm.imp, newdata = data, type = "response" )
   
+  
   dispersion <- summary(bglm.imp)$dispersion
   
   if(n.mis>0){
@@ -67,9 +68,9 @@ mi.count <- function ( formula, data = NULL, start = NULL,
     ############################
       sim.coef  <- sim(bglm.imp,1)$coef
       lambda <- exp(as.matrix(tcrossprod(mf, sim.coef)))
-      random.pred <- rnbinom(n=n.mis, mu=lambda, size=dispersion)
+      random.pred <- .rpois.od(n = n.mis, lambda = lambda, dispersion = dispersion)
     } else{
-      random.pred <- rnbinom(n=n.mis, mu=determ.pred[missing.index], size=dispersion)
+      random.pred <- rpois(n = n.mis, lambda = determ.pred[missing.index])#, dispersion = dispersion)
     }   
     names(random.pred) <- names(determ.pred[missing.index])
   } else{
@@ -93,4 +94,12 @@ mi.count <- function ( formula, data = NULL, start = NULL,
   return(result)
   on.exit(rm(Y))
   on.exit(rm(bglm.imp))
+}
+
+
+.rpois.od <- function(n, lambda, dispersion = 1) {
+    if (dispersion == 1)
+       rpois(n, lambda)
+    else
+       rnbinom(n, size=(lambda/(dispersion-1)), mu=lambda)
 }

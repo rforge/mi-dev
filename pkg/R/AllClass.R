@@ -20,7 +20,7 @@ setClass("mi",
                 coef.mcmc      = "ANY",
                 coef.converged = "logical",
                 add.noise = "logical",
-                dim.mcmc  = "numeric"),
+                total.iters  = "numeric"),
             contains  = "list"
 )
 
