@@ -45,7 +45,7 @@ mi.count <- function ( formula, data = NULL, start = NULL,
 
   # main program
   if( !is.null( start ) ){ 
-    n.iter <- 50
+    n.iter <- 25
     start[is.na(start)] <- 0
     #start <- NULL
   }
