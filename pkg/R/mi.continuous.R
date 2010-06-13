@@ -69,7 +69,7 @@ mi.continuous <- function (formula, data = NULL, start = NULL,
     } else{
       random.pred <- rnorm(n.mis, determ.pred[missing.index], sigma.hat(bglm.imp))
     }
-    names(random.pred) <- names(determ.pred[missing.index])
+    names(random.pred) <- names(determ.pred)
   } else{
     random.pred <- numeric(0)
   }

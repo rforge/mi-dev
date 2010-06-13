@@ -82,7 +82,7 @@ mi.binary <- function( formula, data = NULL, start = NULL, n.iter = 100,
     random.pred <- random.temp 
     random.pred <- replace(random.pred, random.temp == 0, y.levels[1])
     random.pred <- replace(random.pred, random.temp == 1, y.levels[2])
-    names(random.pred) <- names(determ.pred[missing.index])                      
+    names(random.pred) <- names(determ.pred)                      
   }
   else{
     random.pred <- numeric(0)

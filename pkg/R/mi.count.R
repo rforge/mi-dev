@@ -72,7 +72,7 @@ mi.count <- function ( formula, data = NULL, start = NULL,
     } else{
       random.pred <- .rpois.od(n = n.mis, lambda = determ.pred[missing.index], dispersion = dispersion)
     }   
-    names(random.pred) <- names(determ.pred[missing.index])
+    names(random.pred) <- names(determ.pred)
   } else{
     random.pred <- numeric(0)
   }

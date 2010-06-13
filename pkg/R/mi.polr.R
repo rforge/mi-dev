@@ -64,7 +64,7 @@ mi.polr <- function ( formula, data = NULL, drop.unused.levels = TRUE,
   if (n.mis>0){
     random.pred <- Rmultnm(n.mis, expect.prob[missing.index,], 1:length(bplr.imp$lev))    
     random.pred <-  recode(random.pred, paste(1:length(bplr.imp$lev),"='", bplr.imp$lev,"'",sep="",collapse=";") )        
-    names(random.pred) <- names(determ.pred[missing.index])
+    names(random.pred) <- names(determ.pred)
   } else{
     random.pred <- NULL
   }
