@@ -49,7 +49,7 @@ mi.binary <- function( formula, data = NULL, start = NULL, n.iter = 100,
   Y <- recode(Y, paste("'", y.levels, "'=", c(0, 1), sep = "", collapse = "; "))
 
   if (!is.null(start)) {
-      n.iter <- 25
+      n.iter <- 50
       start[is.na(start)] <- 0
   }  
   if (is.null(data)) {
@@ -82,7 +82,7 @@ mi.binary <- function( formula, data = NULL, start = NULL, n.iter = 100,
     random.pred <- random.temp 
     random.pred <- replace(random.pred, random.temp == 0, y.levels[1])
     random.pred <- replace(random.pred, random.temp == 1, y.levels[2])
-    names(random.pred) <- names(determ.pred)                      
+    names(random.pred) <- names(determ.pred[missing.index])                      
   }
   else{
     random.pred <- numeric(0)

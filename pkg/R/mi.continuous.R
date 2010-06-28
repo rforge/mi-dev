@@ -44,7 +44,7 @@ mi.continuous <- function (formula, data = NULL, start = NULL,
 
   # main program
   if( !is.null( start ) ){ 
-    n.iter <- 25
+    n.iter <- 50
     start[is.na(start)] <- 0
   }
   
@@ -69,7 +69,7 @@ mi.continuous <- function (formula, data = NULL, start = NULL,
     } else{
       random.pred <- rnorm(n.mis, determ.pred[missing.index], sigma.hat(bglm.imp))
     }
-    names(random.pred) <- names(determ.pred)
+    names(random.pred) <- names(determ.pred[missing.index])
   } else{
     random.pred <- numeric(0)
   }

@@ -45,9 +45,9 @@ mi.count <- function ( formula, data = NULL, start = NULL,
 
   # main program
   if( !is.null( start ) ){ 
-    n.iter <- 25
-    start[is.na(start)] <- 0
-    #start <- NULL
+    n.iter <- 50
+    #start[is.na(start)] <- 0
+    start <- NULL
   }
   
   bglm.imp    <- bayesglm( formula = formula, data = data, family = quasipoisson, 
@@ -72,7 +72,7 @@ mi.count <- function ( formula, data = NULL, start = NULL,
     } else{
       random.pred <- .rpois.od(n = n.mis, lambda = determ.pred[missing.index], dispersion = dispersion)
     }   
-    names(random.pred) <- names(determ.pred)
+    names(random.pred) <- names(determ.pred[missing.index])
   } else{
     random.pred <- numeric(0)
   }
