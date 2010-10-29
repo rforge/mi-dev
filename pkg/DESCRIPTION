@@ -1,6 +1,6 @@
 Package: mi
-Version: 0.09-12
-Date: 2010-10-19
+Version: 0.09-11.02
+Date: 2010-10-25
 Title: Missing Data Imputation and Model Checking
 Author:
   Andrew Gelman <gelman@stat.columbia.edu>,
