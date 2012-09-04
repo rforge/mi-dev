@@ -31,10 +31,10 @@ conv.plot ( mi.object, ... )
   Andrew Gelman \email{gelman@stat.columbia.edu}
 }
 \examples{
-  data(CHAIN)
-  CHAIN <- mi.preprocess(CHAIN)
-  imp.CHAIN <- mi(CHAIN, n.iter=6, add.noise=noise.control(post.run.iter=0))
-  convergence.plot(imp.CHAIN,mfrow=c(2,4))
+  #data(CHAIN)
+  #CHAIN <- mi.preprocess(CHAIN)
+  #imp.CHAIN <- mi(CHAIN, n.iter=6, add.noise=noise.control(post.run.iter=0))
+  #convergence.plot(imp.CHAIN,mfrow=c(2,4))
 }
 
 \keyword{ hplot }
