@@ -3,7 +3,7 @@
 # ==============================================================================
 
 setMethod("residuals", signature(object = "mi.method"), 
-  function(object, y){
+  function(object, ..., y){
   y - fitted(object)
 }
 )
@@ -11,13 +11,13 @@ setMethod("residuals", signature(object = "mi.method"),
 
 
 setMethod("residuals", signature(object = "mi.binary"), 
-  function(object, y){
+  function(object, ..., y){
   .dichot(y) - fitted(object)
 }
 )
 
 setMethod("residuals", signature(object = "mi.categorical"), 
-  function(object, y){
+  function(object, ..., y){
   as.numeric(y) - as.numeric(fitted(object))
 }
 )
@@ -26,14 +26,14 @@ setMethod("residuals", signature(object = "mi.categorical"),
 
 
 setMethod("residuals", signature(object = "mi.polr"), 
-  function(object, y){
+  function(object, ..., y){
   as.numeric(y) - as.numeric(fitted(object))
 }
 )
 
 
 setMethod("residuals", signature(object = "mi.count"), 
-  function(object, y){
+  function(object, ..., y){
   res <- y - fitted(object)
   stud.res <- res/sd(fitted(object))
   return(stud.res)
@@ -42,19 +42,19 @@ setMethod("residuals", signature(object = "mi.count"),
 
 
 setMethod("resid", signature(object = "mi.method"), 
-  function(object, y){
+  function(object, ..., y){
   y - fitted(object)
 }
 )
 
 setMethod("resid", signature(object = "mi.binary"), 
-  function(object, y){
+  function(object, ..., y){
   .dichot(y) - fitted(object)
 }
 )
 
 setMethod("resid", signature(object = "mi.categorical"), 
-  function(object, y){
+  function(object, ..., y){
   as.numeric(y) - as.numeric(fitted(object))
 }
 )
@@ -63,14 +63,14 @@ setMethod("resid", signature(object = "mi.categorical"),
 
 
 setMethod("resid", signature(object = "mi.polr"), 
-  function(object, y){
+  function(object, ..., y){
   as.numeric(y) - as.numeric(fitted(object))
 }
 )
 
 
 setMethod("resid", signature(object = "mi.count"), 
-  function(object, y){
+  function(object, ..., y){
   res <- y - fitted(object)
   stud.res <- res/sd(fitted(object))
   return(stud.res)
