@@ -1,15 +1,10 @@
-importFrom("lme4",
+importFrom("stats",
       coef,
+      coefficients,
       fitted,
       resid,
       residuals,
-      plot
-)
-
-
-importFrom("stats",
-      update,
-      coefficients
+      update
 )
 
 importFrom("Matrix",
