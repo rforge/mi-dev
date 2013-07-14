@@ -140,7 +140,7 @@ and looping through until approximate convergence.
 
 \examples{
 # simulate fake data
-set.seed(1)
+set.seed(100)
 n <- 100
 u1 <- rbinom(n, 1, .5)
 v1 <- log(rnorm(n, 5, 1))
