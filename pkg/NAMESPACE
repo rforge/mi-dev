@@ -7,12 +7,26 @@ importFrom("stats",
       update
 )
 
+importFrom(lme4, "lmer", "glmer")
+
+importFrom(methods, "setOldClass")
 
 importFrom("Matrix",
       tcrossprod
 )
 
+import(foreign)
 
+importFrom(MASS, "polr",
+                 "mvrnorm")
+
+importFrom(R2WinBUGS, "as.bugs.array")
+
+importFrom(abind, "abind")
+
+importFrom(nnet, "multinom")
+
+importFrom(car, "recode")
 
 importFrom("arm",
       display,
