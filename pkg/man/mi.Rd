@@ -177,8 +177,7 @@ dat.transformed <- mi.preprocess(dat, inf)
 #IMP <- mi(dat.transformed, n.iter=6, check.coef.convergence=TRUE, 
 #  add.noise=noise.control(post.run.iter=6))
 
-IMP <- mi(dat.transformed, n.iter=6, check.coef.convergence=TRUE, 
-  add.noise=FALSE)
+IMP <- mi(dat.transformed, n.iter=6, add.noise=FALSE)
 
 
 # no noise
@@ -192,9 +191,9 @@ IMP <- mi(dat.transformed, n.iter=6, check.coef.convergence=TRUE,
 
 # convergence checking
 converged(IMP, check = "data")  ## You should get FALSE here because only n.iter is small 
-converged(IMP, check = "coefs")
+#converged(IMP, check = "coefs")
 IMP.bugs1 <- bugs.mi(IMP, check = "data")    ## BUGS object to look at the R hat statistics
-IMP.bugs2 <- bugs.mi(IMP, check = "coefs")   ## BUGS object to look at the R hat statistics
+#IMP.bugs2 <- bugs.mi(IMP, check = "coefs")   ## BUGS object to look at the R hat statistics
 plot(IMP.bugs1)  ## visually check R.hat
 
 # visually check the imputation
