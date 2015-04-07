@@ -1,6 +1,6 @@
 Package: mi
 Version: 0.10-1
-Date: 2015-04-06
+Date: 2015-04-07
 Title: Missing Data Imputation and Model Checking
 Author:
   Andrew Gelman <gelman@stat.columbia.edu>,
@@ -9,8 +9,8 @@ Author:
   Masanao Yajima <my2167@columbia.edu>,
   Maria Grazia Pittau <grazia@stat.columbia.edu>
 Maintainer: Yu-Sung Su <suyusung@tsinghua.edu.cn>
-Depends: arm (>= 1.8-03)
-Imports: abind, car, foreign, lme4 (>= 0.999999-2), MASS, Matrix (>= 1.0), methods, nnet, stats, R2WinBUGS
+Depends: arm (>= 1.8-4)
+Imports: abind, car, foreign, lme4 (>= 0.999999-2), MASS, Matrix (>= 1.0), methods, nnet, stats, R2WinBUGS, nlme
 Description: R functions for performing multiple imputation with several checks.
 URL: http://www.stat.columbia.edu/~gelman/
 License: GPL (>=2)
